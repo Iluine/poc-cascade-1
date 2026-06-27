@@ -521,7 +521,26 @@ fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un
   (halo local insuffisant), dont la haute dimension chaotique n'est qu'un cas particulier suffisant
   — chercher d'abord le bas-rang non-local (advection d'amont). Enjeu temps-réel = **sparsité ×
   échelle**, pas échelle seule. Mémoire : même gouvernance (le routage borne la mémoire de travail
-  à l'actif → même chiffre, la fraction active, décide temps ET mémoire de travail).
+  à l'actif → même chiffre, f_p (perceptuel, pas dynamique), décide temps ET mémoire de travail).
+
+**(e) LE JND — pinner le perceptuel, sortir de l'attracteur (feedback, le vrai générateur) :**
+- L'attracteur « proxy sur-compte → perceptuel corrige » a frappé 3× (L2-cache @C2 ; vitesse
+  dynamique @sparsité). Le GÉNÉRATEUR n'est pas un réflexe à surveiller — c'est que le perceptuel
+  n'est pas calculé, il est DÉFINI, et mon JND est un placeholder (±10 %/±20 %, « ne pas défendre »).
+  Tant qu'il est placeholder, « perceptuellement irréductible » n'a pas de référent fixe → chaque
+  f_p hérite de l'arbitraire du seuil. **La sortie de l'attracteur = pinner le JND, pas surveiller le proxy.**
+- Le wake passait car ses chiffres étaient aux EXTRÊMES (0 %/42 %, robustes à tout JND). L'inondation
+  sera en ZONE GRISE → le verdict dépendra du JND non pinné → l'attracteur frappe une 4e fois.
+- **Geste T1.5 (gravé) : f_p AVEC analyse de sensibilité au JND** — f_p en fonction du seuil sur sa
+  plage plausible. C'est l'analyse de sensibilité que je fais pour β/D/seeds, JAMAIS appliquée au
+  seul paramètre dont dépend TOUTE la métrique perceptuelle. f_p petit sur toute la plage → enjeu
+  robuste, go. f_p traverse la fenêtre de décision quand le JND varie → verdict INDÉTERMINÉ →
+  **pilote JND BLOQUANT, pas optionnel.** Ne pas croire f_p avant d'avoir borné sa sensibilité.
+- **En réserve (ne pas construire encore)** : le JND-jeu n'est pas constant — distance d'observation,
+  caméra, attention. f_p est donc un CHAMP fovéa-dépendant, et la sparsité perceptuelle EXPLOITABLE
+  > f_p à JND uniforme (la majorité du domaine est loin → JND élevé → mémoïsable même si active).
+  C'est la fovéa observer-centrée / le LOD, revenant comme MULTIPLICATEUR de sparsité — l'axe qui
+  pourrait faire passer l'inondation de « limite » à « enjeu réel », mais seulement si mesuré.
 
 **Ne pas surclamer dans aucun sens** : ni « le routage est mort » (faux), ni « il suffit de monter
 le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé).
