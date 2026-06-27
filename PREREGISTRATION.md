@@ -497,17 +497,26 @@ fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un
 (d) spatialement SPARSE — domaine majoritairement inerte/settled avec front mince actif.**
 
 **(d) SPARSITÉ — le 4e angle de vacance, le plus structurel (mesuré 2026-06-28) :**
-- L'économie du routage = **facteur S = 1/(fraction active)** (ne tourner fin que sur l'actif).
+- L'économie = **facteur S = 1/(fraction PERCEPTUELLEMENT IRRÉDUCTIBLE f_p)** — ne tourner fin
+  que là où mémoïser/grossir échoue *perceptuellement* (PAS où c'est dynamiquement actif).
   Le routage ne franchit le budget que si **S > G** (G = facteur de dépassement du fin-partout).
   Substrat dense → S petit → fenêtre d'enjeu `fin>budget≥routé` quasi-vide, à TOUTE échelle.
-- **Substrat VIV MESURÉ DENSE** : fraction active 42 % (seuil 10 %), 55 % (5 %) → **S ~2.4×**
-  (majorant optimiste). Ne franchit que si fin-partout dépasse à peine. Scènes-jeu cibles :
-  inondation ~10 % → S~10× ; feu ~5 % → S~20× → elles franchissent. **Le sillage entretenu n'a
-  pas de zone qui s'éteint** = pas de sparsité = pas de moteur d'économie. C'est le 4e angle :
-  j'avais choisi le seul type de scène où le moteur même de la thèse (« 99 % inerte ») n'existe pas.
+- **⚠️ Correction de mesure (feedback)** : le seuil « std de vitesse » mesure l'activité DYNAMIQUE,
+  qui SUR-COMPTE (comme la L2-cache) — ex. la relaxation derrière un front est dynamiquement active
+  mais perceptuellement éphémère/mémoïsable. La vraie sparsité est **perceptuelle** (f_p).
+- **Substrat VIV** : 42 % d'activité DYNAMIQUE (seuil 10 %) = **type de scène dense** (observation de
+  type valide : un sillage entretenu n'a pas de bulk qui s'éteint). MAIS le verdict opératoire est
+  perceptuel : **f_p ≈ 0 %** (C2, périodique → mémoïser-partout) → vacant. Les 42 % dynamiques ne
+  condamneraient que dans le contrefactuel non-récurrent (S~2.4×) ; ici C2 condamne d'abord.
+- **Scènes-jeu (inondation ~10 %, feu ~5 %) = HYPOTHÈSE NON MESURÉE, à TESTER — pas une
+  démonstration.** Intuition dynamique posée à côté d'un fait mesuré (le 42 % du wake) ≠ preuve.
+  Le f_p réel peut diverger DANS LES DEUX SENS : la zone de relaxation derrière le front (largeur ∝
+  temps de relaxation NON mesuré) peut densifier ; l'écart dynamique↔perceptuel (relaxation
+  mémoïsable) peut sparsifier. Inconnu jusqu'à mesure.
 - **Filtre de faisabilité T1.5 (pendant temps-réel du balayage de fermabilité)** : sur toute scène
-  candidate, **mesurer la fraction active AVANT toute ligne d'oracle**. Si > ~10-20 % en régime
-  établi (S < 5-10×) → pas d'enjeu temps-réel, même grand/chaotique → écarter. **Sparsité d'abord.**
+  candidate, **mesurer f_p (perceptuellement irréductible), PAS la fraction dynamique, AVANT tout
+  oracle** — la mesure perceptuelle qui a tué le fantôme, appliquée à la sparsité. f_p > ~10-20 %
+  (S < 5-10×) → écarter. **Mesurer f_p, ne pas présupposer.**
 - **Note de portée** : la non-fermabilité qui réveille le descend = **non-localité d'information**
   (halo local insuffisant), dont la haute dimension chaotique n'est qu'un cas particulier suffisant
   — chercher d'abord le bas-rang non-local (advection d'amont). Enjeu temps-réel = **sparsité ×
