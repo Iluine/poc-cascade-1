@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# venv
+.venv/
+venv/
+
+# data / artefacts d'expérience (lourds, non versionnés)
+data/
+runs/
+artifacts/
+*.npz
+*.npy
+*.h5
+*.vtk
+*.png
+*.mp4
+!docs/**/*.png
+
+# scratch
+scratch/
+*.log
