@@ -542,5 +542,27 @@ fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un
   C'est la fovéa observer-centrée / le LOD, revenant comme MULTIPLICATEUR de sparsité — l'axe qui
   pourrait faire passer l'inondation de « limite » à « enjeu réel », mais seulement si mesuré.
 
+**(f) STRUCTURE — routage ⊗ persistance (résultat de ROADMAP, feedback) :**
+- **C2 (plausibilité) et C3 (économie) ne sont PAS séparables.** Sur le wake, le routé reproduisait
+  le monde (mémoïser-partout) PARCE QU'il n'y avait rien à router — même cause que C3 vide. « Router
+  améliore la plausibilité » et « router économise » = deux LECTURES d'un seul événement (une fenêtre
+  où mémoïser échoue et la bonne action réussit).
+- Le routage a une décision graduée SEULEMENT sur un domaine **MIXTE** (mémoïsable + non-mémoïsable
+  coexistant). Le wake n'avait pas de mélange (tout actif → décision triviale, effondrée). **Le
+  mélange vient de la PERSISTANCE** : le settled est mémoïsable, le front non. Sans persistance, pas
+  de mélange, pas de décision — pour C2 COMME C3. (Option « C2 seul sans persistance » = piège
+  renommé : actif-partout = wake à l'envers.)
+- **Donc le routage ENTIER dépend de la persistance.** INVERSION DE DÉPENDANCE : persistance =
+  PRÉREQUIS du routage, pas sa suite. La pré-enregistration T1(routage)→T2(persistance) avait l'ordre
+  inversé pour la VALEUR du routage. Acter l'inversion ; pas besoin de re-dériver toute la roadmap.
+- **Test réel de l'architecture = sur un domaine mixte : le routeur appris distingue-t-il le committé
+  NON-TRIVIAL de l'actif mieux que le nul, et ce gain se lit-il EN PLAUSIBILITÉ ET EN COMPUTE ?**
+  Un seul test, deux lectures inséparables — le premier vrai test, sur le terrain où l'archi vit.
+- **Garde anti-circularité (récursive)** : le committé ne doit PAS être trivialement lisible depuis le
+  détail (sinon le nul-détail le détecte = circularité, C2 vacant). Le committé doit porter une
+  STRUCTURE fine (relief figé = HAUT détail) tout en étant INERTE (activité nulle) → le détail seul ne
+  distingue pas committé-figé de front-actif ; le halo (vitesse≈0) le peut. Divergence physique, pas construite.
+
 **Ne pas surclamer dans aucun sens** : ni « le routage est mort » (faux), ni « il suffit de monter
-le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé).
+le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé,
+et — résultat (f) — domaine non mixte donc routage jamais sollicité du tout).
