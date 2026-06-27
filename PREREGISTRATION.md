@@ -491,12 +491,28 @@ qu'aucun ROM bas-rang ne tient à la résolution grossière → dynamique locale
 - **Mémoire : travail (bornée, T1.5, mesurable — cache mémoïsation, bases POD, état actif) ⊥
   persistante (non bornée, T2 = le mur fracture/persistance).** Ne pas confondre.
 
-**Substrat T1.5 valide = (a) perceptuellement non-récurrent + (b) assez grand/cher pour que le
+**Substrat T1.5 valide = (a) perceptuellement non-récurrent + (b) assez grand pour que le
 fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un expert HONNÊTE
-(capacité raisonnable, pas sous-dimensionné — sinon faux réveil du descend, C1 retourné).**
-Note de portée (hors fichier→ici) : la non-fermabilité qui réveille le descend est une propriété
-de **non-localité d'information** (le halo local ne suffit pas), dont la haute dimension chaotique
-n'est qu'un cas particulier suffisant — chercher d'abord le bas-rang non-local (advection d'amont).
+(capacité raisonnable, pas sous-dimensionné — sinon faux réveil du descend, C1 retourné) +
+(d) spatialement SPARSE — domaine majoritairement inerte/settled avec front mince actif.**
+
+**(d) SPARSITÉ — le 4e angle de vacance, le plus structurel (mesuré 2026-06-28) :**
+- L'économie du routage = **facteur S = 1/(fraction active)** (ne tourner fin que sur l'actif).
+  Le routage ne franchit le budget que si **S > G** (G = facteur de dépassement du fin-partout).
+  Substrat dense → S petit → fenêtre d'enjeu `fin>budget≥routé` quasi-vide, à TOUTE échelle.
+- **Substrat VIV MESURÉ DENSE** : fraction active 42 % (seuil 10 %), 55 % (5 %) → **S ~2.4×**
+  (majorant optimiste). Ne franchit que si fin-partout dépasse à peine. Scènes-jeu cibles :
+  inondation ~10 % → S~10× ; feu ~5 % → S~20× → elles franchissent. **Le sillage entretenu n'a
+  pas de zone qui s'éteint** = pas de sparsité = pas de moteur d'économie. C'est le 4e angle :
+  j'avais choisi le seul type de scène où le moteur même de la thèse (« 99 % inerte ») n'existe pas.
+- **Filtre de faisabilité T1.5 (pendant temps-réel du balayage de fermabilité)** : sur toute scène
+  candidate, **mesurer la fraction active AVANT toute ligne d'oracle**. Si > ~10-20 % en régime
+  établi (S < 5-10×) → pas d'enjeu temps-réel, même grand/chaotique → écarter. **Sparsité d'abord.**
+- **Note de portée** : la non-fermabilité qui réveille le descend = **non-localité d'information**
+  (halo local insuffisant), dont la haute dimension chaotique n'est qu'un cas particulier suffisant
+  — chercher d'abord le bas-rang non-local (advection d'amont). Enjeu temps-réel = **sparsité ×
+  échelle**, pas échelle seule. Mémoire : même gouvernance (le routage borne la mémoire de travail
+  à l'actif → même chiffre, la fraction active, décide temps ET mémoire de travail).
 
 **Ne pas surclamer dans aucun sens** : ni « le routage est mort » (faux), ni « il suffit de monter
 le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé).
