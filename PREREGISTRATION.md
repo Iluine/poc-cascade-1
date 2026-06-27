@@ -473,5 +473,30 @@ qu'aucun ROM bas-rang ne tient à la résolution grossière → dynamique locale
 - **Méthode** : utiliser l'instrument de fermabilité pour vérifier, sur tout substrat candidat,
   que les TROIS sorties s'activent (taux memoize/expert/descend non dégénéré) AVANT de juger C2.
 
+**Critère TEMPS-RÉEL (C3 redéfini — l'objectif est le jeu, pas un ratio abstrait) :**
+- C3 ÉTAIT le claim temps-réel ; moot en T1 pour la même raison que C2 (composite vacant →
+  « compute du routé » = lire un cache = trivial). T1 ne pouvait pas le produire.
+- **Succès = franchissement de budget-frame (SEUIL), pas ratio de FLOPs** : le routage gagne son
+  existence quand le fin-partout VIOLE le budget-frame et que le routé y RENTRE, à plausibilité
+  égale (sous JND). Si le fin-partout tient déjà → routage plausible mais SANS ENJEU.
+- **L'overhead du routeur compte dans le coût du routé** (extraction features + réseau + décision
+  par fenêtre). Sinon mémoïser-partout (zéro décision) bat le routage en TEMPS → vacance par une
+  autre porte. Le routeur doit être radicalement moins cher que la décision qu'il évite.
+- **Baseline T1 mesurée (2026-06-28)** : fin-partout couplé 512×192 = **1.33 ms/pas, 111 MB,
+  tient 60 fps confortablement** (13 pas/frame, lâcher à 0.56 Hz naturel). → **AUCUN enjeu
+  temps-réel sur ce substrat** : 3e angle confirmant la vacance T1.
+- **L'enjeu temps-réel est un axe d'ÉCHELLE, pas (que) de Re** : le fin-partout dépasse le budget
+  quand le domaine est grand (échelle-jeu, 3D), à tout Re. Chaos → enjeu *plausibilité* ;
+  échelle → enjeu *temps-réel* ; partiellement orthogonaux (les deux exigent la non-mémoïsabilité).
+- **Mémoire : travail (bornée, T1.5, mesurable — cache mémoïsation, bases POD, état actif) ⊥
+  persistante (non bornée, T2 = le mur fracture/persistance).** Ne pas confondre.
+
+**Substrat T1.5 valide = (a) perceptuellement non-récurrent + (b) assez grand/cher pour que le
+fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un expert HONNÊTE
+(capacité raisonnable, pas sous-dimensionné — sinon faux réveil du descend, C1 retourné).**
+Note de portée (hors fichier→ici) : la non-fermabilité qui réveille le descend est une propriété
+de **non-localité d'information** (le halo local ne suffit pas), dont la haute dimension chaotique
+n'est qu'un cas particulier suffisant — chercher d'abord le bas-rang non-local (advection d'amont).
+
 **Ne pas surclamer dans aucun sens** : ni « le routage est mort » (faux), ni « il suffit de monter
 le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé).
