@@ -12,6 +12,7 @@ dependencies = [
     "xlb==0.3.1",      # oracle fluide (repli AegirJAX) — backend JAX différentiable confirmé
     "warp-lang==1.10.0",  # CONTRAINTE LOAD-BEARING : XLB 0.3.1 importe warp.utils.ScopedTimer,
                           # supprimé en warp-lang>=1.13. Ne PAS dé-épingler sans patcher XLB.
+    "scikit-learn>=1.5",  # NearestNeighbors — diagnostic monde-3 (experiments/mixed_substrate.py, T1.5)
     # "jax-fem==0.0.12", # ajouté après smoke test F1
 ]
 

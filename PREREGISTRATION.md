@@ -566,3 +566,518 @@ fin-partout dépasse le budget-frame + (c) localement non-fermable au-delà d'un
 **Ne pas surclamer dans aucun sens** : ni « le routage est mort » (faux), ni « il suffit de monter
 le Re » (non mesuré), ni « T1 a testé l'architecture » (faux : 2 sorties sur 3, descend non interrogé,
 et — résultat (f) — domaine non mixte donc routage jamais sollicité du tout).
+
+---
+
+## 🔬 T1.5 — Journal (substrat sollicitant les trois sorties)
+
+### 2026-06-30 — Substrat mixte par persistance : mécanisme front-passage → BARRAGE (obstacle traversant-spécifique) ; cap (D) inondation
+
+Construction d'un substrat MIXTE (mémoïsable settled + non-mémoïsable actif ; le mélange vient de la
+persistance, cf. (f)) dans le rig LBM (`experiments/mixed_substrate.py`), gaté 2 étages (GATE 1
+stationnarité de W ; GATE 2 monde-3 sous binning + gel-coupé).
+
+- **Settling par physique RÉFUTÉ** (drag uniforme, 3 points jusqu'à 25× baseline) : committé=0 à tous,
+  débit mouillé collé à U, frac_active MONTE avec le drag (0.96→0.98). Conservation de masse ⇒ débit
+  ≈ U partout en canal traversant ; un puits de qdm uniforme ne settle rien (construit densité/pression
+  pour maintenir le débit). Settling-par-vitesse impossible ici.
+- **Mécanisme (1) — commit par PASSAGE DU FRONT** (découplé de la vitesse : cellule balayée vieillit
+  vers committé au rythme 1/τ) : GATE 1 a d'abord dit STATIONNAIRE (committé 22 %, W 6.6 %, cv 0.01)
+  — **artefact**. Profil spatial : committé = l'INLET (x<0.28), figé à v≈0, front calé, **domaine MORT**
+  (actif=0.004 partout). Le commit fige d'abord l'inlet (continûment actif) → région committée v≈0 =
+  OBSTRUCTION → en débit conservé elle fait BARRAGE → source étouffée, front calé, domaine mort.
+- **Tenaille du freeze (dans cette géométrie)** : figer à **v≈0** → halo-distinguable (garde
+  anti-circularité OK) MAIS barrage ; figer à **v≈U** → pas de barrage MAIS halo-invisible (garde
+  violée). Pas de 3e voie dans un canal traversant.
+- **Classifieur GATE 1 durci** (acquis net, réutilisable) : le binaire `W<0.02 ⇒ effondrement` mentait
+  (confondait rien-commit / tout-commit, tous deux W≈0) ET laissait passer le domaine-mort (W
+  stationnaire, zéro dynamique). Désormais 4 modes nommés depuis (committé, actif, W) : domaine-mort /
+  rien-commit / tout-commit / W-instable.
+
+**Énoncé ÉTROIT (le seul qui se transfère)** : *dans une géométrie mono-champ, incompressible, à flux
+traversant conservé, une région inerte committée est nécessairement une obstruction.* Load-bearing =
+**mono-champ / incompressible / traversant**. **PAS** « la persistance est structurellement dure »
+(deux échecs ≠ théorème). Le barrage est une PRESCRIPTION : le canal traversant était le mauvais vase.
+
+**Deux échappatoires, dans les scènes que Cascade vise, aucune dans le LBM-traversant** :
+(α) **surface libre / accumulation** (inondation) — le settled ne barre pas, le volume s'empile (niveau
+monte), pas de conflit de flux par section ; v≈0 physique, pas fiat.
+(β) **champ persistant séparé** (sédiment/charbon) — l'inerte n'est pas le médium qui s'écoule, 2
+quantités conservées distinctes. (Mais à Re=100 le dépôt est esclave du flux périodique → mémoïsable →
+résout le barrage, PAS la vacance ⇒ confirme que la **non-récurrence** est la contrainte liante.)
+
+**Deux contraintes liantes pour les 3 sorties** : (i) anti-barrage, (ii) anti-vacance-périodique (tueur
+de C2 à Re=100). Aucune option mono-contrainte ne suffit. **Cap T1.5 = (D) inondation shallow-water sur
+terrain** (surface libre + front transitoire non-récurrent = (i) ET (ii)), via la brique validée
+shallow-water-rom (MUSCL wet/dry = le re-test SHARP dû depuis le caveat de diffusivité d'oracle).
+Mapping 3 sorties : memoize = flaques settled (v≈0, h tracke le terrain = haut détail) ; expert = front
+wet/dry non-récurrent ; descend = front × terrain fin non-fermable au grossier. **Conditionné** au filtre
+de faisabilité (f_p perceptuel + sensibilité JND + 3 taux non-dégénérés) AVANT tout router, et au
+re-sharpening MUSCL (sinon front sur-diffusé « paraît bas-rang » → re-tue le descend en silence). 3/3
+non garanti ; 2/3 (memoize/expert) reste une avancée stricte sur la décision effondrée du wake.
+
+### 2026-06-30 — Recadrage par le BUT (vérifier si Cascade est une solution) + contrat pré-enregistré de la règle de dépôt
+
+**Recadrage de posture (le but force la falsification, pas la construction)** : l'objectif n'est pas
+« tester le router » — c'est **vérifier si Cascade** (un état-monde `z`, un opérateur routé `F`, image+son
+readouts, plausible + PERSISTANT + horizon infini au budget-jeu) **est une solution**. Vérifier = falsifier
+(le test le moins cher qui peut tuer), pas ingénier vers le succès. Le livrable n'est pas « le router
+marche » (binaire) mais une **carte de viabilité** : où le routage paie (sparse + non-récurrent + sous
+pression de budget + non-local) vs vacant. Les vacances (C2 wake, barrage) sont des points de carte, pas des
+échecs à contourner. Trois axes de tueur : budget (router, payoff prouvé nulle part), **persistance**
+(le mur le plus profond, à peine touché), plausibilité (**JND non pinné** → aucun axe perceptuel mesurable).
+
+**Métrique = plausibilité, JAMAIS exactitude.** Le détour gate-0 (front 2nd-ordre ? convergence ?) était la
+mauvaise métrique : exactitude-de-solveur, la dérive que l'arc tue. « 1er-ordre au front » n'est disqualifiant
+QUE si le trait perdu était perceptuellement présent. L'instrument doit être perceptuellement adéquat, pas exact.
+
+**Mesure (1) = test-tueur de l'axe PERSISTANCE** (la scène doit être PERSISTANTE, pas stationnaire — sinon
+on photographie un ressaut a-historique = VIV redux, et `z`-qui-grossit-avec-l'histoire n'est jamais sollicité,
+le piège T1 par la porte « scène propre »). Trois issues : (1) trivial-fermable [vacant, wake déguisé] /
+(2) structuré-mais-irréductible [mur mémoire, persistance morte] / (3) structuré-ET-non-trivialement-fermable
+[le mélange existe]. **(2) et (3) ne sont en jeu QUE si la règle de dépôt est path-dependent** ; une règle
+instantanée-locale ne laisse que (1), maquillée.
+
+**Contrat pré-enregistré de la règle de dépôt (gravé AVANT le code — c'est lui qui empêche (1) de se mentir) :**
+- **Défaut latent** : `commit(x)=g(h(x),terrain(x))` est terrain-pilotée/haut-détail/v≈0/halo-distinguable
+  (passe l'anti-circularité détail) MAIS fermable-halo trivialement (info = terrain connu + profondeur dans
+  le halo). Issue 1 déguisée en issue 3 ; verdict « fermable » juste, conclusion fausse.
+- **4e garde (manquante)** : halo-distinguable, pas détail-trivial, ET **pas halo-trivial** (= pas
+  reconstructible depuis terrain-statique-connu + profondeur-locale SANS l'histoire).
+- **Règle** : champ **SÉDIMENT séparé** `s(x)` (échappatoire β, pas gel-de-`h` α qui re-barre + reste
+  instantané), loi **PATH-DEPENDENT** (type Exner : dépôt/reprise par cisaillement), modifie `b_eff` (front
+  suivant ré-ancre sur terrain+histoire). `s` à v≈0 → ne barre pas (lac-au-repos couvre déjà le settled).
+- **Critère pré-enregistré (falsifiable en 2 runs)** : deux séquences de pulses produisant le **même état
+  instantané (h,u) en x** doivent produire des dépôts `s(x)` **différents**. Même dépôt → règle
+  instantanée-locale → (1) vacant par circularité (axe halo, pas détail).
+- **Hypothèse architecturale load-bearing** : la fermeture a accès LIBRE au terrain fin STATIQUE (asset
+  autorisé, stocké, jamais régénéré) → structure terrain-dérivée « gratuite », seule l'histoire compte.
+  Tient pour terrain statique ; basculerait pour terrain dynamique/destructible.
+- **Critère ≡ mesure** : fermabilité de (1) = cache **clé-(halo dynamique instantané + terrain fin connu)**
+  qui échoue. La clé DOIT inclure le terrain fin (sinon sur-compte la structure-terrain en non-fermabilité) et
+  être INSTANTANÉE (sinon un cache-de-trajectoire ferme l'histoire et fake la fermabilité). Les 2 erreurs de
+  clé = les 2 façons de mentir.
+- **Goldilocks bloquant** (comme le pilote-JND) : la loi a un taux dépôt/reprise. Mal réglé → tout se dépose
+  (empreinte du 1er pulse = quasi-instantané, issue 1) ou rien ne tient (domaine-mort). Mesurer
+  `f_fermable(taux)` avec sensibilité, pas un seul réglage, avant de croire (1).
+
+→ Build : scène pulses-sédiment path-dependent + mesure de fermabilité clé-(halo+terrain) du `s` accumulé ;
+BC soutenues (pour le ressaut-ancré = trait descend, mesure 2) **différées derrière (1)**.
+
+### 2026-06-30 — (1) premier chiffre : l'histoire S'ÉVAPORE au readout (C2-bis prouvé) + critère de richesse RE-spécifié en readout
+
+**Critère path-dependent (verrou 1) : PASSE**, robustement. `corr(s_A,s_B)=0.39` sans binning (ordre de pulses
+inversé → 61 % du dépôt vient de l'histoire), corroboré par resfrac 67 % (binning-sensible, habillage). La règle
+intègre l'histoire. La path-dependence est une propriété de la RÈGLE → espace-`s` est le bon espace pour CE verrou.
+
+**Premier chiffre de (1) — l'histoire mesurée en READOUT (pas distance-`s`)** : à taux faible (`s`~2 % du relief),
+`corr(R_A,R_B)=1.0000`, **0 % supra-JND à JND≥5 %** sous ombrage RASANT (révèle le relief — garde anti-platitude
+satisfaite). **61 % d'histoire en espace-`s` → ~0 % en readout.** C2-bis prouvé sur la PERSISTANCE : le 61 % est
+le 18,6 % cache-L2 de C2, →~0 % perceptuel. Cause : un dépôt à 2 % noyé par le terrain à 98 % en pixels — la
+non-linéarité du readout (thèse LOD) décide, pas la magnitude de `s`. Mesurer la fermabilité en distance-`s`
+aurait fabriqué 61 % de non-fermabilité fantôme. **Verdict réel mais conditionnel au TAUX** (Goldilocks).
+
+**Correction du proxy de RICHESSE (même trou, déplacé d'un espace)** : « `s[P1..Pn]` vs `s[P1]` » vit en espace-`s`
+→ des changements de `s` s'évaporent au readout (qu'on vient de prouver). Richesse-en-`s` nécessaire, PAS suffisante ;
+elle doit monter en readout, comme la fermabilité. Une fois en readout, richesse (b) et survie (a) FUSIONNENT en un
+seul objet `ΔR`. `corr(s_A,s_B)` abandonnée (proxy d'avant-readout, aveugle à la saturation).
+
+**DÉFINITION PRÉ-ENREGISTRÉE de `f` (critère de richesse, falsifiable en 3 runs : 2 ordres + simultané)** :
+  `f(taux) = fraction du domaine où ‖readout(s[ordre]) − readout(s[simultané même-masse])‖ > JND`,
+  readout = relief ombré incidence rasante, avec sensibilité-JND sur la plage plausible.
+- Évaporation (taux faible) → `ΔR` sub-JND partout → `f≈0`.
+- Saturation (taux fort) OU dépôt terrain-déterminé (ordre n'importe pas) → `readout(ordre)≈readout(simultané)` →
+  `f≈0`. **Le terrain-déterminé s'annule dans `s_ordre−s_simultané` → `ΔR` isole l'HISTOIRE, pas le terrain :
+  anti-circularité (« pas halo-trivial ») INTÉGRÉE à la définition, pas un test séparé.**
+- Seul un dépôt dont l'ORDRE laisse une trace perceptible → `f>JND` = issue 2/3 réelle.
+- Référence = simultané-même-masse (order-free), PAS « vs premier pulse » (privilégierait P1). C'est le critère
+  original « même-état → dépôts différents » remonté en readout, débarrassé du choix de référence.
+- UNE courbe `f(taux)` + sensibilité-JND : maximum franc = intégration visible ; rampe sub-JND sur toute la plage =
+  sub-JND/trivial partout. Robustesse lue sur une courbe, pas une intersection (a)∩(b) bruitée (qui fabriquerait un
+  Goldilocks en zone grise = attractor #4, JND non-pinné).
+
+**Séquencement (cheapest-falsifiable)** : `f(taux)` D'ABORD (3 runs, pas de cache). `f≈0` partout → (D) vacant sur
+l'axe persistance, point de carte, verdict réel SANS clé de cache. `f>JND` robuste à un taux → histoire
+perceptiblement persistante → ALORS seulement la fermabilité clé-(halo+terrain) en distance-readout sépare issue 2
+(mur mémoire) de issue 3 (fermable). La clé de cache est différée **derrière `f`**.
+
+### 2026-06-30 — VERDICT persistance-sédiment + ÉNONCÉ DE CARTE : le routage paie seulement sur du perceptible HORS-CLÉ
+
+**Balayage `f(taux)` (def pré-enregistrée, `f(A−B)` sans confond schedule)** : `s/relief` = 2/6/20/45 % →
+`f(A−B)` = 0.7/3.7/7.0/11.4 % (JND 2 %), 0/1.2/4.4/7.7 % (JND 5 %). Monotone montant, **aucune saturation**.
+
+**Verdict NET (pas gris)** : persistance-par-sédiment **sub-JND sur tout le régime plausible** (≤~20 % relief :
+`f` petit pour TOUT JND raisonnable → JND-ROBUSTE), perceptible seulement au dépôt **lourd** (45 % relief = le
+sédiment enterre le terrain = **re-terraforming**, plus de la persistance-par-dépôt). La dépendance-JND (×2) est
+**entièrement du côté non-plausible** de la frontière de plausibilité du dépôt. **Point de carte robuste, pas indécis.**
+
+**PAS de pin-JND ici (piège, pas détour)** : pinner le référent le plus structurant de l'arc contre une mesure
+auto-bordée (1 substrat/règle/géométrie/readout/angle, taux plafonné) = tirer un invariant d'un point unique. Et
+treadmill pur : le pin ne déplacerait le verdict que dans le coin déjà marqué hors-plausible ; là où le verdict vit
+il est déjà JND-robuste. Le JND attend un readout digne de le porter.
+
+**DEUX POINTS DE CARTE, CAUSE COMMUNE** :
+- Wake (budget) : vacant car PÉRIODIQUE → tout récurrent → le halo (clé) tient la récurrence → mémoïsable.
+- Sédiment (persistance) : sub-JND car le dépôt visible est dominé par le TERRAIN STATIQUE (dans la clé) →
+  l'histoire visible est noyée par de la structure que la clé contient déjà gratuitement.
+- **Commun : le contenu perceptiblement pertinent est porté par quelque chose que la clé (halo+terrain) tient DÉJÀ.**
+  Le routage ne paie que sur du perceptible **HORS-CLÉ** ; les deux substrats mettent presque tout le perceptible
+  DANS la clé. **Thèse readout-LOD retournée** : la non-linéarité qui jette le détail lointain (cadeau compression)
+  est la même qui noie l'histoire sous le terrain (routeur vacant).
+
+**Raffinement — ISSUE 1, PAS issue 2 (le mur reste non testé)** : les deux vacances sont des ISSUE 1 (in-clé,
+trivialement fermable), PAS le mur-mémoire. Le sédiment sub-JND est BONNE nouvelle pour l'engine : le LOD jette
+l'histoire invisible → mémoire bornée → horizon infini cheap, SANS routeur. Séparation acquise : **engine-viable**
+(in-clé = cheap, pas de mur) ≠ **routeur-paie** (exige hors-clé). Le mur-mémoire (tueur le plus profond) exige du
+persistant hors-clé, perceptible ET irréductible → **non testé**.
+
+**ÉNONCÉ DE CARTE (premier de l'arc — condition de viabilité NOMMÉE, pas cherchée à tâtons)** : *le routage est
+vacant partout où le perceptible est porté par la clé (périodicité, relief statique) ; reste à tester s'il paie là
+où le perceptible est porté par de l'HISTOIRE DYNAMIQUE HORS-CLÉ.* Atteint par ÉVIDENCE (deux vacances même-cause),
+pas par « montons le Re » (réconfort). Prochain test = `ΔR(ordre−simultané)` sur un trait **FLUIDE** (pas déposé),
+dont le contenu readout-visible n'est PAS réductible à terrain+présent — **simultanément** le test routeur-paie ET
+le premier vrai test du mur-mémoire. `f≈0` là aussi → cause commune = **propriété du PARI** (résultat majeur).
+`f` franc + JND-robuste → premier lieu où le routage vit → là le JND mérite son pin.
+**Caveat de scope** : « hors-clé + persistant » exige un fluide qui NE settle PAS vers un état order-indépendant →
+dynamique soutenue / non-récurrente (BC soutenues, régime non-récurrent) = nouveau substrat. Et « non-récurrent mais
+bas-rang » pourrait retomber in-clé (bas-rang = halo-fermable) → le vrai hors-clé pourrait exiger du haut-rang.
+
+### 2026-06-30 — Distinction PÉRIODIQUE / BAS-RANG / ORDER-INDÉPENDANT (le wake les fusionnait) — (1) re-scopé
+
+**Correction de prédiction** : « bas-rang → in-clé → f≈0 » n'est vrai que pour le bas-rang **AUTONOME**. Un cycle
+limite est bas-rang ET order-indépendant (l'attracteur oublie le transitoire → in-clé) ; le wake fusionnait
+périodicité et basse dimension car à Re=100 elles arrivaient ensemble. Elles se séparent : un écoulement **bas-rang
+NON-AUTONOME** peut garder dans son état présent une trace de l'ordre du forçage (mode amorti à τ_relax long,
+recirculation lente) — order-DÉPENDANT tout en étant bas-rang. L'info distinguant A de B vit dans une **phase lente
+que le coarsening jette** (mécanisme du bord-de-bande C2, mais PERSISTANT) → **hors-clé bas-rang**. C'est le trou de
+la carte ; « bas-rang retombe in-clé » l'excluait par construction. Le bon découpage = périodique ≠ bas-rang ≠
+order-indépendant, pas la fusion que le wake a vendue.
+
+**(1) re-scopé — 3 causes de `f≈0` à séparer (sinon zéro creux)** : (a) order-indépendant (cycle limite, oublie),
+(b) order-dépendant mais trace sub-JND (sédiment-bis, LOD noie), (c) géométrie sans mémoire lente assez longue. La
+mesure qui les sépare, EN ESPACE-ÉTAT (légitime : propriété de la dynamique, pas du readout) :
+
+  **`corr(état_A(t), état_B(t))` après le dernier pulse divergent — la COURBE sur tout l'horizon :**
+  - remonte vers 1 → order-INDÉPENDANT (attracteur) → `f≈0` = « le pari exige la non-récurrence vraie », EARNED
+    (pas supposé) → build chaos justifié par évidence.
+  - plateau < 1 → order-DÉPENDANT (mémoire d'ordre réelle) → ALORS `ΔR(ordre−sim)` au readout sépare sédiment-bis
+    (mémoire noyée → common cause 3e fois : le pari meurt sur le readout-LOD, pas la récurrence) de
+    premier-hors-clé-RÉEL (mémoire perceptible + bas-rang → retourne la prédiction, meilleur résultat possible).
+  - **COURBE pas point** : plateau<1 (mémoire vraie) vs rampe→1 (mémoire qui s'efface, persistance illusoire à
+    horizon plus long). La forme est le verdict, comme la saturation au balayage de taux.
+
+**Conséquence** : on ne build le haut-rang/chaos QUE si `corr` remonte à 1 en bas-Re soutenu. Si la mémoire d'ordre
+existe déjà en bas-Re, le pari exige peut-être juste de la **mémoire lente bas-rang** (bien moins chère, instrument
+validé) — l'hypothèse que le wake a masquée. Symétrique de « ne pas sauter au chaos par réconfort » : ne pas
+présupposer que seul le chaos porte du hors-clé.
+
+### 2026-06-30 — Le BUT coupe les géométries fluides : mémoire-effaçable ≠ persistance ; le test = f(READOUT), pas f(géométrie)
+
+**Coupe (par le but)** : chercher la mémoire d'ordre dans un mode fluide lent (bord-de-bande, recirculation) est une
+dérive — dispositifs de LABO, hors-jeu, choisis pour réutiliser l'instrument cheap (mode-ingénieur par la porte
+« réutilise l'instrument »). Et physiquement disqualifié : un mode lent bas-Re est **AMORTI** (τ_relax fini) →
+`corr(t)` **RAMPE→1**, ne plateau pas (dissipatif autonome → relaxe vers l'attracteur). Mémoire effaçable = transitoire
+lent, PAS persistance à horizon infini. `plateau<1` strict exige forçage-jamais-coupé (mémoire dans le forçage =
+in-clé via pulses-présents) OU multistabilité/hystérésis (état IRRÉVERSIBLE). Donc le mode fluide lent = **4e forme
+d'in-clé** (esclave du forçage connu).
+
+**DISTINCTION GRAVÉE** : mémoire-EFFAÇABLE (mode fluide amorti, hors-jeu, `corr`→1) ≠ mémoire-NON-EFFAÇABLE
+mal-rendue (sédiment + mauvais canal). La persistance à horizon infini exige un changement IRRÉVERSIBLE
+(commit/seuil/bascule), pas une phase lente. Le wake a vendu la fusion périodique/bas-rang ; ne pas laisser le
+sillage vendre la fusion mémoire-lente/persistance.
+
+**RE-DÉSIGNATION** : j'ai DÉJÀ la mémoire non-effaçable (sédiment, `corr(s_A,s_B)=0.39`, le dépôt ne relaxe pas = être
+committé). Le trou n'est pas « un mode fluide hors-clé » mais **« un READOUT où cette mémoire déjà-non-effaçable
+devient perceptible sans enterrer le terrain »**. Le sédiment a échoué par le CANAL (relief ombré = terrain+dépôt
+même canal optique), pas par manque de mémoire (61 %). Un seul readout testé, le pire.
+
+**Le but comme OUTIL** (« image ET SON sont des readouts ») : canaux non testés où `s` module ce que le terrain ne
+porte PAS — albedo/matériau du dépôt, turbidité de colonne d'eau, signature sonore lit-fluide. Non-linéaires en `s`,
+DÉCOUPLÉS du terrain = la classe que la thèse readout-LOD prédit comme le bon levier.
+
+**TEST re-désigné (cheaper que (1), plus proche du but que (2))** : garder le sédiment path-dependent + `ΔR(ordre−sim)`,
+balayer le **CANAL de readout**, pas la géométrie. `f(readout)` : relief (fait, ≈0 plausible) / albedo / turbidité / son.
+- Un canal fait survivre les 61 % >JND → **premier hors-clé, in-game, mémoire vraie, horizon infini**.
+- Aucun canal → **common cause 3e fois, STRUCTURELLE** : le pari meurt sur le readout-LOD (pas récurrence ni terrain) —
+  le résultat le plus profond de l'arc, touchant directement le `z→readouts` au cœur de la phrase.
+- Implémentation : turbidité-propre exige un champ sédiment SUSPENDU (pas tenu) → commencer par l'**albedo** (`s`→
+  couleur saturante, découplé du relief), buildable depuis le `s` existant. Son APRÈS (JND auditif non pinné),
+  seulement si l'albedo montre que le canal est le levier.
+
+### 2026-07-01 — PREMIER HORS-CLÉ candidat : la mémoire d'ordre SURVIT dans le canal albedo (le canal était le levier)
+
+`f(readout)` sur le sédiment existant (mémoire d'ordre non-effaçable, `corr(s_A,s_B)=0.39`), 2 canaux, taux plausibles :
+- **relief ombré** (terrain-couplé) : ≈0 (noyé par le terrain) — déjà acté, le C2-bis.
+- **albedo** (`1−exp(−s/S_HALF)`, terrain-découplé) : `f` = 5–10 % aux mêmes taux, JND-robuste.
+- **Sensibilité S_HALF (0.005→0.20, ×40)** : `f_albedo` reste **3.5–10 % ≫ f_relief (1.2 %)** sur TOUTE la plage
+  (ne s'effondre à aucun bout) → survie **PAS un réglage**, robuste au JND ET au paramètre matériel S_HALF.
+
+**REFRAME** : le « hors-clé » n'était pas une propriété de la DYNAMIQUE (mode fluide) mais du **READOUT (canal)**. La
+mémoire était dans le sédiment committé depuis le début ; le relief la jetait (compétition optique avec le terrain),
+l'albedo la garde (découplé). Le levier du routage est le **CANAL**, pas seulement le substrat — ce que `z→readouts`
+prédisait, manqué par mon unique readout (Lambert) par construction.
+
+**ANTI-SUR-REVENDICATION** : « perceptible-hors-clé EXISTE » ≠ « le routage PAIE ». Reste (a) **fermabilité
+clé-(halo+terrain) DANS le canal albedo** : mémoire reconstructible du halo (issue 3, paie + persistance fermable)
+ou pas (issue 2, MUR mémoire) — path-dependence l'implique non-fermable, à MESURER, et c'est le **premier vrai test
+du mur-mémoire** (tueur le plus profond) sur un objet perceptible réel ; (b) **pression de budget** (fin-partout vs
+frame, axe orthogonal intouché). Caveats : 1 terrain/règle/géométrie/canal, mais le relatif (albedo≫relief, robuste
+JND+S_HALF) est intra-scène.
+
+**POINT DE CARTE — premier POSITIF de l'arc** : il existe du perceptible-persistant-hors-clé (mémoire d'ordre du
+sédiment, canal albedo) → **premier endroit où le routeur pourrait avoir un job**. Prochain test = fermabilité
+clé-(halo+terrain) en distance-readout-albedo : SÉPARE issue 2 (mur) de issue 3 (paie). Gate `f>JND` robuste enfin
+tenu → la clé de cache, différée jusqu'ici, a enfin un objet qui mérite d'être mesuré.
+
+### 2026-07-01 — Test du MUR-MÉMOIRE corrigé : `f(k)` profondeur de mémoire perceptible (PAS complexité-de-champ)
+
+**Trou de la fermabilité-instantanée** : la mémoire d'ordre étant non-fonction de (état+terrain) par le critère
+path-dependent DÉJÀ établi, la fermabilité-clé-instantanée retournerait « non-fermable » TRIVIALEMENT — re-confirme la
+path-dependence, ne teste pas le mur. **Trou de « complexité albedo sature-t-elle »** (ma 1re reformulation) : un champ
+borné (albedo plafonne) sur grille finie a complexité bornée QUELLE QUE SOIT l'histoire → « sature » = borne-de-grille,
+pas closure. Faux-NON-mur. La complexité-de-champ sature trivialement.
+
+Le mur = « l'information mutuelle passé↔readout-FUTUR croît-elle » : combien du passé retenir pour que le readout
+présent soit correct. Closure = résumé borné `c`, readout reconstructible de `c`, `c` ne croît pas avec l'histoire.
+
+**Métrique : `f(k)` = profondeur de mémoire perceptible** = `ΔR-albedo(readout présent)` entre deux histoires
+IDENTIQUES sur les `k` derniers pulses, DIVERGENTES avant (même multiset, ordre du préfixe inversé).
+- `f(k)→0` (k croît) : divergence ancienne oubliée → CLOSURE (issue 3, horizon infini viable, thermalisation-borne-le-
+  buffer mesurée).  - `f(k)>JND` pour k grand : ancienne divergence encore perceptible → MUR (issue 2).
+- Mesure une DIFFÉRENCE → **ne sature PAS par grille** (deux champs saturés peuvent l'être différemment). Garde
+  anti-faux-mur INTÉGRÉE : étalement-sans-rétention → `f(k)→0` auto (l'étalement EST une closure). Réutilise ΔR-albedo
+  validé, zéro instrument neuf.
+
+**Trois gardes gravées** : (1) lire la COURBE `f(k)` — décroît-vers-0 / plateau-sous-JND (closure) / plateau-sur-JND
+(mur) ; JND-albedo a enfin son référent (gagné à l'étape S_HALF-robuste). (2) Taux **fort-plausible** (20 % relief) —
+le mur vit où la mémoire est tenace ; même point d'op que la présence perceptuelle. (3) Horizon infini : le verdict est
+une **PENTE EXTRAPOLÉE** (`f(k)` sommable → closure / divergente → mur), PAS une valeur à k fini (sinon on rejoue « ça
+sature » sur horizon trop court = le piège horizon-length de la conclusion T1). La pente est mesurable sur k fini.
+Cheapest-first : `f(k)` à 2-3 k, voir si la courbe descend, avant le long horizon.
+
+### 2026-07-01 — `f(k)` mesuré : PAS de mur-mémoire (closure-leaning, ROBUSTE à la géométrie)
+
+`f(k)` cheapest-first (T=10, k=1/4/7/10, taux fort-plausible, JND-albedo), descend à JND 5 % :
+- géométrie OVERLAP (pulses même bande, recouvrement = facile pour closure) : 8.5 → 1.9 → 0.5 → 0 (mémoire ~3 pulses).
+- géométrie SÉPARÉE (grille 2D = point TENACE, chaque région garde son histoire) : 9.7 → 4.3 → 2.2 → 0 (mémoire
+  ~6-7 pulses, plus lent MAIS toujours monotone descendante). [j'avais d'abord testé l'overlap seul = géométrie facile ;
+  garde auto-attrapée → re-test au point tenace].
+
+**Verdict cheapest-first : `f(k)` descend aux DEUX géométries → pente downward → closure-leaning, PAS de mur.** La
+profondeur de mémoire est bornée (géométrie-dépendante, ~3-7 pulses) → l'état persistant se résume au passé récent →
+**horizon infini viable à mémoire bornée** (thermalisation-borne-le-buffer, mesurée). Le tueur le plus profond
+(mur-mémoire) est ÉVITÉ sur ce substrat, robuste à la géométrie. Caveats : cheapest-first (4 k) ; verdict RIGOUREUX
+sommable-vs-divergent exige le long horizon (T grand, pente reste-t-elle géométrique). 1 taux/substrat.
+
+**Implication routeur** : closable-borné → engine viable, mais le routage ne PAIE que si la profondeur de mémoire est
+HÉTÉROGÈNE (router par-région : stocke-fin où profond, mémoïse où peu) ; sinon « stocke les N récents » (nul trivial)
+suffit → routeur vacant sur la persistance. Questions ouvertes : hétérogénéité de la profondeur + pression de budget.
+
+**CARTE DE VIABILITÉ (état, 2026-07-01)** — 2 vacances + 2 positifs :
+- Budget (wake) : VACANT (périodique, in-clé).
+- Persistance-perceptibilité (sédiment, canal relief) : sub-JND (in-clé terrain) ; MAIS canal **albedo** → **out-of-key
+  perceptible EXISTE** (positif 1).
+- Persistance-mur (f(k)) : **PAS de mur, closable-borné** (positif 2, robuste géométrie).
+- → **l'ENGINE (persistant, horizon infini, mémoire bornée, contenu perceptible hors-clé) looks viable sur ce
+  substrat.** Le payoff du ROUTEUR (C2 : appris bat nul) reste l'OUVERT : closable-trivial → nul « stocke récent »
+  suffit ; le routeur ne paie que sur **hétérogénéité de profondeur + pression de budget**, non encore mesurées.
+
+### 2026-07-01 — RECADRAGE : les substrats testés sont des COUPLAGES DOUX ; le pari Cascade vit dans le couplage RAIDE
+
+**Le sédiment-flood était le premier substrat bi-physique COUPLÉ** (pas « une 2e physique ») : fluide shallow-water +
+champ persistant sédiment, échange par loi de dépôt path-dependent, `b_eff=b0+s` rétroagissant sur le fluide = la
+structure exacte de F-multiphysique (deux conservés distincts, terme d'échange, un qui persiste). Les 3 gardes passées
+(hors-clé existe, pas de mur, baseline tient) sont les 3 gardes du multiphysique-au-budget. **Mais c'est le couplage le
+plus DOUX** : deux physiques lentes, échange quasi-unidirectionnel (feedback `s→b_eff` faible, mesuré). **L'engine tient
+PARCE QUE le couplage est doux.**
+
+**Difficulté NON-ADDITIVE du pari** : N physiques couplées ≠ N coûts additionnés, mais un espace-PRODUIT où chaque
+INTERFACE entre régimes peut devenir non-fermable. `resfrac` mesure ça. Sur mono-physique : « le routeur a-t-il un job ».
+Sur un COUPLAGE : si l'interface produit de l'irréductibilité locale que le fin doit résoudre et que l'IA pourrait
+router = **la thèse centrale de Cascade**. Le multiphysique qui casse le budget = feu×fluide×structure×fracture, échanges
+RAIDES bidirectionnels, échelles à plusieurs ordres, interfaces où une physique CRÉE le régime de l'autre. **On n'y est pas.**
+
+**ÉNONCÉ DE CARTE (plus juste que « engine-oui/routeur-non »)** : l'engine atteint le but sur **couplage doux**, sans
+routeur (le LOD suffit quand le couplage ne crée pas d'irréductibilité). Le pari — l'IA rend le multiphysique-RAIDE
+temps-réel — **n'est PAS testé** : aucun substrat n'a de couplage assez raide. Ni « routeur mort » ni « Cascade prouvé » :
+engine validé sur le régime FACILE du pari ; le régime DUR (sa raison d'être) reste devant. Routeur vacant partout car
+testé seulement où le couplage est trop doux — wake (trop périodique), sédiment (terrain-dominé), couplage-doux : la
+tractabilité EST la douceur qui vide le test. **L'axe manquant = RAIDEUR DE COUPLAGE, pas Re ni échelle seule.** « Monter
+le Re » = mono-physique-plus-dur (le réflexe récurrent). F est routé PARCE QU'il est multiphysique : le routage n'a de
+raison d'être que parce que des physiques distinctes exigent des experts distincts et que tout résoudre fin sur le
+couplage dépasse le budget. Cause commune de la session unifiée : le hors-clé que le routeur route = le contenu
+d'INTERFACE de couplage, et seul un couplage raide le produit.
+
+**Distinctions (anti-sur-revendication symétrique)** : « hors-clé existe » (albedo) ≠ « routeur a un job » (resfrac) ;
+« engine suffit sur couplage doux » ≠ « routeur inutile » (1 substrat ≠ le pari). Le couplage raide a sa propre trappe
+de tractabilité (low-Re/périodique → re-doux) → design = prochaine question paper-grade. **Ordre (fin avant moyen)** :
+engine-au-budget-sur-couplage-doux = 1er rang ; resfrac = 2e rang. resfrac sur le couplage doux mesure le PLANCHER :
+>0 → routeur a un job sur le couplage le plus faible ; ≈0 (probable) → trop doux → **désigne la raideur comme l'axe**,
+« construire un couplage raide » passant d'intuition à nécessité DÉMONTRÉE.
+
+### 2026-07-01 — resfrac PLANCHER : POSITIF sur le couplage doux (surprise vs prédiction), mais SANS enjeu-budget
+
+`resfrac(order_memory | halo)` par fenêtre de Harten, désambiguïsé : le 1.03 initial était sous-alimenté (72 fenêtres) ;
+à **182 fenêtres committées** il se stabilise à **0.67–0.85** robuste (WIN 2/4/8, k variés). order_memory = signal PUR
+(solveur déterministe, `|albA−albA'|=0`). **→ le hors-clé n'est PAS prédictible du halo (~75 %) → le nul de Harten ne peut
+pas le router → le routeur a un JOB LATENT même sur le couplage DOUX.** Contredit la prédiction (≈0). Cause : l'order_memory
+(différence d'ordre, path-dependent) n'est pas co-localisé avec le dépôt halo-visible (coarse-`s` = total, pas la
+différence d'ordre → halo aveugle là).
+
+**Caveats (le faux-positif = l'erreur symétrique)** :
+- Conditionnel au jeu de features du halo (nul plus riche → resfrac plus bas) ; path-dependence garantit `resfrac>0`
+  (plancher), la magnitude 0.75 (même avec coarse-`s` dans le halo) est le surplus.
+- Valeur-vs-localisation : resfrac-sur-valeur borne la marge du routeur (qui décide par localisation), ne l'égale pas.
+- **DÉCISIF (le (f)) : AUCUN enjeu-budget.** Fin-partout tient la frame sur ce petit substrat → « job SANS enjeu » : le
+  routeur pourrait router, rien ne l'y oblige. `resfrac>0 ≠` routage PAIE sans pression de budget.
+
+**Lecture réconciliée au recadrage** : le plancher est plus HAUT que prédit — le job latent existe même au couplage le
+plus faible → **le pari est en meilleure posture qu'attendu.** Mais l'enjeu (budget) n'est pas sur ce petit substrat doux.
+`resfrac>0` RENFORCE le plancher du pari **sans établir le payoff** ; le payoff exige l'enjeu = couplage RAIDE / échelle.
+Le recadrage tient (la raideur reste l'axe), désormais avec un **plancher mesuré positif sur le doux**.
+
+**CORRECTION (le fantôme C2-cache à l'ENTRÉE de resfrac)** : le 0.71 brut était sur `mean|albA−albB|` **non-seuillé** —
+le risque (c) réel n'était pas le bruit numérique (écarté par déterminisme) mais l'order-memory perceptuellement NULLE
+(la garde « la métrique voit ce que le verdict tranche », appliquée aux 3 sorties mais PAS à l'entrée). Re-mesure sur
+`order_memory` **supra-JND** (fraction où `|albA−albB|>JND-albedo`) : **resfrac tient à 0.60–0.66** (JND 2/5/10 %, 116–151
+fenêtres, supra sur 9–14 % du domaine), vs 0.71 brut → **ne s'effondre PAS**. Le hors-clé est **perceptible**, pas invisible.
+
+**Verdict corrigé** : job latent **perceptible RÉEL** sur le couplage doux. La prédiction « doux → resfrac≈0 » ne tient
+pas. **Cause commune NUANCÉE** : forme resserrée (hors-clé = irréductibilité d'interface de couplage) HOLD — le doux l'a
+produit *parce qu'il EST un couplage* ; mais « SEUL le raide le produit » = FAUX (même le doux en produit du perceptible).
+**→ l'axe discriminant du PAYOFF n'est pas la raideur, c'est l'ENJEU-BUDGET.** Le doux a le job, pas les stakes. Caveats
+tenus : conditionnel aux features du halo (0.62 = borne sup) ; valeur-vs-localisation ; **décisif : aucun enjeu-budget**
+(job perceptible SANS stakes ≠ « routage paie »). Plancher vindiqué comme **perceptible**, axe budget en discriminant.
+
+**Garde de SORTIE (job existe ≠ job paie) — la sparsité du hors-clé** : le routeur gagne en compute économisé, pas en
+valeur non-prédite ; il n'économise que si le non-fermable est SPARSE (concentré, le reste mémoïsable). resfrac (magnitude)
+ne donnait pas la structure spatiale. Mesure (WIN=2, JND-albedo) : **f_p = 18 % du domaine exige du fin → S = 1/f_p = 5.5** ;
+**concentration : 90 % de la masse supra-JND dans 14 % des fenêtres, Gini=0.86, Moran=0.56** (clusterisé/front, PAS diffus).
+La suspicion-diffus (qui aurait tué le payoff même avec enjeu) est **mesurée-écartée** : le hors-clé du couplage doux est
+un **front sparse**. → Les 3 choses (sparsité / raideur-la-produit / budget) se recollapsent en 2 : sparsité FAVORABLE
+(mesurée S=5.5), donc le discriminant du payoff est bien **l'enjeu-budget** — gagné, pas supposé. La raideur n'est PAS
+requise pour le job (le doux l'a, sparse) ; elle augmenterait S (interface plus mince) et G (dynamique plus rapide) = la
+MAGNITUDE du payoff, pas son existence. Caveats : `f_p=18%` dépend du seuil de routage (concentration seuil-robuste) ;
+S=5.5 à ce point d'op.
+
+**Discriminant final** — et CORRECTION (`S>G` cache deux fuites, mauvaise unité) : `S=5.5=1/f_p` est géométrique
+(économie SPATIALE). Le critère n'est PAS `S>G` (approximation overhead-nul, interdite par la conclusion T1). En entier :
+**routé tient ⟺ `C_routé < budget < C_fin`**, `C_routé = f_p·C_fin + (1−f_p)·C_memo + C_overhead`. Deux termes que `S>G`
+jette, tous deux rabotant S vers le BAS :
+- **C_overhead** : nul de Harten (features + décision) × 182 fenêtres — à S=5.5, pas du second ordre (T1 : « routeur
+  radicalement moins cher que la décision qu'il évite »).
+- **C_memo** : mémoïser ≠ gratuit (lecture cache + reconstruction). C_memo~5 %·C_fin → `S_eff≈1/(0.18+0.82×0.05)≈4.5`.
+→ **`S_geom=5.5` = plafond géométrique** (concentration seuil-robuste : Gini 0.86 / Moran 0.56 — solide ; niveau
+seuil-dépendant). **`S_eff = C_fin/C_routé net < 5.5, NON MESURÉ.** La moitié-C2 réellement mesurée est S_eff, pas S_geom.
+
+**Prochain chiffre = le COUPLE `(S_eff, G)`, pas G seul.** S_eff = la mesure surprenante (exige C_overhead + C_memo,
+mesurables ICI sur le nul-de-Harten que la spec impose de coder en premier — C_overhead gratuit) ; G = extrapolation
+coût-fin (arithmétique baseline, peu d'info — `G(2D)` paie 313²–735², `G(3D)` 46³–81³ ; à l'échelle-jeu 3D G≫S → exige
+hors-clé razoir-mince = front codim-1 = **la raideur revient comme nécessité à l'échelle**, via S, pas via le job).
+Critère gravé : `C_routé(net) < budget < C_fin`, jamais `S>G`.
+
+### 2026-07-01 — PREMIER BUILD DE F : `(S_eff, G)` mesuré ; `S_eff` dépend de la granularité de routage
+
+Premier vrai build du routeur de l'arc (nul de Harten + memoize coarse+terrain + profil FLOPs, JIT-indépendant) sur le
+sédiment-flood. **Contrôle interne Q1 PASSE à 93.8 %** (fenêtres fermables reconstruites sous-JND par le memoize) →
+`f_p` et `C_memo` cohérents (6 % d'optimisme résiduel mineur). FLOPs/cell comptés : `C_fin=310`, `C_memo=6`, `C_overhead=9`.
+
+**`(S_eff, G)`** : à WIN=4 (`f_p=37%`) → **`S_eff=2.45`** ; à WIN=2 (`f_p=18%`, la granularité du S_geom gravé) →
+**`S_eff=4.45`**. `G(64²)=0.042 ≪ 1`. La correction overhead+memo est confirmée : `S_geom=5.5 → S_eff=4.45` à WIN=2
+(rabot ~1.0).
+
+**Trou exposé par le build (réel) : `f_p` — donc S_eff — dépend de la GRANULARITÉ de routage** (taille de fenêtre de
+Harten + seuil needs-fine). Un front mince contamine plus de fenêtres-en-fraction quand la fenêtre grossit → S baisse.
+**`S_eff ∈ ~2.5–4.5`** selon WIN ; le `S_geom=5.5` gravé était le coin le plus fin/optimiste. Le routeur réel a une
+**granularité optimale** (fin = S haut mais C_overhead haut) — un knob non encore optimisé.
+
+**Lecture (anti-sur-revendication, double)** : `G≪1` → budget PAS en jeu ici → `(S_eff, G)` est l'**économie nette du
+routeur là où rien ne l'oblige**, PAS le verdict Cascade. Ni « le routage paie » (aucun enjeu), ni « S trop petit »
+(granularité non optimisée, échelle non testée). Le verdict attend `G>1` (échelle où fin-partout casse la frame) —
+non atteignable sur le matériel actuel → extrapolation, pas clôture. **C'est le premier S_eff net du livrable, sur le
+premier substrat qui a un job ; il dit l'économie, pas la viabilité.**
+
+### 2026-07-01 — `f_p(L)` MESURÉ (le terme caché de l'extrapolation) : quasi-codim-1 → la fenêtre s'ouvre, mais via le LOD-fovéa
+
+**Le danger corrigé** : `G(L)` est arithmétique (coût-fin ∝ cellules), mais le critère est la FENÊTRE `C_routé<budget<C_fin`,
+et `C_routé` contient `f_p`, qui NE scale PAS comme G. J'avais écrit deux choses contradictoires sur `f_p(L)` (« ~invariant »
+au resfrac ; « razor-mince → décroît » au codim-1) — une hypothèse déguisée en calcul qui décide le verdict Cascade.
+**Mesuré** (même physique self-similaire, dx fixe, monde ×4, `f_p` en CELLULES physiques pas fenêtres) :
+`f_p = 7.08 / 4.50 / 2.40 %` à `L = 10/20/40` → **`f_p ∝ L^(-0.78)`** : quasi-codim-1 (α=0.78, loin du filling α=0),
+léger épaississement `w ∝ L^0.22`. L'intuition « invariant » RÉFUTÉE. `S=1/f_p ∝ L^0.78` croît → scaling MESURÉ, pas décrété.
+
+**Extrapolation de la fenêtre (α mesuré + hypothèses affichées)** : `S(L)∝L^0.78` mais `G(L)∝L^d` (d=2/3) → G croît PLUS
+VITE. Fenêtre `1<G<S` ferme à `L/L₀ = S₀^(1/(d−α))` : `S₀≈3` → 2D ~2.5×L₀, 3D ~1.7×L₀. **Étroite → SANS LOD-fovéa, le
+routage ne paie pas à la vraie échelle-jeu** (G∝L^d dépasse S∝L^0.78).
+
+**→ Le LOD-fovéa est le mécanisme LOAD-BEARING** (pas un bonus) : il borne le fin à la VUE de l'observateur (taille fixe),
+pas au monde → l'échelle effective reste dans la fenêtre quelle que soit la taille du monde. Dans la fovéa, routage paie à
+`S≈3` (doux, mesuré) ; un couplage RAIDE y monterait S (front plus mince, α→1).
+
+**VERDICT DE VIABILITÉ (gagné par chaîne mesurée, pas clôture)** : Cascade tient au budget-jeu **ssi** (a) LOD-fovéa borne
+le fin à la vue — l'architecture l'a (distance = plafond LOD) — ET (b) le routage paie dans la fovéa — mesuré `S≈3` sur le
+couplage doux. **Les deux mécanismes du pari sont présents et l'un est mesuré.** Restent à mesurer : le budget-fovéa absolu
+(fine-fovéa > frame ?) et le gain de S par raideur. Première fois de l'arc que la moitié-C3 a un **scaling `f_p(L)` mesuré**
+au lieu d'un décret — le verdict ne sort plus du choix d'hypothèse mais de la physique.
+
+### 2026-07-01 — CORRECTION : (a) n'est PAS acquis-par-l'architecture ; budget-fovéa mesuré ; le pin JND/fovéa = dernier load-bearing
+
+**Inversion corrigée** : j'avais gravé (a) « LOD borne le fin à la vue » comme ACQUIS (architectural) et (b) `S≈3` comme le
+maillon mesuré. C'est inversé : (b) est mesuré ; (a) « le fin-fovéa TIENT LA FRAME » est **NON mesuré** (borné ≠ sous budget ;
+intention architecturale ≠ mesure). Le LOD-fovéa fait DEUX choses (j'en avais gravé une) : (i) borne le fin à la fovéa ; (ii)
+**sparsifie la périphérie** (JND croît avec l'excentricité → loin, presque tout mémoïsable). Mon `S≈3` était à JND UNIFORME.
+
+**Budget-fovéa mesuré (`S_eff` sous champ-JND-de-distance, balayé sur `r_fovea` — perceptuel, sensibilité pas choix)** :
+`r_fovea/rmax = 1.0/0.3/0.15` → `S_eff = 1.8/2.3/3.9` (périphérie JND ×1/×3/×6). **Le LOD multiplie bien S (mécanisme ii
+confirmé) mais ~2× sur la plage** — pas libérateur. Et **`S_eff` DÉPEND de `r_fovea`, perceptuel NON-PINNÉ** → (a) hérite de
+l'arbitraire JND/fovéa = le référent que tout l'arc a manqué. Choisir `r_fovea` pour que le budget passe = fabriquer le verdict.
+
+**ENDPOINT HONNÊTE** : la chaîne est mesurée-favorable de bout en bout SAUF un maillon — le **pin perceptuel JND/fovéa** — et
+ce n'est pas un trou de plus : c'est le référent que ce substrat **computationnel ne peut pas produire** (exige un modèle
+perceptuel / étude). Engine viable + routeur job-sparse (`S≈2.5–4.5`) + `f_p∝L^{-0.78}` (codim-1) + LOD multiplie S (~2×) :
+tout mesuré, tout favorable. Le verdict ABSOLU se réduit à *le JND/fovéa est-il tel que S(LOD-multiplié) batte G(échelle-fovéa)*.
+**Le couplage RAIDE a une justification neuve, mesurée** : un S plus haut (front plus mince, α→1) rend le verdict **ROBUSTE au
+pin non-fait** (passe à `r_fovea` plus large) — pas « plus de marge » mais **l'assurance contre le seul référent non-pinnable ici**.
+
+### 2026-07-01 — CORRECTION D'INVERSION : la fenêtre se FERME (le LOD-bornage est le pilier) + r_fovea bordé par l'acuité → penche positif
+
+**Inversion corrigée (j'avais coché la gravure favorable de deux qui se contredisent)** : j'avais gravé « la fenêtre s'ouvre ✓ »
+alors que j'avais MESURÉ qu'elle se FERME (`G∝L^d > S∝L^0.78`, ferme à ~1.7–2.5×L₀). Le codim-1 n'ouvre pas la fenêtre, il
+ralentit la fermeture. **Donc le verdict ne tient pas sur le scaling — il pend ENTIÈREMENT au LOD-fovéa = le pilier, pas une
+cerise** (sans lui : défavorable, pas neutre). Et le pilier du LOD n'est PAS le ×2 périphérique (bonus, facteur constant vs
+exposant divergent) — c'est le **BORNAGE D'ÉCHELLE** : la fovéa fixe `L_eff` donc fixe `G` → sort de la course `G∝L^d` =
+changement de régime. Et le raide n'échappe pas au pin : `α→1 < d` → ferme toujours à l'échelle non-bornée, déplace seulement
+le seuil `r_fovea`, toujours conditionnel au pin. (« robuste au pin » était l'optimisme de « la fenêtre s'ouvre ».)
+
+**(1) le pin n'est PAS hors-scope** : « au budget d'un jeu » EST perceptuel → changement d'instrument substrat→référent
+perceptuel (comme AegirJAX→XLB, diffusif→MUSCL). **Bornage `r_fovea` par acuité** : haute-acuité fovéale ~2°, FOV jeu ~90° →
+`r_fovea/vue ≈ 0.022`. Balayage : `r_fovea=0.15→S_eff=3.9`, `S_eff∝1/r_fovea²` → à `r_fovea≈0.022`, `S_eff` en dizaines. Pilier
+vu juste : zone fine `≈(0.022·cellules_vue)²` = **bornée par l'ÉCRAN, pas le monde** → coût-frame screen-bounded, hors `L^d`.
+
+**VERDICT DIRECTIONNEL (pas clôture)** : au `r_fovea` honnête (petit), pilier-bornage en régime FORT → coût-fine screen-bounded
+ET petit → **penche POSITIF**, et **le raide est probablement DÉCORATIF** (le doux suffit à S_eff élevé sous petite fovéa).
+**Conditionnel** au dernier terme : budget absolu écran = `C_fin × cellules_fovéa` vs frame, exige la résolution-fovéale
+(modèle rendu/caméra). Caveats order-of-magnitude (acuité, mapping r_fovea↔angle, résolution-fovéale), pas cloués. **Endpoint
+non atteint : il manque le budget-écran absolu (caméra), pas une finition — mais la direction, pour la 1re fois, penche positif
+sur le pilier bordé par la physique perceptuelle, pas par décret.**
+
+### 2026-07-01 — CORRECTION ARITHMÉTIQUE : le budget-écran n'est PAS directionnel-positif — INDÉTERMINÉ en 3D-volumétrique
+
+**Erreur (sens favorable, biais+faute renforcés)** dans l'estimation `~340 MFLOP/s, tient par 10⁴×` : (1) **falaise-pas-rampe** —
+j'ai binarisé l'acuité (2° fin / reste gratuit) alors qu'elle décroît CONTINÛMENT (mécanisme ii, ~50% à 2.5°, ~20% à 10°) →
+bien plus de cellules partiellement-fines que les 14k de la falaise ; (2) **2D-pas-3D-volumétrique** — la fovéa est un FRUSTUM,
+`cellules-fines ≈ r²×profondeur`, et pour eau/fumée/feu (les readouts de Cascade) PAS d'occlusion → rayon traverse le volume →
+profondeur ~10³ → `14k → ~10⁷`. **Le pilier-bornage borne l'échelle LATÉRALE (écran), PAS la profondeur du volume fin** →
+screen-bounded vrai en 2D, FAUX en 3D-volumétrique (le cas de Cascade par sa thèse même).
+
+Les deux corrections **consomment exactement le 10⁴×**. → **Budget INDÉTERMINÉ à l'OoM en 3D-volumétrique**, bascule sur la
+**profondeur du frustum fin** — terme qu'aucun proxy sédiment ni estimation 2D ne produit.
+
+**Conséquence** : (a) le F-build n'est pas « confirmer le positif » mais **MESURER le seul terme qui peut basculer** (profondeur
+de frustum fin volumétrique sous champ-JND-continu), qui penche moins bien qu'estimé → construire F sur **le cas qui peut le
+FALSIFIER** (volumétrique, profond, observé en perspective), PAS un monde 2D/peu-profond qui passe (= faux-PASS par choix de
+substrat, une dernière fois). (b) Le raide n'est PAS « probablement décoratif » (l'estimation qui le rendait tel vient de tomber)
+— il est **décoratif-OU-nécessaire selon la profondeur de frustum** : `α→1` mincit le front → réduit la profondeur fine traversée
+par le rayon → attaque le terme indéterminé. **Un seul inconnu — profondeur de frustum fin volumétrique — gouverne ET le verdict
+budget ET le besoin du raide.** L'endpoint : pas « tout favorable, build pour confirmer », mais « dernier terme indéterminé en 3D,
+penche-possiblement-négatif, seul F tournant sur le cas falsifiant le tranche ».
