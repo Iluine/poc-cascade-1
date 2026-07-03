@@ -1499,3 +1499,99 @@ appariement plus serré — piste concrète issue des données : la dispersion v
 mesure — à chiffrer sur archives AVANT toute décision ; (2) accepter 2 nuits (19.4 h) si la décision de
 spec le vaut ; (3) porter l'incertitude D(Nz_op) ∈ [loi, plancher] dans la spec (issue INDÉTERMINÉ-loi
 assumée sans le 3e point). Statut session Boussinesq : PLUS RIEN DE DÛ — W0 clôt la file v4 côté Boussinesq.
+
+---
+
+## Addendum Arc A — Manche 1 (fermeture état-complet) : §A0–§A5 (gravé le 2026-07-03, AVANT toute mesure)
+
+### §A0 — Arc A : structure gravée (deux manches, trois cellules)
+
+**Hiérarchie des claims (gravée avant mesure) :**
+- **Registre-commis = claim EXISTENTIEL.** C'est lui que le but exige : non-contradiction du
+  témoignage émis, ledger borné par le budget d'observation — pas par le volume du monde.
+- **État-complet = SÉLECTEUR d'architecture.** Il départage invariants-dans-`z` vs ledger.
+  Son FAIL ne tue rien.
+
+**Emboîtement logique :** état-complet PASS ⇒ registre-commis PASS (un résumé qui régénère
+déterministiquement tout le champ persistant reproduit a fortiori toute observation émise,
+revisites comprises). Contraposée : commis FAIL ⇒ état-complet FAIL.
+
+**Grille des issues, pré-interprétée (aucune relecture a posteriori) :**
+
+| Cellule | Issue | Conséquence gravée |
+|---|---|---|
+| 1 | état-complet PASS | Fermeture dans `z` : architecture invariants-régénérables. Manche 2 court-circuitée par implication — **sur CE substrat uniquement**. |
+| 2 | état-complet FAIL, commis PASS | Mur mémoire sur l'état, pas sur le témoignage. Architecture **ledger obligatoire** ; le différenciateur du projet survit. |
+| 3 | commis FAIL | Thèse morte sous ses deux formes. Verdict existentiel négatif. |
+
+**Ordre d'exécution :** manche 1 = état-complet (instrumentation existante, le moins cher).
+Manche 2 = registre-commis, construite **seulement si** manche 1 FAIL ou INDÉTERMINÉ-porté.
+
+**Pré-étiquetage (bloquant) : un FAIL de la manche 1 est NON-EXISTENTIEL.** Il sélectionne
+la cellule 2-ou-3 à départager ; il ne tue rien. Personne ne le relira autrement.
+
+### §A1 — Claim manche 1 (figé)
+
+Il existe un résumé **grossier**, **déterministe-régénérable**, du champ persistant
+(sédiment) tel que :
+- **(i)** la régénération reproduit le **readout** (turbidité/albédo, contraste Weber Δχ)
+  **sous JND**, instantanément **et** après rollout avant — fermeture **sous la dynamique**,
+  pas fermeture de texture ;
+- **(ii)** la taille minimale du résumé **k\*(L) sature** avec la longueur d'historique L.
+
+### §A2 — Opérationnalisation (figée)
+
+- **Substrat** : le substrat sédiment/shallow-water validé (historique path-dependent mesuré
+  ~61 %, canal readout survivant = turbidité/albédo, resfrac 0.60–0.66). **Réutiliser tel
+  quel. Ne pas re-valider le générateur. Ne pas re-régler la sédimentation.**
+- **Histoires** : L ∈ {L₀, 2L₀, 4L₀, 8L₀} épisodes, où L₀ = longueur d'un arc épisodique déjà
+  en usage dans le substrat (fixé en Task 0 depuis l'existant, PUIS gravé au journal avant le
+  premier run). **≥ 5 seeds par L.**
+- **Compresseur (famille figée)** : coarse-graining Harten du champ persistant au niveau
+  ℓ ∈ {1, 2, 3} + invariants scalaires conservés (masse déposée totale, et par sous-domaine
+  4×4). Taille du résumé = la variable balayée.
+- **Régénérateur (figé)** : opérateur déterministe conditionné **uniquement** sur le résumé.
+  Toute stochasticité est seedée par **hash(résumé)** — aucune seed libre, aucun état caché,
+  aucune vue du champ vrai ni de l'historique.
+- **Mesures** :
+  - **M-A1 (instantané)** : Δχ(readout(régénéré), readout(vrai)) vs JND.
+  - **M-A2 (dynamique, bloquant)** : rollout T_fwd = 1 épisode depuis le champ régénéré vs
+    depuis le champ vrai, **même forçage, même seed de forçage** ; Δχ des readouts le long du
+    rollout vs JND. Sans M-A2, un PASS est une texture, pas un état.
+  - **M-A3 (déterminisme, bloquant)** : double régénération → identité (tolérance relative
+    1e-12). **La fidélité distributionnelle est interdite comme voie de succès.**
+- **k\*(L)** = plus petit résumé tel que M-A1 ∧ M-A2 sous JND pour la **médiane des seeds**,
+  dispersion inter-seeds rapportée, **aucune seed > 2×JND**.
+
+### §A3 — Verdicts (figés)
+
+- **PASS (fermeture)** : pente de k\*(L) sur la moitié supérieure de la plage de L compatible
+  avec 0 (IC 95 % inter-seeds contient 0), **ET** k\*(L_max) ≤ **10 % de la taille du champ
+  persistant fin** (plafond anti-trivialité — sinon « stocker tout » passe ; placeholder
+  nommé, à ne pas défendre).
+- **FAIL (mur)** : pente positive > bruit inter-seeds sur toute la plage, sans plateau.
+- **INDÉTERMINÉ** : IC chevauchant, ou verdict basculant sur la plage JND. C'est un
+  **résultat**. Options pré-écrites : (a) étendre à 16L₀ **une seule fois** ; (b) porter
+  l'incertitude et ouvrir la manche 2.
+- **Analyse de sensibilité JND OBLIGATOIRE** (geste T1.5 gravé) : k\*(L) recalculé sur la
+  plage plausible du JND placeholder ; verdict retenu seulement s'il est stable sur toute la
+  plage, sinon INDÉTERMINÉ.
+
+### §A4 — Gardes anti-PASS-fabriqué (bloquantes)
+
+1. Métrique en **espace readout uniquement** — jamais L2 sur l'état (discipline établie ;
+   le 18.6 % → 0 % est au dossier).
+2. **M-A2 bloquant** : fermeture sous la dynamique, pas de PASS-texture.
+3. **M-A3 bloquant** : déterminisme structurel, seed = hash(résumé).
+4. **Plafond anti-trivialité** sur k\* (§A3).
+5. **Anti-fuite** : le régénérateur ne reçoit RIEN d'autre que le résumé — imposé par
+   signature et vérifié par test.
+
+### §A5 — Ce que la manche 1 ne prouve PAS (§13 local)
+
+- **Un PASS** ne dit rien : des autres écritures persistantes (fracture, dégâts,
+  empreintes) ; de la 3D ; de l'échelle au-delà du domaine testé ; du routage/fovéa ; du
+  registre commis au-delà de l'implication logique — qui ne vaut que sur CE substrat.
+- **Un FAIL** est celui de **cette famille de compresseurs** (Harten-coarse + invariants
+  scalaires), pas de toute fermeture possible — doublement non-existentiel (cf. §A0).
+- **Le JND reste un placeholder** : tout verdict est conditionné à la sensibilité §A3.
