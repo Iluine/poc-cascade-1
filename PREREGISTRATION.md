@@ -1673,3 +1673,45 @@ par L. **Plage JND = [2 %, 5 %]** (sensibilité §A3 balayée sur cette plage).
 
 Exécution : code + tests + outputs dans pocPhysicator, branche `arc-a-etat-complet` ; chaque étape
 citée ici avec ses commits.
+
+### 2026-07-04 — GATE de re-validation Arc A : FAIL 2/3 — le substrat reconstruit N'EST PAS le substrat validé (corr(s_A,s_B) = 0.9929 vs seuil ≤ 0.7, référence d'origine 0.39) ; manche 1 STOPPÉE avant toute mesure
+
+**Mesures (seuils figés au plan AVANT exécution, application mécanique, n = 10 épisodes/histoire)** :
+- **(a) path-dependence : FAIL.** corr(s_A, s_B) = **0.9929** (seuil ≤ 0.7 ; l'original mesurait 0.39,
+  soit « 61 % du dépôt vient de l'histoire »). Le dépôt reconstruit est quasi insensible à l'ordre des
+  pulses — le trait que l'Arc A doit mesurer (fermabilité d'une HISTOIRE) est quasi absent du substrat
+  reconstruit.
+- **(b) survie albedo : PASS — mais différemment.** f_albedo = 0.81–0.85 sur TOUTE la plage S_HALF vs
+  f_relief = 0.0020 (seuils tenus, hiérarchie robuste). L'amplitude (83 %) est pourtant ≫ la référence
+  (3.5–10 %) : (b) compare séquentiel vs simultané (dynamiques très différentes), pas l'ordre — il peut
+  passer fort pendant que (a) meurt.
+- **(c) closure f(k) : FAIL (géométrie séparée).** Overlap : 0.338 → 0.214 → 0.187 → 0 (décroissante,
+  PASS). Séparée : 0.327 → **0.363** (rebond à k=4) → 0.112 → 0 : non-monotone, FAIL.
+
+**Lecture (hypothèse nommée, NON mesurée)** : le dépôt reconstruit ressemble au « défaut latent »
+que le contrat du 2026-06-30 avait nommé — un commit largement terrain-déterminé / quasi-commutatif
+(issue 1 déguisée). Suspects : les paramètres a priori de la loi (θ_c = 0.5, k_e = k_d/5 — choisis
+par le contrôleur, les valeurs d'origine sont perdues avec le code) et la structure d'épisode
+(assèchement complet entre pulses). Diagnostic cheap possible : part d'érosion active (fraction de
+cellules·pas où θ > θ_c) — si ≈ 0, la loi est dépôt-seul donc quasi-commutative par construction.
+
+**Conséquence gravée appliquée** : STOP — Tasks 3–6 non lancées, aucun paramètre retouché, aucun
+seuil déplacé. Le FAIL est un résultat : la reconstruction « d'après specs de journal » ne suffit
+PAS à reproduire le substrat (les verdicts gravés 2026-06-30/07-01 restent valides pour le substrat
+d'ORIGINE ; ils ne se transfèrent pas au reconstruit).
+
+**Statut épistémique du gate** : gate d'INSTRUMENT (type G0) — itérer l'instrument jusqu'à validité
+est légitime (précédent : chirurgie IB/LBM de T1), à CRITÈRES INCHANGÉS et par changements
+physiquement motivés et pré-annoncés ; ce que la règle interdit est le re-réglage silencieux par
+l'exécutant. Le fork est remonté à Romain : (1) diagnostic cheap puis UNE itération de conception
+nommée, pré-enregistrée, re-validée aux mêmes seuils ; (2) re-pré-enregistrer Arc A sur le substrat
+reconstruit tel quel — DÉCONSEILLÉ : corr = 0.993 → quasi pas d'histoire à fermer → k\*(L) saturerait
+trivialement = PASS fabriqué ; (3) suspendre Arc A côté état-complet.
+
+**Note d'instrument (complétude)** : dérive de masse d'eau 3–13 %/épisode au mur mouillé/sec —
+propriété du solveur figé (padding antisymétrique du moment normal → pente de vitesse asymétrique →
+flux HLL non nul au mur), documentée et bornée en test ; aucun lien établi avec le FAIL (a).
+
+**Commits pocPhysicator (branche `arc-a-etat-complet`)** : e36dd23..be88024 (Task 1 : substrat +
+instruments, 102 tests verts, KD_CALIBRE = 1.911e-3 gelée, max(s)/relief = 0.206) ; 554c2a9 (gate,
+données brutes `outputs/arcA/revalidation.json`).
