@@ -1752,3 +1752,44 @@ donnée d'origine.
   de la voie « reconstruction »** : l'itération autorisée a été consommée, on remonte (le fork suivant
   appartient à Romain). Co-calibration infaisable (cibles jointes inatteignables) → BLOCKED, remonter
   sans forcer.
+
+### 2026-07-04 — Gate v2 : FAIL 2/3 — les DEUX signatures gravées sont tenues et la path-dependence d'origine ne revient PAS (corr = 0.9446 vs ≤ 0.7 ; origine 0.39). STOP définitif de la voie « reconstruction » : le substrat d'origine est IRREPRODUCTIBLE depuis son dossier de journal
+
+**Co-calibration (une exécution, seed 12345, convergence au 1er cycle, constantes gelées avant
+re-validation)** : KD_CALIBRE_V2 = 1.911e-3 (bit-à-bit = V1), KE_CALIBRE_V2 = 5.233e-3 (k_e/k_d
+passe de 0.2 à 2.74). Signatures vérifiées aux constantes gelées : max(s)/relief = **0.18876**
+∈ [0.18, 0.22] ET resfrac = **0.64254** ∈ [0.60, 0.66]. 105 tests verts.
+
+**Verdict v2 (mêmes seuils, application mécanique)** :
+- **(a) FAIL** : corr(direct, inversé) = **0.9446**. La prédiction directionnelle pré-enregistrée est
+  confirmée en SENS (0.9929 → 0.9446) mais pas en amplitude : **resfrac dans la plage gravée est
+  nécessaire mais PAS suffisant** pour la path-dependence d'origine. On grave la mesure, pas le
+  mécanisme.
+- **(b) PASS** : f_albedo_op = 0.8511, f_relief = 0.0020, dominance sur toute la plage S_HALF.
+- **(c) FAIL** (séparée) : 0.602 → 0.304 → **0.352** (rebond à k=7 ; v1 : rebond à k=4) → 0 ;
+  overlap PASS (0.441 → 0.312 → 0.281 → 0).
+
+**Portée EXACTE (ne pas surclamer, dans les deux sens)** :
+- Les verdicts d'origine (2026-06-30 → 07-01 : hors-clé albedo, pas de mur f(k)) restent valides
+  POUR LE SUBSTRAT D'ORIGINE. Rien ici ne les infirme.
+- Ce qui est établi de neuf : **le dossier de journal du substrat (loi nommée + point d'op + les deux
+  signatures) ne suffit PAS à le reproduire** — deux reconstructions conformes aux specs gravées
+  donnent corr 0.99 puis 0.94 là où l'origine donnait 0.39. L'information qui portait les ~61 %
+  d'histoire vivait dans des choix d'implémentation non consignés (forme exacte de la loi, structure
+  de forçage/BC, transport éventuel) et est perdue avec le code. Leçon d'instrument consignée :
+  les artefacts load-bearing se committent (déjà appliqué : tout ce travail est commité).
+- Arc A manche 1 : **suspendue en l'état** — pas de mesure k\*(L) sur un substrat quasi sans histoire
+  (corr 0.94 → PASS de fermeture trivial garanti = fabriqué).
+
+**Fork remonté à Romain (la voie « reconstruction » est close ; options nouvelles)** :
+(1) **re-fonder** : bâtir un substrat path-dependent PAR CONSTRUCTION (transport en suspension :
+érosion → champ suspendu advecté → re-dépôt aval ; physiquement le porteur d'ordre le plus plausible,
+et la brique du readout « turbidité » déjà nommé au §A1) — nouveau build pré-enregistré avec les
+critères (a)/(b)/(c) requalifiés de gate d'identité en gate de CONCEPTION (mêmes seuils, itérable
+sous discipline d'instrument normale, type G0) ; Arc A garde ses claims §A1–§A5 inchangés ;
+(2) mesurer d'abord, pour ~2 min, la borne d'histoire-readout du v2 (f_albedo entre les deux ordres)
+avant de décider — si même le readout ne voit rien, (1) ou (3) ; (3) suspendre l'état-complet et
+réallouer.
+
+**Commits pocPhysicator** : 0619c17 (diagnostic), 486d637 (co-calibration V2), ebdf32c (gate v2 +
+outputs), 6512f14 (ledger).
