@@ -1081,3 +1081,421 @@ substrat, une dernière fois). (b) Le raide n'est PAS « probablement décoratif
 par le rayon → attaque le terme indéterminé. **Un seul inconnu — profondeur de frustum fin volumétrique — gouverne ET le verdict
 budget ET le besoin du raide.** L'endpoint : pas « tout favorable, build pour confirmer », mais « dernier terme indéterminé en 3D,
 penche-possiblement-négatif, seul F tournant sur le cas falsifiant le tranche ».
+
+---
+
+### 2026-07-01 — Dynamique-z : le contrôle β-max A TIRÉ (extension passive triviale) ; re-design Boussinesq/Ra, critère gravé AVANT build
+
+**Fait** : le build passif (`dyn_z.py`, scalaire advecté par vélocité posée, balayage β prévu) a été soumis au
+contrôle pré-enregistré « β-max doit casser le washout AVANT tout balayage ». **Le contrôle a tiré** :
+Δpixel(β=4.0) = 0.0% → l'extension-z était TRIVIALE (coarse-z ne diverge pas du fin même à couplage violent)
+→ le balayage aurait mesuré zéro PAR CONSTRUCTION (faux-favorable structurel, l'analogue du domaine-mort).
+Balayage NON exécuté. Diagnose : un scalaire PASSIF n'a aucune rétroaction fin-z→horizontal ; la projection
+lave toute différence-z qui ne rétroagit pas. (Corollaire honnête : le sédiment sans flottabilité est
+PHYSIQUEMENT sans moteur de structure-z — sa trivialité était correcte, pas un artefact.)
+
+**Le résultat conceptuel du tour (posé par la diagnose, retourné par Romain)** : le SEUL canal par lequel la
+dynamique-z peut coûter au budget est la rétroaction fin-z → structure horizontale projetée. La structure-z
+qui ne rétroagit pas est lavée par la projection → gratuite quelle que soit sa richesse. La question n'est
+pas « la dynamique-z est-elle chère » mais **f_p-dynamique-projetée** = fraction de la structure-z fine dont
+la rétroaction horizontale dépasse le JND APRÈS projection — le 3ᵉ f_p (après f_p-latéral et
+f_p-readout-profondeur≈0).
+
+**Critère gravé AVANT le build suivant (leçon miroir de l'artefact-3 métrique-÷L)** : la projection est un
+amortisseur de la divergence DYNAMIQUE, pas seulement du readout. Divergence-volume ≠ divergence-projetée,
+et c'est la projetée qui touche le budget. → **Ra\* (et tout β\*/κ\* de dynamique-z) se mesure sur
+Δpixel-PROJETÉ sous rollout, JAMAIS sur Δ-volume** — sinon faux-DÉFAVORABLE (divergence-volume que la
+projection efface avant le pixel). La bonne quantité est toujours ce qui atteint le pixel.
+
+**Design pré-enregistré (aucun point posé par l'exécutant ; les deux gardes symétriques)** :
+- Substrat : **panache Boussinesq, tranche x-z 2D-verticale** (le moins cher qui possède la rétroaction
+  fin-z→horizontal par construction physique). 3D différé jusqu'à ce que la tranche tranche.
+- **Échelle-z ÉMERGENTE, non tunée** : elle sort de l'instabilité (mode le plus instable ← Rayleigh),
+  personne ne la pose. C'est la garde anti-biais sur le DOF neuf.
+- Paramètre balayé : **Ra** (Ra bas → structure large, coarse-z résout ; Ra haut → plumes sous-maille).
+  Sortie : **Ra\*** = seuil où la rétroaction projetée passe le JND, confronté au Ra tabulé des media réels
+  (fumée chaude/flamme : Ra haut ; sédiment : Ra~0).
+- Mesure : **Δpixel-projeté(t)** entre run coarse-z et run fin-z (coarse initialisé = z-coarsening du fin),
+  lecture de forme : linéaire = rétroaction sans borne = le budget paie la profondeur (défavorable) ;
+  plateau = thermalise/sature = closure sur l'axe z-dynamique (cheap).
+- **Contrôle AVANT balayage, corrigé** : à Ra-max, Δpixel-PROJETÉ doit casser le washout. S'il ne casse
+  pas → « la projection amortit même la convection violente » = dynamique-z cheap POUR DE VRAI (résultat
+  fort et favorable, gagné contre le bon contrôle). S'il casse → le balayage a un signal, Ra\* mesurable.
+- **Neutralité imposée dans les deux sens** : ni « les media actifs sont probablement pas cheap »
+  (pessimisme-sur-correcteur, miroir du ~10³) ni washout-readout extrapolé (l'intégrale-le-long-du-rayon
+  moyenne pareil le passif et l'actif). Ra\* peut tomber des deux côtés ; le balayage seul tranche.
+
+---
+
+### 2026-07-01 — Boussinesq/Ra : contrôle cassé, balayage mesuré ; 7ᵉ knob (Δ₀ jumeaux) tué par la garde-en-taux ; verdict de la dynamique-z par rapport de pentes
+
+**Contrôle Ra-max (10⁷)** : Δpixel-projeté final = 18 % (κ=4, JND=5 %) → CASSE → le balayage avait un signal.
+**Balayage (Δpixel-projeté ponctuel, plateau t∈[10,25] retournements)** : Ra\* encadré [3e4,1e5] (mâchoire
+transparente J=2 %) à [3e5,1e6] (absorbante J=5 %). Forme = PLATEAU (pas de mur-z) mais plateau HAUT
+(60–80 % pixels >JND). Media actifs réels (fumée/flamme Ra≳1e6) au-dessus ; sédiment (Ra~0) en-dessous.
+
+**7ᵉ knob attrapé (Romain) — dans la garde elle-même** : la magnitude de perturbation des jumeaux (1e-6)
+décidait le verdict (t_c−t_j = (1/λ)·ln(Δ₀_coarse/Δ₀_jumeaux) : 1e-3 → « sur-compte » favorable, 1e-12 →
+« signal réel » défavorable). Le « plancher de chaos = 0.0 % » du run précédent ne voulait rien dire.
+**Garde rebâtie sans magnitude : comparer des TAUX, pas des trajectoires** — λ = pente log des jumeaux
+(propriété de l'écoulement), discriminant = pente(Δ coarse-fin projeté) vs λ_proj :
+≈λ → chaos intrinsèque (le coarse déplace la CI sur l'attracteur ; la mémoïsation ne bat pas ça non plus) ;
+>λ ou saut non-exponentiel → destruction structurelle = coût réel du coarse-z.
+
+**Mesuré (λ en 1/retournement ; invariance au Δ₀ DÉMONTRÉE : 1e-6 et 1e-8 → pentes identiques aux 3 Ra)** :
+
+| Ra | λ_vol jumeaux | λ_proj jumeaux | pente coarse-fin proj | lecture-taux |
+|---|---|---|---|---|
+| 1e5 | 0.423 | 0.335 | 0.165 | ≤λ → chaotique-intrinsèque |
+| 1e6 | 0.161 | 0.294 | 0.320 | ≈λ → chaotique-intrinsèque |
+| 1e7 | 0.360 | 0.434 | **1.160** | **>>λ (×2.7) → structurel** |
+
+- L'écoulement est chaotique aux 3 A (λ>0) ; l'« amortissement du chaos par la projection » n'est PAS
+  uniforme : λ_vol−λ_proj = +0.09 (1e5) mais −0.13 (1e6), −0.07 (1e7) — la projection n'amortit pas le TAUX
+  de chaos à haut Ra. En revanche elle amortit le SAUT structurel de volume : d_vol(coarse-fin) saute
+  immédiatement à ~0.15 (aucune fenêtre exponentielle, structurel en volume) que la projection lave à 1.7e-4.
+- **M1/M3 statistiques du film projeté (Ra=1e5, 1e6)** : luminance moyenne identique (≤0.1 %), puissance par
+  octave coarse/fin ∈ [0.82, 1.09], enveloppe temporelle ratio 0.98/1.05 → **le film coarse-z est
+  statistiquement le même film**. Le plateau ponctuel 60–80 % était de la DÉCORRÉLATION, pas de
+  l'implausibilité — le Δpixel ponctuel-contre-contrefactuel sur-comptait, rejouant la leçon L2/C2 sur l'axe
+  temporel (personne ne voit jamais le run fin).
+
+**Portée EXACTE du verdict** : à Ra ≤ 1e6, la dynamique-z est cheap AU SENS FORT (divergence coarse-fin au
+taux du chaos intrinsèque + statistiques perceptuelles conservées = le coarse-z produit une AUTRE réalisation
+plausible du même film). À Ra = 1e7, signal super-λ (×2.7) = destruction structurelle possible — NON tranché :
+(a) le fin lui-même y est sous-résolu (Nz=64, caveat gravé d'avance → le chiffre est suspect dans les deux
+sens), (b) fenêtre de fit courte (48 pts), (c) M1/M3 non mesurés à 1e7. La frontière structurelle vit dans
+(1e6, 1e7] et les media cibles (fumée/flamme) chevauchent cette zone. Prochain pas falsifiant le moins cher :
+M1/M3 à Ra=1e7 + refaire 1e7 à fin plus résolu (Nz=128) pour tester si le super-λ est physique ou artefact
+d'instrument. Arbitrage de la fourche ponctuel-vs-statistique : les deux mesures pointent la même lecture,
+mais elle reste à valider par Romain (pas de fermeture unilatérale côté favorable).
+
+---
+
+### 2026-07-01 — Validation d'instrument à Ra=1e7 : le super-λ PERSISTE à fin doublé + M1 distordu → la frontière structurelle est PHYSIQUE, dans (1e6, 1e7]
+
+**Même design gravé, fin Nz=128 (vs 64), coarse Nz=64, ratio de coarsening inchangé (2), Ra=1e7** :
+- λ_proj jumeaux = 0.339 ; pente coarse-fin projetée = 0.973 → **ratio 2.87** (vs 2.67 à Nz=64).
+  Le super-λ N'EST PAS un artefact de sous-résolution : il persiste, même légèrement renforcé, quand le fin
+  double. La destruction structurelle par le coarse-z à Ra=1e7 est physique.
+- **M1 à 1e7 (241 trames)** : octaves coarse/fin = 0.63 / 1.25 / 0.79 / 0.93 / 0.86 / 0.66 / 0.63 — hors de
+  la bande ±10 % vue à 1e5/1e6. La bande dominante (kx=1, 39 % de la puissance) perd 37 %, kx 2-3 gagne 25 % :
+  le coarse-z DÉCALE la distribution des tailles de plumes projetées → **film statistiquement DIFFÉRENT**.
+  M3 (enveloppe) reste ~1 (0.97) : le scintillement survit, c'est la GÉOMÉTRIE spectrale qui casse.
+
+**Les deux mesures indépendantes (taux ET statistiques) convergent — cette fois côté DÉFAVORABLE** :
+à Ra=1e7 le coarse-z ne produit plus « une autre réalisation plausible » mais un film aux mauvaises tailles
+de structures, divergeant 2.9× plus vite que le chaos. Symétrie avec Ra≤1e6 (les deux mesures convergeaient
+côté cheap) : le discriminant fonctionne dans les deux sens, il n'est pas un instrument-à-confirmer.
+
+**Verdict de la dynamique-z (portée exacte)** : TERME À DEUX CÔTÉS AVEC FRONTIÈRE. Cheap au sens fort pour
+Ra ≤ 1e6 ; coût réel (structurel, budget paie la profondeur fine) à Ra = 1e7, frontière dans (1e6, 1e7].
+Les media cibles du pari raide (fumée chaude Ra~1e8-1e10, flamme Ra~1e6-1e8) sont AU-DESSUS ou À CHEVAL →
+pour eux, le coarse-z seul ne suffit pas ; le sédiment (Ra~0) reste cheap. Limites de portée : tranche 2D
+x-z, Boussinesq seul, ratio de coarsening 2, M1 à une seule mâchoire (κ=4). L'implication architecturale
+(la fovéa-LOD doit-elle inclure z ? est-ce le rôle du `descend` du routeur ?) = arbitrage Romain, pas fermé ici.
+
+---
+
+### 2026-07-01 — Trois prises sur le verdict dynamique-z ; seuils gravés AVANT les mesures qui suivent
+
+**Prise petite (gravée comme MISS, pas comme arrondi)** : le critère M1 gravé est ±15 % de puissance par
+bande. À Ra=1e6, kx 32-63 : coarse/fin = 0.82 → **MISS** (3 points sous le seuil ; idem kx=64 à 1e5 : 1.35).
+Le rapport précédent l'a emballé dans un PASS (« ∈ [0.82, 1.09] ») — motif « rigueur habillée », noté.
+Analyse à produire (mesure, pas exemption rétroactive) : contraste-Weber porté par la bande (χ = RMS_bande/⟨L⟩)
+et Δχ fin-coarse vs JND=2 %. Deux issues possibles, énoncées avant le chiffre : Δχ ≥ JND → le miss est
+perceptuellement réel, le verdict « statistiquement même film » à 1e6 est ENTAMÉ ; Δχ ≪ JND → le miss est réel
+au sens du critère mais sous-perceptuel → limite DU CRITÈRE (bandes non-porteuses sur-comptées par le ±15 %
+non pondéré), à corriger dans le critère pour les usages FUTURS, jamais rétroactivement.
+
+**Prise moyenne — le discriminant n'avait ni seuil ni barre d'erreur (runs uniques, lecture post-hoc).
+SEUIL GRAVÉ MAINTENANT, avant toute mesure multi-graines** : N ≥ 4 graines (θ₀), par graine r = pente(Δ
+coarse-fin projeté)/λ_proj(jumeaux). Verdict : **STRUCTUREL si mean(r) − 2·SEM > 1 ET mean(r) ≥ 1.5 ;
+CHAOTIQUE-INTRINSÈQUE si mean(r) + 2·SEM < 1.5 ; sinon INDÉTERMINÉ** (pas de lecture à l'œil). Le 1.5 est
+conventionnel et gravé avant les graines ; la zone indéterminée est le prix de l'honnêteté.
+
+**Prise grande — l'expérience ne distingue pas les deux façons de payer.** Le « coarse-z » mesuré est un
+solveur TRONQUÉ NAÏF ; le niveau grossier de l'architecture est F-avec-expert, potentiellement corrigé
+sous-maille. La frontière mesurée est donc une BORNE SUPÉRIEURE sur « où le grossier a besoin d'aide », pas
+une preuve que l'aide = résolution (miroir de la leçon oracle-diffusif : un coarse trop naïf rend le fin
+artificiellement nécessaire). Le détail M1 ferme UNE branche : kx=1 perd 37 % → l'erreur est à l'échelle
+RÉSOLUE → une closure de READOUT conditionnée sur des invariants grossiers faux hérite du faux (la licence
+Kolmogorov ne sauve pas ce régime au readout). Mais il ouvre l'autre : erreur résolue CAUSÉE par la troncature
+sous-maille = exactement ce qu'une closure DYNAMIQUE au niveau grossier répare peut-être.
+
+**Test gravé (le moins cher qui peut échouer, AVANT toute spec fovéa-z)** : coarse FERMÉ vs coarse naïf,
+Ra=1e7, instrument validé (fin Nz=128, ratio 2), closure = Smagorinsky bête (Cs=0.17, Δ=√(dx·dz), Pr_t=1,
+ν_t clampé pour stabilité), même discriminant (jugé au seuil gravé ci-dessus), mêmes M1/M3.
+Lectures : ratio s'effondre sous le seuil intrinsèque ET kx=1 revient dans ±15 % → **le job appartient à la
+sortie EXPERT** (meilleur opérateur grossier, coût quasi-coarse), descend au chômage ; ratio tient contre une
+closure honnête → **descend garde le job**, escalade licenciée par un test qui pouvait la tuer.
+
+**Gardes de portée** : (a) treadmill — NE PAS raffiner Ra\* intra-décade (aucune décision n'en dépend : les
+media cibles sont au-dessus quoi qu'il arrive) ; (b) croissance-vs-saturation au-delà de 1e7 = chère, GATÉE
+derrière le test closure ; (c) le volumique saute structurellement aux TROIS Ra — seule la projection (κ=4,
+une mâchoire) sauve 1e5–1e6 : **le « cheap » vit dans le readout, pas dans z** ; Ra\* n'est PAS un scalaire
+du médium mais un champ fovéa-dépendant (cohérent avec la réserve JND-champ gravée) — ne pas graver
+« Ra\* constant ». (d) Descend-comme-spec-fovéa-z : hypothèse LÉGITIME, conclusion ILLÉGITIME tant que le
+coarse fermé ne l'a pas ratée. Concession actée en sens inverse (Romain) : Boussinesq donne au `descend` son
+premier job physiquement localisé — c'est le premier résultat qui donne à la 3ᵉ sortie autre chose qu'une
+existence de principe.
+
+---
+
+### 2026-07-01 — Résultats P1/P2/P3 : le coarse FERMÉ reste structurel à 1e7 (descend garde le job) ; RÉVISION : 1e6 devient INDÉTERMINÉ sous barres d'erreur ; les MISS M1 sont sous-perceptuels (limite du critère)
+
+**P1 (le MISS 0.82)** : contraste-Weber par bande — TOUS les Δχ sont ≪ JND=2 % (max 0.42 % à 1e6, kx 2-3 ;
+somme quadratique ~0.5 %). Les MISS ±15 % (dont de NOUVEAUX apparus sur ce run : kx 2-3 = 1.35 à 1e6) sont
+réels au sens du critère et sous-perceptuels au sens Weber → **limite DU CRITÈRE actée** : le ±15 % par bande
+non pondéré sur-compte les bandes non-porteuses ; pour les usages futurs, M1 se juge sur Δχ vs JND (χ = 
+RMS_bande/⟨L⟩), le ±15 % reste diagnostic. Jamais rétroactif : les MISS restent des MISS au journal.
+**Note d'instrument découverte en passant** : les ratios de bande single-run sont INSTABLES (kx 2-3 à 1e6 :
+1.09 sur 31 trames → 1.35 sur 240 trames, même graine, même trajectoire) et le spread inter-graines de kx=1
+est énorme (0.50–1.12 à 1e6 ; 0.12–2.31 à 1e7 fermé) → toute lecture M1 par bande exige des barres d'erreur.
+
+**P2 (discriminant au seuil gravé, 4 graines)** :
+| Ra | coarse | r (±2·SEM) | verdict gravé |
+|---|---|---|---|
+| 1e6 | naïf | 1.17 ± 0.55 | **INDÉTERMINÉ** |
+| 1e6 | fermé | 1.19 ± 0.32 | INDÉTERMINÉ |
+| 1e7 | naïf | 2.85 ± 0.46 | STRUCTUREL |
+| 1e7 | fermé | **2.36 ± 0.69** | **STRUCTUREL** |
+
+**RÉVISION d'un verdict antérieur (la prise moyenne avait raison)** : « cheap au sens fort à Ra ≤ 1e6 » ne
+tient plus tel quel. Le single-run r=1.09 à 1e6 était de la chance de graine (graine 23 → r=1.85, λ=0.252).
+État honnête de la frontière : 1e7 STRUCTUREL robuste (4/4 graines, tient au spot-check Nz=128 : r=2.53) ;
+1e6 = statistiques perceptuelles conservées (Δχ ≪ JND) mais TAUX INDÉTERMINÉ ; 1e5 jamais multi-grainé
+(single r≈0.5). La zone indéterminée est réelle, pas un échec du seuil — c'est lui qui l'a exposée.
+
+**Test closure (gravé au tour précédent, verdict rendu)** : le Smagorinsky bête NE fait PAS s'effondrer le
+super-λ à 1e7 (2.85 → 2.36, toujours STRUCTUREL, mean−2·SEM = 1.67 > 1). La clause kx=1 « revient dans
+±15 % » n'est PAS claimable : moyenne 1.00 par ANNULATION d'un spread 0.12–2.31 (P3 : le fermé répare kx=1
+0.63→0.88 mais sur-dissipe le haut du spectre, 0.53/0.23 — signature Smagorinsky classique).
+→ **Le `descend` GARDE le job à Ra=1e7** — l'escalade architecturale est licenciée par un test qui pouvait
+la tuer. PORTÉE : contre CETTE closure (Smagorinsky bête, celle nommée au test gravé) ; une closure apprise
+reste un contender non testé — c'est une mesure future LÉGITIME mais non due (le test gravé est rendu),
+à gater derrière une décision qui en dépendrait réellement (anti-treadmill).
+
+---
+
+### 2026-07-01 — ARC B-bis rendu : ZONE GRISE (une cellule) — le canal statistique ne confirme PAS le structurel de 1e7 ; « les deux mesures convergent côté coût » est DÉGRADÉ ; marges fines en titre : Cs=0.17 → +0.17, Cs=0.23 → −0.27 vs 1.5
+
+**Canal TAUX (balayage Cs, 4 graines appariées, format R3)** : naïf r=2.85±0.46 (marge vs 1.5 : +0.89) ;
+Cs=0.10 : 2.73±0.42 (+0.81) ; Cs=0.17 : 2.36±0.69 (**+0.17, fine**) ; Cs=0.23 : 2.14±0.91 (**−0.27** —
+STRUCTUREL sous la règle 0a [mean−2·SEM=1.23>1 ET mean≥1.5] mais l'intervalle CHEVAUCHE le seuil 1.5).
+Tendance honnête : la marge s'amincit MONOTONEMENT avec Cs, et la graine 42 s'effondre à Cs fort
+(r=1.33 à 0.17, r=0.81 à 0.23) — le spread CROÎT avec la closure. Le structurel-au-taux tient au balayage
+Cs sous la règle gravée, mais pas confortablement : c'est une conclusion à marge fine, pas un plancher.
+
+**Canal STATISTIQUE (Δχ, 4 graines, ~240 trames/graine, porteuses gravées avant lecture = kx 1-1, 2-3,
+4-7, 8-15)** : TOUT est sub-JND robuste à JND ∈ [2,4] % — naïf ET fermé (max : kx=1 naïf 0.94±0.45 %,
+fermé 0.70±0.65 %). Une seule cellule grise : **kx=1 à JND=1 %** (mean+2·SEM = 1.39 %/1.35 % > 1 %, ni
+supra ni sub robuste — barres trop larges, pas signal). M3 : naïf 0.91±0.08, fermé 0.94±0.08 (~1).
+**Verdict par la règle gravée : ZONE GRISE** (Bb2 exigeait sub robuste jusqu'à JND=1 % partout ; raté sur
+la seule cellule kx=1@1 %). En substance, penche Bb2 : rien de supra-JND nulle part, à aucun JND.
+
+**Item 2 — dégradation gravée (annoncée avant lecture, confirmée)** : le FAIL M1 du naïf à 1e7
+(kx=1 = 0.63 en puissance, single-run) se dégrade en **Δχ = 0.94±0.45 % = sub-JND à 2 %** multi-graines.
+« Les deux mesures indépendantes convergent côté coût à 1e7 » (entrée du 2026-07-01, validation Nz=128)
+est RÉVISÉ : **seul le canal TAUX porte le verdict structurel à 1e7** ; l'écart M1 était réel en puissance
+et sous-perceptuel en contraste-Weber. Le structurel de 1e7 reste robuste (4/4 graines, balayage Cs,
+spot-check 128) mais il est un fait de DYNAMIQUE (super-λ) sans contrepartie mesurée sur les axes
+perceptuels actuels (contraste spatial stationnaire, enveloppe).
+
+**Conséquences (règle de l'addendum appliquée)** : B2 reste NON-DÉFINITIF — structurel-taux-seul, stats en
+zone grise. La spec fovéa-z reste SUSPENDUE (Bb1 seul licenciait pleinement). La question « qu'est-ce que
+le super-λ détruit que le contraste-Weber ne voit pas ? » (candidats : cohérence temporelle des structures,
+géométrie des transitoires) est la sortie naturelle vers l'Arc C — mais la règle gravée ne la déclenchait
+que sur Bb2 STRICT : posée ici comme CANDIDATE, arbitrage Romain. Lever la cellule grise kx=1@1 % coûterait
+des graines supplémentaires — dépense non due (anti-treadmill) sauf si l'arbitrage en dépend.
+Appariement consigné : même θ0 par graine, coarse naïf/fermé = même zdown, même base fine.
+
+---
+
+### 2026-07-01 — Correction de règle (Cs=0.23 = INDÉTERMINÉ), regravure canal taux « 2/3 + tendance », requalification du discriminant juge→détecteur, pré-enregistrement ÉTAGE 1
+
+**P1 — Correction d'étiquette (erreur de règle dans le tableau précédent)** : sous la référence R3 (le seuil
+est 1.5, jamais 1), structurel = IC entièrement au-dessus de 1.5. À Cs=0.23, mean−2·SEM = 1.23 < 1.5 →
+la cellule est **INDÉTERMINÉE**, pas « STRUCTUREL (0a) mais ». Canal taux REGRAVÉ : **structurel sur 2 Cs
+sur 3** (naïf +0.89, Cs=0.10 +0.81, Cs=0.17 +0.17 — marge fine), **indéterminé à Cs=0.23**, graine 42 sous
+1 à Cs fort (0.81 : le fermé y diverge MOINS vite que le chaos). La clause B2-v1 exigeait le structurel
+pour TOUTES les valeurs de Cs → **non satisfaite**. EN TITRE : la tendance r(Cs) est MONOTONE DÉCROISSANTE
+(2.85 → 2.73 → 2.36 → 2.14) — une closure bête à peine mieux réglée continuerait probablement de raboter.
+Germano dynamique et closure apprise restent gatés (même garde anti-treadmill : ne redeviennent vivants
+qu'au chiffrage d'une spec fovéa-z).
+
+**P2 — REQUALIFICATION GRAVÉE : le discriminant passe de JUGE à DÉTECTEUR.** B-bis a établi que l'implication
+« super-λ ⇒ destruction perceptuelle » est coupée sur tous les axes disponibles (contraste-Weber spatial,
+enveloppe). Le discriminant pente-vs-λ reste un fait de dynamique robuste et un instrument bon marché — mais
+son statut est désormais TRIPWIRE : il dit OÙ regarder, il ne rend plus de verdict perceptuel. Aucun verdict
+futur ne cite « structurel-au-taux » comme équivalent de « perceptuellement cassé ». Cellule kx=1@JND=1 % :
+NON achetée en graines — se résout gratuitement quand l'Arc C pinne le JND (≥2 % → moot ; ~1 % → relire les
+données existantes). Dépense gravée CONDITIONNELLE.
+
+**P3 — ÉTAGE 1 pré-enregistré (mesure de DIFFÉRENCE d'ensembles, pas de perception ; l'hypothèse rivale est
+ouverte : le super-λ pourrait n'être que de la vitesse de décorrélation vers le MÊME ensemble, y compris
+temporel — jamais mesuré comme ensemble).** Protocole gravé AVANT lecture :
+- Données : T=100 retournements (~1440 trames stationnaires t≥10 ; 240 trames vérifiées trop courtes pour
+  les basses fréquences), 4 graines appariées, fin vs naïf vs fermé (Cs=0.17), Ra=1e7, Nz=64.
+- Axes (gravés) : (A1) spectre k-ω du readout projeté — par octave-kx porteuse : centroïde ω̄ et largeur σ_ω ;
+  (A2) vitesse de phase c\*=ω̄/k̄ par octave [ADAPTATION gravée avec justification : la vitesse d'ascension
+  est invisible par construction dans un readout projeté-le-long-de-z ; sa trace visible est la dérive
+  latérale] ; (A3) distribution de puissance par octave-ω des séries temporelles de pixels ;
+  (A4) temps de décorrélation τ (autocorrélation 1/e) par octave-kx filtrée.
+- Statistique (gravée, appariée par graine) : d_s = stat_coarse,s − stat_fine,s ; un axe TIRE ssi
+  |mean(d)| > 2·SEM(d) ET signe cohérent sur ≥3/4 graines (garde comparaisons-multiples : 4 axes × 4 octaves
+  × 2 coarses = 32 cellules, ~1-2 faux positifs attendus à 2σ sans la clause de signe). Rapporter la carte
+  complète, pas seulement les cellules qui tirent.
+- Verdicts (gravés, les deux nets) : DIFFÉRENCE TROUVÉE → le descend récupère un job nommé et mesuré ;
+  l'axe entre dans l'Arc C (étage 2, JND temporel) qui décide de la perceptibilité. PAS DE DIFFÉRENCE (aux
+  barres) → le descend est au chômage à 1e7 PAR MESURE — excellente nouvelle pour le budget (coarse-z +
+  readout suffiraient jusqu'à 1e7 inclus, la frontière remonte ou disparaît). **Avertissement bi-directionnel
+  gravé** : la traction anti-descend (exécutant) ET la traction pro-budget (l'attracteur de l'autre bord)
+  existent toutes deux ; les seuils ci-dessus sont figés, la lecture ne les déplacera dans aucun sens.
+- Étage 2 (perception) : GATÉ derrière un étage 1 positif.
+
+---
+
+### 2026-07-01 — ÉTAGE 1 : DIFFÉRENCE TROUVÉE — les ensembles temporels diffèrent ; le descend a un job NOMMÉ ET MESURÉ : la largeur spectrale temporelle des grandes structures. Marge en titre : naïf kx=1 → −36.8 % ± 8.6 %, 4/4 graines (4.3× la barre)
+
+**Cellules qui tirent (règle gravée : |mean|>2·SEM ET ≥3/4 même signe)** — 3 cellules, TOUTES sur le même
+axe A1 σ_ω (largeur spectrale en ω par octave-kx), TOUTES du même signe (coarse plus ÉTROIT), sur les
+octaves les plus porteuses :
+| coarse | octave | d (±2·SEM) | marge |
+|---|---|---|---|
+| naïf | kx 1-1 | **−36.8 % ± 8.6 %** | 4/4, 4.3× |
+| fermé | kx 1-1 | −22.0 % ± 14.5 % | 4/4, 1.5× |
+| fermé | kx 2-3 | −15.3 % ± 13.3 % | 4/4, 1.15× |
+
+**Ce n'est PAS le motif des comparaisons multiples** (qui serait : cellules isolées, axes dispersés, marges
+minces) : un seul axe, un seul signe, cohérent naïf/fermé, dont une cellule à 4.3× la barre. Signature
+physique lisible : **les grandes structures projetées du coarse-z évoluent trop lentement/trop
+régulièrement** — moins de résolution-z → moins de disruption fine → les panaches vivent trop longtemps,
+scintillent dans une bande trop étroite. Contrôle anti-artefact dans la carte : c\* (A2) à kx=1 naïf =
+−2.4 % (inchangé) → le rétrécissement de σ_ω n'est PAS un décalage Doppler d'advection, c'est une vraie
+perte de largeur de bande. N'ont PAS tiré : A2 (vitesses de phase), A3 (distribution ω des pixels), A4
+(τ — estimateur bruité mais même direction : fermé kx=1 +206 %, cohérent avec σ_ω plus étroit).
+
+**Conséquences (verdicts gravés d'avance, appliqués)** :
+- L'hypothèse rivale (« le super-λ n'est que de la décorrélation vers le MÊME ensemble ») est **RÉFUTÉE sur
+  l'axe temporel** : les ensembles diffèrent, par mesure appariée multi-graines.
+- **Le descend a un job nommé et mesuré** : restaurer la largeur spectrale temporelle des grandes échelles
+  projetées (la « respiration » des panaches). Le tripwire (super-λ) pointait au bon endroit — statut
+  détecteur confirmé utile.
+- La closure bête RÉDUIT le déficit à kx=1 (−36.8 → −22.0) mais l'ÉTALE vers kx 2-3 (−15.3 tire pour le
+  fermé ; naïf y était à −10.7, 3/4, sans tirer) — cohérent avec sa signature (sur-dissipation déplacée).
+- **Étage 2 (gaté, dû à l'Arc C)** : l'axe « largeur de bande temporelle des grandes structures » entre dans
+  le harnais JND comme nouvel axe de stimuli ; le JND temporel décide si −37 % (naïf) / −22 % (fermé) est
+  perceptible. AUCUN verdict perceptuel n'est rendu ici : étage 1 est une mesure de différence d'ensembles.
+- La question candidate « qu'est-ce que le taux détruit que le contraste-Weber ne voit pas ? » a maintenant
+  une réponse mesurée : la cohérence temporelle des structures (le candidat nommé dans l'addendum v2) —
+  elle passe de candidate à MESURÉE, en attente de son JND.
+
+---
+
+### 2026-07-01 — ARC V pré-enregistré (gravé avant tout run) : le fin Nz=64 est-il convergé sur σ_ω, l'axe qui rend le verdict de l'étage 1 ?
+
+**Question** : le −36.8 % (déficit σ_ω, coarse32 vs fin64, kx=1) est provisoire tant que le fin de référence
+n'est pas convergé sur CET axe. Leçon oracle-diffusif : le mécanisme nommé (moins de disruption fine →
+panaches trop persistants) s'applique au fin sous-résolu comme au coarse.
+
+**Protocole (v3, transcrit)** : σ_ω par octave, fin Nz=128 vs fin Nz=64, 4 graines (7, 11, 23, 42),
+T=100 retournements, fenêtre stationnaire t≥10, bornes d'octaves gravées inchangées, critère apparié
+inchangé (|mean(d)| > 2·SEM ET ≥3/4 même signe). **Choix d'exécution gravés** : appariement par
+θ0_64 = zdown(θ0_128) (même grande échelle d'IC, analogue exact de la construction coarse) ; les séries
+L(x,t) de TOUS les runs sont ARCHIVÉES en .npz (correction de dette : deux protocoles de suite ont supposé
+des archives inexistantes). Ra=1e7, κ=4, mêmes solveur/rendu. Aucun autre run dû dans cette session.
+
+**Claims (v3, transcrits)** :
+- **V1 (fin convergé)** : d(σ_ω) fin128-vs-fin64 sub-critère sur kx=1 ET kx=2-3 → le −36.8 % est gravé
+  DÉFINITIF comme amplitude du déficit.
+- **V2 (fin non convergé)** : une cellule tire → le chiffre-titre est REMPLACÉ par le déficit re-mesuré à
+  la référence Nz=128. Note de structure gravée : « coarse » ≡ run à demi-résolution-z dans cet instrument,
+  donc la cellule fin64-vs-fin128 EST le déficit ratio-2 à la référence 128 — le remplacement ne coûte
+  aucun run. Sens attendu du mécanisme : « vrai déficit ≥ −36.8 % » — on grave ce que la mesure dit,
+  pas le mécanisme.
+- Dans les deux cas : l'étage 2 (C-temporel, session parallèle) lit son point final à l'amplitude V-validée.
+**Dépenses refusées (v3)** : σ_ω@1e6 (conditionnel, gaté) ; tout autre run dans cette session.
+
+---
+
+### 2026-07-01 — ARC V rendu : V2 — fin Nz=64 NON convergé sur σ_ω ; chiffre-titre REMPLACÉ : le déficit ratio-2 à la référence 128 est −19.1 % ± 12.6 % (kx=1, 4/4, marge fine 1.5×) — et il RÉTRÉCIT quand la référence double, à l'INVERSE du sens attendu du mécanisme
+
+**Mesure (protocole gravé, appariement zdown, archives .npz complètes)** : d(σ_ω) fin64-vs-fin128 :
+kx=1 : **−19.1 % ± 12.6 %, 4/4 → TIRE** ; kx 2-3 : +5.3 % ± 16.5 % (2/4, sub-critère) ; kx 4-7 et 8-15
+sub-critère. → **V2** : le fin Nz=64 n'était pas convergé sur l'axe qui rend le verdict de l'étage 1.
+
+**Application du claim gravé** : le chiffre-titre −36.8 % (coarse32 vs fin64) est REMPLACÉ par
+**−19.1 % ± 12.6 %** — la cellule fin64-vs-fin128, qui EST le déficit ratio-2 à la référence 128 (note de
+structure gravée d'avance). Point de synchronisation pour l'étage 2 (C-temporel) : **la lecture finale
+Ct1/Ct2 se fait à −19.1 % sur la psychométrique** (dans la plage balayée [−10 %, −60 %]).
+
+**Le chiffre inconfortable, en titre comme dû — dans les DEUX sens** :
+1. Le sens attendu du mécanisme était « vrai déficit ≥ −36.8 % ». La mesure dit l'inverse : le déficit
+   ratio-2 RÉTRÉCIT quand la résolution absolue double (−36.8 % à 32/64 → −19.1 % à 64/128). Gravé tel quel.
+2. Conséquence ouverte, non tranchable dans cette session : la référence 128 n'est PAS montrée convergée
+   (le déficit non nul à 64-vs-128 le prouve par récurrence). La suite (−36.8, −19.1, …) tend vers des
+   déficits plus petits à résolution croissante — l'hypothèse « le déficit σ_ω est en partie un artefact de
+   sous-résolution ABSOLUE (les deux runs de l'étage 1 étaient sous-résolus) » est désormais VIVANTE. Elle
+   affaiblirait le job du descend si la suite converge vers ~0 ; elle le préserve si elle converge vers un
+   plancher non nul. Un point 128-vs-256 la trancherait — NON DU (aucun autre run dans cette session, gravé),
+   et c'est une dépense à arbitrer par Romain AVANT que l'étage 2 ne lise son point final : lire la
+   psychométrique à −19.1 % n'a de sens que si −19.1 % est tenu pour l'amplitude réelle, ce que la
+   non-convergence de la référence rend incertain dans le sens favorable-au-budget.
+3. Marge fine : 1.5× la barre (−19.1 ± 12.6). Sous G-4, à moins d'un écart-type du critère → sensibilité :
+   la cellule tient à 2·SEM et 4/4 signes, mais une 5e graine pourrait la faire basculer — rapporté, pas caché.
+
+**G-5 vérifié** : V2 ne retire pas la justification de l'étage 2 (le balayage paramétrique [−10, −60] a été
+conçu pour couvrir tout déplacement du chiffre par V — les sessions restent parallélisables). Il DÉPLACE le
+point de lecture et ajoute la question de convergence ci-dessus à l'arbitrage. Session Boussinesq : plus
+rien de dû ; archives en place pour toute relecture.
+
+---
+
+### 2026-07-02 — ARC W0 pré-enregistré (gravé avant l'analyse) : pouvoir statistique du point 128-vs-256
+
+**Question W (v4, transcrite)** : D(Nz) = déficit ratio-2 à la résolution d'opération — loi de puissance
+(le déficit s'éteint : descend = arbitrage de coût) ou plancher non nul (déficit irréductible : descend
+obligatoire au-dessus du JND temporel) ? Deux points existent (−36.8 % @32/64, −19.1 % @64/128) ;
+ratio 0.52 compatible D ∝ Nz^−p, p≈0.95 — COMPATIBLE, PAS FITTÉ. W1 fournirait le 3e point.
+
+**Prédictions jumelles (v4, gravées avant tout chiffre)** : W-loi → D(256) ≈ −10 % ; W-plancher →
+D(256) ≈ −19 %. Pouvoir requis pour les distinguer : **2·SEM ≤ 4.5 %** sur la cellule 128-vs-256.
+
+**W0 (zéro run)** : (a) bruit par graine recalculé depuis les archives .npz (cellule 64/128 exacte,
+par graine) + le 8.6 % (2·SEM) du journal pour 32/64 ; (b) n\* = graines nécessaires (SEM ∝ 1/√n) ;
+(c) coût RÉEL chiffré par benchmark de timing (200 pas extrapolés — solveur numpy CPU, pas GPU : on
+chiffre l'instrument tel qu'il tourne) + vérification mémoire (inv_p à Nz=256 ≈ 34 Mo ×2, OK a priori).
+**Gate d'achat (v4)** : n\* ≲ une nuit → W1 en fond ; sinon « 128-vs-256 non discriminable au bruit
+actuel » gravé — un run qui ne peut pas trancher fabrique de la confiance, options remontées à Romain.
+Note de neutralité : T plus long réduit σ² ∝ 1/T mais coûte ∝ T — le produit n\*·coût est ~invariant ;
+si le gate échoue en graines, il échoue aussi en T (à consigner si c'est le cas, pas d'échappatoire cachée).
+
+---
+
+### 2026-07-02 — W0 rendu : « 128-vs-256 NON discriminable au bruit actuel » — gate d'achat FERMÉ (19.4 h au bruit best-estimate vs ~10 h) ; W1 non lancé. En titre aussi : la graine 7 donne d ≈ −2.4 % — la cellule 64/128 contient une graine quasi nulle
+
+**(a) Bruit par graine (archives, cellule 64/128 exacte)** : d = −2.4 % (graine 7), −20.6 %, −20.4 %,
+−33.1 % → σ par graine = 12.6 %. Le chiffre inconfortable en titre : UNE graine sur 4 est quasi NULLE —
+la fragilité anticipée sous G-4 à l'Arc V est confirmée au niveau des données brutes (le −19.1 % ± 12.6 %
+tient au critère, mais son support inter-graines est hétérogène). Cellule 32/64 (journal) : σ = 8.6 % ;
+le bruit CROÎT avec la résolution (8.6 → 12.6), donc l'estimation pour 128/256 par la cellule voisine
+(12.6 %) est la best-estimate, et probablement encore optimiste.
+
+**(b) n\*** : 32 graines au bruit best-estimate (12.6 %) ; 15 au bruit optimiste (8.6 %, contredit par la
+tendance). **(c) Coût réel (benchmark 200 pas, numpy CPU)** : Nz=256 = 32.6 min/run, Nz=128 = 3.8 min/run
+→ paire 36.3 min → total 19.4 h (n\*=32) à 9.1 h (n\*=15, optimiste).
+
+**Verdict du gate (règle gravée « ≲ une nuit ~10 h »)** : **INFAISABLE au bruit best-estimate** —
+9.1 h n'est atteignable que sous l'hypothèse de bruit que la tendance mesurée contredit. Gravé :
+« 128-vs-256 non discriminable au bruit actuel ». W1 NON lancé — un run qui ne peut pas trancher entre
+−10 % et −19 % fabriquerait de la confiance. Note d'invariance (gravée d'avance, vérifiée applicable) :
+T plus long n'échappe pas (σ² ∝ 1/T, coût ∝ T, produit invariant).
+
+**Options remontées à Romain (arbitrage, aucune n'est exécutée ici)** : (1) réduction de variance par
+appariement plus serré — piste concrète issue des données : la dispersion vient de graines entières
+(−2 vs −33), pas du bruit de fenêtre ; un appariement par ENSEMBLE de conditions initiales par graine
+(moyenner d sur k sous-fenêtres temporelles longues par graine) pourrait réduire σ sans nouveau run de
+mesure — à chiffrer sur archives AVANT toute décision ; (2) accepter 2 nuits (19.4 h) si la décision de
+spec le vaut ; (3) porter l'incertitude D(Nz_op) ∈ [loi, plancher] dans la spec (issue INDÉTERMINÉ-loi
+assumée sans le 3e point). Statut session Boussinesq : PLUS RIEN DE DÛ — W0 clôt la file v4 côté Boussinesq.
