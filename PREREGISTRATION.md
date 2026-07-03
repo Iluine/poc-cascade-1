@@ -1640,3 +1640,36 @@ contrat + journal restent ICI. Chaque entrée de journal Arc A citera les commit
 - **Plage JND (albedo) = [2 %, 5 %]** — les deux valeurs en usage au journal pour f. L'instrument
   Δχ Weber de l'addendum (χ = RMS_bande/⟨L⟩, cf. R1) est à construire sur le canal albedo ; la plage
   JND s'applique à Δχ.
+
+### 2026-07-03 — Point d'arrêt Task 0 LEVÉ (validation Romain) : L₀ et plage JND FIXÉS ; specs d'instrument et de substrat gravées AVANT le build
+
+**FIXÉ (validé par Romain au point d'arrêt)** : **L₀ = 10 pulses** → L ∈ {10, 20, 40, 80}, ≥ 5 seeds
+par L. **Plage JND = [2 %, 5 %]** (sensibilité §A3 balayée sur cette plage).
+
+**Instrument Δχ-albedo (gravé avant toute mesure)** — deux mesures, deux usages, pas d'échange :
+- **f (re-validation uniquement, réplique du journal)** : fraction du domaine où |ΔA|/⟨A⟩ > JND,
+  A = albedo. C'est la définition d'origine des entrées 2026-06-30/07-01 ; elle sert aux critères (a)/(b)/(c).
+- **Δχ par bande (M-A1/M-A2, §A1)** : spectre spatial radial de A, octaves k ∈ {1, 2-3, 4-7, 8-15,
+  16-31} cycles/domaine ; χ_b = RMS(bande)/⟨A⟩ ; bandes PORTEUSES = ≥ 10 % de la puissance AC (règle
+  R1) ; Δχ_b = |χ_b(régénéré) − χ_b(vrai)| ; **critère = max sur les bandes porteuses vs JND**.
+  Aucun verdict sur bande non-porteuse (leçon R1).
+
+**Specs de reconstruction du substrat (gravées avant le build, amendement 2026-07-03)** :
+- **Épisode** = pulse d'eau (monticule gaussien, centre seedé, amplitude fixe) sur terrain sec fixe
+  (asset statique connu, même terrain pour TOUS les runs) → relaxation wet/dry (`simulate_wetdry_o2`,
+  N_settle pas fixés) → assèchement (h remis à sec, `s` persiste). Le forçage d'un run = la séquence
+  seedée des centres de pulses.
+- **Loi de dépôt (type Exner, gravée)** : proxy de cisaillement θ = u²+v² sur cellules mouillées ;
+  ds/dt = k_d·h·1[θ<θ_c]·(1−θ/θ_c) − k_e·s·1[θ>θ_c]·(θ/θ_c−1) ; rétroaction b_eff = b0 + s au
+  solveur À CHAQUE épisode (le pulse suivant voit le dépôt).
+- **Point d'opération (gravé au journal d'origine, repris tel quel)** : taux fort-plausible —
+  s_max ≈ 20 % du relief à L₀ ; S_HALF = 0.05 au point d'op, robustesse balayée sur [0.005, 0.20].
+- **Calibration UNIQUE autorisée** : k_d est fixé par UNE recherche préalable pour atteindre le point
+  d'op gravé (≈20 % relief à L₀), PUIS gelé AVANT les runs de re-validation (a)/(b)/(c). Toute autre
+  retouche de k_d/k_e/θ_c après la première mesure de re-validation = interdite (un critère manqué
+  = STOP et remonter).
+- **Référence « simultané même-masse »** pour f : run tous-pulses-à-la-fois, s final rescalé à la
+  masse totale du run ordonné.
+
+Exécution : code + tests + outputs dans pocPhysicator, branche `arc-a-etat-complet` ; chaque étape
+citée ici avec ses commits.
