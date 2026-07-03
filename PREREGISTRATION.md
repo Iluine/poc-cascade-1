@@ -1595,3 +1595,48 @@ Il existe un résumé **grossier**, **déterministe-régénérable**, du champ p
 - **Un FAIL** est celui de **cette famille de compresseurs** (Harten-coarse + invariants
   scalaires), pas de toute fermeture possible — doublement non-existentiel (cf. §A0).
 - **Le JND reste un placeholder** : tout verdict est conditionné à la sensibilité §A3.
+
+---
+
+### 2026-07-03 — Task 0 Arc A (reconnaissance) : le substrat sédiment N'EXISTE PLUS sous forme de code ; arbitrage = reconstruction DURABLE dans pocPhysicator + amendement re-validation
+
+**Reconnaissance (négative, vérifiée à fond)** : le code du substrat sédiment validé (loi de dépôt
+path-dependent, forçage pulses, `b_eff=b0+s`, readout albedo `1−exp(−s/S_HALF)`, instruments ΔR/f(k))
+n'existe **nulle part sur cette machine** — vérifié dans pocCascade2phys ET pocPhysicator (worktree,
+toutes branches, tout l'historique git), dans tous les transcripts de session, et dans /tmp. Seuls les
+verdicts (entrées 2026-06-30 → 2026-07-01 ci-dessus) survivent. Cause : le code vivait en scratchpad
+/tmp ; **reboot machine 2026-07-03 19:49 → /tmp purgé**. Dommage collatéral consigné : les **archives
+Arc V** (`v_fin128_s*.npz`, `v_fin64zd_s*.npz`) sont perdues — l'option (1) de W0 (« chiffrable
+gratuitement sur les archives ») exige désormais de régénérer les 8 runs (~30–60 min CPU).
+
+**Ce qui existe et se réutilise** : `pocPhysicator` (main, v2.5) = brique shallow-water 2D 64×64
+validée — solveur MUSCL 2ᵉ ordre well-balanced positivity-preserving mouillé/sec
+(`src/solver_wetdry.py::simulate_wetdry_o2`, oracles Thacker/Ritter/Stoker), terrains paramétrés
+(`src/terrains.py`), rendu heatmap (`src/render.py`). **Manquent** (à reconstruire depuis les specs
+gravées ci-dessus) : couche sédiment, forçage épisodique, readout albedo, instrument Δχ Weber.
+
+**Arbitrage Romain (2026-07-03)** : option 2 — **reconstruire le substrat, DURABLEMENT** : code commité
+(git), plus aucun artefact load-bearing en /tmp (leçon du reboot).
+
+**AMENDEMENT §A2 (gravé AVANT le build, conséquence de l'arbitrage)** : la clause « Réutiliser tel
+quel. Ne pas re-valider le générateur. » est insatisfiable (l'objet n'existe plus). Elle est remplacée
+par : **le substrat reconstruit DOIT être re-validé contre les critères DÉJÀ gravés au journal, au même
+point d'opération, SANS re-réglage** — paramètres fixés avant les runs de re-validation :
+  (a) critère path-dependent (2 runs, ordre de pulses inversé → dépôts différents ; référence :
+      corr(s_A,s_B)≈0.39, resfrac ~67 %) ;
+  (b) survie du canal albedo : f_albedo ≫ f_relief, robuste sur S_HALF ∈ [0.005, 0.20]
+      (référence : 3.5–10 % vs 1.2 %) ;
+  (c) f(k) monotone décroissante aux deux géométries (overlap et séparée).
+**Un critère manqué = STOP et remonter** (le substrat reconstruit n'est pas celui qui a été validé) —
+pas de re-réglage pour le faire passer. L'esprit anti-tuning de la clause d'origine est conservé ;
+seule la lettre (impossible) est amendée.
+
+**Décision de dépôts** : code + tests + `outputs/arcA/` dans **pocPhysicator** (branche dédiée) ;
+contrat + journal restent ICI. Chaque entrée de journal Arc A citera les commits pocPhysicator.
+
+**Proposé au point d'arrêt Task 0 (EN ATTENTE de validation Romain — non gravé comme fixé)** :
+- **L₀ = 10 pulses** — l'arc épisodique déjà en usage au journal (f(k) mesuré à T=10 pulses ;
+  profondeur de mémoire mesurée ~3–7 pulses → la saturation de k\*(L) est discriminable dès 2L₀).
+- **Plage JND (albedo) = [2 %, 5 %]** — les deux valeurs en usage au journal pour f. L'instrument
+  Δχ Weber de l'addendum (χ = RMS_bande/⟨L⟩, cf. R1) est à construire sur le canal albedo ; la plage
+  JND s'applique à Δχ.
