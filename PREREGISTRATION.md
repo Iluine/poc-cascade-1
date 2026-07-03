@@ -1715,3 +1715,40 @@ flux HLL non nul au mur), documentée et bornée en test ; aucun lien établi av
 **Commits pocPhysicator (branche `arc-a-etat-complet`)** : e36dd23..be88024 (Task 1 : substrat +
 instruments, 102 tests verts, KD_CALIBRE = 1.911e-3 gelée, max(s)/relief = 0.206) ; 554c2a9 (gate,
 données brutes `outputs/arcA/revalidation.json`).
+
+### 2026-07-04 — Diagnostic du FAIL (a) : l'hypothèse annoncée est MORTE ; la signature manquée est resfrac (0.17 mesuré vs 0.60–0.66 gravé) → itération de conception nommée, pré-enregistrée AVANT implémentation
+
+**Arbitrage Romain** : option (1) — diagnostic cheap, puis UNE itération de conception nommée,
+re-validée aux MÊMES seuils. Diagnostic exécuté (pocPhysicator `0619c17`, `outputs/arcA/diag_pathdep.json`).
+
+**Résultats — l'hypothèse « dépôt-seul dominé par la phase calme » est contredite sur 3 mesures /4** :
+(1) érosion ACTIVE : 75.3 % des (snapshot, cellule mouillée) en θ > θ_c — pas de régime dépôt-seul ;
+(2) 99.3 % du dépôt tombe en snapshots ACTIFS (0.7 % en phase calme) — pas de domination stagnante ;
+(4) contrefactuel k_e = 0 : corr(direct, inversé) passe de 0.9929 à 0.9973 — couper l'érosion AUGMENTE
+la commutativité de 0.004 seulement : le ratio k_e/k_d n'est pas la cause du FAIL. Seule (3) est
+partiellement à charge : corr(s_final, résidence d'eau cumulée) = 0.83 — terrain-déterminisme
+substantiel mais pas total. On grave la mort de l'hypothèse annoncée, comme d'habitude.
+
+**Ce que le diagnostic révèle en creux (lecture, base de l'itération)** : la carte d'identité gravée
+du substrat d'origine (§A2 : « path-dependent ~61 %, **resfrac 0.60–0.66** ») a DEUX signatures. La
+reconstruction n'en a calibré qu'UNE (taux : max(s)/relief ≈ 0.2, tenu à 0.206) ; la seconde —
+resfrac, ici définie masse totale érodée / masse totale déposée sur l'histoire — sort à **0.174**,
+soit ~4× sous la plage gravée. Le substrat d'origine était en régime de RETRAVAIL fort (deux tiers du
+déposé re-repris) ; le reconstruit retravaille à peine — et un dépôt peu retravaillé pèse chaque pulse
+presque indépendamment → quasi-commutatif. k_e = k_d/5 était un a priori du contrôleur, pas une
+donnée d'origine.
+
+**ITÉRATION NOMMÉE (pré-enregistrée ici, AVANT implémentation)** :
+- **Changement unique** : remplacer l'a priori k_e = k_d/5 par une **co-calibration aux DEUX
+  signatures gravées** — bissections alternées : k_d → max(s)/relief ∈ [0.18, 0.22] à k_e fixé ;
+  k_e → resfrac ∈ [0.60, 0.66] à k_d fixé ; ≤ 4 cycles, seed 12345, 10 épisodes (même protocole de
+  calibration que l'origine, une exécution, constantes re-gelées AVANT re-validation). θ_c = 0.5 et
+  toute la structure d'épisode INCHANGÉS.
+- **Prédiction directionnelle (falsifiable)** : le retravail fort re-pondère le dépôt vers les pulses
+  récents par région → corr(direct, inversé) doit BAISSER nettement. On grave la mesure, pas le
+  mécanisme.
+- **Re-validation aux MÊMES seuils (a)/(b)/(c), même script, aucun seuil déplacé.** Issues gravées :
+  3/3 PASS → substrat re-validé, manche 1 reprend (Tasks 3–6). Un critère manqué → **STOP définitif
+  de la voie « reconstruction »** : l'itération autorisée a été consommée, on remonte (le fork suivant
+  appartient à Romain). Co-calibration infaisable (cibles jointes inatteignables) → BLOCKED, remonter
+  sans forcer.
