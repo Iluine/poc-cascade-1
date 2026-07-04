@@ -2010,3 +2010,61 @@ l'attendu §A11 du bras nul). La sonde est le moins cher qui peut falsifier la t
 
 **Portée** : la sonde ne TRANCHE que la testabilité. Elle n'est PAS le verdict manche 1 (k\*(L)
 exige le balayage L ∈ {10,20,40,80} × 5 seeds du plan gravé) et ne s'y substituera pas.
+
+### 2026-07-04 — M-0bis : T-TESTABLE — max(M-A1, M-A2-mini) sous cap ∈ [0.13, 0.63] vs seuil 0.02 : la fermeture d'un résumé grossier sur v2 n'est PAS triviale ; l'attendu §A11 (« saturation triviale du bras nul ») est FALSIFIÉ
+
+**Exécution (protocole gravé `ae1c926`, appliqué sans écart)** : `src/summary.py` construit en TDD
+strictement selon la spec gravée du plan manche 1 Task 4 (block-mean dyadique + invariants ;
+régénération bilinéaire + rescale de masses 4×4 sur grille fine, division protégée ; 21 tests dont
+M-A3 double-régénération ≤ 1e-12 + identité cross-process, anti-fuite signature+décoy, tailles
+exactes 1041/273/81) ; trajectoire d'épisode par fonction ADDITIVE (`run_episode_trajectoire`,
+0 ligne existante modifiée, +4 tests) ; suite complète **130 verts** ; sonde déterministe
+(double run bit-identique). Revue indépendante : conforme, 0 finding bloquant — additivité,
+continuité de la rng (10 premiers centres bit-à-bit = M-0) et rescale 4×4 vérifiés sur pièces.
+
+**Mesure (S_HALF op, critère R1 ; détail en `outputs/arcA/testability_v2.json`)** :
+
+| Histoire | ℓ (floats) | M-A1 | M-A2-mini (max rollout) | sous cap ? |
+|---|---:|---:|---:|:---:|
+| direct  | 1 (1041) | 0.0317 | 0.0339 | non (indicatif) |
+| direct  | 2 (273)  | 0.1456 | 0.1665 | oui |
+| direct  | 3 (81)   | 0.5060 | 0.5476 | oui |
+| inverse | 1 (1041) | 0.0256 | 0.0256 | non (indicatif) |
+| inverse | 2 (273)  | 0.1310 | 0.1582 | oui |
+| inverse | 3 (81)   | 0.5509 | 0.6280 | oui |
+
+Bande porteuse dominante : 4–7 cycles/domaine (taille des bosses du terrain). Diagnostic f_close
+cohérent (39–94 % du domaine supra-JND selon ℓ).
+
+**Verdict mécanique (pré-écrit)** : les 4 cellules sous cap × 2 histoires sont ≥ 0.13 ≫ 0.02 →
+**T_testable**. Aucun seuil retouché.
+
+**Portée EXACTE** :
+1. **La manche 1 sur v2 n'est PAS vacante** : la fermeture sub-JND d'un résumé grossier y est une
+   vraie question — il existe une plage dynamique réelle (ℓ=1 : ~0.03 ; ℓ=2 : ~0.15 ; ℓ=3 : ~0.6,
+   à cheval sur la plage JND [0.02, 0.05]). La prémisse de la suspension (« PASS trivial garanti »)
+   est falsifiée pour v2.
+2. **L'attendu pré-écrit §A11 est FALSIFIÉ** : v2 ne produit PAS de saturation triviale. Si la
+   manche 1 tourne SUR v2, il n'y a plus de bras nul distinct — le contrôle « instrument menteur »
+   de §A11 doit être requalifié au fork (pas silencieusement).
+3. **Indication non verdictale** (à L₀=10 seulement, 1 seed, sans préjuger du k\*(L) de la manche) :
+   rien sous cap ne ferme même à JND=5 % ; ℓ=1 (hors cap) ferme à 5 % mais pas à 2 %. Le verdict
+   manche 1 (§A3 : saturation de k\*(L) sous 409.6 floats) a une vraie question à trancher dans les
+   deux sens.
+4. La sonde ne se substitue PAS au verdict manche 1 (balayage L × seeds requis).
+
+**Fork remonté à Romain** :
+(1) **Relancer la manche 1 SUR v2** — Tasks 3–6 du plan gravé `arc-a-manche1.md` (histoires
+L ∈ {10,20,40,80} × 5 seeds, M-A1/M-A2/M-A3, k\*(L), verdict §A3 mécanique), avec DEUX amendements
+à graver avant lancement : (i) substrat = v2 gelé (co-calibré, gate d'identité FAIL — assumé : les
+claims §A1–§A5 portent sur « ce substrat », pas sur l'original perdu) ; (ii) §A11 requalifié — le
+contrôle-instrument devient un bras nul SYNTHÉTIQUE à histoire détruite (p. ex. mélange spatial du
+champ s préservant l'histogramme, ou champ s d'une histoire à 1 seul pulse de masse équivalente),
+attendu : k\*(L) plat/trivial sur le bras détruit, contrasté sur v2 ;
+(2) build suspension d'abord (§A10, gate §A9 à repenser — l'objection M-0 « (a') vacant » reste
+entière pour CE chemin) puis manche 1 dessus — plus cher, ne teste pas plus de claim ;
+(3) suspendre. **Recommandation : (1)** — la manche 1 redevient testable au moindre coût, et le
+build suspension reste disponible si le verdict manche 1 l'exige.
+
+**Commits pocPhysicator** : 32e9004 (summary.py TDD), 48d771f (trajectoire additive), cc61056
+(sonde + JSON), bf62b7e (ledger).
