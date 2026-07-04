@@ -2068,3 +2068,37 @@ build suspension reste disponible si le verdict manche 1 l'exige.
 
 **Commits pocPhysicator** : 32e9004 (summary.py TDD), 48d771f (trajectoire additive), cc61056
 (sonde + JSON), bf62b7e (ledger).
+
+### 2026-07-04 — Arbitrage fork M-0bis : option (1) — RELANCE DE LA MANCHE 1 SUR v2. Deux amendements gravés AVANT lancement
+
+**Arbitrage Romain** : « 1. je suis ta recommandation ». La manche 1 (plan gravé
+`arc-a-manche1.md`, Tasks 3/5/6 — la Task 4 `summary.py` est déjà construite et revue sous
+M-0bis) se relance sur le substrat v2, avec les deux amendements suivants. Les seuils, mesures et
+verdicts de §A2–§A3 sont par ailleurs INCHANGÉS (L ∈ {10,20,40,80} × seeds {101..105},
+M-A1/M-A2/M-A3, cap 409.6 floats, k\*(L) médiane + clause 2×JND, pente IC 95 % bootstrap,
+sensibilité JND {2..5} % bloquante).
+
+**Amendement (i) — substrat** : le substrat de la manche 1 est **v2 gelé**
+(`SedimentParams()` par défaut = KD_CALIBRE_V2/KE_CALIBRE_V2, terrain `default_terrain`,
+protocole d'épisode inchangé). Assumé : v2 n'est PAS le substrat d'origine (gate d'identité FAIL
+2/3, voie reconstruction close) ; les claims §A1–§A5 se lisent sur CE substrat, conformément à
+§A5. La testabilité est établie par M-0bis (T_testable), pas présumée.
+
+**Amendement (ii) — §A11 requalifié : bras de contrôle instrument SYNTHÉTIQUES** (l'attendu
+d'origine « saturation triviale de v2 » est falsifié par M-0bis ; v2 devient le bras de mesure).
+Le pipeline complet (summarize/regenerate, M-A1, M-A2, k\*) tourne AUSSI sur deux champs de
+contrôle à réponse connue par construction, aux cellules L ∈ {10, 80} × seeds {101..105} :
+- **Contrôle-fermable** : `s_ferm = regenerate(summarize(s_L, ℓ=3))` (le champ vrai remplacé par
+  sa propre version 81-floats régénérée). Attendu pré-écrit : k\* = 81 floats (sous-JND dès ℓ=3,
+  M-A1 ET M-A2) à tous les JND de {2..5} %.
+- **Contrôle-infermable** : `s_shuf` = permutation aléatoire des 4096 cellules de s_L
+  (histogramme exactement préservé, structure spatiale détruite), permutation tirée de
+  `default_rng(9001 + 1000·L + seed)`. Attendu pré-écrit : k\* = ∞ (aucun niveau ne ferme, à
+  aucun JND de la plage).
+- **Lecture (gate d'instrument, type G0)** : toute cellule de contrôle qui viole son attendu →
+  **STOP, remonter** — l'instrument est suspect (itération d'instrument légitime sous discipline
+  normale : nommée, pré-annoncée, jamais silencieuse). Les contrôles ne participent PAS au
+  verdict §A3 ; ils conditionnent le droit de le lire.
+
+**Coût annoncé** : histoires 5 × 80 épisodes (~40 min CPU) + M-A2 mesure 4×5×3×2 épisodes
+(~11 min) + contrôles 2×2×5×3×2 épisodes (~23 min) — ~1h15 CPU total, en arrière-plan.
