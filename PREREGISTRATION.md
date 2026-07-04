@@ -2211,3 +2211,70 @@ amendement de dernière minute l'a fourni, pas parce que la grille le prévoyait
 apposer les clauses, re-run Tasks 5–6 + diagnostic clause 2, remonter le verdict — qui sera,
 pour la première fois de la manche, lisible quel qu'il soit. Les sorties v1 (bilinéaire) restent
 dans l'historique git (commits a64185b, 4a572c5, cf6c131).
+
+### 2026-07-04 — Manche 1 sur v2, instrument ordre 0 : gate CONFORME, PREMIER VERDICT LISIBLE — global INDÉTERMINÉ, cellule INDÉTERMINÉ-CAPACITÉ à JND=2 % (clause 1 tirée) ; prédiction directionnelle FALSIFIÉE (les Δχ baissent 120/120) ; première structure en L de la manche : k\*=1041 aux petits L, ∞ à L=80 (JND 4–5 %), hors cap
+
+**Exécution (arbitrage `9bcb09a` + clauses, 4 volets, revue indépendante avec vérification sur
+données)** : `regenerate` = constant-par-blocs (clip conservé, vérification masses 1e-12 SANS
+multiplication) ; bilinéaire conservé en audit. Incident consigné : la promesse « S∘R = id
+bit-à-bit » échouait d'1 ULP à ℓ=3 (réduction numpy non-binaire sur 64 élts/bloc) — l'implémenteur
+a STOPpé correctement ; résolution du contrôleur : **`summarize` ré-implémentée en cascade 2×2
+itérée** (définition RÉCURSIVE du cell-average de Harten, sémantique inchangée, écarts ≤ ulps
+documentés) — l'argument cascade gravé exigeait l'implémentation récursive pour être vrai en
+flottant. S∘R strict et idempotence stricte vérifiés aux 3 niveaux. 164 tests verts.
+Reproduction bit-exacte de M-0bis/run v1 : par checkout historique (consigné).
+
+**Gate des contrôles : CONFORME 0/80** — ferm 0/40 (Δχ = 0.0 exact, passe PAR CONSTRUCTION :
+contrôle de plomberie, clause 3, à ne pas relire comme validation forte) ; shuf 0/40 (k\* = ∞
+partout, Δχ ∈ [0.86, 2.18] — le contrôle discriminant). **Le verdict est LISIBLE.**
+
+**Prédiction directionnelle gravée (« M-A1/M-A2 v2 montent à chaque ℓ ») : FALSIFIÉE.** Baisse
+dans 120/120 cellules (0 hausse, 0 égalité ; recoupé indépendamment contre les valeurs v1).
+Factuel : le bilinéaire + rescale produisait des Δχ spectraux PLUS GRANDS que l'escalier
+constant-par-blocs. On grave la mesure ; le mécanisme n'est pas tranché.
+
+**k\*(L ; JND) bras v2 (médiane 5 seeds + clause 2×JND ; v1 : ∞ partout — premières cellules
+finies de la manche)** :
+
+| L | JND=2 % | JND=3 % | JND=4 % | JND=5 % |
+|---|---|---|---|---|
+| 10 | ∞ | 1041 | 1041 | 1041 |
+| 20 | ∞ | ∞ | 1041 | 1041 |
+| 40 | ∞ | ∞ | 1041 | 1041 |
+| 80 | ∞ | ∞ | ∞ | ∞ |
+
+Aucun k\* fini < 1041 : ℓ=2 (273) et ℓ=3 (81) ne ferment JAMAIS, à aucun JND, aucun L.
+
+**Verdict §A3 (mécanique, lisible)** : JND=2 % → **INDÉTERMINÉ-CAPACITÉ** (clause 1, message
+gravé : famille insuffisante à ce JND ; N'EST PAS le mur ; pas de cellule §A0 2/3 ; fork
+famille-vs-manche-2). JND=3/4/5 % → INDÉTERMINÉ (k\*(80) = ∞ → pente indéfinie ; 1041 > cap
+partout ailleurs). **Global : INDÉTERMINÉ** (non stable sur la plage).
+
+**Diagnostic escalier (clause 2, non-bloquant, cellule gravée L=10/seed=101/ℓ=3)** :
+Δχ(0) = 0.3265 (part compression statique), max_t Δχ(t) = 0.3875 (t=87), rapport **1.187** —
+la compression statique domine, la dynamique-sur-marches ajoute ~19 %. Le débat du plancher est
+démêlé d'avance : en cas de famille-insuffisante, ~84 % du Δχ vient de la compression elle-même.
+
+**Portée EXACTE (hors verdict, à ne pas surclamer)** : à 1041 floats (25 % du champ, HORS cap),
+la fermeture tient aux petits L et casse à L=80 (JND 4–5 %) — **première observation en forme de
+mur de la manche** (k\* croît avec l'histoire), mais au-dessus du cap et illisible par la grille
+§A3 : ce n'est PAS un verdict de mur. Sous le cap, la famille {block-mean ℓ, invariants} n'a pas
+la capacité, à aucun JND — c'est le sens précis d'INDÉTERMINÉ-CAPACITÉ.
+
+**Fork remonté à Romain (pré-écrit par la clause 1 : famille-vs-manche-2, décision neuve, nommée)** :
+(1) **Itération de famille nommée** : passer du coarse uniforme à un résumé ADAPTATIF (garder les
+plus grands coefficients de détail de la MRA de Harten sous un budget de floats — la machinerie
+conceptuelle existe côté pocCascade2phys ; portage numpy minimal ici). Capacité par float
+strictement supérieure ; l'observation hors-cap (fermeture à 1041 aux petits L) donne une vraie
+chance de faire rentrer k\*(petits L) sous le cap et de rendre la croissance en L LISIBLE dans la
+grille. Pré-enregistrement requis : famille nommée, grille §A3 amendée avec cellule
+« ne-peut-pas-répondre » (règle de forme), attendus des contrôles reconduits.
+(2) **Basculer manche 2** (le filet §A6 : le différenciateur survit) — la machinerie
+événements/ledger/reconstruction, plus chère, mais le substrat et l'instrument perceptuel
+sont maintenant en place.
+(3) Suspendre.
+**Recommandation : (1)** — une itération de famille est exactement ce que l'observation hors-cap
+appelle, et elle recycle tout le pipeline validé (histoires, mesures, gate, verdict).
+
+**Commits pocPhysicator** : c35e4dd (ordre 0 + cascade), ab7de1e (clause 1), 04b8163 (re-run),
+c518b11 (diag escalier), 7f12dbd (ledger).
