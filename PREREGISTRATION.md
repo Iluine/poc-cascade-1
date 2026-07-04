@@ -2409,3 +2409,54 @@ destine à l'Arc C.
 
 **Commits pocPhysicator** : 18e52b9 (module), 2ee1120 (measure_qt), 0a81832 (verdict_qt),
 a86b929 (run). Contrat : a8ed659 (famille 2 + clauses).
+
+### 2026-07-04 — Arbitrage portée-shuf : option (1) ENDOSSÉE, avec le test de défendabilité gravé AVANT la re-lecture, deux clauses de forme, et TROIS GARDES DE LECTURE posées avant de relire la table
+
+**Test de défendabilité (gravé — pourquoi cet amendement post-données n'est pas de la
+complaisance)** : un amendement post-données est de la complaisance si la PROPRIÉTÉ gardée
+change ; c'est une correction de PORTÉE si la propriété est intacte et que seule l'étendue de la
+grille était écrite trop large. Ici la propriété que shuf garde est l'anti-trivialité du
+verdict : « aucun k\* sous le cap ne peut être atteint par un champ sans structure ». Cette
+propriété vit sous le cap PAR CONSTRUCTION — c'est le cap qui définit ce que le verdict a le
+droit de lire. Les budgets 1024/2048 sont des diagnostics de la clause 4, exclus du verdict
+depuis leur gravure. Qu'un champ permuté ferme à ~50 % de la résolution n'est pas une fuite de
+l'instrument : **c'est un théorème d'échantillonnage** — à ce budget, tout histogramme se
+rapproche, et c'est précisément pour ça que le cap existe. Point décisif pour l'intégrité : la
+requalification NE PEUT PAS fabriquer le verdict, parce qu'elle ne touche aucune cellule que le
+verdict lit — les 40/40 sous cap sont conformes (0.52–0.91 sur les cellules mêmes qui posent
+problème au plafond). L'option 2 serait la sur-correction classique : amputer la queue
+débit-distorsion que l'Arc C attend, pour préserver un attendu mal écrit. **On garde les données,
+on corrige la phrase.**
+
+**Amendement gravé** : attendu shuf requalifié — « k\* = ∞ SOUS LE CAP » ; opérationnellement :
+cellule shuf CONFORME ssi k\* > 409.6 (aucune fermeture à budget ≤ 400) ; VIOLATION ssi
+k\* ≤ 400. Ferm inchangé (k\* = 32 exact, 7 budgets). Re-LECTURE sur les mesures existantes —
+zéro re-run, zéro seuil §A3 touché.
+
+**Clause de forme 1 (l'énoncé complet, les deux moitiés gravées ensemble)** : toute grille
+inclut une cellule « l'instrument ne peut pas répondre » (leçon des scellés) ET tout attendu de
+contrôle se grave avec la PORTÉE de la propriété qu'il garde (leçon d'aujourd'hui). Deux moitiés
+d'une même discipline — pré-écrire l'espace des issues Y COMPRIS les issues de l'instrument
+lui-même. Trois erreurs de portée en un arc : un pattern de rédaction, plus un accident.
+
+**Clause de forme 2 (l'étoile Arc C)** : le caveat non-discriminant sur toute cellule
+k\* ∈ {1024, 2048} SUIT LA SURFACE dans le livrable Arc C — étoile permanente « budget
+non-discriminant vs bruit » portée par la sérialisation et la figure, pas seulement par le
+journal. Sinon dans trois semaines quelqu'un lit la surface sans le journal.
+
+**TROIS GARDES DE LECTURE (posées AVANT la re-lecture de la table — dernière fenêtre où elles
+peuvent être écrites sans être suspectes)** :
+1. **La clause de sensibilité §A3 est bloquante** et JND = 2 % est vraisemblablement encore
+   infermable sous cap : le global attendu est « cellule 1 par-JND partiel + surface portée à
+   l'Arc C », PAS cellule 1 tout court. C'est le cas pré-écrit de la clause 4 — verdicts par-JND
+   divergents mais propres → global INDÉTERMINÉ, surface à l'Arc C comme l'objet que son pin
+   résout. La manche ne se clôt pas aujourd'hui ; elle se CONDITIONNE proprement à l'Arc C —
+   état final légitime et prévu.
+2. **La structure en L se lit dans les deux sens avant toute pente** : 256 à L=10 contre 400
+   ailleurs est AUSSI une croissance de k\* avec l'histoire, du même ordre que celle vue hors-cap
+   au run précédent (1041 qui casse à L=80). Si la pente §A3 la déclare compatible-zéro, c'est
+   PASS-par-la-règle et on le prononce ; mais la cohérence des deux indices de croissance se
+   consigne comme INDICE CONVERGENT au journal, non comme verdict. Ni enterré, ni surclamé.
+3. **Rappel de portée invariant** : cellule 1 sur ce substrat court-circuite la manche 2 SUR CE
+   SUBSTRAT UNIQUEMENT (§A0/§A5, réaffirmé §A6). Le claim existentiel à l'échelle du but
+   (obligations étagées, densité d'observation) reste ouvert quoi qu'il arrive dans cette table.
