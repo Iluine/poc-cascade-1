@@ -2516,3 +2516,133 @@ k\*, gate, verdict) et les deux familles sont commités et reproductibles.
 
 **Commits pocPhysicator** : 49189d1 (gate requalifié + étoile), 11091a0 (verdict re-généré).
 Contrat : fa54d20 (amendement + gardes). Historique complet de la manche : 04ac96f → 11091a0.
+
+---
+
+## Addendum Arc C — Pin du référent perceptuel (JND) : §C0–§C5 (gravé le 2026-07-05, AVANT toute mesure et avant toute lecture bibliographique)
+
+> Arbitrage Romain : Arc-C-d'abord (manche 2 différée derrière le pin — ses seuils M-A
+> hériteraient sinon du placeholder, la faute originelle de l'arc réinjectée dans le claim
+> existentiel). Le pin est le goulot : quatre consommateurs gatés attendent.
+
+### §C0 — Décision de niveau BUT : mapping obligations étagées → régimes de mesure
+> **PROPOSÉ — point d'arrêt Task 0, validation Romain requise avant toute mesure.**
+
+Les obligations étagées (§A6) impliquent des JND **étagés**. Mapping proposé :
+- **Étage 2 (émissions : captures, revisites conjointes, comparaisons entre joueurs)** →
+  régime **SÉVÈRE** : ABX simultané, stimuli côte-à-côte, inspection libre sans limite de
+  temps — le pire cas réel (une capture comparée pixel à pixel au monde re-dérivé).
+- **Étage 3 (revisite libre, mémoire du joueur)** → régime **LAXISTE** : ABX séquentiel,
+  délai de rétention D = 5 s + masque bruité entre présentations, exposition limitée (2 s).
+  **Borne sévère assumée de l'étage 3 réel** (la vraie revisite se compte en heures/jours,
+  sans référence) : tout PASS à JND_lax vaut a fortiori — le conservatisme est du bon côté.
+- Le pin livre **deux scalaires par axe** (JND_sev, JND_lax), chacun avec IC.
+- Lecture double de la surface k\* : la ligne sévère dit ce que les ÉMISSIONS coûtent ;
+  la ligne laxiste ce que la REVISITE LIBRE coûte. **Le claim §A2 (fermeture du couple
+  résumé+régénérateur) se lit à JND_sev** — c'est l'obligation d'émission qu'il garantit.
+  L'écart sev/lax, s'il est grand, pré-annonce un stockage à deux étages (régions jamais
+  émises = résumés plus maigres) — noté pour la spec, aucune décision ici.
+
+### §C1 — Portée et statut du pin (gravé)
+
+- Le pin est un **référent d'ingénierie** : n = 1 (Romain), sujet informé, écran et
+  conditions fixés. Ce n'est PAS un invariant psychophysique universel. Biais nommés et
+  gardés (§C5), pas éliminés.
+- **Deux axes** : (α) **spatial** — Δχ-albedo, l'instrument R1 existant (bande porteuse
+  dominante mesurée : 4–7 cycles/domaine) ; (β) **temporel** — déficit de largeur spectrale
+  σ_ω des grandes structures (l'axe de l'étage 1 Boussinesq ; balayage pré-conçu [−10, −60] %).
+- **Conditions d'affichage gravées en Task 0 avant mesure** : distance d'observation, taille
+  affichée du domaine (→ taille angulaire), colormap = le rendu réel (`render.py`),
+  luminance/gamma de l'écran, durée d'exposition par régime. Tout changement de condition =
+  nouvelle mesure consignée, jamais une retouche.
+- Le pin **remplace le placeholder [2, 5] %** dans tout usage futur (seuils M-A de la
+  manche 2 inclus). Les verdicts passés ne sont jamais relus rétroactivement ; les verdicts
+  CONDITIONNELS (surface k\*, cellule kx=1@1 %) se lisent au pin — c'est leur définition.
+
+### §C2 — C-1 : encadrement bibliographique (jamais un pin seul)
+
+**Exécutant : la session critique (chat), PAS Claude Code.** Procédure de conversion
+pré-écrite, gravée AVANT d'ouvrir le moindre papier (le lecteur connaît la surface k\* ;
+chaque degré de liberté de conversion est un knob) :
+1. Fréquence : bande porteuse (4–7 cycles/domaine) × taille angulaire gravée → cycles/degré.
+2. Adaptation : luminance moyenne du rendu → niveau photopique (choix nommé n°1 : CSF de
+   référence, une seule, citée).
+3. Seuil CSF (contraste Michelson) → Δχ-RMS : ratio RMS/Michelson **mesuré sur NOS stimuli**
+   (jamais supposé) (choix nommé n°2 : taille de patch / sommation spatiale).
+**Budget de choix arbitraires ≤ 3, nommés.** Au-delà → C-1 rétrogradé à ENCADREMENT d'ordre
+de grandeur, C-2 tranche. Lectures pré-écrites : intervalle [lo, hi] entièrement ≥ 4 % →
+présomption côté PASS, C-2 confirme ; entièrement ≤ 2 % → présomption sévère ; chevauchant →
+aucun verdict. **C-1 ne pin jamais seul** (gratings ≠ heatmap texturée).
+Axe temporel : transfert littérature (flicker/discrimination temporelle) attendu MAUVAIS —
+C-1-temporel = encadrement au mieux, gravé d'avance.
+
+### §C3 — C-2 : harnais ABX sur stimuli réels (le pin)
+
+- **Stimuli spatiaux** : paires (vrai, dégradé) issues des npz commités de la manche 1 —
+  aucun stimulus synthétique, aucun re-run de simulation. Axe de stimulation continu :
+  mélange linéaire `stim(t) = (1−t)·vrai + t·régénéré(budget)`, t ∈ [0, 1] ; **Δχ(t) est
+  MESURÉ par l'instrument R1 sur chaque stimulus présenté** (pas supposé linéaire).
+- **Stimuli temporels** : films projetés Boussinesq Ra = 10⁷ à σ_ω(kx=1) réduit
+  paramétriquement de −10 à −60 % (le balayage pré-conçu). Archives perdues (reboot) →
+  régénération nécessaire ; coût plafonné (§Partie 2). L'axe spatial passe EN PREMIER
+  (stimuli déjà commités, zéro régénération).
+- **Procédure** : ABX (réponse au percept, pas de oui/non → pas de biais de critère),
+  staircase adaptatif 2-down-1-up (convergence ~70.7 % correct), seuil = moyenne des 6
+  derniers renversements, exprimé en Δχ mesuré (spatial) ou en % de réduction σ_ω (temporel).
+  **≥ 3 staircases par condition** (axe × régime), ordre des essais non révélé au sujet.
+- **Sorties** : JND_sev^spat, JND_lax^spat, JND_sev^temp, JND_lax^temp — chacun valeur + IC
+  (dispersion inter-staircases).
+
+### §C4 — Lectures pré-écrites des quatre consommateurs (gravées avant le premier essai)
+
+**1. Surface k\*(L, JND) — manche 1.** Lecture à JND_sev^spat, sur l'IC ENTIER :
+- IC entier ≥ 4 % → **cellule-1-candidate**. GARDE GRAVÉE (avant le pin, dernière fenêtre
+  non suspecte) : le prononcé définitif exige l'**extension 16L₀** (L = 160, l'option (a)
+  de §A3, une seule fois) — les IC de pente PASS sont bornés à zéro par le bas (k\* quantifié
+  ne décroît pas), la compatibilité-zéro y est sa forme la plus faible ; L = 160 donne à la
+  pente une vraie chance de casser. Tient → cellule 1, portée §A5 (ce substrat, ce JND).
+- IC entier ≤ 3 % → la ligne opérante est infermable/non-discriminante → manche 1 =
+  **NON-DÉMONTRÉ au pin** (la règle de dernière famille s'applique : pas de 3ᵉ famille sans
+  décision nommée) → hypothèse ledger, la dépense suivante est la manche 2.
+- IC à cheval sur la frontière 3/4 % → INDÉTERMINÉ maintenu ; UNE session C-2
+  supplémentaire autorisée pour resserrer l'IC (une seule, gravée) ; sinon porté tel quel.
+**2. σ_ω / W1 — lecture en ÉTAU, l'économie pré-écrite.** La psychométrique temporelle se
+lit aux DEUX bornes de l'incertitude W0 : −10 % (W-loi) et −19 % (W-plancher, le chiffre
+Arc V). Trois issues :
+- les deux sub-JND_t → déficit imperceptible quel que soit loi/plancher → le descend est au
+  chômage à Ra = 10⁷ sur cet axe → **W1 MORT** (l'achat 19.4 h s'annule), frontière fovéa-z
+  simplifiée d'autant.
+- les deux supra-JND_t → déficit perceptible même à l'estimation optimiste → job du descend
+  confirmé perceptuellement → **W1 MORT AUSSI** (le 3ᵉ point ne changerait pas le verdict).
+- seuil DANS [−19, −10] → W1 redevient décisionnel → re-arbitrage de l'achat (options W0),
+  avec une justification enfin réelle.
+Deux issues sur trois tuent une dépense de 19.4 h : c'est l'économie que l'ordre
+Arc-C-d'abord achète.
+**3. Cellule grise kx=1 @ JND = 1 %.** JND_sev^spat ≥ 2 % → moot (gravé d'avance) ; < 2 % →
+relecture des données existantes au pin (gratuit). Portée : le pin spatial est mesuré sur
+l'albedo ; le transfert aux films de luminance Boussinesq est une hypothèse NOMMÉE — si les
+sessions temporelles ont lieu de toute façon, une staircase spatiale sur stimuli Boussinesq
+(coût marginal) remplace l'hypothèse par une mesure.
+**4. Gate fovéa-z.** S'ouvre sur : manche 1 lisible-au-pin (consommateur 1) + pin (cet arc)
++ W1 résolu-ou-mort (consommateur 2). Pré-écrit : dans 2 des 3 issues du consommateur 2,
+le gate n'attend plus que le consommateur 1.
+
+### §C5 — Gardes anti-fabrication (bloquantes)
+
+1. **Le sujet connaît la surface k\*** — biais nommé. Parades structurelles : ABX (se
+   tromper volontairement est la seule triche possible, et elle est détectable), staircase
+   adaptatif à niveau non révélé, axe t continu (le sujet ignore le Δχ de l'essai courant).
+2. **Catch trials** à Δχ fort insérés aléatoirement (~10 % des essais) : réussite ≥ 90 %
+   sinon session INVALIDE. Deux sessions invalides consécutives → STOP, remonter (fatigue
+   ou protocole), jamais de moyenne complaisante.
+3. **Cohérence inter-staircases** : dispersion ≤ 30 % de la moyenne, sinon la condition est
+   INDÉTERMINÉE (pas de cherry-pick de staircase).
+4. **Lecture des consommateurs sur l'IC entier du pin**, jamais au point central (leçon
+   T1.5-e : le verdict qui bascule dans l'IC est INDÉTERMINÉ).
+5. Toute grille de ce document inclut sa cellule « l'instrument ne peut pas répondre »
+   (sessions invalides, staircases incohérentes) ; tout attendu de contrôle est gravé avec
+   la **portée de la propriété qu'il garde** (règle de forme, deux moitiés, désormais
+   standard).
+6. Ordre gravé : validation C-0 → conditions d'affichage → C-1 (chat) → C-2 spatial →
+   C-2 temporel → lectures §C4. Aucune lecture de consommateur avant la fin des mesures de
+   l'axe concerné.
