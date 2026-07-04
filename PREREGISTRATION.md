@@ -2102,3 +2102,52 @@ contrôle à réponse connue par construction, aux cellules L ∈ {10, 80} × se
 
 **Coût annoncé** : histoires 5 × 80 épisodes (~40 min CPU) + M-A2 mesure 4×5×3×2 épisodes
 (~11 min) + contrôles 2×2×5×3×2 épisodes (~23 min) — ~1h15 CPU total, en arrière-plan.
+
+### 2026-07-04 — Manche 1 sur v2, pipeline complet exécuté : GATE D'INSTRUMENT EN VIOLATION (contrôle-fermable 40/40) — verdict §A3 SCELLÉ, non prononçable. Le contrôle synthétique a attrapé un plancher instrumental supra-JND : le régénérateur bilinéaire ne peut certifier k\*=81 pour AUCUN champ
+
+**Exécution (Tasks 3/5/6 du plan gravé + amendements `8e02dd6`, revues indépendantes à chaque
+tâche, un correctif de traçabilité au gate — même seuils, verdict.json inchangé au champ près)** :
+- Task 3 : 5 histoires × 80 épisodes (seeds 101–105), checkpoints L ∈ {10,20,40,80}, npz commités,
+  sanity PASS (path-dependence inter-seeds au readout f = 0.71 ; replay bit-à-bit).
+- Task 5 : mesures M-A1/M-A2 des trois bras (v2 grille complète ; contrôles ferm/shuf à L ∈ {10,80}),
+  `measures.npz`. Déterminisme vérifié.
+- Task 6 : k\*(L) + clause 2×JND, gate des contrôles PAR CELLULE avant toute lecture, pentes
+  bootstrap (10 000, seedé), verdict §A3 mécanique, figures + GIF pire-cas. 139 tests verts.
+
+**GATE DES CONTRÔLES (amendement ii, lu en premier)** :
+- **shuf (attendu k\* = ∞) : CONFORME 40/40** — max(M-A1,M-A2) ∈ [1.36, 2.28], jamais fermé.
+- **ferm (attendu k\* = 81) : VIOLATION 40/40** — jamais k\* = 81 (souvent 1041, parfois ∞).
+- → **verdict §A3 du bras v2 SCELLÉ « NON LISIBLE »** (audit, non-verdict : INDÉTERMINÉ ×4 JND,
+  k\*(L) = ∞ partout — rien ne ferme sous le cap à aucun L). Cellule §A0 : NON DÉTERMINÉE.
+
+**Diagnostic (mesuré, pas spéculé — chiffres du contrôle-fermable = champ DÉJÀ lisse à l'échelle
+8 cellules)** : le round-trip du compresseur, R∘S, n'est pas une projection — l'upsampling
+bilinéaire n'est pas un inverse à droite de la moyenne par blocs. Son PLANCHER propre, mesuré sur
+son propre point image : Δχ ≈ 0.014–0.032 (ℓ=1), 0.04–0.08 (ℓ=2), **0.09–0.19 (ℓ=3) — au-dessus
+de TOUTE la plage JND [0.02, 0.05]**. Conséquence structurelle : avec CE régénérateur, aucun champ
+— même parfaitement résumable — ne peut fermer à 81 floats, et 273 est marginal. La question §A3
+(k\*(80) ≤ 409.6) était inrépondable positivement par construction. Le bras nul synthétique a fait
+exactement son travail (leçon M-0/M-0bis appliquée : c'est le 3ᵉ instrument que les contrôles
+attrapent avant qu'il fabrique un verdict).
+
+**Ce que les données disent SOUS le scellé (audit, à ne pas surclamer)** : le signal v2 est 2–5×
+au-dessus du plancher instrumental à chaque niveau (ℓ=1 : 0.02–0.12 vs plancher ~0.02 ; ℓ=2 :
+0.10–0.39 vs ~0.06 ; ℓ=3 : 0.27–0.85 vs ~0.14) — la non-fermeture de v2 n'est pas QUE du
+plancher. Mais la part exacte est indémêlable tant que le plancher est supra-JND : verdict
+illisible, pas de FAIL prononcé.
+
+**Fork remonté à Romain (STOP obligatoire du plan, options)** :
+(1) **Itération d'instrument nommée : régénérateur → upsampling constant-par-blocs (ordre 0,
+Harten canonique)**. S∘R devient l'identité EXACTE (R∘S = projection) : plancher = 0 bit-à-bit,
+le contrôle-fermable passe par construction (et reste un vrai test de plomberie), toute
+non-fermeture mesurée sur v2 devient du signal pur. Prix assumé : les artefacts de bloc du
+régénéré comptent comme différence perceptuelle réelle — c'est honnête, le claim §A2 porte sur le
+couple résumé+régénérateur. Implémentation additive (`summary.py`), mêmes seuils, re-run
+Tasks 5–6 (~12 min). Amendement de la spec Task 4 du plan (bilinéaire → constant) à graver.
+(2) Garder le bilinéaire et redéfinir le contrôle-fermable comme point fixe de R∘S — répare
+l'équité du contrôle mais PAS le plancher : le verdict v2 resterait confondu. Déconseillé.
+(3) Suspendre.
+**Recommandation : (1).**
+
+**Commits pocPhysicator** : 04ac96f (histoires), a64185b+4a572c5 (mesures), 96eaf70+cf6c131
+(verdict+figures), 12f0446 (traçabilité gate), 846abce (ledger).
