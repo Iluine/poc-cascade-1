@@ -1973,3 +1973,40 @@ moindre coût si la testabilité sur v2 se confirme.
 
 **Commits pocPhysicator** : 09fca34 (M-0 + JSON), 0568e55 (ledger). Contrat : 598fabd (§A6–§A11),
 b778924 (plan).
+
+### 2026-07-04 — M-0bis PRÉ-ENREGISTRÉE (avant exécution) : sonde de testabilité de la manche 1 sur v2 — arbitrage option (2) du fork M-0
+
+**Arbitrage Romain** : « 2, mesure la testabilité sur v2 d'abord ». Le risque à exclure avant de
+relancer la manche 1 sur v2 est le **PASS fabriqué** (fermeture triviale d'un résumé grossier,
+l'attendu §A11 du bras nul). La sonde est le moins cher qui peut falsifier la testabilité.
+
+**Protocole (figé avant build/run)** :
+- Build de `src/summary.py` **strictement selon la spec gravée du plan manche 1, Task 4**
+  (`docs/superpowers/plans/arc-a-manche1.md` : block-mean dyadique ℓ ∈ {1,2,3} + masse totale +
+  masses 4×4 ; régénération bilinéaire, clip ≥ 0, rescale multiplicatif par sous-domaine, division
+  protégée ; tailles 1041/273/81 floats vs 4096) + les tests du plan (M-A3 ≤ 1e-12 et identité
+  cross-process, anti-fuite par `inspect.signature` + décoy, tailles exactes, invariants 1e-10,
+  round-trip constant exact). Aucun écart de spec sans STOP.
+- Champs sondés : `s_direct` et `s_inversé` de M-0 (seed 7, L₀ = 10, constantes V2 gelées).
+- **M-A1 instantané** : Δχ(albedo(regenerate(summarize(s, ℓ))), albedo(s)) au point d'op S_HALF,
+  critère R1 (max sur bandes porteuses ≥ 10 % AC), pour ℓ ∈ {1, 2, 3}.
+- **M-A2-mini** : rollout de 1 épisode — centre = 11ᵉ tirage de la même rng (seed 7), IDENTIQUE
+  pour les deux histoires — depuis s_regen(ℓ) ET depuis s_vrai ; Δχ des albedos à chaque snapshot
+  d'intégration Exner le long de l'épisode ; statistique = **max le long du rollout** (statistique
+  M-A2 gravée, restreinte à 1 épisode). L'accès aux s intermédiaires se fait par fonction ADDITIVE
+  (aucun chemin de code v2 modifié).
+- Niveaux sous le cap anti-trivialité (§A3 : ≤ 409.6 floats) : **81 et 273** ; ℓ=1 (1041) rapporté
+  hors-cap à titre indicatif. Diagnostic rapporté : f_close (convention M-0) par niveau.
+
+**Lectures pré-écrites (mécaniques)** :
+- **T-triviale** : pour TOUS les niveaux sous cap (81 ET 273) et LES DEUX histoires,
+  max(M-A1, M-A2-mini) < 2 % (JND le plus sévère) → la fermeture est triviale sur toute la plage
+  JND → manche 1 sur v2 VACANTE en l'état → retour au fork (option 1 : gate contrastif + build
+  suspension redevient la voie).
+- **T-testable** : sinon (≥ 1 cellule niveau-sous-cap × histoire × JND ∈ [2,5] % qui ne ferme pas)
+  → l'instrument a de la plage dynamique → remonter avec recommandation de relancer la manche 1
+  sur v2. NOTE : T-testable falsifierait AUSSI l'attendu pré-écrit §A11 (« saturation triviale du
+  bras nul ») — à requalifier au point d'arrêt, pas silencieusement.
+
+**Portée** : la sonde ne TRANCHE que la testabilité. Elle n'est PAS le verdict manche 1 (k\*(L)
+exige le balayage L ∈ {10,20,40,80} × 5 seeds du plan gravé) et ne s'y substituera pas.
