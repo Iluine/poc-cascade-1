@@ -2646,3 +2646,69 @@ le gate n'attend plus que le consommateur 1.
 6. Ordre gravé : validation C-0 → conditions d'affichage → C-1 (chat) → C-2 spatial →
    C-2 temporel → lectures §C4. Aucune lecture de consommateur avant la fin des mesures de
    l'axe concerné.
+
+### §C6 — Task 0 : validation C-0 + amendement géométrie + conditions + fork temporel (gravé le 2026-07-05, AVANT tout stimulus)
+
+**Concession de niveau contrat (Romain).** Le cap « régénération plafonnée à 2 h CPU » du
+prompt de mission (Partie 2) **présupposait un solveur Boussinesq présent sur la machine**. Il
+ne l'est pas (grep exhaustif src/scripts/docs/historique : le code convection n'a jamais été
+porté ici — journal seul, comme le sédiment et les archives Arc V). C'est la troisième fois
+qu'un artefact load-bearing manque à l'inventaire ; cette fois l'hypothèse silencieuse était
+**dans le document de mission**, et la reconnaissance de l'exécutant (Task 0) l'a attrapée
+avant qu'elle coûte. Gravé comme fait.
+
+**C-0 — VALIDÉ, avec amendement de géométrie (bloquant, il déplace le pin).**
+
+Le reste de §C0 est co-signé tel quel : étage 2 → **sévère** (ABX simultané, inspection libre) ;
+étage 3 → **laxiste** (ABX séquentiel, D = 5 s, masque bruité, 2 s d'exposition, borne sévère
+assumée de l'étage 3 réel) ; **le claim §A2 se lit à JND_sev**. L'amendement ne porte que sur
+la géométrie d'affichage — qui n'est PAS un détail de confort mais un **knob qui déplace le
+pin** :
+
+- **Le knob, nommé.** La géométrie « naturelle » proposée en Task 0 (domaine 64×64 à ~10 cm de
+  côté, vu à ~60 cm ≈ 9.5° d'angle) place la bande porteuse (4–7 cycles/domaine) à **0.4–0.7
+  cycles/degré** — très en dessous du pic de sensibilité de l'œil (~2–5 c/deg). Conséquence
+  DIRECTIONNELLE : à cette géométrie on mesure un JND **plus laxiste** que ce qu'un observateur
+  au pic percevrait — c.-à-d. le réglage qui rend le **PASS de la surface k\* le plus facile**.
+  Personne ne l'a choisi pour ça, mais c'est ce qu'il fait, et quiconque connaît la surface
+  sait que 4 % = PASS. Le knob se neutralise, il ne se laisse pas jouer.
+- **Décision gravée (adversariale-mais-bornée).** Une **seule géométrie pour les deux régimes**,
+  calculée pour placer la bande porteuse **au pic CSF (~3 c/deg)** — soit un domaine affiché à
+  **~1.8–2° d'angle visuel** (l'exécutant calcule la taille en pixels depuis le matériel réel,
+  cf. conditions ci-dessous).
+- **Bonus non accidentel** : à cette taille, une cellule ≈ **1.7 minute d'arc**, sous l'acuité —
+  le stimulus est une **texture, pas une grille pixel-peepable** → confound de comptage de
+  pixels écarté.
+- **Direction du conservatisme, pré-écrite** : pin au pic = **borne sévère** ; **tout PASS à ce
+  pin vaut a fortiori à toute géométrie plus lâche.**
+- **Zoom libre EXCLU de l'opérationnalisation de l'étage 2 (décision de portée, gravée — pas
+  glissée).** Le zoom illimité (le pire cas littéral d'une capture comparée pixel à pixel)
+  effondrerait le pin vers le **plancher de quantification de la colormap (~0.4 %)** et rendrait
+  à peu près tout infermable. L'exclure est défendable — **la comparaison naturelle de captures
+  se fait à taille naturelle** — mais c'est un choix de portée qui appartient au contrat, donc
+  il est écrit ici et pas supposé. Résiduel nommé.
+- **Condition diagnostique optionnelle.** La géométrie 9.5° peut rester comme **condition
+  diagnostique NON-VERDICTALE** (si le budget d'essais le permet) — **jamais** comme ligne de
+  lecture d'un consommateur.
+
+**Conditions d'affichage.** Validées en l'état : **colormap = viridis, vmin = 0, vmax = 1,
+origin = lower** (`render.py`/`io_utils.py`) = le rendu réel, **zéro choix neuf**. Gamma **sRGB
+supposé** + **luminosité de l'écran fixée et notée** = **choix nommé n°3** du budget C-1. Le
+**budget C-1 est donc CONSOMMÉ** (CSF de référence, taille de patch, gamma) — plus aucun choix
+libre disponible, exactement là où on voulait être. **En attente de Romain (ne peut venir que
+de lui, entre dans la conversion c/deg)** : modèle/taille/résolution de l'écran des sessions et
+**distance mesurée** (mesurée, pas estimée). Ces deux chiffres closent la taille-pixels de la
+géométrie ~1.8–2° ; ils ne bloquent QUE Task 3 (sessions), pas Tasks 1–2.
+
+**Axe temporel — (c) backup en parallèle de (b) spatial-d'abord ; fork nommé, tranché avant
+Task 4 seulement.** Raison de fond (statut, pas confort) : les bornes de l'étau §C4-2
+**[−19, −10] %** sont des **propriétés de l'instrument d'origine** (solveur, κ=4, projection) ;
+un JND mesuré sur des films **reconstruits** porte une **hypothèse de transfert** vers ces
+chiffres. Aujourd'hui ne se décide QUE : spatial démarre, backup se cherche. Si (c) échoue, le
+fork se nomme entre :
+- **(a)** reconstruction Boussinesq, **hypothèse de transfert gravée** ;
+- **(a′)** films synthétiques à σ_ω paramétrique — ~10× moins cher, **hypothèse de transfert
+  pire** (la structure de panache compte probablement dans la perception de largeur de bande) ;
+- **(d)** porter l'étau **non résolu** → W1 **mort-par-défaut**, gate fovéa-z suspendu au **seul
+  consommateur 1**.
+Aucune de ces branches ne se décide ce jour.
