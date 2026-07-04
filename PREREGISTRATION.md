@@ -2712,3 +2712,75 @@ fork se nomme entre :
 - **(d)** porter l'étau **non résolu** → W1 **mort-par-défaut**, gate fovéa-z suspendu au **seul
   consommateur 1**.
 Aucune de ces branches ne se décide ce jour.
+
+### §C7 — Refonte géométrie « cible-jeu » + levée du point d'arrêt Task 0 (VALIDÉ Romain, 2026-07-05)
+
+**Deux corrections de Romain au point d'arrêt Task 0**, qui corrigent l'**appareil de mesure** et
+la **portée** — aucun seuil touché : **(1)** la cible est un **jeu** → ne pas baser le pin sur un
+écran fixé, il doit valoir *quel que soit l'écran* ; **(2)** on ne peut **pas présumer** ce que
+feront les joueurs. Elles **amendent §C6 sur deux résiduels** — la « taille en pixels depuis le
+matériel » (dépendance à un écran) et l'**exclusion du zoom** (présomption de comportement).
+§C6 reste au journal, non réécrit (append-only) ; §C7 le supersède sur ces deux points.
+
+**1. Auto-calibration — pin ancré en cycles/degré, garantie inter-écrans par borne.**
+Le pin n'est jamais « l'écran de Romain » : c'est un scalaire **ancré en c/deg**. Garantie
+inter-écrans par **borne de sensibilité**, pas par moyenne d'écrans :
+- Le pin est mesuré à la **géométrie la plus sensible du régime texture** (porteuse au pic CSF
+  ~3 c/deg). Tout joueur, tout écran, toute distance « comme prévu » voit à une sensibilité
+  **≤** celle du pin → **un PASS au pin tient a fortiori pour tous**.
+- Le **harnais s'auto-calibre à l'écran où il tourne** : au démarrage de session, longueur de
+  référence mesurée à l'écran + distance d'observation mesurée → pixels-par-degré → le domaine
+  est rendu à la taille angulaire cible sur *n'importe quel* écran. Ces deux chiffres sont un
+  **input de calibration par session** (consignés comme **conditions de validité** de la
+  session, avec repère physique de distance maintenu pendant les essais) — **plus** un paramètre
+  d'écran gravé au contrat.
+
+**2. Deux régimes bornés — plancher pixel-peep MESURÉ (pas argué).** On remplace l'exclusion du
+zoom (§C6) par un **bornage aux deux extrêmes**, aucune présomption entre :
+- **Régime texture** — pin primaire au pic CSF (ce que mesure C-2 spatial).
+- **Régime pixel-peep** — quand le joueur zoome jusqu'à voir les cellules, l'artefact devient la
+  **blockiness structurelle** du quadtree ; le référent s'effondre vers le **plancher de
+  quantification colormap (~0.4 %)**. Ce plancher est **MESURÉ** (une staircase à l'échelle
+  pixel, coût marginal une fois le harnais construit) — **pas** argué depuis la colormap (seule
+  règle que l'arc n'a jamais enfreinte : mesuré ≠ supposé).
+- **Deux lectures pré-écrites, quel que soit le côté où la mesure tombe** : plancher mesuré
+  franchement sous le pin texture → les deux régimes sont nettement séparés, le fork zoom
+  (pièce 4) tranche lequel borne ; plancher mesuré proche du pin texture → les régimes se
+  recouvrent, le pin texture borne quasi partout et le fork zoom perd son mordant.
+
+**3. Colmatage du trou de monotonie — plafond quantitatif du régime texture.** Entre pic-CSF et
+pixel-peep, la sensibilité n'est pas garantie monotone en taille angulaire (à ~1.8–2°, une
+cellule est déjà près de l'acuité — la couture de la pièce 2). On la ferme par un **plafond
+calculé, pas affirmé** : le régime texture est borné par la taille angulaire où **une cellule =
+le plafond d'acuité (borné en minutes d'arc)**, **calculé par le harnais depuis la calibration**.
+Règle pré-écrite : **si le zoom max du jeu approche ce plafond, une staircase à la géométrie
+max-autorisée remplace l'argument** (on mesure au bord au lieu de supposer que le pic-CSF borne
+tout le régime).
+
+**4. Fork zoom OUVERT — avec son étiquette de prix (gravée pour qu'il ne se referme pas par
+oubli).** Le zoom max du jeu **sélectionne la borne liante** ; c'est une **décision de design du
+jeu (à Romain), non due aujourd'hui**. Le prix de chaque côté est écrit :
+- zoom plafonné à l'échelle texture → **pin texture borne** ;
+- **zoom pixel illimité sur champs persistants** → référent au **plancher** → **obligations de
+  re-dérivation quasi exactes** sur l'émis-en-zoom → **stockage grade-ledger** pour ces régions
+  (rejoint la note §C0 : régions jamais émises = résumés plus maigres ; ici l'inverse — régions
+  zoomées-émises = résumés quasi exacts).
+- **Conséquence load-bearing, non lissée** : la surface k\* de la manche 1 se lit à JND_sev
+  **dans le régime texture uniquement**. Si le jeu autorise le zoom pixel, le référent liant de
+  la lecture k\* devient le plancher, et à ce JND la manche 1 part très probablement
+  **NON-DÉMONTRÉ**. **La politique de zoom du jeu est donc en amont du verdict de la manche 1.**
+
+**Levée du point d'arrêt Task 0 (les deux items restants, VALIDÉS Romain).**
+- **C-0 — mapping VALIDÉ** : étage 2 (émissions) → **sévère** (ABX simultané, inspection libre) ;
+  étage 3 (revisite) → **laxiste** (ABX séquentiel, D = 5 s, masque bruité, 2 s d'exposition) ;
+  **claim §A2 lu à JND_sev**. (§C0 n'est plus PROPOSÉ : validé.)
+- **Conditions d'affichage** : colormap = viridis/vmin=0/vmax=1/origin=lower = rendu réel, **zéro
+  choix neuf** ; gamma **sRGB supposé** + **luminosité notée par session** = choix nommé n°3 ;
+  **budget C-1 consommé** (CSF réf, taille de patch, gamma). Les paramètres d'écran gravés sont
+  remplacés par la **calibration par session** (pièce 1).
+- **Axe temporel — (b) + (c) CONFIRMÉ** : spatial d'abord (stimuli commités, zéro régénération)
+  pendant que Romain cherche le code Arc V sur backup ; fork **(a/a′/d) nommé (§C6), dû avant
+  Task 4 seulement si (c) échoue**.
+- **Point d'arrêt Task 0 entièrement levé.** La mesure procède. Question terminale inchangée :
+  **JND_sev^spat avec son IC, et de quel côté de la frontière 3/4 % il tombe entier** (lecture
+  du consommateur 1, §C4).
