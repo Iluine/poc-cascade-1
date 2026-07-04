@@ -2460,3 +2460,59 @@ peuvent être écrites sans être suspectes)** :
 3. **Rappel de portée invariant** : cellule 1 sur ce substrat court-circuite la manche 2 SUR CE
    SUBSTRAT UNIQUEMENT (§A0/§A5, réaffirmé §A6). Le claim existentiel à l'échelle du but
    (obligations étagées, densité d'observation) reste ouvert quoi qu'il arrive dans cette table.
+
+### 2026-07-04 — MANCHE 1, PREMIER VERDICT PRONONÇABLE : PASS à JND 4 % et 5 % (k\* = 400 float-éq ≤ cap, plat en L), INDÉTERMINÉ à 2–3 % — GLOBAL INDÉTERMINÉ (clause de sensibilité) → la surface k\*(L, JND) est portée à l'Arc C. Les trois gardes de lecture appliquées
+
+**Re-lecture (amendement fa54d20 appliqué, re-revue indépendante)** : gate re-lu **CONFORME
+0/80** (ferm 0/40 inchangé ; shuf 0/40 sous la portée requalifiée — les 7 ex-violations, toutes
+k\* = 2048, hors du domaine que le gate protège). Vérification d'intégrité décisive : les
+k\*/pentes/IC du verdict re-généré sont **bit-identiques** à l'audit pré-amendement — le
+déverrouillage vient de la seule règle de lecture du gate, pas d'un recalcul. 301 tests verts.
+
+**Surface k\*(L, JND) — bras v2, médianes 5 seeds (★ = cellule non-discriminante vs bruit,
+étoile portée par le JSON et la figure — clause de forme 2)** :
+
+| L | JND=2 % | JND=3 % | JND=4 % | JND=5 % |
+|---|---|---|---|---|
+| 10 | 1024★ | 400 | 400 | **256** |
+| 20 | 1024★ | 400 | 400 | 400 |
+| 40 | 1024★ | 1024★ | 400 | 400 |
+| 80 | 2048★ | 1024★ | **400** | **400** |
+
+**Verdict §A3 (mécanique)** : pentes L∈{40,80} + IC 95 % bootstrap : 2 % : 25.6 [-25.6, 25.6] ;
+3 % : 0 [-25.6, 41.2] ; 4 % : 0 [0, 15.6] ; 5 % : 0 [0, 3.6].
+- **JND 4 % : PASS** (k\*(80) = 400 ≤ 409.6 ET IC ∋ 0). **JND 5 % : PASS** (idem, k\*(10) = 256).
+- JND 2 % : INDÉTERMINÉ (k\*(80) = 2048 > cap ; pente non concluante). JND 3 % : INDÉTERMINÉ
+  (k\*(80) = 1024 > cap).
+- **GLOBAL : INDÉTERMINÉ** (clause de sensibilité §A3, bloquante — non stable sur la plage).
+- **Issue mappée (clause 4, verbatim)** : « global INDÉTERMINÉ — surface k\*(L, JND) portée à
+  l'Arc C ».
+
+**Les trois gardes appliquées (gravées AVANT cette lecture, fa54d20)** :
+1. **« Cellule 1 par-JND partiel + surface à l'Arc C », PAS cellule 1 tout court.** Le global
+   attendu par la garde est advenu à l'identique. Sens du PASS partiel, portée exacte : sur v2,
+   à JND ∈ {4, 5} %, un résumé quadtree de ≤ 400 float-éq (9.8 % du champ) tient le readout
+   albedo sous JND, instantanément (M-A1) ET sous dynamique (M-A2), à TOUS les L ∈ {10..80},
+   avec k\*(L) plat — le claim §A2 tient à ces JND sur ce substrat. À 2–3 %, la question reste
+   ouverte sous le cap (et les cellules hors-cap y sont non-discriminantes ★). **La manche ne se
+   clôt pas : elle se CONDITIONNE à l'Arc C** — le pin JND réel choisira la courbe opérante sur
+   la surface étoilée. État final légitime et prévu.
+2. **PASS-par-la-règle prononcé ; l'indice de croissance consigné comme indice, ni enterré ni
+   surclamé** : 256 (L=10) → 400 (L≥20) à JND 5 % est une croissance de k\* avec l'histoire, du
+   même ordre que l'indice hors-cap de la famille 1 (1041 qui casse à L=80). Noter aussi que les
+   IC des pentes PASS sont [0, 15.6] et [0, 3.6] — bornés à zéro PAR LE BAS (k\* quantifié ne
+   décroît pas) : la compatibilité-zéro y est la forme la plus faible. **Indice convergent d'une
+   croissance douce de k\* en L, sous le seuil de résolution de la grille actuelle** — consigné
+   comme indice au journal, PAS comme verdict. L'Arc C et toute manche 2 doivent le connaître.
+3. **Portée invariante** : le PASS partiel court-circuite la manche 2 SUR CE SUBSTRAT UNIQUEMENT
+   et AUX JND où il tient (§A0/§A5/§A6). Le claim existentiel à l'échelle du but (obligations
+   étagées, densité d'observation croissante/adversariale) reste ouvert.
+
+**État de l'Arc A à la clôture de cette entrée** : manche 1 = verdict prononcé, conditionnée à
+l'Arc C via la surface étoilée (courbe débit-distorsion du champ persistant). La règle de
+dernière famille n'a pas eu à s'appliquer (pas de second INDÉTERMINÉ-CAPACITÉ). Le bras nul v2,
+les contrôles (plomberie + discriminant borné au cap), le pipeline complet (histoires, mesures,
+k\*, gate, verdict) et les deux familles sont commités et reproductibles.
+
+**Commits pocPhysicator** : 49189d1 (gate requalifié + étoile), 11091a0 (verdict re-généré).
+Contrat : fa54d20 (amendement + gardes). Historique complet de la manche : 04ac96f → 11091a0.
