@@ -1793,3 +1793,129 @@ réallouer.
 
 **Commits pocPhysicator** : 0619c17 (diagnostic), 486d637 (co-calibration V2), ebdf32c (gate v2 +
 outputs), 6512f14 (ledger).
+
+---
+
+## Addendum Arc A — Re-fondation du substrat (§A6–§A11)
+
+> **Statut : gravé le 2026-07-04, AVANT toute mesure sur l'objet neuf.** Suite du fork du
+> 2026-07-04 (gate v2 FAIL 2/3, voie « reconstruction » close). Arbitrage Romain : option (2)
+> puis option (1), sous cinq conditions de durcissement + BC périodiques (motivé physiquement)
+> + note de but « obligations étagées ». **Les claims §A1–§A5 sont INCHANGÉS.**
+
+### §A6 — Note de niveau BUT : obligations étagées (gravée, pour lecture des verdicts)
+
+L'exigence du jeu (re-dérivée en session depuis le game design, convergente avec les trois
+routes analytiques déjà actées) est le **registre-commis à obligations étagées** :
+1. **Invariants durs, observés ou non** : conservation (la masse sédimentaire lâchée est
+   quelque part en aval, jamais évaporée ni remontée) ; les événements commis restent commis.
+   Tout ré-échantillonnage vit dans la classe d'équivalence compatible avec le registre causal.
+2. **Émissions** : ce qui a atteint un écran reste re-dérivable **sous JND** (captures,
+   revisites conjointes, comparaisons entre joueurs).
+3. **Le reste : libre** — mais libre = **fonction déterministe d'un registre avec perte**
+   (seed = hash(registre)), JAMAIS bruit de ré-échantillonnage. La liberté vit dans ce que le
+   registre oublie, pas dans l'aléa au retour.
+
+**Pré-étiquetage de lecture (bloquant)** : un FAIL de la manche 1 n'est pas une crise (cellule
+2 = le filet ; le différenciateur survit). Un PASS de la manche 1 ne clôt pas la question
+existentielle : l'implication cellule-1 vaut sur CE substrat uniquement (§A5) ; le claim
+registre-commis à l'échelle du but (autres écritures, densité d'observation
+croissante/adversariale — garde anti-vacuité de la manche 2) reste ouvert.
+
+### §A7 — Re-dérivation de l'ordre des manches (la prémisse d'origine est morte)
+
+La justification gravée en §A0 (« instrumentation existante, le moins cher ») est morte avec
+le substrat. Re-dérivation explicite, l'ordre est **MAINTENU** :
+1. Le build manche 1 (compresseur + régénérateur sur champ persistant) reste matériellement
+   plus petit que la machinerie manche 2 (définition d'événements, ledger, reconstruction
+   conditionnée, balayage de densité d'observation).
+2. Le court-circuit logique tient : PASS manche 1 ⇒ manche 2 close par implication sur ce
+   substrat → l'espérance de coût favorise toujours manche 1 d'abord.
+3. Le substrat re-fondé (suspension/turbidité) sert les **deux** manches — un basculement en
+   manche 2 ne perd rien de la construction.
+
+### §A8 — M-0 : mesure préliminaire sur v2 (la « 2 minutes », gravée avant exécution)
+
+**Objet** : borne d'histoire-readout du substrat v2 gelé (KD_CALIBRE, KE_CALIBRE_V2) :
+`f_ordre(v2)` = fraction du domaine où |ΔA(direct, inversé)|/⟨A⟩ > JND, JND balayé sur
+[2 %, 5 %], albedo A au point d'op (S_HALF = 0.05, sensibilité [0.005, 0.20] rapportée).
+
+**Double usage gravé** : (i) confirmer/infirmer que v2 est mort jusqu'au readout inclus ;
+(ii) premier point de calibration de la fonction de transfert état→readout
+(corr = 0.9446 ↔ f_ordre) et **baseline du bras nul §A11**.
+
+**Lectures pré-écrites** :
+- `f_ordre(v2)` ≤ 1 % du domaine à JND = 5 % → v2 confirmé mort au readout → bras nul propre,
+  build §A10 lancé.
+- `f_ordre(v2)` > 1 % à JND = 5 % → le readout AMPLIFIE une histoire que corr sous-estime →
+  **STOP, remonter** : la hiérarchie corr↔readout est inversée, le gate §A9 doit être repensé
+  avant tout build.
+
+### §A9 — Gate de CONCEPTION du substrat re-fondé (critères figés avant build)
+
+**Requalification actée** : gate d'identité → gate de conception (type G0). Itérable, à
+critères **INCHANGÉS**, par changements **physiquement motivés, nommés, pré-annoncés** ;
+**chaque résultat de gate remonte à Romain** — aucune boucle silencieuse jusqu'au PASS.
+
+- **(a') CRITÈRE PORTEUR — readout-first (remplace (a) comme primaire)** :
+  ordre-mémoire au readout albedo entre deux histoires même-multiset d'ordre inversé :
+  `f_ordre ≥ 5 %` du domaine supra-JND, **robuste sur toute la plage** JND ∈ [2, 5] % et
+  S_HALF ∈ [0.005, 0.20]. (Référence d'origine : ~9–14 % supra-JND ; le seuil 5 % est un
+  placeholder nommé, en-deçà de l'origine avec marge, pas à défendre.)
+  `corr(s_A, s_B)` est **rétrogradé en diagnostic** (rapporté, non bloquant ; origine 0.39
+  à titre indicatif). Motif gravé : corr est une métrique d'espace-état, la classe que la
+  discipline du projet a répudiée trois fois (18.6 %→0 %, 61 %→~0 %) ; la propriété que
+  l'Arc A ferme est celle qui atteint le pixel.
+- **(b') survie du canal** : `f_ordre(albedo) ≥ 3 × f_ordre(relief)` sur toute la plage
+  S_HALF (référence d'origine : ≈3–8×). Le (b) d'origine (séquentiel-vs-simultané) est
+  rapporté en diagnostic.
+- **(c') closure sanity** : `f(k)` **moyenné sur ≥ 3 seeds**, monotone décroissante aux deux
+  géométries (overlap et séparée). Le moyennage inter-seeds est une réduction de variance
+  (les rebonds v1/v2 étaient des lectures single-run), PAS un déplacement de seuil : le
+  critère de monotonie est inchangé.
+- **resfrac** (masse érodée/déposée) : rapporté en signature diagnostique. Il n'est PLUS une
+  cible de calibration (leçon v2 : nécessaire-pas-suffisant, gravée).
+
+### §A10 — Design du substrat re-fondé (figé avant build)
+
+- **Mécanisme — transport en suspension (porteur d'ordre PAR CONSTRUCTION)** :
+  érosion (θ > θ_c) alimente un champ **suspendu** `c(x)` ; `c` est **advecté** par le
+  courant (+ diffusion faible) ; dépôt `ds/dt = w_s·c` sur cellules où θ < θ_c ;
+  reprise depuis `s` comme avant ; rétroaction `b_eff = b0 + s` inchangée à chaque épisode.
+  L'ordre des pulses s'écrit dans OÙ le suspendu voyage avant de retomber.
+- **BC PÉRIODIQUES (gravé, motivé physiquement)** : la topologie cible du but est un monde
+  fermé convexe bouclé (le niveau 0 de Harten = la planète ; conservation exacte sans termes
+  de bord). Conséquence immédiate : la fuite au mur documentée (dérive d'eau 3–13 %/épisode)
+  disparaît par construction. L'assèchement inter-épisodes reste un opérateur d'épisode
+  (h remis à sec, `s` et `c`… — voir contrainte : `c` est DÉPOSÉ intégralement à
+  l'assèchement, jamais détruit, sinon la conservation ment).
+- **Knob neuf : `w_s`** (vitesse de chute ; longueur d'advection L_adv ≈ |u|·h/w_s) — c'est
+  LE porteur d'ordre, donc le knob qui peut fabriquer le verdict. **Balayage Goldilocks
+  PRÉ-ENREGISTRÉ (bloquant)** : ≥ 5 valeurs log-espacées ; à chaque w_s : `f_ordre(w_s)`
+  (readout) + diagnostics (corr, resfrac, part érodée redéposée à distance > 1 cellule).
+  Extrêmes pré-nommés : w_s→∞ = dépôt local instantané → retombe sur v1/v2, `f_ordre`→0
+  attendu ; w_s→0 = rien ne tient → `f_ordre`→0. **Point d'op = choisi sur un PLATEAU de la
+  courbe** (région où (a') tient avec robustesse), jamais un point isolé qui passe. Aucun
+  w_s ne tient sur la plage → **BLOCKED, remonter sans forcer**.
+- **Conservation de la masse sédimentaire = ASSERT BLOQUANT** :
+  masse(s) + masse(c) − (érodé − déposé) comptée à chaque pas ; tolérance 1e-10 relatif par
+  épisode (le périodique la rend exacte, sans flux de bord). Un assert qui tire = bug, STOP.
+  Motif gravé : un champ suspendu qui fuit peut fabriquer OU masquer de l'ordre-mémoire ;
+  les écritures persistantes exigent la conservation (principe §A6-1).
+- **Calibration** : k_d/θ_c — UNE calibration pré-annoncée vers le point d'op gravé
+  (s_max ≈ 20 % du relief à L₀ = 10 pulses), constantes gelées AVANT le gate. **w_s n'est
+  PAS calibré au gate : il est balayé (Goldilocks) et son point d'op gravé depuis la courbe.**
+- **Readout turbidité** (intégrale de colonne de `c`) : désormais disponible par construction
+  — construit et rapporté en **diagnostic**, NON porteur du gate (l'albedo reste le canal
+  gravé). Son éventuelle entrée dans M-A1/M-A2 (le §A1 nomme « turbidité/albédo ») est une
+  décision à graver au point d'arrêt post-gate, pas un choix d'exécutant.
+
+### §A11 — Bras nul v2 (contrôle négatif intégré, bloquant pour l'instrument)
+
+- v2 (constantes gelées) est **conservé et commité comme substrat-contrôle** :
+  quasi-commutatif, deux signatures tenues — un négatif calibré gratuit.
+- **Usage gravé** : le pipeline manche 1 complet (compresseur, régénérateur, M-A1/M-A2/M-A3,
+  k\*(L)) tourne AUSSI sur v2. Attendu pré-écrit : **saturation triviale** de k\*(L)
+  (fermeture facile d'une histoire absente). Si le pipeline ne distingue PAS v2 du substrat
+  re-fondé (courbes k\*(L) indiscernables), **c'est l'instrument qui ment → STOP**.
+- M-0 (§A8) fournit la baseline readout du bras.
