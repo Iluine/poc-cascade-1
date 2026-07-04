@@ -1919,3 +1919,57 @@ critères **INCHANGÉS**, par changements **physiquement motivés, nommés, pré
   (fermeture facile d'une histoire absente). Si le pipeline ne distingue PAS v2 du substrat
   re-fondé (courbes k\*(L) indiscernables), **c'est l'instrument qui ment → STOP**.
 - M-0 (§A8) fournit la baseline readout du bras.
+
+### 2026-07-04 — M-0 (§A8) : LECTURE 2 — f_ordre(v2) = 0.7595 à la cellule porteuse (seuil ≤ 0.01) — le readout voit sur ~76 % du domaine une « histoire » que corr = 0.9446 déclarait quasi absente. STOP pré-enregistré : le gate §A9 est à repenser AVANT tout build
+
+**Exécution** : Task 0 (smoke bras nul : `run_history(12345, 10)` aux constantes gelées redonne
+max(s)/relief = 0.18876, hash consigné au ledger) puis Task 1 M-0, protocole STRICTEMENT celui du
+critère (a) du gate v2 (seed 7, 10 centres, même multiset, ordre direct vs inversé,
+`SedimentParams()` V2 gelées) ; formule §A8 (dénominateur symétrique ⟨(A_dir+A_inv)/2⟩ — écart de
+convention avec `f_fraction` documenté, le contrat fait foi). Revue indépendante : conforme,
+vérification croisée protocole + sanity-check numérique (fractions multiples exactes de 1/4096).
+
+**Mesure (balayage complet en `outputs/arcA/m0_v2_readout.json`)** :
+- corr(s_direct, s_inversé) = **0.94455** (= gate v2, confirme les constantes).
+- f_ordre(albedo) ∈ [0.74, 0.89] sur TOUT le balayage JND ∈ {2..5} % × S_HALF ∈ {0.005..0.20}·relief ;
+  cellule porteuse (JND = 5 %, S_HALF = 0.05·relief) : **f_ordre = 0.7595**.
+- Plancher de canal (relief ombré, même protocole) : f_ordre ≤ 0.0015 — l'amplification est
+  spécifique au readout albedo, pas un artefact de la méthode.
+
+**Verdict mécanique (§A8, pré-écrit)** : 0.7595 > 0.01 → **lecture_2** : « le readout AMPLIFIE une
+histoire que corr sous-estime → STOP, remonter : la hiérarchie corr↔readout est inversée, le gate
+§A9 doit être repensé avant tout build. » Tasks 2–4 (build suspension, Goldilocks, gate) **NON
+lancées**. Aucun seuil retouché.
+
+**Portée EXACTE et implications (sans surclamer, dans les deux sens)** :
+1. **Le critère porteur (a') tel qu'écrit est VACANT** : le bras nul lui-même donne f_ordre = 0.76
+   ≫ 5 %. Un substrat re-fondé qui « passerait » (a') n'aurait rien démontré — le seuil est
+   franchi par un substrat quasi-commutatif en état. C'est exactement ce que M-0 (le moins cher
+   qui peut échouer) devait attraper avant le build.
+2. **Ce que la mesure ne tranche PAS** : si ces 76 % sont de l'ordre-mémoire STRUCTURÉ ou de la
+   sensibilité amplifiée sans structure (« texture » : corr état 0.94 ⇒ ~11 % de variance non
+   partagée, que la normalisation JND-relative rend supra-seuil presque partout). f_ordre compte
+   les cellules franchissant le seuil, il ne voit pas si l'écart est organisé.
+3. **La suspension de la manche 1 (2026-07-04, gate v2) était motivée par corr = 0.94 — une
+   métrique d'espace-état**, la classe que la discipline du projet répudie. Au readout — l'espace
+   où vit le verdict M-A1/M-A2 — v2 n'est PAS « quasi sans histoire » : l'attendu « saturation
+   triviale de k*(L) » du bras nul (§A11) n'est plus garanti, et la prémisse « mesurer k*(L) sur
+   v2 fabriquerait un PASS trivial » est affaiblie. On grave le fait, pas une réhabilitation.
+4. La référence d'origine (~9–14 % supra-JND) est très en-dessous du 76 % de v2 : soit la
+   convention f d'origine différait (code perdu, invérifiable), soit le point d'op d'origine était
+   moins amplifiant. Comparaison indicative seulement — ne pas s'y appuyer.
+
+**Fork remonté à Romain (STOP §A8, options)** :
+(1) **Repenser le critère porteur pour qu'il isole la STRUCTURE d'ordre, pas le franchissement de
+seuil** — p. ex. critère CONTRASTIF au bras nul (l'objet §A9 devient « le re-fondé porte
+significativement plus d'ordre-mémoire readout que v2 », mesuré par une statistique organisée :
+corrélation spatiale de ΔA avec le déplacement des dépôts, ou f_ordre à JND élevé où v2 retombe),
+puis build §A10 sous ce gate repensé ;
+(2) **Ré-examiner la suspension de la manche 1 sur v2** : si le readout porte l'histoire (76 %),
+la fermeture sub-JND d'un résumé grossier (M-A1/M-A2) sur v2 n'est plus triviale par construction
+— la manche 1 redevient peut-être testable SANS nouveau substrat (le moins cher qui peut échouer) ;
+(3) suspendre l'Arc A. Les options (1) et (2) ne s'excluent pas : (2) d'abord est l'ordre du
+moindre coût si la testabilité sur v2 se confirme.
+
+**Commits pocPhysicator** : 09fca34 (M-0 + JSON), 0568e55 (ledger). Contrat : 598fabd (§A6–§A11),
+b778924 (plan).
