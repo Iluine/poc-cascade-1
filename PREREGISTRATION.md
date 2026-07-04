@@ -2357,3 +2357,55 @@ géométrie)** :
   surface portée à l'Arc C).
 - Scripts de mesure/verdict : NOUVEAUX (`*_qt.py`), les scripts de la famille 1 restent
   intouchés (reproductibilité par historique).
+
+### 2026-07-04 — Famille 2 (quadtree), run complet : GATE EN VIOLATION — mais cette fois c'est SHUF, 7/40, UNIQUEMENT au budget plafond 2048 ; sous le cap le discriminant est intact (0 violation) et ferm est parfait (Δχ = 0.0 exact, 70 cellules). Verdict scellé. Troisième erreur de PORTÉE d'attendu — fork sur la portée de l'attendu shuf
+
+**Exécution (module quadtree + harnais _qt + run, trois revues indépendantes, 295 tests)** :
+- Module `src/summary_quadtree.py` : S∘R = id bit-à-bit ARBRE INCLUS aux 7 budgets × 3 champs
+  (vérifié en revue par exécution indépendante) ; comptabilité bits d'arbre exacte (budget 2048
+  rempli à 2048 exactement ; refus au bord 402 > 400) ; glouton (gain, y, x) déterministe.
+  Arbitrage consigné (validé) : les masses 16×16 ne sont PAS restituables vs l'original sous
+  troncature (feuille englobante = redistribution uniforme, contre-exemple en test exécutable) —
+  conservation TOTALE 1e-12 garantie, fidélité spatiale jugée par le readout (design).
+- Harnais `run_arcA_measure_qt.py`/`run_arcA_verdict_qt.py` (famille 1 intouchée), run complet
+  déterministe, violation vérifiée EN DONNÉES BRUTES par la revue.
+
+**GATE DES CONTRÔLES : VIOLATION — lecture fine (les faits, tous vérifiés)** :
+- **ferm (plomberie) : CONFORME 0/40** — Δχ = 0.0 EXACT aux 7 budgets × 2L × 5 seeds : la
+  projection quadtree tient en conditions réelles, le plancher instrument est bit-à-bit nul.
+- **shuf : VIOLATION 7/40 — TOUTES au budget plafond 2048, JND 3–5 % seulement** (2 seeds/5 à
+  L=10, 1/5 à L=80). Aux budgets ≤ 400 : max(M-A1, M-A2) ∈ [0.52, 0.91] sur les MÊMES cellules —
+  jamais fermé. **Sous le cap, le discriminant est intact.**
+- Mécanique respectée : verdict §A3 v2 SCELLÉ, aucune des trois issues sélectionnée.
+
+**Diagnostic (structurel, pas un bug)** : à 2048 float-éq pour 4096 cellules (~50 % de la
+résolution), même un champ PERMUTÉ devient partiellement approximable — la « fermeture » à ce
+budget ne discrimine plus structure et bruit. L'attendu gravé « shuf : k\* = ∞ PARTOUT » couvrait
+les budgets diagnostics hors-cap ; la propriété qu'il protège (l'anti-trivialité) vit SOUS le cap.
+**Troisième erreur de portée d'attendu** (ferm k\*=81 famille 1 ; grilles §A0/§A3 ; maintenant
+shuf aux budgets diagnostics) — la règle de forme se précise : **un attendu de contrôle se grave
+avec la PORTÉE de la propriété qu'il garde, pas sur toute la grille par défaut.**
+
+**Corollaire gravé (vaut quel que soit l'arbitrage)** : les fermetures HORS-CAP (1024, 2048) ne
+discriminent pas structure/bruit — toute cellule k\* ∈ {1024, 2048} de la surface v2 se lit avec
+ce caveat. Sous le cap, la discrimination tient (shuf n'y ferme jamais).
+
+**Sous scellé (audit, non-verdict, à ne pas surclamer)** : la surface v2 contient les PREMIÈRES
+fermetures SOUS CAP de toute la manche — k\* médian = 400 (et 256 à L=10) à JND 4–5 %, à TOUS
+les L y compris 80. La lecture formelle n'existera qu'après arbitrage du gate.
+
+**Fork remonté à Romain (portée de l'attendu shuf)** :
+(1) **Requalifier l'attendu à sa portée fonctionnelle** : « shuf : k\* = ∞ SOUS LE CAP
+(budgets ≤ 400) » ; les budgets hors-cap restent des diagnostics (clause 2) EXCLUS du gate, et
+portent le caveat gravé ci-dessus. Re-LECTURE du gate sur les mesures existantes (aucun re-run,
+aucun seuil §A3 touché) → si conforme, verdict lisible. C'est un amendement d'attendu APRÈS
+données — jamais silencieux, d'où ce fork ; sa base principielle est identique aux
+requalifications ferm : erreur de portée, pas de complaisance (le discriminant sous-cap n'a
+jamais failli).
+(2) Retirer {1024, 2048} de la grille — plus dur, perd la queue débit-distorsion que la clause 4
+destine à l'Arc C.
+(3) Suspendre.
+**Recommandation : (1).**
+
+**Commits pocPhysicator** : 18e52b9 (module), 2ee1120 (measure_qt), 0a81832 (verdict_qt),
+a86b929 (run). Contrat : a8ed659 (famille 2 + clauses).
