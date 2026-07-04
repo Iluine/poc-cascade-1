@@ -2151,3 +2151,63 @@ l'équité du contrôle mais PAS le plancher : le verdict v2 resterait confondu.
 
 **Commits pocPhysicator** : 04ac96f (histoires), a64185b+4a572c5 (mesures), 96eaf70+cf6c131
 (verdict+figures), 12f0446 (traçabilité gate), 846abce (ledger).
+
+### 2026-07-04 — Arbitrage fork instrument : option (1), régénérateur → CONSTANT-PAR-BLOCS, avec argument renforcé + TROIS CLAUSES gravées AVANT le re-run + règle de forme
+
+**Arbitrage Romain (option 1), endossé sur un argument plus fort que celui de l'exécutant** :
+l'alternative « intelligente » évidente — garder le bilinéaire et le corriger par constante
+additive par bloc pour rendre les moyennes exactes (prolongation conservative classique) —
+échoue précisément sur CE substrat : elle exige de pouvoir descendre sous zéro aux bords des
+dépôts, où le bilinéaire undershoot ; le clip ≥ 0 casse alors l'exactitude des moyennes exactement
+là où s vit (champ sparse, majoritairement nul). Sur un champ positif et sparse avec clip, le
+constant-par-blocs n'est pas seulement plus simple : **c'est la seule projection exacte de la
+famille**. Et il est propre en cascade : moyennes de blocs exactes ⇒ masses 4×4 exactes ⇒
+rescale ×1 ⇒ clip inactif ⇒ S∘R = id bit-à-bit. L'option (2) (point fixe) est écartée : répare
+l'équité du contrôle, laisse le verdict confondu.
+
+**Note d'implémentation (fidèle à l'argument cascade, gravée)** : le rescale devient une
+VÉRIFICATION (masses 4×4 à 1e-12 relatif) sans multiplication — les moyennes étant exactes par
+construction, multiplier par un facteur 1±ulp (ordre de sommation) détruirait l'identité
+bit-à-bit sans gagner d'exactitude. Le clip reste (no-op sur champ ≥ 0). Le bilinéaire est
+conservé sous un nom d'audit (reproductibilité de M-0bis et du run v1) mais n'est plus le
+régénérateur du claim.
+
+**Clause 1 — la cellule de verdict manquante (gravée avant le re-run, pendant que c'est
+incertain)**. La grille §A3 présuppose des k\* finis : PASS lit une pente nulle, FAIL-mur lit une
+pente positive. L'audit scellé montre k\*(L) = ∞ partout, et le constant-par-blocs va durcir les
+Δχ — **prédiction directionnelle gravée : M-A1/M-A2 de v2 montent à chaque ℓ** (on grave la
+mesure, pas le mécanisme). L'issue « k\* = ∞ uniforme, rien ne ferme sous le cap à aucun L, y
+compris L₀ » est pré-écrite comme **INDÉTERMINÉ-CAPACITÉ** : la famille {block-mean ℓ, invariants}
+manque de capacité à ce JND. Et surtout ce qu'elle n'est PAS : **ce n'est pas le mur** — le mur
+est un énoncé de croissance avec l'histoire ; un instrument qui ne ferme même pas une histoire de
+10 pulses ne dit rien sur l'accumulation. Conséquence pré-écrite : ne sélectionne PAS la cellule
+2/3 de §A0 ; remonte le **fork famille-vs-manche-2** (une itération de famille serait une décision
+neuve, nommée, pré-enregistrée — pas un réflexe). Note honnête : sous le cap de 409.6 floats, k\*
+ne peut valoir que {81, 273, ∞} — la machinerie de pente sur trois valeurs quantifiées est fragile
+par construction ; connu, assumé, pas retouché maintenant.
+
+**Clause 2 — le prix des blocs, chiffré au lieu de subi**. Avec le constant-par-blocs, le
+contrôle-fermable devient exact au round-trip : son M-A2 ne sonde plus rien. Diagnostic
+NON-BLOQUANT ajouté, une cellule suffit — gravée : **(L=10, seed=101, ℓ=3)** : rollout depuis
+s_ferm (bloqué) vs depuis s_L (lisse), trajectoire complète Δχ(t) sérialisée ; lecture rapportée =
+Δχ(0) (part compression statique) vs max_t Δχ(t) (avec dynamique) et leur rapport = la
+contribution de la dynamique-sur-marches seule. Si le verdict tombe en famille-insuffisante, ce
+chiffre démêle la part escalier de la part compression — sans lui on rejouerait le débat du
+plancher un cran plus loin.
+
+**Clause 3 — requalification explicite du contrôle-fermable**. Il passe désormais par
+construction : il DESCEND au rang de contrôle de plomberie (déterminisme, anti-fuite, idempotence
+bit-à-bit). Le contrôle discriminant restant est le shuf. Que personne ne relise « ferm 40/40
+conforme » comme une validation forte.
+
+**Leçon méta (consignée, sans en faire un arc)** : deuxième fois que la grille de verdicts
+pré-enregistrée ne couvre pas l'espace réel des issues (la grille §A0 à trois cellules supposait
+un substrat qui existe ; la grille §A3 supposait des k\* finis). **Règle de forme pour les
+prochaines pré-enregistrations : toute grille inclut par défaut une cellule « l'instrument/la
+famille ne peut pas répondre ».** Le scellé d'aujourd'hui a fonctionné, mais parce qu'un
+amendement de dernière minute l'a fourni, pas parce que la grille le prévoyait.
+
+**Exécution ordonnée** : amender la spec Task 4 du plan (bilinéaire → constant-par-blocs),
+apposer les clauses, re-run Tasks 5–6 + diagnostic clause 2, remonter le verdict — qui sera,
+pour la première fois de la manche, lisible quel qu'il soit. Les sorties v1 (bilinéaire) restent
+dans l'historique git (commits a64185b, 4a572c5, cf6c131).
