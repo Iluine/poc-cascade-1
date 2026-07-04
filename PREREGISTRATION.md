@@ -2278,3 +2278,82 @@ appelle, et elle recycle tout le pipeline validé (histoires, mesures, gate, ver
 
 **Commits pocPhysicator** : c35e4dd (ordre 0 + cascade), ab7de1e (clause 1), 04b8163 (re-run),
 c518b11 (diag escalier), 7f12dbd (ledger).
+
+### 2026-07-04 — Arbitrage fork famille-vs-manche-2 : option (1) AMENDÉE — famille 2 = QUADTREE de moyennes (raffinement adaptatif par blocs), cinq clauses gravées avant le run, trois issues pré-écrites. Gardes de relecture posées sur le verdict précédent
+
+**Gardes de relecture (les deux sens, gravées)** : la structure hors-cap (1041 tient à
+L ∈ {10,20,40}, casse à 80, à JND 4–5 %) est **un saut, sur une échelle quantifiée à trois
+valeurs, à deux JND sur quatre, au-dessus du cap : un INDICE qui motive l'itération, pas « la
+forme du mur »** — que personne ne le raconte ainsi dans dix sessions. Symétriquement : que
+personne ne l'enterre — c'est la première dépendance en L de toute la manche, et elle est
+exactement ce que la famille suivante doit rendre lisible dans la grille.
+
+**Arbitrage Romain : option (1) endossée, famille AMENDÉE — le top-k de coefficients de détail a
+un piège, nommé avant qu'il tire** : la reconstruction MRA tronquée d'un champ positif peut
+undershooter sous zéro (un détail fin gardé appliqué sur une moyenne intermédiaire jetée) → clip
+≥ 0 → R∘S n'est plus une projection → plancher non nul — le piège d'il y a douze heures, remonté
+d'un niveau. Le gate ferm l'attraperait, mais ce serait un cycle d'instrument prévisible et payé
+pour rien. **Famille 2 = raffinement adaptatif par blocs : le quadtree de moyennes de cellules,
+l'adaptativité de Harten au sens canonique.** Blocs larges où s≈0, fins sur les dépôts. Trois
+propriétés d'un coup : (i) moyennes d'un champ positif = positives → pas de clip → **S∘R = id
+exact, plancher = 0 conservé par construction** — la propriété qui vient de rendre le verdict
+lisible ; (ii) coût d'indexation trivial et comptable (bits d'arbre) ; (iii) **cohérence
+d'architecture** : c'est littéralement le mécanisme de stockage que les invariants-dans-z
+utiliseraient dans le moteur (niveaux de Harten adaptatifs, pas une soupe de coefficients
+globaux). Si cette famille ferme, le verdict est directement architecture-pertinent ; si elle ne
+ferme pas, il l'est aussi. Le top-k reste nommable en (1b) avec un gate de plancher quantifié
+(mesuré ≤ 0,5 % à chaque budget) en remplacement du zéro exact — non retenu : rien qu'il achète
+que le quadtree n'a pas.
+
+**Les cinq clauses (gravées avant le run)** :
+1. **Comptabilité du résumé** : la taille inclut la structure (bits d'arbre, convention gravée :
+   32 bits = 1 float-équivalent), gravée avant mesure, cap INCHANGÉ à 409,6. Sans ça, les k\*
+   inter-familles ne sont pas comparables et le cap anti-trivialité est truqué en silence.
+2. **Grille de budgets gravée** : {32, 64, 128, 256, 400} sous cap + {1024, 2048} hors-cap en
+   diagnostic. Réparation de la fragilité notée : k\*(L) devient une courbe sur 5+2 points au
+   lieu de trois valeurs quantifiées — la machinerie de pente §A3 a enfin de quoi mordre.
+3. **Règle de dernière famille** : c'est la DEUXIÈME ET DERNIÈRE famille sous cette
+   pré-enregistration. Un second INDÉTERMINÉ-CAPACITÉ → la manche 1 se clôt en **NON-DÉMONTRÉ** :
+   sans sélectionner la cellule 2 ni claimer le mur, la planification d'architecture procède sur
+   l'hypothèse ledger, et la dépense suivante est la manche 2. Toute famille ultérieure exige un
+   fork remonté avec une décision nommée qui en dépend. Sinon « une famille de plus » est le
+   treadmill avec un déguisement neuf.
+4. **La surface k\*(L, JND), rapportée telle quelle** — additif, règles §A3 inchangées. Lecture
+   pré-écrite : des verdicts par-JND divergents mais propres = global INDÉTERMINÉ et la surface
+   k\*(L, JND) portée à l'**Arc C** comme l'objet que son pin résout. Le cadrage codec paie :
+   cette surface est la courbe débit-distorsion du champ persistant, et le JND réel choisira la
+   courbe opérante. La manche 1 et l'Arc C se rejoignent là où les gates l'avaient prévu.
+5. **Contrôles reconduits** : shuf inchangé (discriminant) ; ferm en plomberie avec attendu
+   zéro-exact restauré par le quadtree.
+
+**Les trois issues, pré-écrites — chacune change une décision, aucune n'est un gâchis** :
+- **Fermeture plate sous cap** → cellule 1, court-circuit de la manche 2 sur ce substrat — la
+  raison pour laquelle ces ~12 minutes valent d'être jouées avant de payer la machinerie ledger.
+- **Croissance lisible sous cap** → FAIL-mur enfin prononçable, cellule 2, le ledger passe
+  d'hypothèse à obligation.
+- **Second INDÉTERMINÉ-CAPACITÉ** → NON-DÉMONTRÉ, manche 2.
+
+**Spec opérationnelle du quadtree (figée avant build — l'exécutant n'improvise pas la
+géométrie)** :
+- Partition dyadique adaptative du domaine 64×64 ; chaque feuille stocke la MOYENNE de son bloc.
+- Construction gloutonne déterministe : gain d'un split = SSE expliquée = Σ_enfants
+  n_c·(moyenne_c − moyenne_parent)² ; on splitte le gain max d'abord ; tie-break lexicographique
+  (gain, puis y, puis x) ; **un nœud à gain nul n'est JAMAIS splitté** (condition de la
+  projection) ; arrêt quand le budget est atteint ou plus aucun gain > 0.
+- Comptabilité : floats = n_feuilles + ceil(n_nœuds/32) (1 bit de topologie par nœud, préordre) ;
+  un split coûte +3 feuilles, +4 nœuds. Budget respecté APRÈS chaque split.
+- Régénération : chaque feuille peinte à sa moyenne (constant-par-blocs adaptatif), 1 paramètre
+  (anti-fuite), pas de clip nécessaire (moyennes ≥ 0), vérification de cohérence interne.
+  Propriété testée : S∘R = id bit-à-bit y compris l'ARBRE (les gains sur le champ repeint sont
+  identiques par linéarité des moyennes ; les splits sous-feuilles ont gain nul).
+- Invariants (masse totale, masses 4×4) : DÉRIVABLES exactement des feuilles (les feuilles
+  dyadiques ne chevauchent pas les sous-domaines 16×16 ou les contiennent entièrement) — non
+  stockés, pas comptés au budget, vérifiés en test.
+- Contrôle ferm : s_ferm = R(S(s_L, budget=32)) — attendu : fermeture EXACTE (Δχ = 0) à TOUS les
+  budgets de la grille, k\*(ferm) = 32 partout. Contrôle shuf : inchangé, attendu k\* = ∞.
+- Verdict : §A3 inchangé sur la nouvelle grille de budgets + cellule INDÉTERMINÉ-CAPACITÉ +
+  mapping mécanique des trois issues (PASS global → cellule 1 ; FAIL global → cellule 2
+  FAIL-mur ; global INDÉTERMINÉ-CAPACITÉ → NON-DÉMONTRÉ manche 2 ; sinon → global INDÉTERMINÉ +
+  surface portée à l'Arc C).
+- Scripts de mesure/verdict : NOUVEAUX (`*_qt.py`), les scripts de la famille 1 restent
+  intouchés (reproductibilité par historique).
