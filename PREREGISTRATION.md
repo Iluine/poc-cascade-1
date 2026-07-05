@@ -2960,3 +2960,64 @@ remonter) est une campagne **inachevée** → **aucun pins** (fail-loud), le STO
   même » serait la pression silencieuse vers la 3ᵉ session de complaisance.
 - **Espace des sorties fermé et testé** : les trois issues de campagne — complétée-résolue,
   complétée-invalide, arrêtée — ont chacune leur comportement verrouillé par un test e2e.
+
+---
+
+## §C11 — PIN SPATIAL MESURÉ (première donnée humaine) + lecture §C4 mécanique (2026-07-05)
+
+**Le premier chiffre que la machine n'a pas fabriqué.** Session ABX, sujet **Romain (n=1, référent
+d'ingénierie §C1)**, 2026-07-05T18:43, `base_seed=20260705`, harnais `commit 3d2a6ed`. Campagne
+**complète** : 3 staircases × {sévère, laxiste}, toutes complètes ; **1/20 source exclue**
+(`s103_L10`, Δχ d'ancre 0.155 < 0.16 — l'exclusion nommée prédite §C8). `pins_spatial.json`
+**validé contre le contrat gravé §C10** (schéma draft-07).
+
+**Validité §C5** : catch **12/12 = 100 %** (les deux régimes), dispersions inter-staircases **0.18**
+(sévère) et **0.196** (laxiste), toutes deux ≤ 0.30 → **les deux régimes RESOLU**. `timing_laxiste`
+dérive max **1.5 %** (≪ 25 %). Mesure propre.
+
+**Pins (fraction ; 0.04 = 4 %)** :
+- **JND_sev = 0.0733**, IC **[0.0603, 0.0867]** (émissions, étage 2 — la ligne du claim §A2).
+- **JND_lax = 0.1154**, IC **[0.0937, 0.1387]** (revisite libre, étage 3).
+- **Contrôle directionnel §C10** : `ic_disjoints_mauvais_ordre = false`. JND_lax > JND_sev et IC
+  **disjoints dans le BON ordre** (laxiste entièrement au-dessus du sévère) — séparation nette et
+  bien ordonnée, l'instrument mesure du réel.
+
+### Lecture §C4 — mécanique, pré-écrite, appliquée telle quelle (aucune interprétation au-delà)
+
+**Consommateur 1 — surface k\*(L, JND), manche 1.** Lu à **JND_sev**, sur l'**IC ENTIER** = [6.0 %,
+8.7 %]. Règle §C4-1 : **IC entier ≥ 4 % → cellule-1-candidate.** Ici l'IC entier est même ≥ 5 % —
+le point de grille le plus laxiste de la manche 1, déjà **PASS** (k\*(80) = 400 ≤ cap) ; k\* étant
+non-croissant en JND, la surface lit **PASS a fortiori sur tout l'IC**. → **CELLULE-1-CANDIDATE.**
+**GARDE §C4-1 (gravée avant le pin)** : le prononcé DÉFINITIF de la cellule 1 exige l'**extension
+16L₀ (L = 160, option (a) §A3, une seule fois)** — les IC de pente PASS étaient bornés à zéro par
+le bas ; L = 160 donne à la pente une vraie chance de casser. **Mission SÉPARÉE, gatée derrière ce
+résultat, NON lancée ici.**
+
+**Contingence géométrie-plafond (§C8).** Armée seulement si l'IC de JND_sev tombe **entier ≤ 3 %**.
+IC = [6.0 %, 8.7 %] ≥ 4 % → **NE S'ARME PAS.** Le pin sévère tient tel quel ; pas de staircase à la
+géométrie-plafond. (La « staircase-au-bord » de §C7 pièce 3 / §C8 D-4 reste au repos.)
+
+**Consommateur 3 — cellule kx=1 @ JND = 1 %.** JND_sev ≥ 2 % → **MOOT** (gravé d'avance §C4-3).
+7.3 % ≥ 2 %.
+
+**Consommateurs 2 (W1/σ_ω) et 4 (gate fovéa-z).** Dépendent du **pin TEMPOREL**, **non mesuré**
+(axe spatial seul ; l'axe temporel est le fork **(a/a′/d)** différé, dû avant Task 4 si le backup
+Arc V ne rend rien). **En attente du pin temporel.** Le gate fovéa-z a son **consommateur 1 servi**
+(cellule-1-candidate) mais reste suspendu au pin temporel + à W1.
+
+### Portée (§A5) et blemish de record
+
+- **Portée** : ce pin, ce substrat, cet observateur (n=1, §C1). La cellule-1-candidate est une
+  lecture au pin sévère **sur ce substrat** ; le prononcé définitif est gaté sur 16L₀. Le **claim
+  existentiel à l'échelle du but reste ouvert** (obligations étagées, densité d'observation
+  croissante/adversariale).
+- **Blemish de record NOMMÉ (§C9 pièce 3)** : le champ `conditions` du manifeste est resté le
+  **placeholder « CONDITIONS »** (le repère de distance + éclairage réels n'ont pas été saisis). La
+  mesure **n'est pas invalidée** (validité §C5 nette, timing conforme, géométrie 23.9 mm vérifiée à
+  la règle), mais le **registre des conditions a un trou** — à amender au texte réel si le record
+  doit être complet, sinon consigné comme tel. Un blemish de traçabilité, pas de mesure.
+
+**Forks d'aval (décisions Romain, non tranchées ici)** : (1) lancer l'**extension 16L₀** pour
+prononcer la cellule 1 définitivement ? (2) l'**axe temporel** (backup Arc V, sinon fork a/a′/d)
+pour servir les consommateurs 2 & 4 ; (3) la **politique de zoom §C7-4** (avec son étiquette de
+prix), qui reste en amont de la portée du claim.
