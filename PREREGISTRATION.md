@@ -2940,3 +2940,23 @@ dans l'artefact). Unités : tout Δχ/JND en **fraction** (0.04 = 4 %).
   (px_par_degre, taille_domaine_deg, cellule_arcmin, luminosité, conditions — §C7/§C9), et les
   **seuils BRUTS par staircase** (la branche à-cheval recalcule dessus).
 - **`sujet: synthetique`** = rodage, **jamais commité dans `outputs/arcC/`** (garde anti-fabrication).
+
+**Invariant gravé (VALIDÉ Romain, 2026-07-05 — l'implicite rendu explicite le jour où on le
+découvre, pas le jour où il mord).** **`pins` = campagne complétée par construction (`minItems:3`
+VOULU) ; l'arrêt protocolaire est un fait de MANIFESTE, jamais de RÉFÉRENT.** Portée de la
+frontière : un régime qui a tourné ses **3** staircases et échoué est une campagne complétée dont
+le résultat est l'invalidité → se rapporte dans le référent (statut `INVALIDE`, motif, `jnd/ic`
+null). Un régime **coupé à 2** par le garde §C5 (2 sessions invalides consécutives → STOP,
+remonter) est une campagne **inachevée** → **aucun pins** (fail-loud), le STOP vivant au manifeste
+(registre des faits de session). Conséquences gravées sur le fail-loud :
+- Le message d'erreur est un **aiguillage** : il porte le fait (« campagne arrêtée à N staircases
+  par le garde 2-invalides §C5 »), le **régime** concerné, le **chemin du manifeste** où le STOP
+  est consigné, et la **conduite** (« aucun pins ne peut être émis ; la reprise passe par le point
+  d'arrêt — remonter »). Il **tire AVANT** la validation jsonschema (détection explicite du statut
+  STOP au manifeste) — le « is too short » cryptique n'est plus atteignable sur ce chemin.
+- **Le STOP reste un STOP** : le message ne suggère **aucune voie de complétion automatique** (pas
+  de « relancer une 3ᵉ pour débloquer pins »). La seule sortie est l'**arbitrage humain** (fatigue ?
+  protocole ? conditions ?). C'est POUR ÇA que pins doit refuser d'exister : un fichier émis « quand
+  même » serait la pression silencieuse vers la 3ᵉ session de complaisance.
+- **Espace des sorties fermé et testé** : les trois issues de campagne — complétée-résolue,
+  complétée-invalide, arrêtée — ont chacune leur comportement verrouillé par un test e2e.
