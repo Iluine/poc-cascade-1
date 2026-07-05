@@ -3179,3 +3179,64 @@ bootstrap inter-seeds (10 000, seedé), comme §A3 :
 2. **ic_bas armé** : le soupçon de croissance est réel et pré-nommé (6 % → 256/256/400/400
    sur la surface §C12). Si L=160 confirme que ic_bas monte pendant que le pin central reste
    plat → INDÉTERMINÉ-JND, pas cellule 1 nette. L'œil est armé, le verdict reste mécanique.
+
+### §A12-résultat — VERDICT PRONONCÉ (2026-07-06) : **INDETERMINE_JND**
+
+Extension exécutée sur couche ADDITIVE (h160 : 5 seeds × 160 épisodes ; `measures_160.npz` ;
+agrafage au verdict), instrument gelé préservé **bit-à-bit end-to-end** : préfixes {10,20,40,80}
+identiques aux originaux (5/5), contrôles L=10 (ferm ET shuf) identiques à `measures_qt`, surface
+k\*(L≤80) identique à l'artefact C-1a `surface_kstar_aux_pins.json` (6 pins × 4 L, garde
+non-tautologique). Suite 536/0skip. Revue par-tâche (spec+qualité) + revue opus dédiée du verdict +
+revue whole-branch (« PRÊT À GRAVER ») + re-dérivation à la main du contrôleur. `run_history` /
+`L_LIST` / `measures_qt.npz` non mutés (blob `88e16e2d` intact).
+
+**Gate §A11 reconduit (L∈{10,160}) : CONFORME** — 0 violation / 80 cellules (ferm k\*=32 exact ;
+shuf k\*=∞ sous cap). Verdict **LISIBLE**.
+
+**Surface k\*(L) — pin sévère, IC ENTIER (médiane inter-seeds, budgets float-éq) :**
+
+| colonne | JND | L=10 | L=20 | L=40 | L=80 | **L=160** | lecture par colonne |
+|---|---|---|---|---|---|---|---|
+| ic_bas | 6.03 % | 256 | 256 | 400 | 400 | **400** | fermée à 400 (pente IC ∋ 0) |
+| pin | 7.33 % | 256 | 256 | 256 | 256 | **400** | **saut 256→400 à 16×** ; pente OLS{40,80,160}=1.29, IC=[−0.26, 1.29] ∋ 0 |
+| ic_haut | 8.67 % | 256 | 256 | 256 | 256 | **256** | fermée à 256 (plate ×5) |
+
+**Prononcé mécanique (combinateur §A12, AUCUNE lecture à l'œil) :** colonnes fermées =
+{ic_bas ✓, pin ✗, ic_haut ✓} → **divergent** → **INDETERMINE_JND**. Ni CELLULE 1 PRONONCÉE (les 3
+colonnes ne sont pas toutes fermées : le pin central a sauté), ni FAIL-MUR (le saut central n'est
+**pas significatif** — pente IC ∋ 0). C'est le résultat que §A12 nommait « le plus probable ».
+
+**Ce que dit le verdict (portée §A5, non surclamée) :** sur ce substrat (v2), à ce pin (n=1, Romain,
+sévère), cette famille (qt) — la cellule 1 **n'est PAS prononcée définitivement**. Le verdict est
+**JND-dépendant DANS l'IC** : bord lâche (8.67 %) → fermeture nette à 256 ; pin central (7.33 %) →
+le budget saute à 400 à 16× (marche vers le mur, non significative) ; bord serré (6.03 %) →
+fermeture à 400. C'est **exactement la surface k\*(L, JND) que §C4 destine à l'Arc C comme l'objet
+que le pin résout**. Le seuil de bascule 256↔400 est **chiffré** (lisible dans la surface complète,
+entre 7.33 % et 8.67 %), pas deviné. Le **claim existentiel à l'échelle du but reste ouvert**.
+
+**Le plateau 256 (« cadeau » C-1a §C12) est FRAGILE :** il tenait plat à 8× (L≤80) au pin central ;
+à 16× le pin central lui-même passe à 400. Le coût de persistance plancher (6,25 % de l'état fin,
+256/4096) ne tient qu'aux histoires ≤ 8·L₀ **au pin réel** ; à 16× la marche vers le mur apparaît au
+**centre** de l'IC. Note pour la spec game-design : provisionner le budget de persistance en tenant
+compte de cette montée à horizon long, pas seulement du plancher court-histoire.
+
+**Gardes §A12 appliquées (traçabilité, pas de sur-lecture) :**
+1. **Échelle 3-valeurs {128,256,400}** — la grille fine a rendu le saut 256→400 LISIBLE : il a
+   effectivement tiré, au pin central, à L=160. La platitude n'a pas été sur-lue comme fermeture
+   forte ; c'est la moitié haute {40,80,160} qui a porté le verdict.
+2. **ic_bas armé — soupçon NON confirmé tel que pré-nommé.** Le soupçon gravé était « ic_bas monte
+   pendant que le pin central reste plat ». La réalité est AUTRE : ic_bas était déjà à 400 (dès
+   L=40), le **pin central** a sauté, ic_haut est resté plat. `soupcon_confirme = false`. L'œil était
+   armé pour un motif précis ; le combinateur mécanique (règle générale « divergence entre colonnes »,
+   PAS l'histoire anticipée) a tranché correctement quand même. Dit honnêtement : la divergence est
+   réelle, sa **forme diffère** de l'anticipation — c'est le design anti-fabrication qui fonctionne.
+
+**Règle de dernière famille (§manche-1) : CONSOMMÉE.** Aucune 3ᵉ famille, aucun run supplémentaire —
+§A12 le grave. La mission 16L₀ **s'arrête ici**.
+
+**Point d'arrêt : verdict remonté.** Pas d'enchaînement sur la manche 2 ni sur une 3ᵉ famille.
+Artefacts (pocPhysicator, branche `arc-c-pin-jnd`) : `outputs/arcA/verdict_16L0.json`,
+`arcA_kstar_16L0.png`, `arcA_kstar_16L0_pirecas.png` ; commits Task 1 `9a2aeac`→ verdict `c645558`.
+Durcissement considéré-et-décliné (revue whole-branch, non exigé par le contrat) : assert runtime
+d'appariement des seeds au point d'agrafage — invariant déjà verrouillé par constante partagée +
+test de non-régression L=10.
