@@ -2784,3 +2784,76 @@ jeu (à Romain), non due aujourd'hui**. Le prix de chaque côté est écrit :
 - **Point d'arrêt Task 0 entièrement levé.** La mesure procède. Question terminale inchangée :
   **JND_sev^spat avec son IC, et de quel côté de la frontière 3/4 % il tombe entier** (lecture
   du consommateur 1, §C4).
+
+### §C8 — Arbitrage Task 2 → Task 3 (VALIDÉ Romain, 2026-07-05) : décision géométrie (i) + contingence géométrie-plafond ; axe de mesure Δχ + catch séparé ; ancre-famille = UN point ouvert
+
+**Ce que la machine a fait.** La tension que §C7 pièce 3 anticipait au bout « zoom du jeu », le
+harnais l'a localisée **dans la géométrie du pin lui-même** : sur un contenu 64×64 à porteuse
+4–7 cyc/domaine, **pic-CSF (3 c/deg) et cellules sous-acuité sont incompatibles par arithmétique**
+(cellule au pic-CSF = 1.73 arcmin = 1.73× le plafond d'acuité, quasi-invariant écran). Posée au
+bon endroit AVANT la première session. Crédit revue : le **test adversarial règle-inversée** (ne
+converge jamais / erreur 132 %) prouve que la tolérance 20 % du test-clé discrimine.
+
+**Décision 1 — (i) ENDOSSÉ, raison plus forte que celle de l'exécutant.** Le cue de **bloc n'est
+PAS un confound** pour le consommateur 1 — **c'est du signal**. Les stimuli C-2 sont les **sorties
+réelles du couple résumé+régénérateur** sur les champs réels de la manche 1 ; il est gravé que
+« les artefacts de bloc comptent comme différence perceptuelle réelle : le claim §A2 porte sur le
+couple ». Le **pin opérationnel** — « à quel Δχ mesuré un humain distingue vrai de régénéré, quel
+que soit le cue qui porte sa réponse » — est **exactement le référent que la surface k\* doit
+lire, par construction, sur la même famille de stimuli**. Ré-étiquetage gravé : **« JND à la
+géométrie la plus sensible comme-prévu, cues combinés »**. **(iii) REJETÉ fermement** : interpoler
+l'affichage lisse **précisément la classe d'artefact que le régénérateur produit** — ce serait
+maquiller le signal pour purifier l'étiquette. Étiquette honnête maintenue : le 1 arcmin est du
+Snellen haute-fréquence ; la résolvabilité de bloc dans cette texture est probablement plus
+grossière → la tension est **peut-être petite** (mesurable, cf. contingence).
+
+**Contingence géométrie-plafond (gravée AVANT toute donnée — dernière fenêtre non suspecte).**
+(i) est une **borne sévère, donc asymétrique** :
+- **PASS** au pin combiné → vaut **a fortiori partout** — rien à ajouter.
+- Mais un pin dont l'**IC ENTIER ≤ 3 %** basculerait la manche 1 en **NON-DÉMONTRÉ** et
+  déclencherait la dépense manche 2 **sur un référent plus sévère que ce que le jeu exigera
+  peut-être** — la géométrie du pin est **1.73× au-delà du plafond texture**, c.-à-d. dans la
+  bande de zoom qu'une **politique texture-cappée interdirait**. **Donc, gravé** : si l'IC du pin
+  sévère tombe **entier ≤ 3 %**, **UNE staircase à la géométrie-plafond (1.07°, cellules à
+  l'acuité, porteuse 5.1 c/deg) est DUE avant tout prononcé NON-DÉMONTRÉ** — c'est le **référent
+  liant sous zoom texture-cappé**, exigé par le **fork §C7-4**, PAS de la complaisance (la lecture
+  qui tue une manche se fait au référent que le but impose). La **« staircase-au-bord » de §C7
+  pièce 3 EST devenue cette contingence**. Si elle tire, l'**écart entre les deux staircases
+  mesure la tension** au lieu qu'on en débatte.
+
+**Décision 3 — PRINCIPE (VALIDÉ).** L'**axe de mesure = Δχ mesuré par stimulus, PAS le budget**.
+Les budgets **256/400 sont les objets JUGÉS, pas l'axe de mesure** — les employer comme ancre
+plafonnerait la plage à ~2.78 % (pire source) et **gonflerait le seuil par saturation** (finding
+de la revue). Règle gravable : l'**ancre de dégradation = la régénération la plus crue** ; son
+**plafond Δχ doit être ≥ 2× le haut de la plage JND plausible par source, sinon la source est
+EXCLUE et NOMMÉE**. **BUDGET_CATCH sur une réserve SÉPARÉE** (revue M2) — un catch qui puise dans
+l'axe de staircase perd sa marge « sans ambiguïté ».
+
+**Ancre-FAMILLE — UN point OUVERT (contradiction interne relevée par le contrôleur, à trancher
+avant Task 3).** Romain a nommé l'ancre **« 81 floats » (×2)**. Or **81 floats = famille 1**
+(block-mean ℓ=3), **pas la famille quadtree** — et la surface k\* que le pin lit (verdict manche 1,
+`6a82175`) est la **famille 2 QUADTREE** (budgets, cap 409.6). La **décision 1 rend le « même
+famille de stimuli » load-bearing** ; une ancre famille-1 ferait que les blends près du JND
+injectent un artefact **block-mean uniforme**, pas quadtree adaptatif → **mismatch avec les objets
+jugés**. Deux résolutions cohérentes :
+- **(α)** ancre **famille-1, 81 floats** (Δχ 0.27–0.85, marge max ; mais **artefact cross-famille**
+  près du seuil, et requiert de câbler `regenerate(summarize(s,3))` — non présent dans le harnais
+  Task 2, qui n'utilise que le quadtree) ;
+- **(β)** **crudest QUADTREE = budget 32** (Δχ 0.155–0.644 par §3.3 du rapport Task 2, **MÊME
+  famille** que les objets jugés ; la règle ≥2× **nomme** toute source dont l'ancre < 2× le
+  haut-JND — au pire ~1 source des 20 si haut-JND ~8 % ; déjà supporté par le harnais).
+**Recommandation contrôleur : (β)** — il honore la **décision 1** (même famille) ET la
+**décision 3** (crude, axe = Δχ mesuré, règle ≥2× avec exclusions nommées), sans changement de
+code. **En attente d'un mot de Romain** : c'est le **seul endroit où les décisions 1 et 3 se
+tirent l'une contre l'autre**. (Décision 3 gravée en principe ; la famille de l'ancre attend ce
+mot.)
+
+**Décision 2 — non décidée ici.** Les deux chiffres d'écran (longueur de référence + distance
+mesurée) sont des **inputs de calibration au début de chaque session**, consignés comme
+**conditions de validité** — c'est le rôle de §C7 pièce 1.
+
+**État.** Tasks 0–2 closes (harnais construit, revu, 382/382). **Task 3 gatée** sur : ancre-famille
+(ci-dessus) résolue + Romain **sujet devant l'écran**. Forks d'aval inchangés : **temporel
+(a/a′/d)** dû avant Task 4 si le backup Arc V ne rend rien ; **politique de zoom §C7-4** avec son
+étiquette de prix. **Le prochain chiffre de l'arc sera le premier que la machine ne peut pas
+produire seule.**
