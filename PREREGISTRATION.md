@@ -2912,3 +2912,31 @@ inoffensif en ABX (on ne pilote pas son seuil sans se tromper volontairement), m
 **Posture de session (la seule qui compte)** : répondre au **PERCEPT, pas à la stratégie**. Les
 essais où l'on ne voit rien et où l'on **devine au hasard SONT le protocole** — deviner n'est pas
 un échec, c'est ce que le staircase attend.
+
+### §C10 — Contrat de sortie `pins_spatial.json` (schéma gravé le 2026-07-05, AVANT toute donnée humaine)
+
+Le fichier `schemas/arcC-pins-spatial-v1.schema.json` (ce dépôt) est le **contrat de sortie** de
+`pins_spatial.json`, gravé avant toute donnée. `run_arcC_pins.py` **DOIT valider sa sortie contre
+ce schéma avant d'écrire** — un fichier non conforme n'est jamais écrit (fail loud, jamais un
+référent malformé). Le fichier rapporte des **MESURES ; AUCUN verdict §C4** (l'`additionalProperties:
+false` l'interdit structurellement — la lecture du consommateur 1 se fait au point d'arrêt, jamais
+dans l'artefact). Unités : tout Δχ/JND en **fraction** (0.04 = 4 %).
+
+Éléments load-bearing (élaborations gravées de §C4/§C5/§C9, pas de nouvelles décisions de fond) :
+- **`controle_directionnel`** : attendu **JND_lax ≥ JND_sev** (le laxiste est moins sensible → seuil
+  plus grand). Portée : violation = **IC disjoints dans le mauvais ordre** → `ic_disjoints_mauvais_ordre
+  = true` → **STOP-remonter** (instrument/protocole suspect), pas une note. Des IC qui se
+  chevauchent, même mal ordonnés, ne violent PAS (bruit, pas défaut) — règle de forme.
+- **Branche à-cheval (IC combiné)** : IC primaire = **min/max des seuils** (§C4-1 ; à n=3, le
+  bootstrap serait de la fausse précision). Si la cellule à-cheval s'active (§C4-1 : UNE session C-2
+  supplémentaire, 6 seuils au total), `branche_combinee_active = true` et `ic_combine` = **mean±2SEM
+  sur les 6 seuils** — présent UNIQUEMENT dans ce cas.
+- **`timing_laxiste`** roll-up (§C9 pièce 1) : `exposition_moyenne_s` + `derive_max_pct` (> 25 % =
+  régime suspect, session à remonter).
+- **Statut ∈ {RESOLU, INDETERMINE, INVALIDE}**, `motif_statut` **obligatoire si ≠ RESOLU** (jamais
+  un statut nu) : mapping du harnais — RESOLU ; dispersion inter-staircases > 0.30 → **INDETERMINE**
+  (§C5-3) ; taux de catch < 0.90 ou 2 sessions invalides → **INVALIDE** (§C5-2, `jnd`/`ic` = null).
+- **Provenance** : `commit_harnais` (SHA pocPhysicator), `date_session`, `calibration` embarquée
+  (px_par_degre, taille_domaine_deg, cellule_arcmin, luminosité, conditions — §C7/§C9), et les
+  **seuils BRUTS par staircase** (la branche à-cheval recalcule dessus).
+- **`sujet: synthetique`** = rodage, **jamais commité dans `outputs/arcC/`** (garde anti-fabrication).
