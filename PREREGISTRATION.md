@@ -3107,3 +3107,75 @@ vertes : `sous_jnd` recalculé == stocké bit-à-bit (4 JND grille) ; k\*(80)@5 
 et (b) la livraison de C-1 sous sa forme honnête (Romain, hors-code). Restent **à Romain, non dus ce
 soir** : l'**extension 16L₀** (prononcé cellule 1) et l'**axe temporel** (W1 / gate fovéa-z). Le pin
 temporel reste non mesuré. « Le ratio r0, tu le lances quand tu veux ; C-1 t'attend derrière lui. »
+
+---
+
+## §A12 — Extension 16L₀ : le prononcé de la cellule 1 (pré-enregistré 2026-07-05, AVANT run L=160)
+
+> **Statut : gravé le 2026-07-05, AVANT le run L=160.** Déclenché par la cellule-1-candidate
+> (manche 1, verdict INDÉTERMINÉ→PASS-partiel gravé `6a82175`) lue au pin Arc C sévère
+> (JND 7.3 %, IC [6.0, 8.7], §C11/§C12). Exécute l'option (a) de §A3, gravée d'avance,
+> UNE SEULE FOIS. Formalise les gardes déjà posées en §C12. Harnais pocPhysicator, branche
+> `arc-c-pin-jnd` (descendante de `arc-a-etat-complet` — la seule qui réunit les histoires/mesures
+> Arc A ET le pin Arc C). `run_history` gelé (blob `88e16e2d`, md5 `b564723a`), appelé avec
+> `n_episodes=160`, non modifié.
+
+### §A12 — Extension 16L₀ : le prononcé de la cellule 1 (figé avant run)
+
+**Déclencheur (rappel) :** §A3 option (a) — « étendre à 16L₀ **une seule fois** » — était
+pré-gravée pour le cas où la pente k*(L) PASS est trop faible pour trancher. Elle l'est :
+au pin sévère, k*(L) est plat à 256 float-éq sur L ∈ {10,20,40,80}, mais sur une échelle à
+trois valeurs {128, 256, 400}, et les IC de pente PASS sont bornés à zéro par le bas (k*
+quantifié ne décroît pas). L'extension donne à la pente une vraie chance de casser.
+
+**Substrat & instrument (INCHANGÉS, gelés) :** v2 (`SedimentParams()` défaut = KD/KE_V2,
+`default_terrain`), compresseur quadtree famille-2, régénérateur constant-par-blocs (plancher
+0 bit-à-bit), R1/Δχ-albedo, cap 409.6 float-éq. Aucun re-réglage, aucune re-calibration.
+
+**Le changement, unique :** ajouter le checkpoint **L = 160** (16·L₀) à la génération
+d'histoires, sur les **mêmes seeds {101..105}**, même protocole d'épisode. Rien d'autre.
+
+**Grille & lecture :**
+- k*(160) mesuré exactement comme k*(10..80) : médiane inter-seeds, clause 2×JND (aucune
+  seed > 2×JND), max(M-A1, M-A2) < JND.
+- **JND de lecture = pin sévère, IC ENTIER** : 6.0 %, 7.3 %, 8.7 % (les trois colonnes).
+  Continuité : les JND de grille {2,3,4,5} % sont aussi re-tabulés à L=160 pour la surface,
+  mais le VERDICT se lit à la ligne du pin.
+- **Contrôles §A11 reconduits** à L ∈ {10, 160} (bornes) : ferm (attendu Δχ=0 exact,
+  plomberie) + shuf (attendu k*=∞ SOUS CAP — portée §C-requalifiée : les budgets hors-cap
+  1024/2048 restent non-discriminants, exclus du gate ; règle de forme appliquée). Toute
+  violation → STOP-instrument, verdict non lisible.
+
+### §A12-verdicts (figés, appliqués mécaniquement)
+
+Lecture de la **pente k*(L) sur la moitié haute** L ∈ {40, 80, 160} au pin sévère, IC 95 %
+bootstrap inter-seeds (10 000, seedé), comme §A3 :
+
+- **CELLULE 1 PRONONCÉE** (fermeture) : k*(160) reste plat (= k*(80), soit 256 au pin
+  central) ET pente compatible zéro (IC contient 0) ET k*(160) ≤ cap (409.6) — aux TROIS
+  JND de l'IC pin. Portée gravée (§A5, réaffirmée) : **ce substrat (v2), ce pin (n=1,
+  Romain, sévère), cette famille de compresseurs**. Court-circuite la manche 2 SUR CE
+  SUBSTRAT uniquement. Le claim existentiel à l'échelle du but (obligations étagées, densité
+  d'observation) reste ouvert.
+- **FAIL-MUR PRONONÇABLE** (le mur enfin lisible) : k*(160) SAUTE au-dessus de k*(80)
+  (typiquement 256→400, ou 400→∞/hors-cap) au pin central, pente positive > bruit
+  inter-seeds. → cellule 2 : la forme du mur est mesurée, le ledger passe d'hypothèse à
+  obligation. La manche 2 (registre-commis) devient la dépense suivante.
+- **INDÉTERMINÉ-JND** (le résultat le plus probable au vu de l'entrée) : verdict qui
+  DIFFÈRE selon la colonne de l'IC pin — p. ex. plat à 7.3 % et 8.7 % mais montant à 6.0 %
+  (ic_bas montait déjà à L=40 sur la surface re-seuillée §C12). → le verdict est
+  JND-dépendant DANS l'IC → c'est exactement la **surface k*(L, JND) que §C4 destine à
+  l'Arc C comme l'objet que le pin résout**. Porté tel quel : la cellule 1 est prononcée
+  À CONDITION que le pin vrai soit ≥ le JND-seuil de bascule, et cette condition est
+  chiffrée, pas devinée. AUCUNE 3ᵉ famille, AUCUN run supplémentaire (règle de dernière
+  famille §manche-1 : consommée).
+
+### §A12-gardes (les deux de §C12, gravées ici)
+
+1. **Échelle 3-valeurs** : « plat » = « n'a bougé ni vers 128 ni vers 400 ». Le plateau est
+   réel mais grossièrement quantifié — la grille de budgets fine {32,64,128,256,400} rend le
+   saut lisible s'il existe. Ne pas sur-lire la platitude comme une fermeture forte : c'est
+   la MOITIÉ HAUTE {40,80,160} qui porte le verdict, pas les petits L.
+2. **ic_bas armé** : le soupçon de croissance est réel et pré-nommé (6 % → 256/256/400/400
+   sur la surface §C12). Si L=160 confirme que ic_bas monte pendant que le pin central reste
+   plat → INDÉTERMINÉ-JND, pas cellule 1 nette. L'œil est armé, le verdict reste mécanique.
