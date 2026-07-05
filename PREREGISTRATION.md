@@ -3240,3 +3240,113 @@ Artefacts (pocPhysicator, branche `arc-c-pin-jnd`) : `outputs/arcA/verdict_16L0.
 Durcissement considéré-et-décliné (revue whole-branch, non exigé par le contrat) : assert runtime
 d'appariement des seeds au point d'agrafage — invariant déjà verrouillé par constante partagée +
 test de non-régression L=10.
+
+---
+
+## §A13 — Manche 2 : registre-commis (gravé le 2026-07-06, AVANT toute mesure)
+
+> **Déclencheur** : la règle §A0 gravée le premier jour — « manche 2 construite seulement si
+> manche 1 FAIL ou INDÉTERMINÉ-porté ». Manche 1 close sur INDÉTERMINÉ-JND porté (§A12). La
+> dette qui différait la manche 2 est soldée : ses seuils sont les pins MESURÉS de l'Arc C
+> (sev 7.33 % IC [6.03, 8.67] ; lax 11.54 % IC [9.37, 13.87]), plus aucun placeholder.
+> Texte apposé verbatim depuis la pré-enregistration de Romain.
+
+### §A13-0 — Le claim existentiel, et ce que la grille §A0 devient après §A12
+
+**Claim (§A6, opérationnalisé)** : il existe un **registre** (ledger d'événements commis +
+commits d'émission) et un **foncteur de reconstruction déterministe** tels que :
+- **(É1, invariants durs)** : les invariants commis sont préservés EXACTEMENT par la
+  reconstruction (masses du résumé — propriété de projection du quadtree) ; aucun événement
+  commis ne se dé-commet (pulses rejoués depuis leurs seeds, bit-vérifiés).
+- **(É2, émissions)** : tout readout émis est re-dérivable sous **JND_sev** ; et à chaque
+  émission ultérieure, le monde-reconstruction est **indistinguable (sous JND_sev) du monde
+  vrai** — aucun observateur ne peut prendre la substitution en défaut. C'est la
+  non-contradiction du témoignage, mesurable.
+- **(É3, le reste : libre-mais-déterministe)** : reconstruction = f(registre, seeds
+  d'événements) UNIQUEMENT ; double reconstruction bit-identique ; jamais de bruit de
+  ré-échantillonnage.
+- **Axe de croissance (la question existentielle)** : le coût PAR ÉMISSION (taille de
+  commit k) ne croît ni avec l'écart inter-observations Δt ni avec la longueur de chaîne —
+  le registre est borné par le budget d'observation, pas par l'historique.
+
+**Grille §A0 relue après §A12 (gravée)** : manche 1 = INDÉTERMINÉ-JND porté, donc :
+- **commis PASS** → architecture **ledger VIABLE** (le filet §A6 confirmé) : le jeu procède
+  sur seed+registre QUEL QUE SOIT le côté où le pin vrai tranchera l'état-complet.
+- **commis FAIL (cette famille)** → PAS cellule 3 automatique (l'état-complet reste
+  conditionnellement vivant à ic_haut). Deux conséquences pré-écrites : (i) **le resserrage
+  du pin spatial devient DÉCISIONNEL** (il départage la cellule-1-conditionnelle — le
+  consommateur que le resserrage attendait) ; (ii) une politique de registre plus riche est
+  un fork NOMMÉ, décision neuve, jamais un réflexe.
+- **INDÉTERMINÉ-JND** → surface portée, même objet que §A12, lue conjointement.
+- **INSTRUMENT-MUET** → scellé, remonté (la cellule obligatoire de toute grille).
+
+### §A13-1 — Opérationnalisation (figée)
+
+- **Substrat** : v2 gelé (`SedimentParams()`, `run_history`/`run_episode_trajectoire`,
+  terrain défaut) — INCHANGÉ. Événements = pulses procéduraux seedés (le registre causal =
+  la séquence de seeds). Portée nommée : les événements-joueur seraient des entrées de
+  registre non-seedées, structurellement identiques — NON testés ici.
+- **Modèle d'observateur** : émissions **plein-domaine** aux épisodes programmés (le pire
+  cas pour le registre, le plus propre pour la mesure). Le fenêtrage spatial (axe volume)
+  est HORS SCOPE, nommé en §A13-5.
+- **Politique de registre (famille FIGÉE)** : à chaque émission t_i, commit =
+  `summarize(état, budget k)` (quadtree famille-2, comptabilité §clause-1) ; le moteur
+  **se ré-ancre** : état-moteur ← `regenerate(commit)` ; entre émissions, le monde-moteur =
+  simulation avant depuis l'état ré-ancré, MÊMES seeds de forçage que le vrai.
+- **Protocole de chaîne** : vérité et moteur partent du même t_0 ; à chaque émission t_i :
+  mesurer Δχ(readout moteur, readout vrai) [R1, bandes porteuses], committer, ré-ancrer,
+  continuer. La série Δχ_i le long de la chaîne EST l'objet du verdict : bornée/contractante
+  = le registre ferme ; croissante à travers le JND = composition d'erreur = mur-registre.
+- **Balayages** : Δt ∈ {1, 4, 16} épisodes (densité d'observation — la garde anti-vacuité
+  gravée : la non-contradiction doit survivre à l'observateur DENSE comme au CLAIRSEMÉ,
+  les deux bouts peuvent tuer) ; n_émissions = 6 par chaîne ; budgets k ∈ {128, 256, 400}
+  (là où k* vit au pin, §C12) ; seeds {101..105}.
+- **k\*_chaîne(Δt)** = plus petit k tel que max_i Δχ_i < JND pour la médiane des seeds,
+  aucune seed > 2×JND (clause §A2 reconduite).
+
+### §A13-2 — Verdicts (figés, combinateur mécanique de §A12 reconduit)
+
+Lecture au **pin sévère IC ENTIER** (6.03 / 7.33 / 8.67 %), par colonne :
+une colonne « ferme » ssi k\*_chaîne(Δt) ≤ cap (409.6) pour TOUS les Δt testés ET la série
+Δχ_i ne croît pas à travers le JND (pas de composition).
+- **REGISTRE-FERME** : les trois colonnes ferment → commis PASS (portée §A13-5).
+- **MUR-REGISTRE** : les trois colonnes ouvertes (composition à travers le JND à tout
+  budget ≤ cap) → commis FAIL de CETTE famille → conséquences §A13-0.
+- **INDÉTERMINÉ-JND** : colonnes divergentes → surface k\*_chaîne(Δt, JND) portée.
+- **INSTRUMENT-MUET** : contrôles §A13-4 en violation → verdict scellé, remonter.
+**Diagnostic non-verdictal** : la même table à **JND_lax** (IC [9.37, 13.87]) — le delta
+sev↔lax au niveau chaîne chiffre le stockage-deux-étages (§C0) sur l'axe temporel-registre.
+
+### §A13-3 — Séquencement cheapest-first + gate de faisabilité (leçon W0)
+
+- **SONDE d'abord (Task 1, ~minutes)** : 1 seed, Δt = 4, k = 256, 6 émissions. Lectures
+  pré-écrites : (S1) Δχ_i traverse JND_sev dès les premières émissions → la composition est
+  massive, le verdict d'existence est quasi rendu, la grille complète se re-dimensionne en
+  conséquence (remonter avant d'acheter) ; (S2) Δχ_i borné/contractant → la grille s'achète.
+  La sonde ne PRONONCE rien : elle dimensionne.
+- **Gate d'achat (Task 2)** : benchmark de coût réel AVANT la grille (règle W0 : ≤ une nuit
+  ~10 h). Estimation a priori ~4-5 h CPU. Si > gate : grille réduite PRÉ-ÉCRITE (n_émissions
+  6→4, puis budget 128 retiré) — jamais improvisée.
+
+### §A13-4 — Contrôles (attendus gravés AVEC LEUR PORTÉE — règle de forme)
+
+1. **ferm-chaîne (plomberie)** : commit = champ complet (sans perte) → chaîne moteur ≡
+   chaîne vraie **bit-identique**, Δχ_i = 0 exact partout. Portée : tout Δt, tout L.
+2. **shuf-commit (discriminant)** : commit permuté (histogramme préservé) → première
+   re-dérivation supra-JND. Portée : budgets **SOUS CAP** uniquement.
+3. **corruption (détecteur de contradiction)** : UNE masse de bloc commise altérée → la
+   re-dérivation de CETTE émission montre un supra-JND localisé. Portée : détection
+   d'instrument, ne participe pas au verdict.
+Toute violation → INSTRUMENT-MUET, scellé, remonter. Anti-fuite : la reconstruction ne
+reçoit QUE (registre, seeds) — signature + décoy, comme manche 1.
+
+### §A13-5 — Ce que la manche 2 ne prouve PAS (§13 local)
+
+- **Un PASS** ne dit rien : du fenêtrage spatial (axe volume — émissions plein-domaine
+  ici) ; des événements-joueur (tous procéduraux ici) ; du multi-observateur concurrent ;
+  de la 3D et du couplage raide ; de l'axe temporel (σ_ω, non pinné) ; du tier-3 au-delà du
+  déterminisme (aucun axe perceptuel neuf ne juge la « plausibilité du libre »). Substrat
+  v2, pin n=1, cette famille de politique.
+- **Un FAIL** est celui de CETTE politique (commit-résumé + ré-ancrage + replay), pas de
+  tout registre possible — le fork « politique plus riche » est une décision neuve (§A13-0).
+- Le pin garde son IC : tout verdict est lu sur l'IC entier, jamais au point central.
