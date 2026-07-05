@@ -3021,3 +3021,89 @@ Arc V ne rend rien). **En attente du pin temporel.** Le gate fovéa-z a son **co
 prononcer la cellule 1 définitivement ? (2) l'**axe temporel** (backup Arc V, sinon fork a/a′/d)
 pour servir les consommateurs 2 & 4 ; (3) la **politique de zoom §C7-4** (avec son étiquette de
 prix), qui reste en amont de la portée du claim.
+
+---
+
+## §C12 — C-1a : micro-mesures pour l'encadrement bibliographique (VALIDÉ Romain, 2026-07-05)
+
+Deux mesures d'**analyse pure** (0 simulation, 0 RNG, 0 nouvelle donnée humaine ; entrées toutes
+vérifiées présentes AVANT tout code — falsifiabilité levée) alimentent C-1 (encadrement biblio,
+hors-code) et re-lisent la surface k\* au pin réel. Harnais pocPhysicator (branche `arc-c-pin-jnd`) :
+Task 1 ratio = commits `061885a`+`98d30f0` ; Task 2 re-seuillage k\* = `27fdde7`+`6304426`. Chaque
+task : implémenteur frais → revue spec+qualité → non-régression verrouillée. Suite 499/499.
+
+### Le fait dur (garde d'honnêteté §C0, elle a fait son travail)
+
+Le **contraste de Michelson de la porteuse (bande 4-7) est > 1 sur 19/19 sources**
+(c_michelson ∈ [1.90, 4.82], médiane 2.29). **Michelson > 1 n'est PAS un bug de mesure** : c'est un
+fait physique sur nos stimuli — l'albedo moyen est minuscule (~0.04) et la porteuse y déborde
+(χ_rms > 1 pour 14/19 ; bande 4-7 porteuse ≥ 10 % AC pour les 19). Traduit : nos champs albedo **ne
+sont pas des gratings sinusoïdaux de faible contraste** — ce sont des **textures à très fort
+contraste local, quasi-binaires par endroits**. La CSF de la littérature est mesurée **au seuil de
+détection, en petit contraste** — un régime où nos stimuli ne vivent pas. Le pont biblio que C-1
+devait construire enjambe une rivière plus large que prévu.
+
+### Décision ratio — TRANCHÉE (Romain) : **les deux**
+
+- **Natif gardé intact** : le ratio χ_rms/C_michelson mesuré (`ratio_rms_michelson.json`, vrai
+  médiane 0.477 IQR 0.093, régénéré-32 médiane 0.386 IQR 0.074) est la **mesure pré-enregistrée** —
+  on ne réécrit pas une mesure gravée.
+- **r0 ajouté en compagnon** : `r0 = 2·RMS/(peak-to-peak)` de la composante de bande = le ratio
+  **scale-invariant**, celui du **régime petit-contraste**, donc le seul qui puisse légitimement
+  convertir des seuils CSF. **Mandat propre** : passe **additive**, même harnais, **même sanity**
+  (grating pur → r0 = 1/√2), **dispersion inter-sources rapportée** comme pour le natif. (Null-first
+  respecté : l'exécutant a eu raison de ne PAS l'ajouter sans mandat ; le mandat est ici.)
+
+### C-1 RÉTROGRADÉ — verdict pré-écrit AVANT toute lecture biblio (Romain)
+
+Même avec r0, la conversion CSF→Δχ reste un pont **détection → discrimination-en-texture-fort-
+contraste**. Le facteur de masquage supra-seuil pré-annoncé (~5–15×) **n'est pas un nombre que la
+littérature grating donne proprement pour ce régime** (il vaut pour des masques modérés, pas pour
+Michelson > 1). Le **régime fort-contraste consomme à lui seul plus d'incertitude que trois choix
+nommés** → par la règle §C2 gravée (« budget de choix ≤ 3 ; au-delà → **C-1 rétrogradé à ordre de
+grandeur, C-2 tranche** »), **C-1 est un encadrement d'ordre de grandeur, PAS un pont serré**.
+
+- Ce n'est **pas un échec** : c'est que **C-2 est le pin**, et **C-1 confirme seulement qu'on est
+  dans le bon ordre de grandeur** — la hiérarchie a toujours été gravée (« ne jamais pin depuis C-1
+  seul » → ici **« ne jamais pin depuis C-1 tout court »**).
+- **C-1 sera livré** sous cette forme : une **fourchette large** + une **vérification de cohérence
+  de signe et d'échelle**, PAS une deuxième mesure indépendante du 7.3 %. La **jambe population
+  existe, plus courte qu'annoncée**. Dit **maintenant** (non-suspect) plutôt qu'au retour.
+
+### Mesure 2 — re-seuillage k\* au pin réel (`surface_kstar_aux_pins.json`) : un cadeau, chiffré
+
+Re-lecture MÉCANIQUE (aucun verdict lu, aucune pente — la lecture est le fork 16L₀). Non-régressions
+vertes : `sous_jnd` recalculé == stocké bit-à-bit (4 JND grille) ; k\*(80)@5 % = 400.
+
+- **Au pin sévère (7.33 %), k\* est PLAT à 256 float-éq sur tout L ∈ {10..80} — PAS 400.** Soit : sur
+  ce substrat, à ce pin, le diff committé d'un champ persistant **se compresse à 6,25 % de l'état
+  fin (256/4096), plat sur 8× l'historique**. C'est le **chiffre plancher de la sauvegarde
+  seed+diff**, descendu **d'un tiers sous ce que la manche 1 supposait** (400). Pour le game
+  designer : le **coût de persistance par région observée est plus bas que le budget provisionné**.
+- **Stockage-deux-étages §C0, désormais chiffré** : écart sévère/laxiste au pin = **−128 floats à
+  L=10** (le laxiste ferme à 128 < 256), **0 au-delà** (L ∈ {20,40,80} convergent à 256). La
+  distinction émissions/revisite **ne paie en stockage qu'aux courtes histoires** ; aux longues, les
+  deux régimes convergent. **Architecturalement réel, quantitativement marginal sur ce substrat** —
+  une **note pour la spec, pas un pilier**.
+
+### Deux gardes sur la table k\* AVANT qu'elle serve d'entrée à 16L₀ (pré-écrites — armer l'œil, NE PAS trancher)
+
+1. **La platitude vit sur une échelle à trois valeurs {128, 256, 400}.** « Plat à 256 » = « n'a
+   bougé ni vers 128 ni vers 400 sur la plage testée » — plateau **réel mais grossièrement
+   quantifié**, exactement la fragilité qui a motivé 16L₀. À L=160 la question est **binaire et
+   nette** : reste-t-il à 256, ou **saute-t-il à 400 (la marche vers le mur)** ? La grille fine
+   {32,64,128,256,400} gravée est ce qui rendra ce saut **lisible** s'il existe.
+2. **Le pin d'entrée de 16L₀ est le pin sévère, IC ENTIER** (lecture à 6.0 / 7.3 / 8.7 %). La table
+   le permet déjà : à **ic_bas (6.0 %), k\* = 256/256/400/400 — DÉJÀ non-plat** (il monte à L=40).
+   C'est le **premier soupçon de croissance, à la borne basse de l'IC**. Pré-écrit (sans le lire
+   comme verdict) : si 16L₀ confirme que **la borne basse monte pendant que le pin central reste
+   plat**, la lecture cellule-1 devient **JND-dépendante à l'intérieur de l'IC** — et c'est
+   précisément la **surface k\*(L, JND)** que §C4 destine à l'Arc C comme l'objet que le pin résout.
+   **Ne pas trancher maintenant ; armer l'œil pour L=160.**
+
+### Statut
+
+**Arc C spatial se clôt** après (a) la gravure de r0 (mesure compagne, implémentation SDD immédiate)
+et (b) la livraison de C-1 sous sa forme honnête (Romain, hors-code). Restent **à Romain, non dus ce
+soir** : l'**extension 16L₀** (prononcé cellule 1) et l'**axe temporel** (W1 / gate fovéa-z). Le pin
+temporel reste non mesuré. « Le ratio r0, tu le lances quand tu veux ; C-1 t'attend derrière lui. »
