@@ -2857,3 +2857,30 @@ mesurée) sont des **inputs de calibration au début de chaque session**, consig
 (a/a′/d)** dû avant Task 4 si le backup Arc V ne rend rien ; **politique de zoom §C7-4** avec son
 étiquette de prix. **Le prochain chiffre de l'arc sera le premier que la machine ne peut pas
 produire seule.**
+
+**CLÔTURE du point ouvert (VALIDÉ Romain, 2026-07-05) : (β) — ancre = quadtree budget 32.** Le
+« 81 floats » était un lapsus inter-famille (Δχ de la famille block-mean puisés en mémoire parce
+que les plus gros, sans vérifier que la famille du chiffre = la famille du verdict) — exactement
+la classe d'erreur que la décision 1 venait de rendre interdite. **Décision 1 bat le chiffre
+confortable** : ancre = la régénération la plus crue **de la famille jugée** (quadtree budget 32,
+Δχ 0.155–0.644, zéro code neuf). Ce que (β) préserve : la **chaîne de légitimité du stimulus reste
+d'un seul tenant** — champs réels → compresseur réel → régénérateur réel → famille du verdict — du
+staircase jusqu'à la lecture de la surface k\*. (α) aurait acheté de la marge Δχ au prix d'une
+**rupture de cette chaîne au seul endroit qui compte, près du seuil**.
+
+**Trois conséquences opérationnelles — pliées dans le brief Task 3, NE ROUVRENT PAS le contrat** :
+1. **L'exclusion nommée cesse d'être théorique** (ancre au pire 0.155 → la règle ≥ 2× mord dès que
+   le haut-JND plausible dépasse ~7.75 %, ~1 source sur 20 à haut-JND ~8 %). Contrôle d'ancrage
+   **par source, avant sa première présentation** ; source exclue = **nommée au log avec son Δχ
+   d'ancre**, jamais retirée silencieusement. 20 − une poignée = échantillonnage sain ; **≥ 10
+   exclues = résultat à REMONTER, pas à absorber**.
+2. **Asymétrie de l'ancre, sens inconfortable** : budget-32 rend les catch **légèrement plus durs**
+   sur les sources à Δχ d'ancre bas. Si le taux de catch < 90 % à cause de ça → **session INVALIDE
+   quand même** (on ne recalibre PAS le critère de validité sur la difficulté de l'ancre après
+   coup ; le catch atteste l'attention, pas la réussissabilité-par-construction). Trop dur
+   structurellement → **STOP-remonter** ; option propre alors NOMMÉE : tirer les catch de la
+   réserve séparée sur les **sources à ancre la plus forte** (décision à ce moment-là, pas
+   maintenant).
+3. **La contingence géométrie-plafond hérite du principe** : si elle tire (IC ≤ 3 %), sa staircase
+   utilise la **même ancre budget-32, même famille, mêmes sources** — sinon l'écart entre les deux
+   staircases, qui doit mesurer la **tension géométrique**, serait contaminé par un écart d'ancre.
