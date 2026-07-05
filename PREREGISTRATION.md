@@ -2884,3 +2884,31 @@ staircase jusqu'à la lecture de la surface k\*. (α) aurait acheté de la marge
 3. **La contingence géométrie-plafond hérite du principe** : si elle tire (IC ≤ 3 %), sa staircase
    utilise la **même ancre budget-32, même famille, mêmes sources** — sinon l'écart entre les deux
    staircases, qui doit mesurer la **tension géométrique**, serait contaminé par un écart d'ancre.
+
+### §C9 — Conditions de validité d'EXÉCUTION des sessions Task 3 (VALIDÉ Romain, 2026-07-05 — dernière fenêtre avant données irréversibles)
+
+Trois conditions dues au contrat (§C1/§C6/§C7) mais absentes du protocole d'exécution —
+verrouillées ici AVANT toute donnée :
+
+1. **Durées d'exposition réelles LOGGÉES par essai (condition de validité du régime laxiste, PAS
+   un confort).** Le laxiste empile des timers matplotlib (exposition 2 s, masque bruité, rétention
+   5 s, défilement séquentiel) — notoirement approximatifs selon la machine et la charge. Un
+   « 2 s » réalisé à 3,5 s **fausse le paramètre qui DÉFINIT le régime**, et on le découvrirait sur
+   des staircases déjà consommées. Donc : chaque essai laxiste **consigne ses durées réalisées**
+   (timestamps par phase X/masque/A/B suffisent). Le **pré-vol B-bis** (--regime laxiste, quelques
+   essais, Ctrl-C) VÉRIFIE la séquence visible + les durées consignées **AVANT** la campagne ;
+   mismatch grossier → STOP, corriger le mécanisme de timing avant toute staircase.
+2. **Luminosité de l'écran FIXÉE à une valeur, NOTÉE au manifeste, jamais changée entre sessions**
+   — c'est le **choix nommé n°3 du budget C-1** (§C6). Doit exister par écrit, pas par habitude.
+3. **Repère physique de distance maintenu pendant les essais + éclairage ambiant stable.** En
+   laxiste surtout : se pencher vers l'écran pendant la rétention = **zoom involontaire qui déplace
+   le référent en pleine staircase** (le biais nommé §C7). Pas une session en plein jour et la
+   contingence de nuit. Consignés au manifeste.
+
+**Note d'hygiène (amorçage)** : le rodage synthétique à **θ = 0.025** (au lieu de 0.04) évite
+d'afficher un pin pile à la frontière de décision juste avant la vraie session — structurellement
+inoffensif en ABX (on ne pilote pas son seuil sans se tromper volontairement), mais zéro-reproche.
+
+**Posture de session (la seule qui compte)** : répondre au **PERCEPT, pas à la stratégie**. Les
+essais où l'on ne voit rien et où l'on **devine au hasard SONT le protocole** — deviner n'est pas
+un échec, c'est ce que le staircase attend.
