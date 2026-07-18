@@ -3437,3 +3437,57 @@ re-chiffrée (son prix d'origine est mort avec Arc V). AUCUN réveil silencieux.
 **Test d'honnêteté consigné :** (d) n'aurait PAS été choisi après un MUR — l'état-complet
 serait redevenu load-bearing et l'étau avec lui. Le PASS change le calcul par sa
 conséquence structurelle (§A13-0 : ledger viable), pas par son élan.
+
+## §A14 — Sonde fenêtrage-fovéa (pré-enregistrée 2026-07-18, AVANT toute mesure)
+
+> **Statut : gravé le 2026-07-18, avant toute ligne de code de sonde.** Gate fovéa-z ouvert
+> (décision (d) supra) ; cette sonde est le falsificateur le moins cher du mariage
+> registre×fovéa — l'exclusion §A13-5 « fenêtrage spatial » attaquée AVANT que la spec fige.
+
+**Objet.** Deux mécanismes que la manche 2 (émissions plein-domaine) ne pouvait pas voir :
+(1) **contamination** — entre émissions, la dynamique fait entrer dans la fenêtre de
+l'information venue du dehors non-contraint ; (2) **couture** — discontinuité au bord de
+fenêtre au ré-ancrage. Sonde = lecture remontée, AUCUN verdict, aucun branchement
+automatique.
+
+**Cellule.** Seed 101, Δt = 4, 6 émissions (reconduite sonde §A13-3). Substrat v2 gelé,
+exécution machine-instrument (terminal natif).
+
+**Fenêtre.** Fixe, **32×32**, alignée quadtree, quadrant (0,0) par défaut. **Garde
+anti-vacuité pré-écrite** : la vérité DANS la fenêtre doit montrer une dynamique supra-JND
+vs t₀ (fenêtre morte = sonde triviale) ; sinon quadrants essayés dans l'ordre FIXE
+(0,0)→(0,1)→(1,0)→(1,1), premier vivant retenu — règle mécanique, zéro choix après lecture.
+
+**Protocole (bras unique, NU — décision Romain 2026-07-18 : un seul étage).** Vérité et
+moteur partent du même t₀, mêmes seeds de forçage. À chaque émission t_i : mesurer
+Δχ_fen(readout moteur∣fenêtre, readout vrai∣fenêtre) ; commit = summarize(état∣fenêtre,
+k_fen) ; ré-ancrage DANS la fenêtre seulement (état-moteur∣fenêtre ← regenerate(commit)) ;
+DEHORS : le moteur continue SANS contrainte. La série Δχ_fen,i est l'objet de la lecture.
+
+**Choix d'implémentation pré-enregistrés (endossés avec ce texte) :**
+- (i) **k_fen = 64** — aire-proportionnel au k\* = 256 de la grille (32²/64² × 256) ;
+- (ii) ré-ancrage par remplacement de zone : la couture est ASSUMÉE (mécanisme mesuré,
+  pas un défaut d'instrument) ;
+- (iii) nouveau script consommant les primitives du cœur Task 0 — cœur INTOUCHÉ ;
+- (iv) lecture au jnd_sev, formes de la sonde §A13-3 (bornée/contractante vs traverse),
+  Δχ_fen,1 ≡ 0 structurel exclu (aucun commit avant la première émission).
+
+**Vérification d'instrument DUE en build, AVANT run :** les bandes porteuses de
+max_carrier sont-elles définies sur 32×32 ? Si les porteuses basses sont plus grandes que
+la fenêtre, la sonde est muette PAR CONSTRUCTION — remonter avant toute mesure.
+
+**Escalade PRÉ-ÉCRITE (jamais improvisée) :** si la série traverse (contamination avérée),
+le remède à tester est le bras **DEUX-ÉTAGES** : commit fin dedans (k_fen = 64) + commit
+grossier dehors (k_out = 64, soit un niveau LOD d'écart par unité d'aire), ré-ancrage des
+deux zones. Paramètres FIGÉS ici, avant toute lecture — ils ne se re-règlent pas après.
+
+**Diagnostic non-verdictal :** Δχ plein-domaine de la chaîne fenêtrée (chiffre l'erreur
+totale, dehors non-contraint inclus).
+
+**Ce que la sonde ne dit pas :** fenêtre mobile (bras ultérieur nommé), multi-fenêtres /
+multi-observateur, excentricité perceptuelle réelle (le JND hors-fovéa n'est PAS pinné —
+tout grossier-dehors est une politique, pas une promesse perceptuelle), 3D.
+
+**Provenance de la décision :** le deux-étages, d'abord retenu, a été rétrogradé en
+escalade pré-écrite après objection d'attribution (le remède embarqué dans la sonde
+masquerait le mécanisme qu'elle doit exposer) — décision Romain, 2026-07-18.
