@@ -3724,3 +3724,53 @@ CADENCE** (lockstep avec le regard) ; la géométrie de production (fenêtres
 d'énergie pilotées par l'énergie, cadence irrégulière) n'est PAS mesurée —
 portée nommée de la lecture M-c. Consignes 1 (EPS_DETAIL) et 3 (faits
 d'instrument) inchangées. Aucun run n'avait été lancé — aucune mesure invalidée.
+
+### §A15-lecture-M-a (2026-07-19) — MORT-a DÉCLENCHÉ — décision : micro-mesure fusionnée CAPPÉE
+
+**Instrument armé au préalable (run_f1_verifs.py, natif)** : #1 concordance VRAM exacte
+(écart 0 sur témoin 256 Mo) ; #4 bande passante mesurée à vide (plateau pinned ~8.4 Go/s
+H2D / ~6.0 Go/s D2H ; à 64 Ko le débit effectif tombe à 2.8–4.6 Go/s — latence
+dominante, nommé AVANT M-c) ; #3 gel bit-exact PASS (26.7 s) après install CuPy.
+
+**Lecture M-a (run_f1_ma.py, natif, chiffres inconfortables en évidence) :**
+- ENVELOPPE (512, 10) : médiane **703.0 ms**, p99 711.0 — seuil gravé 16.7 ms :
+  **MORT-a DÉCLENCHÉ, facteur ×42**.
+- AUCUNE cellule du scan ne tient : même (256, N_niv=2) = 21.3 ms > 16.7.
+- Scan complet (med ms) : 256/2=21.3 ; 512/2=78.9 ; 256/4=64.0 ; 512/4=237.3 ;
+  256/7=126.8 ; 512/7=470.7 ; 256/10=190.2 ; 512/10=703.0. p99 serrés partout
+  (mesure propre) ; vérif #2 passée de fait (×3.7 à n_fov double).
+- Diagnostic pré-enregistré : coût LINÉAIRE en niveaux (≈×1/×3/×6/×9) et ~100 ms/M
+  cellules constant → PAS l'overhead de lancement, le CALCUL. Limite du diagnostic
+  NOMMÉE : il distingue lancement vs travail, pas travail-naïf vs travail-minimal
+  (les passes mémoire intermédiaires CuPy comptent comme « calcul »).
+- Gate §6 NON déclenché : résidence 0.96 Go < 1.35 — la note VRAM (0.9 Go calculé)
+  est CORROBORÉE. La moitié mémoire du claim tient ; la moitié temps casse.
+- Fait acquis, gravé : **le F naïf CuPy ne tient la frame nulle part dans le scan.**
+
+**Arithmétique d'enveloppe (calcul, pas mesure)** : état 7.08 M cellules × 8 champs
+f32 ≈ 226 Mo ; stencil fusionné idéal ~4–12 passes mémoire/frame ≈ 0.9–2.7 Go à
+~150 Go/s soutenus ⇒ **~6–18 ms : À CHEVAL sur le seuil**. Le papier ne tranche pas.
+
+**Décision Romain (2026-07-19) : micro-mesure fusionnée, CAPPÉE** — décision neuve
+pré-nommée au chiffrage (« mitigations nommées, PAS achetées »). Pré-enregistrement :
+
+**M-a′ — micro-mesure de la borne d'implémentation (pré-enregistrée ICI, avant tout code) :**
+- Protocole : RawKernel CUDA fusionné du MÊME motif E4a (2 systèmes (h,hu,hv,s),
+  stencil wetdry O2 complet, 2 étages SSP-RK2, réduction CFL payée non consommée,
+  dt figé, bathymétrie plate) — 1 niveau, 3 fenêtres n_fov=512, chrono B6
+  (warmup 30 exclu, série 300, médiane ET p99), même base que M-a (calcul,
+  transferts hors-mesure). Machine-instrument, natif.
+- **CRITÈRE PRÉ-ÉCRIT : médiane par-niveau > 16.7/9 ≈ 1.856 ms ⇒ MORT-a CONFIRMÉE
+  au niveau ARCHITECTURE** (à cette enveloppe, ce quadruplet §6) — l'extrapolation
+  ×9 niveaux est étiquetée TRANSPOSITION (linéarité en niveaux MESURÉE sur le naïf).
+- Si < 1.856 ms : MORT-a est RE-SCOPÉE à l'implémentation naïve ; le claim (a)
+  survit au niveau borne — et le règlement COMPLET de M-a exige alors une décision
+  neuve (re-mesure enveloppe pleine avec F fusionné + fovéa mobile + E4d), qui ne
+  s'enchaîne PAS automatiquement.
+- **CAP ANTI-TAPIS-ROULANT GRAVÉ : dernière escalade d'implémentation.** Au-delà du
+  RawKernel fusionné (CUDA Graphs, exotique), toute nouvelle escalade est INTERDITE —
+  si le fusionné dépasse, la mort est architecturale, point.
+- Coût : ~1 séance build + run minutes. Chiffrage remonté avant achat si > 1 séance.
+
+**Séquence restante inchangée** : M-c, génération (nuit), M-d restent dus — leurs
+lectures (PCIe, ledger) informent LES DEUX branches. Chaque lecture remontée.
