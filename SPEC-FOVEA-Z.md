@@ -296,3 +296,82 @@ aux émissions sous jnd_sev (§3, falsificateur tranche-moteur).
   l'amendement 1 (niveau 0 = vivant ; colonne déterministe = ledger+rederive) ?
 - **(D10)** Déclarer É3 machine-locale en v1 (fait mesuré), l'hypothèse sous-JND
   inter-machines étiquetée avec son falsificateur gratuit au menu §8 ?
+
+**D7-D10 TRANCHÉS (Romain, 2026-07-18) : les quatre endossés tels quels.**
+
+`[§4 ENDOSSÉE 2026-07-18]` `[§5 ENDOSSÉE 2026-07-18]`
+
+---
+
+## §6. Budget mémoire (OBLIGATOIRE — v1 : 2D mono) `[EN COURS — soumise à Romain]`
+
+**Épinglage v1 (le quadruplet EST le budget) :** c = 8 champs au niveau fin
+`[NON-ANCRÉ : le substrat-jeu réel n'est pas figé — 8 est l'enveloppe de travail, à
+re-épingler quand le substrat v-jeu se fige]` ; b = 4 (f32, chemin vivant GPU/VRAM ; le
+rederive est f64 CPU-RAM, HORS VRAM par construction §5) ; n_fov = 512 ; N_niv = 10
+`[D3]`. Enveloppe : M_VRAM ≈ 0.9 Go (formule note VRAM, β = 1.5, double-buffer ×2) —
+reste > 3 Go pour rendu + framework sous les 4 Go de la 3050 Ti
+`[MESURÉ-par-calcul : note VRAM, hypothèses nommées]`. Niveau 0 CPU : ~256² cellules,
+trivial. Ledger : ~3.2 Ko/commit, ~11.5 Mo/h. Leviers nommés NON comptés dans
+l'enveloppe (marge cachée, jamais créditée d'avance) : c décroissant par niveau, masques
+dormants, streaming, compression des niveaux froids.
+
+**Gate de section :** si la tranche-moteur mesure une résidence réelle > enveloppe ×1.5,
+le quadruplet est RE-ÉPINGLÉ (décision, pas glissement) — jamais d'enveloppe ajustée
+silencieusement après mesure.
+
+**Décision Romain :** **(D11)** endosser le quadruplet (c=8, f32, n_fov=512, N_niv=10) ?
+
+---
+
+## §7. Pins requis et dettes (v1) `[EN COURS — soumise à Romain]`
+
+Inventaire exhaustif des référents perceptuels — chacun avec statut et consommateur :
+
+- **Pin spatial central** : MESURÉ (Arc C : jnd_sev 7.33 %, IC [6.03, 8.67] % ; laxiste
+  11.54 % [9.37, 13.87] %). Portée n=1, gravée. Consommateurs servis : §A12, §A13, §A14.
+- **r_fovea / JND d'excentricité** : LE pin manquant load-bearing — S_eff en dépend
+  (1.8–3.9 mesuré selon r_fovea) et la règle D4 l'attend. Mesurable : extension
+  excentricité du harnais Arc C (ABX + staircase, stimuli décalés du centre) —
+  campagne HUMAINE. **GARDE ANTI-TAPIS-ROULANT gravée : cette campagne ne se lance
+  QU'APRÈS un verdict tranche-moteur sans mort** — mesurer r_fovea avant de savoir si la
+  frame tient serait dé-risquer le mauvais axe (le pin n'a de consommateur que si le
+  moteur existe).
+- **σ_ω (axe temporel)** : DETTE, condition de réveil gravée (décision (d), 2026-07-18) —
+  rouvre si le paper-grade nomme un consommateur temporel précis. Aucun réveil silencieux.
+- **Hypothèse inter-machines sous-JND** (§5) : falsificateur GRATUIT au menu §8.
+- **Transfert albédo→luminance** : hypothèse nommée héritée (§C4-3), dormante avec σ_ω.
+
+**Décision Romain :** **(D12)** endosser l'ordre — tranche-moteur D'ABORD, campagne
+r_fovea SEULEMENT après verdict sans mort ?
+
+---
+
+## §8. Falsificateurs et gates de sortie (v1) `[EN COURS — soumise à Romain]`
+
+La récolte : toute `[TRANSPOSITION-HYPOTHÈSE]` load-bearing du document a ici son billet
+de mesure. Ordre de dépense (du gratuit au cher, cheapest-falsifier-first) :
+
+1. **F0 — GRATUIT : relecture perceptuelle du FAIL cloud** (hypothèse inter-machines,
+   §5) — repasser l'écart 2.7 % existant dans Δχ/JND. Zéro calcul neuf.
+2. **F1 — TRANCHE-MOTEUR** (le seul gros achat v1 ; brûle 4 hypothèses d'un coup) :
+   (a) frame-time vs L_eff sur 3050 Ti dans l'enveloppe §6 — le falsificateur du mot
+   « moteur » ; (b) écart live↔rederive aux émissions sous charge f32 (contrat D5) ;
+   (c) débit PCIe réel du schéma diff (§5) ; (d) coût de load/replay du ledger (§4).
+   CRITÈRES DE MORT PRÉ-ÉCRITS au pré-enregistrement de la tranche (la LISTE est ici,
+   les chiffres se figent là-bas, AVANT tout run — jamais après).
+3. **F2 — sonde événement-joueur** (format (b) du ledger, §4) : harnais existant, coût
+   type sonde.
+4. **F3 — sonde deux-fenêtres concurrentes** (GATE v1.1) : commutativité sous-JND des
+   ré-ancrages recouvrants (cadrage §4).
+5. **F4 — sonde 3D minimale** (GATE v2) : conversion des transpositions dimensionnelles.
+6. **F5 — τ_relax post-hoc** : armé SEULEMENT à l'achat du cadencement-relaxation (§4).
+
+**Gate de sortie de la spec v1 :** la spec FAIT FOI quand (i) toutes les sections sont
+endossées, (ii) F0 est lu, (iii) F1 a rendu un verdict SANS MORT. Alors seulement le
+code moteur commence — paper grade → mesure → build, la discipline maison portée au
+niveau moteur. Un critère de mort F1 déclenché = remontée + décision, jamais un
+contournement.
+
+**Décision Romain :** **(D13)** endosser l'ordre de dépense F0→F1→F2 (F3/F4 gatés à
+leurs étages, F5 conditionnel) et le gate de sortie ?
