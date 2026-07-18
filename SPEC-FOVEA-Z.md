@@ -118,3 +118,68 @@ z DOIT donc exposer l'extraction de fenêtre alignée-dyadique à tout niveau (l
   `[NON-ANCRÉ]` — le pin d'excentricité (§7) la re-réglera le cas échéant.
 
 `[§2 ENDOSSÉE 2026-07-18]`
+
+---
+
+## §3. Frontière éphémère/persistant (v1 : 2D mono) `[EN COURS — soumise à Romain]`
+
+**Définitions.** ÉPHÉMÈRE : état dont la pertinence perceptuelle décroît — rejouable ou
+oubliable, n'entre JAMAIS au registre, peut être recalculé différemment d'un replay à
+l'autre tant que la plausibilité perceptuelle tient (jamais de L2 — principe fondateur).
+Exemples : vague d'étrave, fumée, éclaboussures. PERSISTANT : état qui porte témoignage —
+observé (émis) ou porteur d'invariants (masses). N'entre que par le registre ; son replay
+obéit à É1/É2/É3 `[MESURÉ : §A13-résultat + §A14-lecture pour la variante fenêtrée]`.
+
+**La frontière est un ÉVÉNEMENT, pas une typologie.** La fumée qui noircit un mur devient
+persistante. Ce qui fait passer la frontière, c'est le COMMIT : l'émission capture
+l'état∣fenêtre du moteur (dynamique éphémère incluse — le commit capture le RÉSULTAT,
+§A14 (v) le prototype) ; les flux d'invariants passent par leur colonne propre (bus
+d'énergie, la magie comme transducteur conservé — pilier existant). Slogan gravé
+reconduit : seul le détail réinjecté paie la taxe de déterminisme bit-exact.
+
+**LE NŒUD — le contrat live↔re-dérivation.** Relecture du claim §A13-0, à la lettre :
+É2 dit « tout readout émis est re-dérivable SOUS JND_sev » — PAS bit-exact ; c'est É3
+qui exige le bit-exact, et il ne l'exige QUE de la reconstruction avec elle-même (double
+re-dérivation identique). Le contrat sépare donc DEUX chemins :
+- **chemin de reconstruction** (rederive) : f(registre, seeds) uniquement, BIT-EXACT,
+  auto-cohérent — c'est LUI qui porte la non-contradiction de l'histoire ;
+- **chemin vivant** (la frame jouée) : doit rester SOUS JND_sev du chemin de
+  reconstruction aux émissions — c'est tout ce que É2 exige de lui.
+Conséquence architecturale : le chemin vivant a DROIT au non-déterminisme (GPU f32,
+réductions non ordonnées) sur ses composantes éphémères ; le chemin de reconstruction
+n'y a jamais droit. L'écart live↔rederive aux émissions devient un CONTRÔLE D'INSTRUMENT
+de production, mesurable en continu `[TRANSPOSITION-HYPOTHÈSE : dans le harnais, les deux
+chemins coïncident bit-à-bit (CPU f64) — l'écart sous charge GPU f32 est NON MESURÉ ;
+falsificateur : la tranche-moteur mesure cet écart, critère pré-écrit : sous jnd_sev,
+sinon repli Option B (tout-déterministe) et son coût de frame mesuré]`.
+
+**Les deux colonnes du ledger.** (1) Événements : entrées seedées (procédurales —
+`[MESURÉ]`) et entrées-joueur (inputs quantifiés en temps-simulation, structurellement
+identiques — `[TRANSPOSITION-HYPOTHÈSE : jamais testé, §A13-1 l'a nommé ; falsificateur :
+sonde événement-joueur sur le harnais existant]`). (2) Commits d'émission : fenêtrés,
+budget aire-proportionnel `[MESURÉ : §A14]`. Taux enveloppe : ~3.2 Ko/commit,
+~11.5 Mo/h à 1 commit/s `[MESURÉ-par-calcul : note VRAM]`. Le fichier de sauvegarde du
+jeu EST le ledger — le monde se recharge par re-dérivation `[NON-ANCRÉ : conséquence de
+design de §A13-0, coût de rechargement à mesurer en tranche-moteur]`.
+
+**Invariants machine-à-états (candidats Hypothesis, v1) :**
+- **H1 append-only** : aucune mutation du ledger, jamais (propriété d'API).
+- **H2 porte unique** : le persistant de z n'est modifié QUE par {pas de physique F,
+  ré-ancrage depuis commit} — aucune écriture directe.
+- **H3 idempotence de replay** : double re-dérivation bit-identique (É3 — mesuré au
+  harnais, devient test de propriété permanent).
+- **H4 projection** : S∘R = id sur les fenêtres commises `[MESURÉ : test §A14]`.
+- **H5 isolement de l'éphémère** : purger tout l'état éphémère puis re-dériver depuis le
+  ledger redonne des readouts sous JND_sev des émissions vécues (le contrôle du nœud
+  ci-dessus, en version invariant).
+
+**Décisions Romain pour clore §3 :**
+- **(D5) Le contrat live↔rederive** : endosser l'**Option A** (coupure au commit — live
+  perceptuel avec droit au non-déterminisme éphémère, rederive bit-exacte seule porteuse
+  d'histoire) comme défaut v1 avec son falsificateur pré-écrit en §8, l'Option B
+  (tout-déterministe, y compris le vivant) ne devenant obligatoire que si l'écart
+  traverse ? Ou imposer B d'emblée (plus sûr, coût de frame inconnu, probablement
+  incompatible GPU) ?
+- **(D6) Les entrées-joueur dans le ledger v1** : spécifier leur FORMAT dès la v1
+  (design pur, étiqueté transposition non testée, brûlé plus tard par une sonde
+  événement-joueur) — ou les repousser en v1.1 et garder la v1 strictement procédurale ?
