@@ -236,6 +236,18 @@ n'est plus re-dérivable depuis le ledger tronqué (le témoignage détaillé es
 par son état final exact) `[NON-ANCRÉ : politique de rétention = décision produit,
 hors v1 ; le FORMAT (d) est dans la v1, la politique non]`.
 
+**Concurrence — cadrage Romain (2026-07-18, prépare la v1.1).** Dans cette architecture
+l'observation N'EST PAS passive : commit ⇒ ré-ancrage ⇒ écriture. Deux émissions
+simultanées sur fenêtres recouvrantes ne commutent pas bit-à-bit (projections avec
+perte). MAIS cette non-commutativité est SANS SÉMANTIQUE : tout ordre total convient,
+il doit seulement exister et être gravé — la clé (t_sim, seq) du ledger suffit. La sonde
+v1.1 mesure précisément : écart A∘B vs B∘A sur recouvrement SOUS JND ? (si oui, l'ordre
+d'observation est un détail d'implémentation). La PRIMEUR des ACTIONS joueur (qui assigne
+seq quand deux joueurs agissent dans le même quantum) est un problème classique
+d'horodatage/AUTORITÉ, nommé HORS-PHYSIQUE : la couche réseau/jeu choisit sa politique ;
+la spec garantit seulement — et garantit déjà — *ordre total donné ⇒ reconstruction
+bit-exacte* (H3). `[NON-ANCRÉ côté politique ; la garantie H3 est MESURÉE au harnais]`
+
 **Décisions Romain pour clore §4 :**
 - **(D7) Cadencement v1 = Δt fixe** (défaut mesuré), cadencement-sur-relaxation nommé
   non-armé — endosser tel quel ?
