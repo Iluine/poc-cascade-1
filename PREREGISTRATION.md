@@ -3407,3 +3407,33 @@ cadencement des commits sur la relaxation. À explorer comme décision neuve, PA
 enchaînement.
 
 **Point d'arrêt honoré : verdict remonté à Romain, texte endossé avant gravure (2026-07-18).**
+
+### Décision fork temporel (2026-07-18) : **(d) PORTER NON RÉSOLU** — gravée avec conditions
+
+**Contexte.** Backup Arc V : abandonné (rien trouvé — décision Romain 2026-07-18) → fork
+(a/a′/d) DÛ (§C6). Branches recalculées après §A13-résultat, dont UNE NEUVE nommée :
+**(a″) hybride registre** — films σ_ω générés par la machinerie É2 validée manche 2
+(dynamique réelle, σ_ω piloté par le forçage) ; hypothèse de transfert entre (a) et (a′)
+(l'indistinguabilité É2 est mesurée sur v2-sédiment/quadtree, PAS sur panaches — transfert
+lui-même hypothèse). Nommée, PAS choisie.
+
+**Décision Romain : (d).** L'étau W1 [−19, −10] % est porté NON RÉSOLU → **W1
+mort-par-défaut** (réanimation = décision neuve, jamais un réflexe). **Gate fovéa-z :
+OUVERT** (§C4-4, 2-des-3 issues : ne dépendait plus que du consommateur 1, servi).
+
+**Motifs gravés (structurels, pas l'élan du PASS) :** (i) le consommateur de σ_ω — W1,
+128-vs-256 — érodé deux fois : par la fovéa (borne L_eff, question de résolution globale
+suspecte) et par §A13-résultat (le jeu procède sur seed+registre quel que soit le côté de
+l'état-complet) ; (ii) le chemin critique de viabilité passe par le pin r_fovea (mesurable,
+harnais Arc C existant), pas par σ_ω ; (iii) mesurer σ_ω aujourd'hui = acheter un instrument
+avant que la question existe — si la spec nomme un référent temporel, il sera plus précis
+que le σ_ω générique (ex. perceptibilité des transitoires de ré-ancrage au cadencement).
+
+**DETTE NOMMÉE σ_ω — condition de réveil (gravée) :** si le paper-grade de la spec fovéa-z
+nomme une décision qui consomme un référent temporel, le fork ROUVRE avec cette question
+précise en main. Branches vivantes au réveil : (a″) préférée sur (a′) ; (a) seulement
+re-chiffrée (son prix d'origine est mort avec Arc V). AUCUN réveil silencieux.
+
+**Test d'honnêteté consigné :** (d) n'aurait PAS été choisi après un MUR — l'état-complet
+serait redevenu load-bearing et l'étau avec lui. Le PASS change le calcul par sa
+conséquence structurelle (§A13-0 : ledger viable), pas par son élan.
