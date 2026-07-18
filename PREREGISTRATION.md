@@ -3688,3 +3688,23 @@ implantation `src/f1_gpu/` + `scripts/run_f1_*.py` + `tests/test_f1_*.py`, cœur
 manche 2 INTOUCHÉ, revue adversariale avant merge, aucune lecture sans vérification
 d'instrument PASS. Mesures : iluin-tworings3 natif uniquement. Point d'arrêt aux
 lectures — aucun enchaînement automatique.
+
+### §A15-complément-2 — Build tranche-1 endossé (2026-07-18) : B1-B9 + 3 consignes
+
+Build livré, revu (bloquant sha256 dtype/shape corrigé), endossé (Romain) et commité
+(pocPhysicator 4e0e719). Choix B1-B9 consignés dans `src/f1_gpu/__init__.py`.
+**Trois consignes gravées avec l'endossement :**
+1. **EPS_DETAIL = 1e-4 (B4)** = paramètre d'instrument `[NON-ANCRÉ perceptuellement]` —
+   il achète le trafic de M-c et rien en tranche-1 ne mesure son coût perceptuel.
+   HÉRITÉ par le pré-enregistrement tranche-2 comme SUSPECT NOMMÉ si M-b lit AUTRE ;
+   la lecture M-c reporte le dense-équivalent EN ÉVIDENCE (chiffres inconfortables).
+2. **Fenêtres d'énergie figées (B3)** : le trafic de déplacement mesuré est un
+   MINORANT nommé (seule la fovéale bouge) — porté dans la portée de la lecture M-c.
+3. **Faits d'instrument** : CuPy 14.1.1 (clause « plus récente supportant
+   numpy 2.4.x » exercée, divergence vs 13.x nommée) ; la VM voit le GPU
+   (passthrough 570) — dev/tests uniquement, JAMAIS une mesure ; vérif #3
+   (gel bit-exact) DUE en natif avant toute lecture.
+
+**Séquence de runs (natif, Romain exécute, chaque lecture remontée, zéro
+enchaînement) :** 1. run_f1_verifs.py → 2. run_f1_ma.py → 3. run_f1_mc.py →
+4. run_f1_md_generer.py (nuit, non-verdictal) → 5. run_f1_md.py.
