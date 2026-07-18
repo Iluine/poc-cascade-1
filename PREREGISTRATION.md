@@ -3632,3 +3632,59 @@ question de SCINDER M-b se pose AVANT achat, pas après.
 = 16.7 ms (p99 non verdictale) ; T3 MORT-b = pin 0.0733, par-seed ; T4 f_PCIe = 25 %
 (⇒ 4.2 ms) ; T5 T_load = 30 s (snapshot = diagnostic) ; T6 stack GPU déféré au
 chiffrage, endossement avant build ; T7 exécution découplée de F0-cloud.
+
+### §A15-complément — Gate d'achat TRANCHÉ (2026-07-18) : chiffrage endossé, SCISSION, CuPy
+
+Chiffrage remonté (pocPhysicator `claude/chiffrage-tranche-moteur.md`) et ENDOSSÉ
+(Romain, 2026-07-18 — E1 à E7). Fait structurel consigné : **(a) et (b) ne sont pas le
+même F** — M-b exige un portage numériquement fidèle de `run_episode` (wetdry O2
+CFL-adaptatif + Exner + pulses) en f32 GPU, sinon Δχ confond « non-déterminisme f32 »
+et « physique différente ». Le risque nommé §A15 est confirmé au chiffrage : (b) ~40 %
+de l'effort, seul risque ÉLEVÉ.
+
+**E1** — Chiffrage global endossé (8–11 séances, ~3200–4700 LOC style maison).
+**E2/T6 clos** — Stack = **CuPy** (`cupy-cuda12x`, même venv, `numpy==2.4.6` épinglé,
+vérif #3 gel bit-exact REJOUÉE après install). Second choix : torch. JAX écarté pour
+cette tranche : transferts/placement implicites (tue l'attribution PCIe exacte de M-c),
+préallocation VRAM (fausse la vérif #1), recompilation par shape (la fovéa mobile).
+**E3** — **SCISSION** : tranche-1 = M-a/M-c/M-d via (a)(c)(d)(e)(f) [5–6 séances] ;
+tranche-2 = M-b via (b) [3.5–5 séances], achetée SEULEMENT si tranche-1 SANS MORT.
+Décision d'ORDRE D'ACHAT : aucun critère de mort, protocole ni portée modifiés ;
+**verdict F1 = les 4 mesures** — « la spec fait foi » (gate iii §8) et la campagne
+r_fovea (garde §7) attendent tranche-2. Nommé ici : latence assumée, aucun glissement.
+**E4** — Choix du composant (a) : (E4a) 8 champs = (h,hu,hv,s)×2 sous stencil complet
+— majorant honnête, l'alternative « 3+5 passifs » minorerait le coût et fabriquerait un
+M-a complaisant ; (E4b) shapes fixes préalloués par niveau ; (E4c) trajectoire =
+balayage 1 cellule fine/frame (saut de fenêtre = diagnostic non-verdictal) ; (E4d)
+remontée = coefficients des seules fenêtres touchées, chaque frame (c'est le schéma
+diff que M-c mesure).
+**E5** — Le vivant f32 calcule SON PROPRE dt CFL — forcer la séquence dt du f64 dans
+le vivant réduirait l'écart et fabriquerait le verdict : interdit, consigné avant build.
+**E6** — Génération du ledger M-d : Δt=1 épisode/commit, CPU natif de nuit,
+NON-verdictal (MORT-d ne chronomètre que le LOAD, jamais la génération ; la taille du
+ledger — 3600 commits, ~11.5 Mo — est préservée, c'est elle que le parse paie).
+**E7** — Load = parse+validation INTÉGRALE du ledger + regenerate(dernier commit) +
+replay du segment courant + reprise du vivant. Conséquence mécanique du ré-ancrage :
+l'état∣fenêtre post-ré-ancrage = f(dernier commit) seul ; le replay intégral serait de
+la VÉRIFICATION (l'audit É3), pas de la construction — résultat prouvé identique (H3).
+
+**Trois consignes adversariales attachées à E7 (endossées avec lui) :**
+1. **MORT-d re-scopé, DIT EN FACE** : 30 s borne le coût du LEDGER (parse, intégrité,
+   regenerate), pas celui de la physique. Le critère devient peu exigeant — consigné
+   comme tel, pas déguisé en falsificateur dur.
+2. **Le diagnostic snapshot-au-milieu est RETOURNÉ en test de la claim E7** : attendu
+   pré-enregistré = écart de load avec/sans snapshot ≈ 0. Tout écart matériel = AUTRE
+   remonté (le diagnostic falsifie E7 au lieu d'être vidé par lui).
+3. **Note de spec (consignée, §4 NON réécrit)** : la compaction snapshot-racine achète
+   du disque et de la rétention, PAS du temps de load — « le replay repart de là »
+   (§4) ne doit pas être lu comme une promesse de load.
+
+**Consigne tranche-2 (gravée d'avance)** : son pré-enregistrement inclura une
+re-mesure frame-time du F FIDÈLE (non-verdictale) — contrôle de représentativité du
+proxy T1, rendu gratuit par la scission.
+
+**Prochain pas : build TRANCHE-1 (Claude Code)** — composants (a)(c)(d)(e)(f),
+implantation `src/f1_gpu/` + `scripts/run_f1_*.py` + `tests/test_f1_*.py`, cœur
+manche 2 INTOUCHÉ, revue adversariale avant merge, aucune lecture sans vérification
+d'instrument PASS. Mesures : iluin-tworings3 natif uniquement. Point d'arrêt aux
+lectures — aucun enchaînement automatique.
