@@ -3552,3 +3552,83 @@ prochaine session cloud** : run 76 s, SAUVEGARDER l'état divergent (la leçon :
 du FAIL originel n'avait pas été persisté), Δχ vs gelé. (b) Le gate de sortie de la spec
 v1 attend ce point (§8). (c) Leçon d'instrument gravée : les états divergents se
 persistent TOUJOURS — un FAIL non persisté coûte une session de plus.
+
+## §A15 — Pré-enregistrement TRANCHE-MOTEUR (F1) (gravé 2026-07-18, AVANT toute ligne de code de tranche)
+
+> **Statut : gravé le 2026-07-18 sur endossement Romain (texte + décisions T1-T7).**
+> La LISTE des 4 mesures vient de SPEC-FOVEA-Z §8-F1 (D13) ; les chiffres se figent ICI,
+> avant tout run — jamais après. Brouillon de travail : pocPhysicator
+> `claude/prereg-tranche-moteur-2026-07-18-BROUILLON.md`.
+
+**Objet.** F1 brûle 4 hypothèses d'un coup : (a) frame-time vs L_eff [le falsificateur
+du mot « moteur »] ; (b) écart live↔rederive sous f32 [contrat D5/Option A] ; (c) débit
+PCIe du schéma diff [topologie §5] ; (d) coût de load/replay du ledger [§4]. C'est une
+**MESURE, pas un prototype** : code autorisé = harnais de tranche (scripts consommant
+les primitives existantes + chemin GPU jetable), PAS le moteur. Un critère de mort
+déclenché = remontée + décision, jamais un contournement. Verdict SANS MORT requis
+pour : la spec fait foi (gate iii §8), campagne r_fovea débloquée (garde §7).
+
+**Ordre (T7, tranché).** Exécution F1 **DÉCOUPLÉE** de F0-cloud : F0 ne gate que
+l'hypothèse inter-machines (§5), pas la tranche. F0-cloud reste dû à la prochaine
+session cloud (persister l'état divergent).
+
+**Instrument.** iluin-tworings3, terminal natif, RTX 3050 Ti 4 Go. Stack GPU (T6) :
+nommé au chiffrage du build, endossé AVANT toute ligne (candidats CuPy/torch/JAX ;
+contraintes : f32, 4 Go, coexistence avec numpy 2.4.6 du chemin rederive). Chrono GPU :
+synchronisation explicite, warmup ≥ 30 frames EXCLU, série ≥ 300 frames, **médiane ET
+p99 reportées toutes deux**. **Vérifications d'instrument DUES avant toute lecture
+(sinon tranche muette, remonter) :** (1) résidence VRAM concordante allocateur vs
+nvidia-smi ; (2) sensibilité du chrono (n_fov 256→512 doit bouger le frame-time) ;
+(3) le rederive CPU f64 reproduit le gel bit-exact sur la machine ; (4) bande passante
+PCIe soutenable MESURÉE À VIDE — le dénominateur de M-c, avant de mesurer le schéma diff.
+
+**M-a — frame-time vs L_eff.** Enveloppe §6 épinglée (c=8, f32, n_fov=512, N_niv=10,
+γ₂≈3 → ~7.9 M cellules actives, ~0.9 Go). F représentatif (T1, tranché) : **substrat v2
+ÉTENDU à c=8 champs** — représentatif en COÛT (stencil, champs), pas en physique-jeu.
+Fenêtre fovéa **MOBILE** (translation continue → re-prédiction Harten au déplacement).
+Scan : N_niv actifs ∈ {2, 4, 7, 10} × n_fov ∈ {256, 512}.
+**MORT-a : médiane frame-time > 16.7 ms à la cellule d'enveloppe (n_fov=512, N_niv=10)**
+(T2) ; p99 reportée, non verdictale en v1. Gate §6 reconduit (pas une mort) : résidence
+mesurée > 1.5 × 0.9 Go ⇒ re-épinglage du quadruplet — décision, jamais glissement.
+
+**M-b — écart live↔rederive aux émissions.** Chaîne d'émissions fenêtrées (k_fen
+aire-proportionnel, cap 10 % reconduit) sur le chemin VIVANT GPU f32 ; rederive =
+f(registre, seeds), CPU f64, disciplines du harnais ; Δχ readout aux émissions
+(albedo + delta_chi, max_carrier — l'espace instrument, jamais l'état). Cellule :
+**3 seeds {101, 102, 103}, Δt=4, 6 émissions** (Δt=4 = l'axe dur mesuré §A13-résultat).
+**MORT-b : max de série Δχ live↔rederive > 0.0733 (pin sévère), PAR-SEED** (T3) — un
+seul seed qui traverse suffit. ⇒ Option A morte, repli Option B (tout-déterministe) =
+**décision neuve** — son coût de frame n'est pas mesuré dans cette tranche sans nouveau
+pré-enregistrement.
+
+**M-c — débit PCIe réel du schéma diff.** Octets/frame réels CPU↔GPU : descente
+(prédiction Harten des fenêtres actives) + remontée (coefficients de détail). Enveloppe
+attendue : échelle n_fov² — brut ~8.4 Mo/direction/frame plein-fovéa (512²×8×4) ; le
+diff doit faire MIEUX que le plein. **MORT-c (deux branches, T4) : (1) temps de
+transfert > 25 % × 16.7 ms = 4.2 ms** à la cellule d'enveloppe ; **(2) fuite
+d'échelle** : le trafic croît avec la taille du monde à fovéa fixe (doubler le monde
+doit laisser le trafic ~constant, sinon la topologie §5 est morte telle que dessinée).
+
+**M-d — coût de load/replay du ledger.** Ledger de référence : 1 h simulée à
+1 commit/s ≈ 3600 commits ≈ 11.5 Mo, généré par la tranche. load = re-dérivation chemin
+bit-exact jusqu'à la dernière émission + reprise du vivant.
+**MORT-d : temps de load > 30 s SANS snapshot-racine** (T5). Diagnostic non-verdictal
+reporté : même load AVEC un snapshot-racine (format (d), §4) au milieu du ledger —
+chiffre ce que la compaction achète, sans qu'elle porte le verdict.
+
+**Portées (non surclamées).** Rien sur : r_fovea/excentricité (campagne gatée APRÈS
+verdict sans mort), 3D (64³ = enveloppe calculée, pas mesurée), multi-vue/concurrence
+(v1.1), qualité perceptuelle produit (pin n=1), coût du RENDU (physique seule), coût de
+l'Option B (nouveau pré-enregistrement si repli).
+
+**Chiffrage du build DÛ avant achat (règle plan).** Estimation Claude Code du harnais
+(chemin GPU F + fovéa mobile, portage commits/readout au vivant GPU, compteurs PCIe,
+générateur de ledger 1 h), remontée à Romain ; gate d'achat = endossement. **Risque
+nommé :** le portage commits/readout (M-b) est le morceau le plus susceptible de faire
+glisser la tranche de « mesure » vers « prototype » — si le chiffrage est gros, la
+question de SCINDER M-b se pose AVANT achat, pas après.
+
+**Décisions consignées (Romain, 2026-07-18) :** T1 substrat v2 étendu c=8 ; T2 B_frame
+= 16.7 ms (p99 non verdictale) ; T3 MORT-b = pin 0.0733, par-seed ; T4 f_PCIe = 25 %
+(⇒ 4.2 ms) ; T5 T_load = 30 s (snapshot = diagnostic) ; T6 stack GPU déféré au
+chiffrage, endossement avant build ; T7 exécution découplée de F0-cloud.
