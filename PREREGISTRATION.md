@@ -3774,3 +3774,32 @@ pré-nommée au chiffrage (« mitigations nommées, PAS achetées »). Pré-enre
 
 **Séquence restante inchangée** : M-c, génération (nuit), M-d restent dus — leurs
 lectures (PCIe, ledger) informent LES DEUX branches. Chaque lecture remontée.
+
+### §A15-lecture-M-c (2026-07-19) — PAS DE MORT — le PASS repose sur la remontée seuillée
+
+**Lecture mécanique (run_f1_mc.py, natif)** : transfert total enveloppe (512,10)
+médiane **2.784 ms** < 4.2 gravé (p99 3.676 = 87 % du seuil, nommé) ; diff 12.74 Mo
+< plein 16.78 Mo ; fuite d'échelle N_niv 10→11 : ratio **0.997** (structurel ~1.11,
+seuil instrument 1.5). **MORT-c(1) et (2) NON déclenchés.**
+
+**Chiffres inconfortables en évidence (consigne 1 exercée) :**
+- Trafic à 99.4 % en remontée seuillée (D2H 12.64 Mo ; descente 74 Ko) — le PASS
+  repose sur EPS_DETAIL=1e-4 : diff = 5.6 % du dense-équivalent 226.5 Mo ; niveau
+  fin dominant (882k coefficients ≈ 7 Mo, densité ~14 %). Suspect nommé pour
+  tranche-2 : RECONDUIT.
+- Sémantique du « plein » : la référence gravée = fovéale seule dense aller-retour ;
+  le diff remonte les 27 fenêtres — gain réel vs dense-all : ×18 ; gain vs plein
+  gravé : ×1.32 seulement.
+- Ratio d'échelle 0.997 < 1.11 structurel : le niveau grossier ajouté ne remonte
+  ~rien — cohérent §5 (monde en log, grossier quasi-statique) MAIS en partie
+  artefact d'EPS_DETAIL + série 300 frames (origine grossière immobile). Non-verdictal.
+- Concession session critique : l'arbitrage B3 (complément-3) porte sur la
+  descente = 0.5 % du trafic — sain en principe, immatériel dans ce régime.
+- Débit effectif D2H ~4.6 Go/s, cohérent vérif #4 — l'overhead petits-transferts
+  nommé avant lecture n'a pas mordu (transferts batchés par niveau).
+
+**Portées (reconduites du driver)** : majorant de cadence (géométrie de production
+non mesurée) ; octets dépendants d'EPS_DETAIL non-ancré perceptuellement.
+
+**Reste dû** : génération ledger (nuit), M-d, et M-a′ (build Claude Code). Chaque
+lecture remontée.
