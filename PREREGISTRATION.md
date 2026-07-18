@@ -3491,3 +3491,39 @@ tout grossier-dehors est une politique, pas une promesse perceptuelle), 3D.
 **Provenance de la décision :** le deux-étages, d'abord retenu, a été rétrogradé en
 escalade pré-écrite après objection d'attribution (le remède embarqué dans la sonde
 masquerait le mécanisme qu'elle doit exposer) — décision Romain, 2026-07-18.
+
+### §A14-lecture — SONDE EXÉCUTÉE (2026-07-18) : AUTRE, bornée loin sous le pin
+
+Build S1 revu (conforme §A14, vérification indépendante 13 tests PASS dans la VM
+bit-identique) ; **choix (v)-(viii) ENDOSSÉS par Romain** (revue remontée, run lancé sur
+endossement — consigné ici explicitement). Vérification d'instrument PASS (bandes définies
+sur 32×32, porteuses fenêtre présentes sur les gelés s_L10/s_L20, non muette). Run natif
+(machine-instrument), garde anti-vacuité : quadrant (0,0) VIVANT au premier essai
+(Δχ vs t₀ ∈ [0.59, 1.45]) ; commits saturés 64/64 (budget au travail, mesure non triviale).
+
+**Séries (seed 101, Δt=4, k_fen=64, fenêtre (0,0)) :**
+Δχ_fen = [0, 0.0169, 0.0107, **0.0460**, 0.0315, 0.0303] ;
+Δχ_plein (diagnostic) = [0, 0.0115, 0.0215, 0.0047, 0.0115, 0.0076].
+
+**Lecture mécanique : AUTRE** — pas de traversée (max 0.0460 = 63 % du pin sévère), pas S2
+(ratio 4-6/2-3 = **2.73 > 1.5** — le facteur load-bearing remonte la forme une 2e fois au
+lieu de l'absorber). **Escalade deux-étages NON déclenchée** (condition pré-écrite =
+traversée ; il n'y en a pas).
+
+**Trois faits remontés :**
+1. Le fenêtrage à budget aire-proportionnel N'A PAS dégradé la tenue — amplitudes
+   équivalentes à la sonde §A13-3 plein-domaine k=256, PIC AU MÊME ENDROIT (i=4, t=16 :
+   même événement du seed × perte de commit, pas un artefact du fenêtrage), relaxation
+   derrière. Premier appui mesuré du mariage registre×fovéa.
+2. La contamination dehors→dedans est restée sous le plancher de la cellule : Δχ_plein <
+   Δχ_fen (i=4 : 0.005 vs 0.046) — le dehors non-contraint (même seed, même t₀) reste
+   quasi-vérité, le flux dominant est dedans→dehors et il est minuscule. Le témoignage
+   fenêtré tient alors que le dehors n'est JAMAIS commis.
+3. La forme « ressaut-puis-relaxation borné sous pin » est maintenant vue DEUX fois, dans
+   deux protocoles (plein-domaine §A13-3, fenêtré §A14) — consistance croissante, appui
+   pour la question cadencement de la spec.
+
+**Portée (stricte) :** 1 seed, 1 Δt, 1 fenêtre fixe (0,0), k_fen=64, 6 émissions — une
+sonde, pas un verdict. Fenêtre mobile, multi-fenêtres, excentricité perceptuelle, 3D :
+toujours hors-lecture (§A14). Suite : la spec fovéa-z paper-grade s'appuie sur cette
+lecture ; toute grille fenêtrée verdict-grade = décision neuve si la spec la demande.
