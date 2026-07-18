@@ -3350,3 +3350,60 @@ reçoit QUE (registre, seeds) — signature + décoy, comme manche 1.
 - **Un FAIL** est celui de CETTE politique (commit-résumé + ré-ancrage + replay), pas de
   tout registre possible — le fork « politique plus riche » est une décision neuve (§A13-0).
 - Le pin garde son IC : tout verdict est lu sur l'IC entier, jamais au point central.
+
+### §A13-résultat — VERDICT PRONONCÉ (2026-07-18) : **REGISTRE_FERME**
+
+Grille exécutée sur iluin-tworings3, terminal natif (la VM Cowork locale a été MESURÉE
+bit-identique au gel — `test_replay_prefixe_bit_identique` PASS, 30.6 s — mais son infra tue
+tout processus à 45 s → repli chemin 1 pré-écrit ; le PASS VM est porté comme fait
+d'instrument). Transfert des commits Tasks 2/3 par patch (`git am` sur base b0e4723),
+bit-exactitude PROUVÉE par hashes de blobs (0fa5874/9055098/e871af5/9348056/c86b8c1).
+25 tests PASS natifs avant exécution ; gate d'achat MESURÉ PASS (2.569 s/ép × 2640 épisodes
+= 1.88 h ≤ 10 h, aucune grille réduite invoquée). Grille lancée le 15, interrompue, REPRISE
+par parts le 18 (design résumable exercé — SKIPs corrects, zéro re-mesure). Anomalie chrono
+seed 103 (2× plus lente, vérité et cellules) : temps horloge uniquement, sans effet mesure.
+
+**Contrôles §A13-4 : 0 violation** — ferm Δχ = 0.0 EXACT partout (3 Δt) ; shuf-commit
+supra-JND aux 3 budgets (Δχ₂ = 1.028 / 0.752 / 0.693 ≫ 0.0733) ; corruption détectée
+(Δχ ém. 4 = 0.3905 supra-JND, préfixe 1..3 bit-identique, localisation 100 % ≥ 50 %) ;
+É2 re-dérivé ≡ émis et É3 double-run bit-exacts. `instrument_muet = false`. Verdict **LISIBLE**.
+
+**k\*_chaîne(Δt) — pin sévère, IC ENTIER (médiane inter-seeds, clause 2·JND §A13-1) :**
+
+| colonne | JND | Δt=1 | Δt=4 | Δt=16 | lecture |
+|---|---|---|---|---|---|
+| ic_bas | 6.03 % | 256 | 256 | 256 | fermée à 256 |
+| pin | 7.33 % | 256 | 256 | **128** | fermée |
+| ic_haut | 8.67 % | 128 | 256 | 128 | fermée |
+
+**Prononcé mécanique (combinateur §A13-2, AUCUNE lecture à l'œil) :** les trois colonnes
+ferment → **REGISTRE_FERME** → commis **PASS**, portée §A13-5.
+
+**Chiffres inconfortables gravés (règle W1 : tout se reporte, surtout ce qui gêne) :**
+(Δt=16, k=400, colonne ic_bas) ne ferme PAS — clause 2·JND : seed 102, émission 4,
+Δχ = 0.1369 > 0.1207 ; pic isolé qui relaxe (série sinon ≤ 0.012) et NON-MONOTONE en k
+(même cellule à k=256 : 0.0855 — plus de budget, pire pic). Sans effet sur le verdict
+(k\* = 256 ferme avant) mais consigné. Cellule la plus dure : (Δt=4, k=128) médiane
+0.0963 > pin — l'axe Δt=4 est l'axe dur, forme de la sonde reproduite. Marges à k\* :
+med_max 0.0554–0.0562 vs 0.0733 (~24 %) pour Δt ∈ {1, 4} ; 0.0265 à Δt=16.
+
+**Diagnostic laxiste (non-verdictal, §C0) :** k\* passe de 256 (sévère) à 128 presque
+partout (laxiste : {1:128, 4:128, 16:128} au pin_lax et ic_haut_lax ; 4:256 à ic_bas_lax)
+— le delta sev↔lax vaut UN CRAN de budget (×2) sur l'axe temporel-registre : chiffrage
+du stockage-deux-étages.
+
+**Ce que dit le verdict (portée §A13-5, NON surclamée) :** sur ce substrat (v2), à ce pin
+(n=1, Romain, sévère, IC entier), cette famille de politique (commit-résumé qt + ré-ancrage
++ replay) : le registre-commis FERME — k\*_chaîne ≤ 256 floats (6.25 % du champ fin, sous
+cap 409.6) pour TOUS les Δt ∈ {1, 4, 16}, aucune composition à travers le JND nulle part.
+Rien de prouvé sur : fenêtrage spatial, événements-joueur, multi-observateur, 3D/couplage
+raide, axe temporel σ_ω, tier-3 (§A13-5, reconduit tel quel).
+
+**Lecture d'innovation portée (non-verdictale, décision neuve à prendre) :**
+ressaut-puis-relaxation GÉNÉRALISÉ — les pics par-seed sont isolés et relaxent (jamais de
+croissance à travers le JND) et k\*(Δt=16) < k\*(Δt=4) au pin : plus l'écart entre commits
+est long, plus le substrat dissipe le bruit de commit. Levier d'architecture possible :
+cadencement des commits sur la relaxation. À explorer comme décision neuve, PAS un
+enchaînement.
+
+**Point d'arrêt honoré : verdict remonté à Romain, texte endossé avant gravure (2026-07-18).**
