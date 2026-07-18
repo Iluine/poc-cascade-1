@@ -111,9 +111,10 @@ en budget `[MESURÉ : §A14-lecture — k_fen = 64 sur fenêtre 32² tient comme
 z DOIT donc exposer l'extraction de fenêtre alignée-dyadique à tout niveau (le plongement
 §A14 (v) est le prototype de cette interface).
 
-**Décisions Romain pour clore §2 :**
-- **(D3) n_fov et N_niv cibles de la v1** — proposition par défaut : n_fov = 512,
-  N_niv = 10 (monde linéairement ~512× la fovéa, ~0.9 Go à c = 8 f32). C'est un ÉPINGLAGE
-  §6, mais l'ordre de grandeur doit être choisi ici pour que §4-§6 chiffrent.
-- **(D4) La règle un-niveau-par-doublement** — l'endosser comme défaut v1 réversible, ou
-  exiger dès la v1 une règle paramétrique (plafond = f(distance) à pente libre) ?
+**D3+D4 TRANCHÉS (Romain, 2026-07-18) :**
+- **(D3)** n_fov = 512, N_niv = 10 — cibles v1 (monde linéairement ~512× la fovéa,
+  ~0.9 Go à c = 8 f32) ; épinglage définitif en §6.
+- **(D4)** Règle un-niveau-par-doublement ENDOSSÉE comme défaut v1 RÉVERSIBLE
+  `[NON-ANCRÉ]` — le pin d'excentricité (§7) la re-réglera le cas échéant.
+
+`[§2 ENDOSSÉE 2026-07-18]`
