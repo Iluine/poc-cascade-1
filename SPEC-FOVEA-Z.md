@@ -60,12 +60,60 @@ pas une promesse de qualité perceptuelle produit (le pin est n=1 : référent d
 pas spec produit). C'est le contrat d'architecture FALSIFIABLE : chaque section nomme ce
 qui la tuerait et quelle mesure a le droit de le faire (§8).
 
-**Décisions Romain pour clore §1 :**
-- **(D1) Scénario normatif de la v1 : 2D d'abord ou 3D d'abord ?** L'enveloppe VRAM dit :
-  2D-512² confortable (~0.9 Go), 3D-64³ serré-mais-tenable (~2.1 Go). La ligne PoC est
-  2D ; l'ambition jeu est 3D. La v1 peut se lier au 2D (continuité instrumentale, tout
-  l'appui mesuré est 2D) en portant le 3D comme addendum gaté, ou viser 3D directement
-  (honnêteté d'ambition, mais AUCUN appui mesuré n'est 3D).
-- **(D2) Modèle d'observateur de la v1 : fovéa unique, observateur unique ?** Tout
-  l'appui mesuré est mono-observateur. Le multi-observateur (coop) serait porté comme
-  dette nommée de §7, pas résolu par la v1.
+**D1+D2 TRANCHÉS (Romain, 2026-07-18) — ÉTAGEMENT :**
+- **v1 (ce document) : 2D, mono-observateur** — l'étage normatif, adossé à tout l'appui
+  mesuré existant.
+- **v1.1 : multi-vue 2D** — étage suivant, GATÉ sur la sonde deux-fenêtres concurrentes
+  (commits concurrents sur le même registre : ordre total du ledger, commutativité —
+  falsificateur constructible sur le harnais §A14 existant, à pré-enregistrer le moment
+  venu).
+- **v2 : addendum 3D** — GATÉ sur une sonde 3D minimale + conversion des hypothèses de
+  transposition load-bearing en mesures. La fine-fovéa 3D est déjà bornée (~64³, note
+  VRAM).
+
+**RÈGLE D'ÉTIQUETAGE (s'applique à tous les étages, non négociable) :** chaque affirmation
+de la spec porte `[MESURÉ]` (avec sa source), `[TRANSPOSITION-HYPOTHÈSE]` (nommée, avec le
+falsificateur qui la brûlerait) ou `[NON-ANCRÉ]` (choix de design assumé, réversible).
+§8 doit acheter le falsificateur le moins cher de chaque `[TRANSPOSITION-HYPOTHÈSE]`
+load-bearing avant que l'étage correspondant fasse foi.
+
+`[§1 ENDOSSÉE 2026-07-18]`
+
+---
+
+## §2. Structure de z (v1 : 2D mono) `[EN COURS — soumise à Romain]`
+
+**z est une pyramide de Harten, pas un champ.** Niveaux j = 0 (le plus grossier, monde
+entier, TOUJOURS résident) à J (le plus fin, fovéa seule). La fenêtre fovéale au niveau J
+a n_fov cellules de côté ; chaque doublement de distance à l'observateur abaisse le
+plafond d'un niveau `[NON-ANCRÉ : règle de design par défaut — sa validité PERCEPTUELLE
+dépend du JND d'excentricité, non pinné (§7) ; réversible sans casser la structure]`.
+Sous le plafond fixé par la distance, c'est l'ÉNERGIE qui décide du raffinement effectif
+(pilier existant) `[MESURÉ : S_eff 1.8–3.9 selon r_fovea, journal 2026-07-01]`.
+
+**Coût structurel.** Cellules actives ≈ γ₂·n_fov²·N_niv, γ₂≈3 — le monde n'entre qu'en
+log `[MESURÉ-par-calcul : note VRAM, hypothèses nommées à épingler en §6]`.
+
+**Contenu d'une cellule.** z porte les PRIMITIVES seulement ; les dérivés (vorticité,
+pression) vivent dans le cache matérialisé, jamais dans z `[NON-ANCRÉ : principe
+d'architecture établi (state vs materialized cache), reconduit]`. Le nombre de champs c
+au niveau fin est un paramètre de §6 ; c peut DÉCROÎTRE avec j (champs réduits au large)
+`[NON-ANCRÉ : levier nommé note VRAM, non compté par défaut]`.
+
+**Résidence.** VRAM = pyramide active (fovéa + fenêtres d'énergie sous plafond) ;
+RAM = niveaux froids / régions dormantes (masques wet/dry, repos sédimentaire) ;
+disque = ledger (§4) + artefacts gelés. Le streaming VRAM↔RAM hors fovéa est un levier
+nommé, pas une exigence v1 `[NON-ANCRÉ]`.
+
+**Le lien au registre (§4).** Les commits d'émission sont fenêtrés et aire-proportionnels
+en budget `[MESURÉ : §A14-lecture — k_fen = 64 sur fenêtre 32² tient comme k* = 256 sur
+64², pic au même événement, contamination dehors→dedans sous plancher]`. La structure de
+z DOIT donc exposer l'extraction de fenêtre alignée-dyadique à tout niveau (le plongement
+§A14 (v) est le prototype de cette interface).
+
+**Décisions Romain pour clore §2 :**
+- **(D3) n_fov et N_niv cibles de la v1** — proposition par défaut : n_fov = 512,
+  N_niv = 10 (monde linéairement ~512× la fovéa, ~0.9 Go à c = 8 f32). C'est un ÉPINGLAGE
+  §6, mais l'ordre de grandeur doit être choisi ici pour que §4-§6 chiffrent.
+- **(D4) La règle un-niveau-par-doublement** — l'endosser comme défaut v1 réversible, ou
+  exiger dès la v1 une règle paramétrique (plafond = f(distance) à pente libre) ?
