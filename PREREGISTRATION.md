@@ -3708,3 +3708,19 @@ Build livré, revu (bloquant sha256 dtype/shape corrigé), endossé (Romain) et 
 **Séquence de runs (natif, Romain exécute, chaque lecture remontée, zéro
 enchaînement) :** 1. run_f1_verifs.py → 2. run_f1_ma.py → 3. run_f1_mc.py →
 4. run_f1_md_generer.py (nuit, non-verdictal) → 5. run_f1_md.py.
+
+### §A15-complément-3 — Correction de la consigne 2 (2026-07-18) : concession, majorant rétabli
+
+La consigne 2 du complément-2 (« fenêtres d'énergie figées ⇒ trafic de déplacement =
+minorant ») reposait sur une lecture erronée de B3 par la session critique
+(« offsets y figés » = offsets de POSITION relatifs, pas fenêtres statiques) —
+erreur concédée. Le build endossé 4e0e719 faisait translater les 3 fenêtres par
+niveau en lockstep avec le balayage E4c ; l'alignement du code sur la consigne
+erronée (fluide-reduit 7967883) est REVERTÉ — **décision Romain : la géométrie
+retenue est « les 3 fenêtres bougent »** — majorant honnête de la descente,
+cohérent avec E4a (pour un critère de mort, on mesure la borne haute).
+**Consigne 2 RÉ-SCOPÉE :** le trafic de déplacement mesuré est un **MAJORANT DE
+CADENCE** (lockstep avec le regard) ; la géométrie de production (fenêtres
+d'énergie pilotées par l'énergie, cadence irrégulière) n'est PAS mesurée —
+portée nommée de la lecture M-c. Consignes 1 (EPS_DETAIL) et 3 (faits
+d'instrument) inchangées. Aucun run n'avait été lancé — aucune mesure invalidée.
