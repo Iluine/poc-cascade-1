@@ -3527,3 +3527,28 @@ traversée ; il n'y en a pas).
 sonde, pas un verdict. Fenêtre mobile, multi-fenêtres, excentricité perceptuelle, 3D :
 toujours hors-lecture (§A14). Suite : la spec fovéa-z paper-grade s'appuie sur cette
 lecture ; toute grille fenêtrée verdict-grade = décision neuve si la spec la demande.
+
+### F0′-lecture (2026-07-18) — sonde locale de la divergence inter-machines : DEUX NULS ÉLOQUENTS
+
+Opérationnalisation endossée (Romain) : F0′ local (leviers de dispatch sur la
+machine-instrument, VM bit-identique) + F0-cloud opportuniste à la prochaine session.
+Protocole : `run_history(101,10)` vs `h_s101.npz` (le test de gel), levier forcé, lecture
+état + Δχ readout. **Résultats : (1) OPENBLAS_CORETYPE=NEHALEM → bit-identique (0 cellule).
+(2) NPY_DISABLE_CPU_FEATURES="AVX2 FMA3 AVX F16C X86_V3" → bit-identique.**
+
+**Lecture.** Les deux leviers descendants sont nuls : le chemin de calcul est stable de
+la baseline à AVX2 sur cette machine. Fait structurel : la machine-instrument N'A PAS
+d'AVX512 (features énumérées) ; le CPU cloud (serveur) en a presque sûrement ; np.exp est
+dans le chemin chaud (dépôt de pulse, readout albédo) et numpy possède des implémentations
+SIMD spécifiques AVX512 pour exp. **Attribution raffinée : la divergence cloud vient
+vraisemblablement des chemins SIMD AU-DESSUS du plafond de la machine-instrument
+(AVX512) — irréproductible localement PAR CONSTRUCTION (on ne peut que descendre, et la
+descente est stable).** Cohérent avec : la VM locale (même CPU, userland noble) PASS le
+gel ; le cloud (autre CPU) FAIL.
+
+**Conséquences.** (a) L'hypothèse « divergence inter-machines = sous-JND perceptuel »
+reste NON MESURÉE — aucune divergence locale productible ; **F0 se complète à la
+prochaine session cloud** : run 76 s, SAUVEGARDER l'état divergent (la leçon : l'artefact
+du FAIL originel n'avait pas été persisté), Δχ vs gelé. (b) Le gate de sortie de la spec
+v1 attend ce point (§8). (c) Leçon d'instrument gravée : les états divergents se
+persistent TOUJOURS — un FAIL non persisté coûte une session de plus.

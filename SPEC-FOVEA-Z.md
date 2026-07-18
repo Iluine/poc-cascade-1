@@ -352,8 +352,13 @@ r_fovea SEULEMENT après verdict sans mort ?
 La récolte : toute `[TRANSPOSITION-HYPOTHÈSE]` load-bearing du document a ici son billet
 de mesure. Ordre de dépense (du gratuit au cher, cheapest-falsifier-first) :
 
-1. **F0 — GRATUIT : relecture perceptuelle du FAIL cloud** (hypothèse inter-machines,
-   §5) — repasser l'écart 2.7 % existant dans Δχ/JND. Zéro calcul neuf.
+1. **F0 — relecture perceptuelle de la divergence inter-machines** (hypothèse §5).
+   STATUT (2026-07-18) : l'artefact du FAIL cloud n'avait pas été persisté ; F0′ local
+   exécuté — deux leviers de dispatch NULS (bit-identique), attribution raffinée : chemins
+   SIMD au-dessus du plafond machine (AVX512 cloud), irréproductible localement par
+   construction (F0′-lecture au journal). **F0 se complète à la prochaine session cloud**
+   (76 s : run, PERSISTER l'état divergent, Δχ vs gelé). L'hypothèse reste NON MESURÉE
+   d'ici là ; le gate de sortie (iii) attend ce point.
 2. **F1 — TRANCHE-MOTEUR** (le seul gros achat v1 ; brûle 4 hypothèses d'un coup) :
    (a) frame-time vs L_eff sur 3050 Ti dans l'enveloppe §6 — le falsificateur du mot
    « moteur » ; (b) écart live↔rederive aux émissions sous charge f32 (contrat D5) ;
