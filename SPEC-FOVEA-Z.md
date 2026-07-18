@@ -183,3 +183,61 @@ design de §A13-0, coût de rechargement à mesurer en tranche-moteur]`.
 - **(D6) Les entrées-joueur dans le ledger v1** : spécifier leur FORMAT dès la v1
   (design pur, étiqueté transposition non testée, brûlé plus tard par une sonde
   événement-joueur) — ou les repousser en v1.1 et garder la v1 strictement procédurale ?
+
+**D5+D6 TRANCHÉS (Romain, 2026-07-18) :** **(D5) Option A** — coupure au commit : le
+chemin vivant a droit au non-déterminisme éphémère (GPU f32), le chemin de reconstruction
+est bit-exact et seul porteur d'histoire ; falsificateur pré-écrit (tranche-moteur, écart
+live↔rederive sous jnd_sev, sinon repli Option B). **(D6)** le format des entrées-joueur
+est spécifié dès la v1 (§4), étiqueté `[TRANSPOSITION-HYPOTHÈSE]` jusqu'à la sonde
+événement-joueur.
+
+`[§3 ENDOSSÉE 2026-07-18]`
+
+---
+
+## §4. Le registre en production (v1 : 2D mono) `[EN COURS — soumise à Romain]`
+
+**Format du ledger.** Séquence append-only (H1) d'entrées à ordre TOTAL : clé =
+(t_sim quantifié, numéro de séquence) — mono-écrivain en v1 ; la concurrence multi-vue
+est le problème PROPRE de la v1.1, gatée sur sa sonde (§1). Types d'entrées :
+- **(a) événement seedé** `{t_sim, seed, type_procédural}` `[MESURÉ : tout le harnais]` ;
+- **(b) entrée-joueur** `{t_sim quantifié, payload d'input, id_observateur}` —
+  id_observateur ≡ 0 en v1, champ RÉSERVÉ pour v1.1 `[TRANSPOSITION-HYPOTHÈSE : format
+  D6, jamais testé ; falsificateur : sonde événement-joueur sur harnais existant]` ;
+- **(c) commit d'émission** `{t_sim, fenêtre (niveau, rect aligné-dyadique), SummaryQT
+  (topologie u8, moyennes f64), k}` `[MESURÉ : §A13/§A14]` ;
+- **(d) snapshot-racine** `{t_sim, commit PLEIN sans perte du domaine actif}` — voir
+  compaction ci-dessous.
+
+**Budget des commits.** k aire-proportionnel à la fenêtre au niveau fin, cap reconduit
+(10 % de l'aire observée — le cap 409.6 de la famille 2 en est l'instance plein-domaine
+64²) `[MESURÉ : k*=256 plein-domaine ; k_fen=64 fenêtré §A14]`.
+
+**Cadencement des commits.** Défaut v1 : Δt FIXE par émission `[NON-ANCRÉ — c'est le
+protocole mesuré]`. Optimisation NOMMÉE, non armée : cadencement-sur-relaxation — appui :
+ressaut-puis-relaxation vu 2×, k*(Δt=16) < k*(Δt=4) au pin (plus l'écart est long, plus
+le substrat dissipe le bruit de commit) `[MESURÉ comme PHÉNOMÈNE ; NON-ANCRÉ comme
+politique]`. Si cette optimisation est achetée un jour : le falsificateur est l'analyse
+τ_relax post-hoc sur les registres m2_parts (identifiée, ZÉRO épisode neuf, à armer à
+l'achat seulement — discipline anti-tapis-roulant).
+
+**Rejouabilité et sauvegarde.** save = le ledger, INTÉGRALEMENT ; load = re-dérivation
+(chemin bit-exact §3) jusqu'à la dernière émission + reprise du chemin vivant. Débit
+enveloppe ~3.2 Ko/commit, ~11.5 Mo/h à 1 commit/s `[MESURÉ-par-calcul : note VRAM]` ;
+coût de rechargement à mesurer (tranche-moteur, §8).
+
+**Compaction par snapshot-racine (type (d)).** Un ledger de session longue croît
+linéairement ; la compaction remplace un préfixe par un snapshot-racine : commit PLEIN
+sans perte → le replay repart de là, le préfixe est archivable/tronquable. Appui direct :
+le contrôle ferm de la manche 2 a MESURÉ que le commit sans perte donne une chaîne
+bit-identique (Δχ = 0.0 exact, tout Δt) `[MESURÉ : §A13-4-1 — le snapshot-racine est
+exactement le bras ferm]`. Ce que la troncature COÛTE : l'histoire d'avant-snapshot
+n'est plus re-dérivable depuis le ledger tronqué (le témoignage détaillé est remplacé
+par son état final exact) `[NON-ANCRÉ : politique de rétention = décision produit,
+hors v1 ; le FORMAT (d) est dans la v1, la politique non]`.
+
+**Décisions Romain pour clore §4 :**
+- **(D7) Cadencement v1 = Δt fixe** (défaut mesuré), cadencement-sur-relaxation nommé
+  non-armé — endosser tel quel ?
+- **(D8) Le type (d) snapshot-racine dans le format v1** (adossé au bras ferm mesuré),
+  politique de rétention explicitement HORS v1 — endosser tel quel ?
