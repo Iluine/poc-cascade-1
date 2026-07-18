@@ -375,3 +375,17 @@ contournement.
 
 **Décision Romain :** **(D13)** endosser l'ordre de dépense F0→F1→F2 (F3/F4 gatés à
 leurs étages, F5 conditionnel) et le gate de sortie ?
+
+**D11-D13 TRANCHÉS (Romain, 2026-07-18) : les trois endossés tels quels.**
+
+`[§6 ENDOSSÉE 2026-07-18]` `[§7 ENDOSSÉE 2026-07-18]` `[§8 ENDOSSÉE 2026-07-18]`
+
+---
+
+## STATUT DU DOCUMENT (2026-07-18)
+
+**Les 8 sections sont rédigées et ENDOSSÉES** (13 décisions Romain : D1-D13, toutes
+consignées in-situ). Le document est un CONTRAT COMPLET en attente de ses mesures :
+il FERA FOI après (i) lecture F0, (ii) verdict F1 (tranche-moteur) sans critère de mort
+déclenché. Prochaines actions : F0, puis pré-enregistrement de la tranche-moteur
+(critères de mort chiffrés AVANT tout run).
