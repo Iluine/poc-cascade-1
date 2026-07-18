@@ -253,3 +253,46 @@ bit-exacte* (H3). `[NON-ANCRÉ côté politique ; la garantie H3 est MESURÉE au
   non-armé — endosser tel quel ?
 - **(D8) Le type (d) snapshot-racine dans le format v1** (adossé au bras ferm mesuré),
   politique de rétention explicitement HORS v1 — endosser tel quel ?
+
+---
+
+## §5. GPU-déterminisme (OBLIGATOIRE — v1 : 2D mono) `[EN COURS — soumise à Romain]`
+
+**Topologie de calcul (proposition Romain 2026-07-18, amendée).** Le niveau 0 de la
+pyramide (+ niveaux froids) vit CPU-RAM/disque ; les fenêtres actives DESCENDENT sur GPU
+(prédiction Harten), F fin s'applique sur GPU, la remontée passe PAR LE DIFF — qui, en
+Harten, a un nom : les coefficients de détail. L'interface CPU↔GPU est la transformée
+elle-même ; le trafic est à l'échelle n_fov², jamais du monde `[NON-ANCRÉ : design ;
+falsificateur : la tranche-moteur mesure frame-time ET débit PCIe réel]`.
+
+**Amendement 1 — le niveau 0 CPU est du VIVANT, pas la colonne déterministe.** Le diff
+remontant est f32 GPU non-déterministe (droit Option A, §3) : l'appliquer à une colonne
+« autoritaire » la rendrait non-rejouable. Le niveau 0 CPU appartient au CHEMIN VIVANT
+(perceptuel, dérive sous-JND admise). La colonne déterministe n'est PAS un niveau de la
+pyramide : c'est (ledger, rederive). Le diff GPU ne touche JAMAIS le persistant — porte
+unique H2 : {F déterministe du rederive, ré-ancrage} seuls écrivent le persistant.
+Bonus : la conservation (É1) est vérifiable au point de passage du diff (contrôle
+d'instrument de production, coût borné).
+
+**Le chemin de reconstruction.** Rederive = CPU f64 pur, mêmes disciplines que le
+harnais `[MESURÉ : tout §A13/§A14 tourne sur ce chemin]`. Coût : hors-frame par
+construction (load, replay, audits) — jamais dans la boucle de jeu.
+
+**Amendement 2 — É3 est MACHINE-LOCALE, fait mesuré.** La bit-exactitude ne voyage pas
+entre machines : FAIL cloud mesuré 2×, écart max 2.7 % d'état à 10 épisodes, cause
+CPU/BLAS `[MESURÉ : ledger SDD 2026-07-15]`. La v1 déclare donc : garantie É3 = par
+machine. Inter-machines, la garantie retombe à du sous-JND — **NON MESURÉ en espace
+readout** `[TRANSPOSITION-HYPOTHÈSE : falsificateur GRATUIT — relire l'écart du FAIL
+cloud existant dans Δχ/JND, zéro calcul neuf ; verse au menu §8. Si sous-JND : le
+multi-machine v1.1 respire ; sinon : le multijoueur exige une autorité de simulation]`.
+
+**Ce que la v1 exige donc du GPU : RIEN en déterminisme.** Aucun kernel ordonné, aucune
+réduction déterministe — le non-déterminisme GPU est intégralement quarantiné dans le
+chemin vivant par la topologie ci-dessus. Le seul contrat chiffré : écart live↔rederive
+aux émissions sous jnd_sev (§3, falsificateur tranche-moteur).
+
+**Décisions Romain pour clore §5 :**
+- **(D9)** Endosser la topologie CPU-coarse-vivant / GPU-fin / remontée-par-diff, AVEC
+  l'amendement 1 (niveau 0 = vivant ; colonne déterministe = ledger+rederive) ?
+- **(D10)** Déclarer É3 machine-locale en v1 (fait mesuré), l'hypothèse sous-JND
+  inter-machines étiquetée avec son falsificateur gratuit au menu §8 ?
