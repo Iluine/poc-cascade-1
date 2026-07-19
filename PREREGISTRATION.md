@@ -4163,3 +4163,31 @@ Frame médiane : 1 GPU-side / 2 CPU — **baisse attendue PARTIELLE par
 construction**, verrouillée par test. **Décision Romain : COURIR TEL QUEL** —
 s3 mesure l'ancre du mécanisme GPU-side ; une V2 ré-emboîtée se prédira sur
 ancre mesurée avant d'être construite. Re-périmètre : levier suivant, nommé.
+
+### §A17-lecture-s3 + CLÔTURE DE LA CASCADE DE SONDES (2026-07-19)
+
+**Lecture (run_f1_s3_pred_gpu.py, natif)** : A_s3 = **17.002 ms** (p99 19.673) ;
+prédiction GPU-side = **2.570 ms** (−0.249 vs CPU-side 2.819) ; **cible L1+L3 =
+−0.302 ms, toujours NÉGATIVE**. Baisse partielle par construction, confirmée
+(1 conversion médiane sur 3). Audit CFL propre.
+
+**Garde anti-tapis-roulant EXERCÉE (le critère gravé : quand la prochaine mesure
+ne peut plus changer la décision)** : l'ancre est AMBIGUË — 0.249 ms pour une
+conversion ne départage pas deux modèles (coût per-slot linéaire vs structure de
+stalls s'effondrant d'un coup) qui collent aux mêmes données ; et la marche
+suivante (ré-emboîtement) n'est plus une sonde mais un build de géométrie
+EXIGEANT d'abord les deux résolutions de spec. **La cascade de sondes est CLOSE.**
+
+**Acquis de la cascade (tous mesurés, tous gravés)** : V2@16.7 fermée-négative
+terme à terme (F batché 14.432, modèle +0.6 % ; prédiction ≥ 2.5 dans toute
+configuration mesurée ; remontée 8.523 non financée) ; mécanisme GPU-side
+fonctionnel et verrouillé ; orchestration batchée = celle du moteur (les 6.11 ms
+du per-niveau étaient de la plomberie) ; linéarité en systèmes vraie en batché
+(0.845) ; deux trous de spec nommés (emboîtement §2, c dégressif vs descente).
+
+**Décision Romain (2026-07-19) : PROCHAINE VRAIE SÉANCE = PAPER-GRADE** —
+(1) graver l'EMBOÎTEMENT en §2 et trancher c-dégressif-vs-descente (les deux
+bloquent tout moteur V2, quelle que soit la porte) ; (2) RE-ÉPINGLER un candidat
+avec toutes les ancres mesurées — aminci, ré-emboîté, et/ou porte 33.3 avec le
+motif T2 (où vit le rendu) traité EN FACE ; (3) pré-enregistrer son M-a-quater.
+Aucune sonde, aucun build avant ce paper-grade. F0-cloud reste dû (session cloud).
