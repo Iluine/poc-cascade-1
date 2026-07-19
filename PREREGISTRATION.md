@@ -4502,3 +4502,28 @@ explicite à prendre** (R4 : le cadencement se déciderait avec une question
 perceptuelle en main). L'EPS retenu serait alors celui que k=1 valide ; le
 budget transferts se traite ensuite. Aucun réveil silencieux, aucune
 reformulation après lecture.
+
+### §A19-complément-2 — Table de branches FERMÉE : branche (iii) (gravé 2026-07-19, avant tout run)
+
+Le build (fluide-reduit e54a730, `src/` intact, empreinte kernel F identique sur
+10 commits) a rendu la validité STRICTE — conforme au gravé : instrument valide
+= k=1 discrimine ET au moins un EPS passe. Cette rigueur expose un cas que ma
+table de branches ne couvrait pas ; il est fermé ICI, avant toute donnée.
+
+**BRANCHE (iii) — k=1 DISCRIMINE mais AUCUN EPS ne passe (même 1e-5)** :
+lecture pré-écrite = **« MÉCANISME DE REMONTÉE EN QUESTION »** — ni sonde muette
+(elle discrimine), ni k coupable (la péremption est minimale). À k=1 avec
+EPS=1e-5 la remontée est quasi sans perte : un résidu au-dessus de 0.0603
+pointe ailleurs. **Deux attributions NOMMÉES, NON ARMÉES** : (a) le retard d'une
+frame suffit à lui seul — falsificateur : comparer contre la vérité DÉCALÉE
+d'une frame ; (b) la référence incrémentale DÉRIVE — falsificateur : comparer
+contre une remontée PLEINE non incrémentale. L'armement de l'un ou l'autre est
+une décision de Romain à la lecture, jamais un enchaînement.
+
+**Table complète et close (aucune lecture ne peut désormais tomber hors table)** :
+(i) discrimine + un EPS passe ⇒ INSTRUMENT VALIDE ⇒ si aucun EPS ne passe à
+k=4 : branche (D), la décision passe à k, réveil σ_ω explicite ;
+(ii) ne discrimine pas ⇒ SONDE MUETTE sur EPS, AUTRE D'INSTRUMENT, ne rien
+régler ; (iii) discrimine sans qu'aucun EPS ne passe ⇒ MÉCANISME EN QUESTION,
+deux attributions nommées non armées. Ajout au JSON : le LABEL de lecture seul
+— aucun build supplémentaire.
