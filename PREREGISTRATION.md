@@ -4319,3 +4319,33 @@ mesure. Bande de M-a-quater RE-CALCULÉE avec L1 : **[14.2, 15.9]** (remplace
 [13.9, 17.2] — recalibration pré-mesure sur ancres nouvelles, dont borne L3
 5.122/4 amortie). MORT inchangée : médiane frame complète > 16.7. Porte 33.3 :
 toujours repli pré-nommé.
+
+### §A18-build-M-a-quater endossé (2026-07-19, AVANT run)
+
+Build livré (fluide-reduit 7164d84 ; kernels F et L3, chrono, substrat_jetable à
+diff vide ; empreinte F e8fcaad4…7f04 sur 8 commits ; pyramide.py en mode
+PARALLÈLE, B3 restant défaut ⇒ sondes et M-a′ reproductibles au bit près).
+**Endossé par Romain, avec trois faits consignés :**
+1. **Géométrie emboîtée par IDENTITÉ, pas par réglage** : offsets d'énergie à
+   ±n_fov/2, identité oy_j − 2·oy_parent = n_fov/2 exacte à tous niveaux ⇒ les
+   2 fenêtres tombent aux bornes de la couverture parente, ZÉRO tour (400
+   positions). `slots_sans_parente()` rend la propriété E FALSIFIABLE (vide en
+   emboîté, non vide en B3) — le trou de s3 est refermé par construction.
+   Prédiction : 10 slots GPU-side, niveau 1 seul CPU ; fail-loud si géométrie
+   non emboîtée.
+2. **Rattrapage d'ancre** : F prédit corrigé 12.641 → **12.655** (l'étiquette
+   0.843 remplacée par l'ancre MESURÉE 0.845, s1 batchée) — concordance exacte
+   au gravé, ancres nommées comme telles dans le driver.
+3. **Choix d'implémentation ENDOSSÉ (remonté par Claude Code)** : L1 étalée
+   oblige L3 et le fusionné à cohabiter ⇒ groupes scindés en segments contigus,
+   **8–12 lancements/frame au lieu de 4, ≈ +0.03–0.08 ms MESURÉ et reporté par
+   frame**. Seule voie ne touchant ni le kernel L3 ni le cap (les alternatives
+   coûtaient des copies ou modifiaient L3). Surcoût 3 ordres sous les 6.11 ms
+   de s2 — qui étaient des syncs CFL, absentes ici.
+
+**Anti-minoration — précision de lecture gravée avant run** : le −16.9 % de la
+borne L3 est un **MAJORANT de l'effet**, pas sa description — un test du build a
+montré que le chemin est VIVANT (après prédiction à zéro, F repropage dès la
+frame suivante depuis les voisins mouillés ; la colonne nulle ne le reste pas).
+La fraction asséchée est MESURÉE et reportée ; l'assèchement réel est plus
+faible que la borne ne le suggère. Rien corrigé en douce.
