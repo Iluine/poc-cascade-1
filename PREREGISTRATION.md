@@ -3967,3 +3967,38 @@ test du modèle. Gravé avant toute donnée = pré-enregistrement.
 **S3 — Répartition des 3 slots énergie : 2 au niveau le plus fin + 1 au second** —
 seule géométrie compatible B3 (deux offsets par niveau), nommée par Claude Code,
 endossée.
+
+### §A16-lecture-M-a-ter (2026-07-19) — MORT V2 + AUTRE DU MODÈLE (×2.13) + sonde d'attribution pré-enregistrée
+
+**Lecture mécanique (run_f1_ma_ter.py, natif)** : V2 frame complète **31.097 ms**
+> 16.7 ⇒ **MORT du candidat V2** ; composante calcul **30.484 ms** hors bande
+[12.18, 16.48] ⇒ **AUTRE : le modèle linéaire en slots a un terme manquant de la
+taille de F lui-même** (×2.13). La cohérence R3 a fonctionné comme gravée : la
+mort est venue AVEC la faute du modèle — le prononcé utile est l'AUTRE.
+V1_diagnostic : 26.259 ms (prédit 11.802, même faute). Transferts V2 : **0.613 ms**
+(≪ 4.2 — le schéma diff à 12 fenêtres excellent) ; résidence 0.311 Go.
+
+**Diagnostic (étiquette : HYPOTHÈSE ARITHMÉTIQUE sur 2 points)** : résidu
+(mesuré − F prédit) = 16.2 ms (V2) / ~13.8 ms (V1) ; rapporté aux cellules-champs :
+0.91 / 0.94 ms/M — **le résidu scale avec les cellules-champs**, signature d'un
+coût par-cellule non modélisé. Suspect : la MACHINERIE DE PYRAMIDE (prédiction
+Harten, extraction/seuillage/compaction B4, mise à jour de référence) en CuPy non
+fusionné — mesurée F-seul en M-a′, noyée par le naïf en M-a, émergée à égalité
+avec F fusionné. La même maladie que le F naïf, au stade précoce.
+
+**Le cap, relu honnêtement** : il interdit toute nouvelle escalade DU F — la
+machinerie est une question NEUVE (jamais dans le modèle ni dans M-a′). Mais
+« fusionner la chose suivante » est le tapis roulant que le cap craignait : AUCUNE
+escalade n'est décidée ici. Décision Romain : SONDE D'ATTRIBUTION d'abord.
+
+**SONDE D'ATTRIBUTION (pré-enregistrée ICI, avant tout code de sonde) :**
+- Bras A : config V2, fovéa IMMOBILE, remontée B4 OFF — F fusionné seul dans la
+  boucle pyramide. ATTENDU PRÉ-ÉCRIT : calcul ∈ [12.18, 16.48] (le modèle F) ⇒
+  attribution CONFIRMÉE ; hors bande ⇒ l'hypothèse machinerie est FAUSSE,
+  chercher ailleurs (AUTRE remonté).
+- Bras B : config V2, fovéa MOBILE E4c, remontée B4 OFF — isole la prédiction de
+  déplacement. Décomposition mécanique : coût(remontée) = V2_full − B ;
+  coût(prédiction) = B − A.
+- Chrono B6, natif, mêmes vérifs. SONDE = lecture remontée, AUCUN verdict,
+  aucune décision d'escalade ou de design embarquée (l'attribution d'abord, le
+  remède — design E4d ou borne fusionnée machinerie — en décision séparée).
