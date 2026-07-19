@@ -4586,3 +4586,37 @@ exactement la tête qui manque à V4. **Inutilisable** : la non-discrimination
 signifie que l'observable ne VOIT pas EPS, pas qu'il n'y a rien à voir.
 Conclure « puisque rien n'est établi nulle part, prenons le moins cher » serait
 du raisonnement motivé — explicitement refusé ici.
+
+### §A19-complément-3 — Branche pré-écrite du diagnostic (gravé 2026-07-19, AVANT le run D-1/D-2)
+
+Build D-1/D-2 livré (fluide-reduit b5be0dd, `src/` intact). **Retrait consigné** :
+Claude Code a retiré l'hypothèse falsifiée (« l'observable est gouverné par la
+péremption L1 ») des trois endroits où elle vivait — docstring, note de
+discrimination, console — et l'a verrouillée par un test d'anti-régression ;
+elle ne subsiste qu'en citation de ce qui a été falsifié. Seuils fixés AVANT run
+et endossés : FACTEUR_EFFONDREMENT = 0.5, TOLERANCE_ABSORPTION_MS = 0.15.
+`exiger_rien_regle` interdit au diagnostic de devenir un réglage déguisé.
+
+**REFRAMING NOMMÉ (session critique, avant les chiffres)** : si D-1(b) confirme
+le plancher de COUVERTURE, alors D-1(b) n'est pas qu'un diagnostic — il établit
+que **l'observable de la sonde EPS était MAL DÉFINI** : sur les cellules que
+nulle remontée ne touche, on comparait le vivant à une « vérité » qui ne
+représente pas ce à quoi le grossier sert. L'observable RESTREINT serait alors
+le CORRECT, et le levier EPS (~2.5 ms de transferts) n'était pas verrouillé,
+seulement mal mesuré.
+
+**DEUX GARDE-FOUS GRAVÉS** : (1) **JAMAIS de re-lecture du balayage existant**
+sur l'observable restreint — choisir l'observable après avoir vu lequel donne
+la réponse voulue serait fabriquer le verdict ; la lecture §A19 (branche ii,
+EPS reste 1e-4) TIENT comme lecture de CET observable-là : superseded, jamais
+invalidée. (2) Toute réouverture passe par un **NOUVEAU PRÉ-ENREGISTREMENT**
+avec la règle Q2 RÉÉNONCÉE pour l'observable corrigé, puis une RE-MESURE.
+
+**BRANCHE PRÉ-ÉCRITE (décision Romain, avant tout chiffre)** : plancher de
+COUVERTURE confirmé ⇒ **EPS EST ROUVERT — nouveau prereg + re-mesure, AVANT le
+chiffrage de M-b.** Motifs : le levier vaut ~2.5 ms quand V4 ne tient qu'à
+0.111 ms avec p99 non résolu ; la sonde corrigée est bon marché (harnais
+existant) ; et si D-2 révèle un terme de production non compté, le levier
+devient nécessaire, pas optionnel. Plancher de READOUT (test à blanc non nul)
+⇒ lecture inverse : le plancher est transférable à M-b, et c'est M-b dont
+l'instrument devient la question (son seuil de mort siège 6 % au-dessus).
