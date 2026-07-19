@@ -409,3 +409,16 @@ faisant foi : **journal §A16** (+ M-a-ter pré-enregistré). Le gate de sortie 
 de la spec est reformulé à cette enveloppe : la spec fait foi après (i) M-a-ter
 sans mort, (ii) F0 lu, (iii) M-b (tranche-2) sans mort sur V2. σ_ω : reconduite,
 condition de réveil affinée au cadencement (§A16-R4).
+
+---
+
+## §2-rev1 (2026-07-19) — Propriété E (emboîtement) + champs d'échelle `[ENDOSSÉE 2026-07-19]`
+
+Deux trous surfacés par les mesures F1 (§A17-s3, journal) sont résolus par
+décision (P1/P2, journal §A18, qui fait foi) : **(E)** l'ensemble actif est un
+ARBRE emboîté — toute fenêtre active déclare une parente couvrant son empreinte
+(quart de fenêtre) ; les fenêtres d'énergie naissent dans l'union des parentes,
+sinon tour d'ancêtres comptée au cap. **(Champs d'échelle)** : les champs
+au-delà de c_parent sont à contenu grossier nul par définition — prédiction =
+zéro exact ; un champ à contenu grossier existe à tous les niveaux. Candidat
+courant : **V4** (journal §A18), mesure gate : **M-a-quater**.

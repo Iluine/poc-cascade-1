@@ -4191,3 +4191,49 @@ bloquent tout moteur V2, quelle que soit la porte) ; (2) RE-ÉPINGLER un candida
 avec toutes les ancres mesurées — aminci, ré-emboîté, et/ou porte 33.3 avec le
 motif T2 (où vit le rendu) traité EN FACE ; (3) pré-enregistrer son M-a-quater.
 Aucune sonde, aucun build avant ce paper-grade. F0-cloud reste dû (session cloud).
+
+## §A18 — Séance papier post-cascade : propriété E, champs d'échelle, candidat V4, M-a-quater (gravé 2026-07-19)
+
+> Brouillon endossé : fluide-reduit claude/seance-papier-2026-07-19-BROUILLON.md.
+> P1-P5 tranchés (Romain). Spec : addendum §2-rev1 (pointeur, cette section fait foi).
+
+**P1 — PROPRIÉTÉ E (emboîtement), gravée** : l'ensemble actif est un ARBRE —
+toute fenêtre active au niveau j ≥ 1 déclare une parente au niveau j−1 couvrant
+intégralement son empreinte (empreinte = quart de fenêtre parente : une parente
+couvre jusqu'à 4 enfants). RÈGLE DE PLACEMENT : une fenêtre d'énergie ne naît
+que dans l'union des parentes ; hors couverture, le routeur monte une TOUR
+d'ancêtres COMPTÉE au cap — le budget d'emplacements est un budget d'ARBRE.
+Les offsets B3 ±n_fov étaient du harnais, remplacés.
+
+**P2 — CHAMPS D'ÉCHELLE, gravés** : les champs au-delà de c_parent sont DÉFINIS
+à contenu grossier nul (nés de l'échelle, comme les détails de Harten) —
+prédiction parent→enfant = remplissage-zéro, EXACT par définition. Contrainte
+de substrat gravée : un champ à contenu grossier existe à TOUS les niveaux.
+Le trou c-dégressif est éliminé, pas bouché.
+
+**P3 — CANDIDAT V4** : fovéale 9 slots (2 fins c=8 + 7 c=4) + 2 slots énergie
+c=8, placement emboîté, champs d'échelle. Scénario R2 inchangé. **F batché =
+12.655 ms** [ancres MESURÉES : 1.685 / 0.845]. Budget 16.7 (T2 inchangé).
+**Porte 33.3 = REPLI PRÉ-NOMMÉ** avec motif T2 traité : physique 30 Hz + rendu
+60 fps par interpolation du readout, cohabitation GPU dans les ~13 ms restants
+par fenêtre [design nommé, non décidé, non gratuit].
+
+**P4 — L1 EN RÉSERVE pré-enregistrée** : cadence k=2 si L3 ne suffit pas — k
+choisi par BUDGET, étiqueté [NON-ANCRÉ perceptuel], réveil σ_ω DIFFÉRÉ (R4).
+
+**P5 — M-a-quater PRÉ-ENREGISTRÉ (chiffres figés)** :
+- Protocole : pipeline COMPLET V4 — F batché + prédiction GPU-side emboîtée +
+  remontée L3 (kernel-moteur émettant |d| ≥ EPS_DETAIL, 1e-4 reconduit
+  [NON-ANCRÉ], suspect tranche-2 inchangé) + transferts ; fovéa mobile E4c,
+  chrono B6, vérifs reconduites, natif.
+- **MORT : médiane frame complète > 16.7** ⇒ V4 mort ⇒ le repli 33.3 devient LA
+  décision à prendre (jamais un enchaînement).
+- **Bande à deux modèles : frame prédite ∈ [13.9, 17.2]** — chevauche le seuil,
+  assumé : le papier rend la question mesurable, il ne promet pas. Hors bande =
+  AUTRE. Diagnostics : parts F / prédiction / remontée / transferts (attribution
+  mécanique — la série de sondes N'EST PAS rouverte).
+- **Gates de build AVANT tout code** : chiffrage Claude Code remonté — le
+  kernel-moteur L3 est un KERNEL NEUF avec son propre pré-enregistrement
+  (équivalence de motif au fusionné + émission), la borne M-a′ INTACTE et citée
+  telle quelle ; géométrie emboîtée ; champs d'échelle. Chiffrage > 2 séances ⇒
+  remonter avant achat.
