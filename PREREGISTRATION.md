@@ -4287,3 +4287,35 @@ par élément (schéma B4), dimensionnement pire-cas (142.6 Mo, gate large),
 retard d'une frame avec écart émis/transférés REPORTÉ, deux bras (fusionné
 intouché = contrôle de dérive vs 14.432 gravés ; L3), fovéa immobile.
 **Étape 2 (build) débloquée.**
+
+### §A18-lecture-borne-L3 + décision achat B (2026-07-19)
+
+**Lecture (run_f1_borne_l3.py, natif)** : remontée_L3 = **5.122 ms**
+(A_L3 19.398 − A_REF 14.277) — L3 gagne ×1.66 sur le CuPy (8.523), manque la
+cible ~1.5 ×3.4. Dérive machine −1.1 % (contrôle propre). Tailles d'émission
+INSTABLES (×2.3, reporté — le retard d'une frame n'est pas neutre, dernière
+frame en attente + bursts). **Sec vs mouillé : −16.9 %** — l'anti-minoration a
+mordu, la consigne « deuxième système mouillé » était load-bearing ; consignée
+pour la lecture de B.
+
+**Arbre pré-nommé appliqué** : L3 seul insuffisant ⇒ réserve L1 (P4).
+Arithmétique sur ancres : k=2 ⇒ frame V4 ∈ [15.5, 17.2] (à cheval) ;
+**k=4 ⇒ [14.2, 15.9] — sous le seuil sur toute la bande.**
+
+**PIÈGE D'INTÉGRITÉ NOMMÉ ET FERMÉ (session critique)** : une remontée en
+rafale toutes les k frames ferait passer la MÉDIANE en laissant un stutter
+~20 ms invisible au critère — **L1 DOIT être ÉTALÉE (round-robin, 11/k
+fenêtres/frame)** : coût lissé, critère médian honnête, même amortissement.
+Consigne OBLIGATOIRE de l'achat B.
+
+**Symétrie consignée** : les deux portes consomment une hypothèse
+temporelle-perceptuelle (16.7+L1 : lointain à 15 Hz ; 33.3 : physique 30 Hz
+interpolée) — la dette σ_ω rôde des deux côtés, réveil différé tenable tant que
+le choix n'est pas design-final.
+
+**Décision Romain (2026-07-19) : ACHAT B + L1 ARMÉE round-robin k=4** (choisi
+par budget, [NON-ANCRÉ perceptuel], σ_ω différé R4/P4). M-a-quater tranche sur
+mesure. Bande de M-a-quater RE-CALCULÉE avec L1 : **[14.2, 15.9]** (remplace
+[13.9, 17.2] — recalibration pré-mesure sur ancres nouvelles, dont borne L3
+5.122/4 amortie). MORT inchangée : médiane frame complète > 16.7. Porte 33.3 :
+toujours repli pré-nommé.
