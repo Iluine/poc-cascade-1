@@ -4527,3 +4527,62 @@ k=4 : branche (D), la décision passe à k, réveil σ_ω explicite ;
 régler ; (iii) discrimine sans qu'aucun EPS ne passe ⇒ MÉCANISME EN QUESTION,
 deux attributions nommées non armées. Ajout au JSON : le LABEL de lecture seul
 — aucun build supplémentaire.
+
+### §A19-lecture-sonde-EPS (2026-07-19) — branche (ii) MUETTE ; le bras k=1 FALSIFIE l'explication attendue ; diagnostic d'instrument pré-enregistré
+
+**Lecture mécanique (run_f1_sonde_eps.py, natif)** : vérification d'instrument =
+**branche (ii) SONDE MUETTE sur EPS**. Lecture pré-écrite APPLIQUÉE : **rien
+n'est réglé, EPS reste à 1e-4** ; aucun EPS retenu, AUTRE remonté. Δχ décimé max
+∈ [0.0820, 0.0825] pour un trafic ×173 — **innocuité NON ÉTABLIE** à toute
+valeur (jamais « nocivité » : le joueur ne voit pas la référence).
+
+**FAIT NEUF, plus important que la lecture : le bras k=1 FALSIFIE l'hypothèse
+« péremption L1 ».** Δχ max par EPS —
+k=1 : [0.0825, 0.0820, 0.0820, 0.0822, 0.0823, 0.0825] ;
+k=4 : [0.0822, 0.0820, 0.0820, 0.0822, 0.0824, 0.0825] — **identiques à 3
+décimales**. Si la péremption pilotait l'observable, k=4 (jusqu'à 4 frames de
+retard) serait nettement pire que k=1 ; il ne l'est pas. **La note du driver
+(« l'observable est gouverné par la péremption L1 ») est CONTREDITE par son
+propre bras de vérification** — elle ne doit pas être portée comme vraie. Ni
+EPS ni k ne bougent l'aiguille ; le Δχ non décimé est tout aussi plat (≈0.069).
+⇒ **PLANCHER STRUCTUREL** (signature §A14 « muette par construction »). Suspect
+principal nommé : le DOMAINE DE COMPARAISON (cellules du niveau 0 que nulle
+fenêtre active ne remonte jamais ⇒ écart constant, indépendant de tout).
+
+**Pourquoi ce plancher gate M-b (et non une curiosité)** : M-b partage les
+primitives de readout (albedo + delta_chi/max_carrier) et son seuil de mort est
+**0.0733 par-seed** — un plancher d'instrument à 0.069 siège à 6 % SOUS le seuil
+qui tue Option A. Acheter 3–5 séances de portage fidèle avec ce plancher
+inexpliqué, c'est risquer de prononcer MORT-b sur un ARTEFACT.
+
+**Second écart à attribuer** : à EPS=1e-4 la sonde donne **médiane 17.249 ms**
+là où M-a-quater donnait 16.589 — **+0.66 ms, quatre fois la marge de V4**, dans
+le mauvais sens ; les transferts concordent (2.635 vs 2.727, dérive), l'écart
+est ailleurs. Deux causes possibles : appareil de sonde entrant dans le chrono
+« nu », ou terme de PRODUCTION non compté par M-a-quater. **Le contrôle T1 de
+M-b est VERDICTAL (Q3)** — l'écart doit être attribué avant.
+
+**Décision Romain (2026-07-19) : DIAGNOSTIC D'INSTRUMENT AVANT le chiffrage
+M-b — pré-enregistré ici :**
+- **D-1 (plancher)** : (a) TEST À BLANC — vivant := vérité, attendu **Δχ = 0
+  exact** ; tout résidu = plancher de READOUT (transférable à M-b) ; (b)
+  COMPARAISON RESTREINTE aux cellules effectivement couvertes par une fenêtre
+  active du cycle — si le plancher s'effondre, c'est un plancher de COUVERTURE
+  (propre à cette sonde, non transférable). Les deux lectures pré-écrites ;
+  aucune autre conclusion tirée.
+- **D-2 (chrono)** : attribuer les +0.66 ms — chrono « nu » de la sonde
+  re-mesuré à configuration M-a-quater identique, appareil de reconstruction
+  explicitement hors boucle. Lectures pré-écrites : écart absorbé ⇒ APPAREIL
+  (sans conséquence) ; écart persistant ⇒ **TERME DE PRODUCTION NON COMPTÉ**,
+  la marge de V4 est entamée et le contrôle T1 s'appliquera à ce total.
+- Portée : diagnostic d'INSTRUMENT, pas une nouvelle tentative de régler EPS
+  (la branche (ii) est appliquée : rien n'est réglé). k reste figé ; aucune
+  décision de cadencement. Coût : minutes, harnais existant.
+- **Le chiffrage de M-b (N2) est SUSPENDU à la lecture de D-1/D-2.**
+
+**Levier identifié mais VERROUILLÉ (à ne pas surclamer)** : le balayage montre
+que passer de 1e-4 à 1e-2 rendrait ~2.5 ms de transferts et ~1.8 ms de médiane —
+exactement la tête qui manque à V4. **Inutilisable** : la non-discrimination
+signifie que l'observable ne VOIT pas EPS, pas qu'il n'y a rien à voir.
+Conclure « puisque rien n'est établi nulle part, prenons le moins cher » serait
+du raisonnement motivé — explicitement refusé ici.
