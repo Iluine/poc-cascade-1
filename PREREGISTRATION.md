@@ -3843,3 +3843,39 @@ raffinement effectif a toujours été épars ; c'est l'épinglage §6 qui était
 tranche-1 (faits robustes au re-épinglage) ; F0-cloud (prochaine session cloud) ;
 puis SÉANCE DE RE-ÉPINGLAGE paper-grade du quadruplet §6 (spec re-versionnée,
 addendum — aucun code avant).
+
+### §A15-lecture-M-d + CLÔTURE TRANCHE-1 (2026-07-19)
+
+**Génération E6 (non-verdictale, consignée)** : 3600 commits en 2.84 h (enveloppe
+2–5 h tenue), cadence stable 2.83–2.90 s/commit, zéro dérive. Ledger : **1.17
+Ko/commit** (4.2 Mo/3600) vs enveloppe gravée ~3.2 Ko — cohérent, nommé : l'enveloppe
+chiffrait le commit plein-domaine (cap 409.6), la chaîne générée est fenêtrée
+(k_fen=64, §A14). Snapshot : +0.1 Mo (commit plein 64², cohérent §A13-4-1).
+
+**Lecture M-d (run_f1_md.py, natif)** : load SANS snapshot médiane **0.063 s**
+(1er/froid 0.051) ≪ 30 s gravé — **MORT-d NON déclenché** (critère re-scopé
+« coût du ledger », quasi-imperdable, dit en face dès E7 : il aurait attrapé un
+désastre de parse, il n'y en a pas ; 7200 entrées, tous sha256 relus).
+**Diagnostic-test de la claim E7 : CONFIRMÉE** — écart avec/sans snapshot 0.011 s
+< 0.5 s (attendu ≈ 0 pré-enregistré). La note « compaction = disque/rétention, PAS
+du load » (consigne E7-3) est désormais MESURÉE, plus seulement raisonnée.
+**Portée nommée** : segment courant = 0 épisode (ledger clos sur un commit) — le
+terme replay d'E7 non exercé ; pire cas mi-segment CALCULÉ : ~0.063 + 1 épisode
+CPU (~2.8 s, mesuré à la génération) ≈ 2.9 s, ×10 sous seuil. `[MESURÉ à segment
+nul ; pire cas = arithmétique]`
+
+**CLÔTURE DU DOSSIER TRANCHE-1 :**
+- **M-a : MORT ARCHITECTURALE** (§A15-lecture-M-a′, prononcée) — au quadruplet §6
+  majorant, sur 3050 Ti ; modèle de coût ancré 6.43 ns/cellule/frame.
+- **M-c : PAS DE MORT** — 2.784 ms < 4.2 ; PASS porté par la remontée seuillée
+  (EPS_DETAIL suspect nommé tranche-2).
+- **M-d : PAS DE MORT** — 0.063 s ≪ 30 ; claim E7 confirmée au diagnostic.
+- **Verdict tranche-1 : AVEC MORT** (une, architecturale, portée stricte).
+  Conséquences en vigueur : spec v0 ne fait pas foi ; r_fovea gaté ; tranche-2
+  (M-b) non achetable sur cette enveloppe.
+
+**File d'attente (aucun enchaînement) :** (1) séance de RE-ÉPINGLAGE du quadruplet
+§6 — entrée : claude/annexe-enveloppe-jeu-2026-07-19.md (fluide-reduit b7bef0a),
+sortie : quadruplet-jeu candidat + M-a-ter pré-enregistré (coût : minutes, harnais
+existant) ; (2) F0-cloud à la prochaine session cloud (persister l'état divergent) ;
+(3) tranche-2/M-b re-scopée à l'enveloppe re-épinglée, SI M-a-ter sans mort.
