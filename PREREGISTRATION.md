@@ -3803,3 +3803,43 @@ non mesurée) ; octets dépendants d'EPS_DETAIL non-ancré perceptuellement.
 
 **Reste dû** : génération ledger (nuit), M-d, et M-a′ (build Claude Code). Chaque
 lecture remontée.
+
+### §A15-lecture-M-a′ + VERDICT (2026-07-19) — **MORT-a ARCHITECTURALE PRONONCÉE** (Romain)
+
+**Lecture mécanique (run_f1_ma_prime.py, natif)** : médiane **5.056 ms/niveau**
+(p99 5.541) contre seuil pré-écrit 1.856 — **×2.7 au-dessus**. Critère rempli.
+La fusion a gagné ×15.6 sur le naïf (78.9 → 5.06 ms/niveau) : le build a fait son
+travail, et ça ne suffit pas. Extrapolé ×9 : ~45.5 ms/frame (TRANSPOSITION,
+linéarité défendue : 524k threads/niveau, GPU saturé — pas de parallélisme
+inter-niveaux à récupérer). CAP honoré : dernière escalade, aucune autre.
+
+**Discussion consignée avant prononcé (point d'arrêt honoré) :**
+- T2 n'est pas le coupable : 45.5 > 33.3 aussi — même le budget laxiste meurt.
+  Aucun B_frame ne sauvait ce quadruplet.
+- 5.056 = borne d'une fusion COMPÉTENTE, pas l'optimum théorique — l'incertitude
+  entre les deux est celle que le cap a choisi d'accepter (gravé avant run).
+- PORTÉE STRICTE : meurt LE QUADRUPLET §6 (c=8 plein à tous niveaux, n_fov=512,
+  N_niv=10, budget 16.7 ms, sur 3050 Ti) — pas la fovéa-z, pas Cascade. L'enveloppe
+  était un majorant délibéré, leviers nommés NON comptés. Machine-scopée par
+  construction.
+
+**VERDICT (Romain, 2026-07-19) : MORT-a ARCHITECTURALE à cette enveloppe.**
+Conséquences mécaniques : F1 tranche-1 = verdict AVEC MORT ; la spec v0 ne fait pas
+foi (gate iii §8) ; campagne r_fovea toujours gatée (garde §7) ; tranche-2 (M-b)
+non achetable (E3). Le re-épinglage du quadruplet est la décision neuve prévue par
+le gate §6 — jamais un contournement.
+
+**Direction nommée pour le re-épinglage (intuition Romain, consignée) :** les
+fenêtres de Harten sont OBLIGATOIRES, mais le raffinement fin ne doit exister qu'à
+un NOMBRE LIMITÉ d'emplacements — un cap dur de fenêtres actives respecté par le
+routeur. Chiffrage au modèle mesuré (T ≈ 5.06 × (c_sys/2) × (n_fov/512)² ms par
+fenêtre-triplet) : le budget 16.7 ms achète ~10 fenêtres 512²-équivalent à c=8
+(~2.6 M cellules fines actives), ~20 à c=4 — contre 27 dans l'enveloppe morte.
+CONVERGENCE nommée avec le pilier mesuré S_eff 1.8–3.9 (journal 2026-07-01) : le
+raffinement effectif a toujours été épars ; c'est l'épinglage §6 qui était dense
+(majorant). La mort tue le majorant, pas le pilier.
+
+**Reste dû** : M-d (génération nuit + load) pour compléter le dossier factuel de
+tranche-1 (faits robustes au re-épinglage) ; F0-cloud (prochaine session cloud) ;
+puis SÉANCE DE RE-ÉPINGLAGE paper-grade du quadruplet §6 (spec re-versionnée,
+addendum — aucun code avant).
