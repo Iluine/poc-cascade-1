@@ -4054,3 +4054,30 @@ micro-sondes pré-enregistrées en ouverture (§0 de la séance)** :
   vs coût architectural dans les 6.11 ms.
 Les sondes SERVENT la séance (ancrer le design), elles ne la retardent pas —
 critères et attendus à figer au brouillon de séance, AVANT tout code.
+
+## §A17 — Séance design F-multi-niveaux + machinerie : OUVERTE (gravé 2026-07-19)
+
+> Brouillon endossé : fluide-reduit claude/seance-design-f-machinerie-2026-07-19-
+> BROUILLON.md. Entrée : décomposition mesurée §A16-lecture-sonde-attribution
+> (F 20.438 / prédiction 2.135 / remontée 8.523, budget 16.7 T2 inchangé).
+
+**G1 (Romain) — micro-sondes d'ouverture ENDOSSÉES, pré-enregistrées :**
+- **s1 — ancre 1-système** : (a) B=1,S=1 isolé ; (b) B=7,S=1 batché. Kernel
+  intouché, chrono B6, natif. Les ancres MESURÉES remplacent l'étiquette
+  « structurelle » (hors ±10 % de 0.843 ⇒ linéarité fausse, modèle re-calibré
+  sur mesures).
+- **s2 — F batché inter-niveaux + CFL async** : bras A re-orchestré (B=5 2-sys +
+  B=7 1-sys, 4 lancements/frame vs 18 ; CFL payée on-device, sync CPU artefact
+  supprimée). LÉGITIMITÉ vs cap endossée : pas une escalade kernel — B5
+  prévoyait le batch du moteur réel ; le per-niveau était plomberie de harnais.
+  Lecture : A_batché dans ±10 % de (5×1.685 + 7×ancre_s1) ⇒ l'écart +6.11 était
+  l'orchestration, modèle re-calibré TIENT ; hors ⇒ AUTRE remonté. **s2 fixe le
+  budget machinerie = 16.7 − A_batché.**
+**G2 — leviers à l'étude après s1/s2 : L1 (remontée cadencée — le choix de k
+touche la condition de réveil σ_ω R4, décision explicite à son moment) + L3
+(détails émis par le kernel — build kernel NEUF avec son propre
+pré-enregistrement ; la borne M-a′ reste intacte et citée telle quelle).**
+L2 (activité — non mesurable sur harnais actuel) et L4 (prédiction 2.135 ms —
+falsificateur naturel : bras s2-mobile) restent nommés, non instruits.
+**G3 — porte budget 33.3 ms OUVERTE-NOMMÉE** : pas décidée ; ne s'étudierait
+que par re-épinglage assumé (la mort de V2 à 16.7 reste gravée).
