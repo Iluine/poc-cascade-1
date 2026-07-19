@@ -4081,3 +4081,30 @@ L2 (activité — non mesurable sur harnais actuel) et L4 (prédiction 2.135 ms 
 falsificateur naturel : bras s2-mobile) restent nommés, non instruits.
 **G3 — porte budget 33.3 ms OUVERTE-NOMMÉE** : pas décidée ; ne s'étudierait
 que par re-épinglage assumé (la mort de V2 à 16.7 reste gravée).
+
+### §A17-lecture-s1-s2 (2026-07-19) — modèle re-calibré TIENT ; budget machinerie 2.268 ms ; G2 AMENDÉ
+
+**s1 (run_f1_s1_ancre_1sys.py, natif)** : ancre 1-système ISOLÉE 0.968 ms/slot
+(+14.8 %, HORS bande — un bloc seul paie sa granularité de lancement) ; BATCHÉE
+(B=7) **0.845 ms/slot** (+0.2 %, dans la bande) — la linéarité en systèmes est
+VRAIE en batché, l'étiquette « structurelle » est remplacée par deux mesures.
+Ancre opérante : 0.845 (le moteur batché ne paie pas l'isolement).
+
+**s2 (run_f1_s2_batche.py, natif)** : **A_batché = 14.432 ms** (p99 15.808) vs
+prédiction re-calibrée 14.341 (5×1.685 + 7×0.845) — **+0.6 %, le modèle TIENT**.
+Les +6.11 ms du bras A étaient l'orchestration (effet CUMULÉ des trois artefacts,
+sans départage — nuance verrouillée respectée). Audit CFL : finies, positives,
+identiques par groupe. **Budget machinerie = 16.7 − 14.432 = 2.268 ms.**
+
+**Chiffre inconfortable en évidence** : la prédiction MESURÉE (2.135 ms,
+§A16-lecture-sonde) ≈ le budget entier (2.268) — L1+L3 seuls ne peuvent PAS
+fermer l'arithmétique même à remontée nulle. MAIS la prédiction a été mesurée
+sous l'ANCIENNE orchestration per-niveau (la maladie que s2 vient de guérir
+pour F) — falsificateur pré-nommé au §A17 : bras s2-mobile.
+
+**Décision Romain (2026-07-19) — G2 AMENDÉ : L4 instruite via le bras s2-mobile,
+pré-enregistré ici** : config V2, orchestration batchée s2, fovéa MOBILE E4c,
+remontée OFF. Lecture mécanique : **prédiction_batchée = A_mobile − 14.432** ;
+cible L1+L3 = 16.7 − 14.432 − prédiction_batchée, reportée sans interprétation.
+La décision (le design est-il jouable à cette cible, ou candidat/porte 33.3 par
+la porte de devant) revient à Romain à la lecture. Sonde : aucun verdict.
