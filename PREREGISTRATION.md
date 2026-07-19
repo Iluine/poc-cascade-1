@@ -4264,3 +4264,26 @@ remontée/transferts DÉRIVÉES des ancres gravées + comptage exact — étique
 reste close ; (4) garde-fous L3 : choix d'implémentation FIGÉS au protocole
 avant la première ligne, **CAP : L3 = dernière escalade sur la remontée**
 (comme M-a′ sur F), borne écrite comme mesure JETABLE et dite telle quelle.
+
+### §A18-complément-2 — Arbitrage compaction L3 (2026-07-19, avant toute ligne de code)
+
+Point d'arrêt honoré à l'étape 1 de l'achat A (prereg kernel L3 rédigé, zéro
+code). **Décision Romain : AGRÉGATION PAR WARP** (__ballot_sync + __popc, un
+atomique par warp) contre l'atomicAdd naïf par émission. Motifs consignés :
+(i) précédent M-a′ — la borne mesure un design compétent, pas une file
+d'attente (17.8 M atomiques sérialisés = mesurer la contention, pas L3) ;
+(ii) asymétrie du regret sous cap — un échec agrégé se lit proprement, un échec
+naïf serait illisible (contention vs design) ET invérifiable à jamais ;
+(iii) le naïf ajoute un coût n'appartenant à aucun terme de la question.
+Le choix fait partie du PROTOCOLE : un chiffre décevant se lira « ce design,
+compacté ainsi, coûte tant » — jamais « il aurait fallu mieux implémenter ».
+
+**Consigne session critique, jointe à la dérogation du tri** : la comparaison
+triée (l'ordre atomique n'étant pas garanti) pourrait masquer une DOUBLE
+ÉMISSION — le verrou vérifie l'UNICITÉ DES INDICES avant tri (gratuit : chaque
+élément n'émet qu'une fois par frame par construction). Dérogation isolée à ce
+chemin, motivée, verrouillée. Choix figés sans arbitrage reconduits : émission
+par élément (schéma B4), dimensionnement pire-cas (142.6 Mo, gate large),
+retard d'une frame avec écart émis/transférés REPORTÉ, deux bras (fusionné
+intouché = contrôle de dérive vs 14.432 gravés ; L3), fovéa immobile.
+**Étape 2 (build) débloquée.**
