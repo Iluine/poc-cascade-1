@@ -4141,3 +4141,25 @@ topologie spécifiée. Prédiction GPU-side = design conforme au gravé,
   33.3) revient à Romain à la lecture.
 - Portes 33.3 (motif T2 : où vit le rendu — à traiter explicitement si ouverte)
   et candidat aminci : RESTENT ouvertes-nommées, non instruites.
+
+### §A17-s3, addendum pré-run (2026-07-19) — deux trous de SPEC surfacés par le build, périmètre consigné
+
+Le build s3 (fluide-reduit 8f0f371, kernel intouché, 189 tests) a établi AVANT
+run, sur 400 positions de balayage : le pré-enregistrement supposait tout slot
+≥2 doté d'un parent GPU — FAUX pour 5 slots. **Deux questions de niveau SPEC
+ouvertes, à traiter au paper-grade (pas ici) :**
+1. **EMBOÎTEMENT** : la géométrie d'énergie B3 (±n_fov) place les fenêtres hors
+   couverture parente — or Harten exige l'emboîtement, propriété JAMAIS écrite
+   en §2. En moteur réel, une fenêtre raffinée sous le plafond devrait vivre
+   dans la région raffinée de son parent. À graver en spec.
+2. **c DÉGRESSIF vs DESCENTE** : niveau 8 (c=8) sur parent niveau 7 (c=4) — les
+   champs supplémentaires n'ont pas de parent à prédire. L'interaction du
+   levier « c décroissant » (D3/§2) avec la prédiction Harten n'a jamais été
+   spécifiée. À graver en spec.
+**Périmètre s3 consigné** : 7 slots GPU-side (fovéaux 2-7 et 9), 5 CPU+H2D
+(niveau 1 gravé ; fovéal 8 [c-mismatch] ; 3 énergie [pas de parent]) — chaque
+repli avec sa raison au JSON, AUCUN contenu parent fabriqué (majorant honnête).
+Frame médiane : 1 GPU-side / 2 CPU — **baisse attendue PARTIELLE par
+construction**, verrouillée par test. **Décision Romain : COURIR TEL QUEL** —
+s3 mesure l'ancre du mécanisme GPU-side ; une V2 ré-emboîtée se prédira sur
+ancre mesurée avant d'être construite. Re-périmètre : levier suivant, nommé.
