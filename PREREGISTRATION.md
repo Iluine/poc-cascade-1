@@ -4393,3 +4393,59 @@ paramètre `[NON-ANCRÉ perceptuel]` suspect depuis §A15-complément consigne 1
 cesse d'être réglé par budget : il devient MESURÉ. Un re-run de dispersion est
 ÉCARTÉ (ne changerait ni la suite ni le levier — critère tapis-roulant).
 Reste dû : F0-cloud (gate ii).
+
+## §A19 — Sonde EPS (N1) + M-b re-scopée V4 (N2) : pré-enregistrées (gravé 2026-07-19)
+
+> Brouillon endossé : fluide-reduit claude/prereg-mb-eps-2026-07-19-BROUILLON.md.
+> Q1-Q3 tranchés (Romain). Gate (iii) de la spec = M-b sans mort ; gate (ii) =
+> F0-cloud, toujours dû (~2 min, prochaine session cloud, indépendant).
+
+**CONCESSION consignée (session critique)** : la formule du §A18-lecture
+(« balayage EPS gratuit dans le run M-b, une mesure deux consommateurs ») était
+FAUSSE SUR L'OBSERVABLE — EPS_DETAIL gouverne la fidélité du NIVEAU 0 VIVANT,
+pas le contrat live↔rederive ; il n'atteint le Δχ de M-b qu'au second ordre (via
+les colonnes entrantes, fovéa mobile) — signal bruité, impropre à arbitrer un
+budget. Observable corrigé ci-dessous ; la correction rend N1 AUTONOME et
+BON MARCHÉ, ce qui change aussi le séquencement (Q1).
+
+**Q1 — SÉQUENCEMENT : N1 (~0.5–1 séance) AVANT N2 (3–5 séances, risque ÉLEVÉ)** —
+N1 peut changer l'enveloppe dans laquelle N2 sera mesurée ; l'inverse est faux.
+
+**N1 — SONDE EPS (pré-enregistrée)** :
+- Vérité : niveau 0 par décimation exacte (moyennes Harten) de l'état fin.
+  Vivant : niveau 0 reconstruit par la remontée seuillée à EPS, incrémentale,
+  **L1 k=4 étalée INCLUSE** (la péremption d'amortissement fait partie du
+  régime de production).
+- Observable : **Δχ readout (albedo + delta_chi, max_carrier)** entre les deux —
+  espace instrument, jamais l'état. Fovéa mobile E4c, série 300 frames, natif.
+- Balayage : EPS ∈ {1e-5, 1e-4 (gravé), 3e-4, 1e-3, 3e-3, 1e-2}. Reporté par
+  EPS : Δχ max et médian, octets/frame, temps de transfert, médiane ET p99 frame.
+- **Q2 — RÈGLE DE DÉCISION PRÉ-ENREGISTRÉE** : EPS retenu = **le plus grand EPS
+  dont le Δχ max de série reste < 0.0603 (ic_bas)** — lecture sur l'IC ENTIER
+  (discipline §A13). Si aucun EPS du balayage ne satisfait (1e-5 compris) :
+  **AUTRE remonté, aucun EPS retenu par défaut** — jamais de choix après courbe.
+- **EXCLUSION NOMMÉE — balayage de k INTERDIT ici** : balayer k perceptuellement
+  = décider le cadencement avec la question perceptuelle en main = **condition
+  de réveil σ_ω (R4) ATTEINTE**. k reste FIGÉ à 4 `[NON-ANCRÉ, par budget]` ;
+  bouger k un jour sera une décision explicite de Romain, jamais un effet de
+  bord de sonde.
+
+**N2 — M-b RE-SCOPÉE V4 (pré-enregistrée ; seuils gravés NON déplacés)** :
+- Chemin vivant = pipeline V4 COMPLET (géométrie emboîtée, prédiction GPU-side,
+  L3, L1 k=4 étalée, fovéa mobile) avec le **F FIDÈLE** (portage `run_episode` :
+  wetdry O2 CFL-adaptatif, Exner, pulses, bathymétrie réelle) — pas le jetable.
+  Chemin rederive = f(registre, seeds) CPU f64, INTOUCHÉ (gel = contrôle).
+- Cellule (§A15, reconduite) : 3 seeds {101, 102, 103}, Δt=4, 6 émissions ;
+  commits fenêtrés, k_fen aire-proportionnel, cap 10 %.
+- **MORT-b (T3, inchangé)** : max de série Δχ live↔rederive **> 0.0733**,
+  **PAR-SEED** ⇒ Option A morte, repli Option B = décision neuve.
+- **Q3 — CONTRÔLE T1 DEVENU VERDICTAL** : la frame complète mesurée avec le F
+  FIDÈLE **> 16.7 ms ⇒ V4 MORT** (critère pré-écrit AVANT tout chiffre — la
+  marge M-a-quater étant de 0.7 %, laisser ce contrôle non-verdictal aurait
+  permis de constater la mort sans la prononcer). Diagnostic joint : écart
+  F fidèle vs proxy 12.655 (représentativité T1).
+- **Gate de chiffrage** : chiffrage du portage remonté AVANT achat ; scission
+  interne si > 3 séances.
+
+**Portées** : rien sur r_fovea, 3D, multi-vue, niveau 0 CPU à 500k (pied n°1),
+qualité produit (pin n=1), coût de l'Option B si M-b meurt.
