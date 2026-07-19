@@ -394,3 +394,18 @@ consignées in-situ). Le document est un CONTRAT COMPLET en attente de ses mesur
 il FERA FOI après (i) lecture F0, (ii) verdict F1 (tranche-moteur) sans critère de mort
 déclenché. Prochaines actions : F0, puis pré-enregistrement de la tranche-moteur
 (critères de mort chiffrés AVANT tout run).
+
+---
+
+## §6-rev1 (2026-07-19) — RE-ÉPINGLAGE post-MORT-a `[ENDOSSÉE 2026-07-19]`
+
+Le gate de section §6 a été exercé : la tranche-moteur (F1 tranche-1) a prononcé
+**MORT-a architecturale** au quadruplet v1 (c=8 dense, n_fov=512, N_niv=10 —
+§A15-lecture-M-a′ au journal). Le quadruplet est RE-ÉPINGLÉ par décision (jamais
+un glissement) : **structure cap-dur d'emplacements, quadruplet-jeu V2**
+(c dégressif : fovéale 9 slots dont 2 fins c=8, + 3 slots énergie c=8 ; scénario
+20°/n=512/J=9/monde 500k ; prédit 14.33 ms sur budget 16.7 inchangé). Détail
+faisant foi : **journal §A16** (+ M-a-ter pré-enregistré). Le gate de sortie (iii)
+de la spec est reformulé à cette enveloppe : la spec fait foi après (i) M-a-ter
+sans mort, (ii) F0 lu, (iii) M-b (tranche-2) sans mort sur V2. σ_ω : reconduite,
+condition de réveil affinée au cadencement (§A16-R4).

@@ -3879,3 +3879,59 @@ nul ; pire cas = arithmétique]`
 sortie : quadruplet-jeu candidat + M-a-ter pré-enregistré (coût : minutes, harnais
 existant) ; (2) F0-cloud à la prochaine session cloud (persister l'état divergent) ;
 (3) tranche-2/M-b re-scopée à l'enveloppe re-épinglée, SI M-a-ter sans mort.
+
+## §A16 — RE-ÉPINGLAGE du quadruplet §6 : quadruplet-jeu V2 + pré-enregistrement M-a-ter (gravé 2026-07-19)
+
+> **Statut : gravé sur endossement Romain (R1-R4), AVANT toute mesure M-a-ter.**
+> Décision prévue par le gate §6 suite au verdict MORT-a (§A15-lecture-M-a′).
+> Brouillon de travail : fluide-reduit claude/reepinglage-quadruplet-2026-07-19-
+> BROUILLON.md. Spec : addendum §6-rev1 (pointeur, cette section fait foi).
+
+**Changement de STRUCTURE.** L'enveloppe dense (γ₂·n_fov²·N_niv) est remplacée par
+un **cap dur d'emplacements** : le budget est une liste de SLOTS (niveau, c), somme
+des coûts ≤ 16.7 ms (T2 INCHANGÉ). Ancre : 1 slot ≡ fenêtre 512² = 1.685 ms à c=8,
+0.843 ms à c=4 `[MESURÉ M-a′ + linéarité structurelle en systèmes]`.
+
+**R1 — Quadruplet-jeu V2 (c dégressif) :** fovéale 9 slots (2 niveaux fins à c=8,
+7 supérieurs à c=4) + **3 slots énergie c=8 fins** (la réserve gameplay, ENFIN un
+poste budgétaire explicite). **Coût prédit : 14.33 ms** (9.271 fovéale + 5.055
+énergie), marge 14.2 %. Résidence prédite ≪ 1.35 Go (12 slots ≈ 3.15 M cellules).
+
+**R2 — Scénario épinglé v1-jeu :** 2D mono-observateur, FOV 20°, n = 512 cellules
+d'arc (≈3.75 px/cellule à 1920), J = 9 sous h0, monde h0 = 500k cellules (~707 de
+côté) ⇒ finest ≈ h0/512, cône couvrant le monde entier. Machine : 3050 Ti (GPU
+minimal 1920 ; enveloppe 4K sur GPU ×4-5 dérivée en annexe, TRANSPOSITION).
+
+**R3 — Prédiction gravée AVANT run (test du modèle de coût) :** 14.33 ms ± 15 %
+⇒ [12.18, 16.48] ms. Hors bande = AUTRE remonté (modèle linéaire en slots faux —
+information, pas échec). COHÉRENCE NOMMÉE : la bande entière est SOUS 16.7 — si le
+modèle tient, M-a-ter passe ; une mort impliquerait AUSSI un AUTRE du modèle.
+
+**R4 — Dette σ_ω RECONDUITE, condition de réveil AFFINÉE :** le pied n°5
+(cadencement temporel — M-a/M-a-ter mesurent UNE application de F par fenêtre par
+frame, `[NON-ANCRÉ : hypothèse de design]` ; la CFL locale sur/sous-cadencerait
+par niveau) est un CONSOMMATEUR TEMPOREL NOMMÉ. Le fork temporel rouvre QUAND la
+spec décide le cadencement, avec la question perceptuelle du sous-cadencement fin
+en main (branche (a″) préférée). Aucun réveil silencieux, aucun réveil prématuré.
+
+**M-a-ter — PRÉ-ENREGISTRÉ (chiffres figés ici) :**
+- Protocole : harnais tranche-1 + kernel fusionné M-a′, config = V2 (liste de
+  slots (niveau, c) paramétrique — extension mineure du driver requise, revue
+  avant run), fovéa mobile E4c, chrono B6, vérifs #1/#2 reconduites, natif.
+- **MORT : médiane frame-time > 16.7 ms ⇒ le quadruplet-jeu V2 est mort** (seuil
+  T2, inchangé — aucun seuil ne bouge).
+- Lecture du modèle : médiane hors [12.18, 16.48] ⇒ AUTRE remonté.
+- Diagnostic non-verdictal : V1 (c=4 partout, 14 slots) mesurée aussi — coût
+  marginal nul, information spec.
+- Gate résidence reconduit (< 1.35 Go).
+
+**Portabilité tranche-1 (pas de re-mesure)** : M-c PASS porté a fortiori (moins de
+fenêtres ; dépendance EPS_DETAIL reconduite) ; M-d PASS porté tel quel ; M-b/
+tranche-2 re-scopée à V2, achetable SEULEMENT si M-a-ter sans mort ; F0-cloud dû.
+
+**La spec re-fait foi quand** : (i) M-a-ter SANS MORT sur V2 ; (ii) F0-cloud lu ;
+(iii) M-b sans mort sur V2. (Reformulation du gate iii §8 à l'enveloppe re-épinglée.)
+
+**Les 5 pieds non mesurés consignés** : niveau 0 CPU 500k ; cube 3D ; fenêtres
+d'énergie (désormais budgétées V2) ; r_fovea (arbitre n/J) ; cadencement temporel
+(R4). Aucun n'est crédité d'avance.
