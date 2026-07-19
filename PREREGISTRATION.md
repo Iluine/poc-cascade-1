@@ -4620,3 +4620,50 @@ existant) ; et si D-2 révèle un terme de production non compté, le levier
 devient nécessaire, pas optionnel. Plancher de READOUT (test à blanc non nul)
 ⇒ lecture inverse : le plancher est transférable à M-b, et c'est M-b dont
 l'instrument devient la question (son seuil de mort siège 6 % au-dessus).
+
+### §A19-lecture-diagnostic (2026-07-19) — readout PROPRE, D-2 relu (label faux), attribution (b) armée
+
+**D-1(a) — ACQUIS SOLIDE : Δχ à blanc EXACTEMENT NUL.** Aucun plancher de
+readout : les primitives (albedo + delta_chi/max_carrier) ne fabriquent rien.
+**Le gate est DÉGAGÉ : M-b héritera d'un instrument sain** — c'était la raison
+d'être du diagnostic, elle est satisfaite. Le plancher observé vient d'ailleurs.
+
+**D-2 — LE LABEL DU DRIVER EST LOGIQUEMENT FAUX ; LA FAUTE DE SEUIL EST DE LA
+SESSION CRITIQUE.** Médiane nue **16.427** — soit EN DESSOUS de M-a-quater
+(16.589) : l'appareil de sonde expliquait **0.822 ms** des 17.249. Résidu
+**−0.162 ms**, NÉGATIF : un terme de production non compté rendrait la mesure
+PLUS HAUTE, jamais plus basse — le label « TERME DE PRODUCTION NON COMPTÉ » ne
+peut pas s'appliquer à un résidu négatif (la règle a été écrite sur |écart|,
+sans considération de signe). De plus −0.162 est très exactement la dérive
+machine du jour (−1.07 % mesuré ⇒ −0.178 attendus sur 16.589). **Erreur de
+pré-enregistrement OWNED par la session critique** : TOLERANCE_ABSORPTION_MS =
+0.15 a été endossée alors que la dérive connue valait 0.155–0.18 — le seuil
+était SOUS le bruit connu, la règle ne pouvait qu'échouer. **Lecture retenue :
+APPAREIL. Aucun terme de production non compté. La marge de V4 tient à
+0.111 ms** et le contrôle T1 de M-b reste verdictal sur le total inchangé.
+
+**D-1(b) — la branche TIRE, son interprétation est CONTREDITE.** Complet
+**0.0820** ; cycle **0.0109** (la vue spécifiée au gravé) ; cumulé **0.0892**.
+La vue cycle s'effondre ⇒ branche « plancher de COUVERTURE » appliquée ⇒
+**EPS EST ROUVERT** (complément-3, pré-écrit). MAIS le cumulé DÉPASSE le complet
+— les cellules couvertes autrefois et non rafraîchies sont PIRES que la moyenne.
+**Conséquence gravée : le nouvel observable ne sera PAS « cellules fraîches du
+cycle »** — ce serait un instrument COMPLAISANT par construction (il ne
+mesurerait que ce qui vient d'être corrigé, quand le consommateur voit tout).
+**RETRAIT consigné (session critique)** : la reformulation « l'observable de la
+sonde EPS était mal défini » (complément-3) n'est PAS soutenue par ces chiffres
+— elle est retirée ; seule la réouverture d'EPS subsiste, sans son motif.
+
+**Signature dessinée par les trois nombres** (frais bon, ancien mauvais,
+indépendant d'EPS ET de k) : **dérive de la référence incrémentale** —
+l'attribution (b) de la branche (iii), déjà nommée avec son falsificateur.
+
+**Décision Romain (2026-07-19) : ARMER l'attribution (b) — comparaison contre
+une REMONTÉE PLEINE NON INCRÉMENTALE** (harnais existant, minutes). Lectures
+pré-écrites : erreur s'effondre ⇒ **la référence incrémentale DÉRIVE** (défaut
+de mécanisme, load-bearing pour tout le lointain de la fovéa-z) ; erreur
+persiste ⇒ **erreur INHÉRENTE** au grossier, et c'est l'exigence de fidélité
+qui est à redéfinir. Dans les deux cas la lecture DÉTERMINE l'observable du
+nouveau pré-enregistrement EPS — qui reste dû, et qui ne s'écrira pas avant.
+EPS reste figé à 1e-4, k figé à 4 ; rien n'est réglé. Chiffrage M-b : toujours
+suspendu, mais son GATE D'INSTRUMENT est désormais dégagé.
