@@ -3935,3 +3935,35 @@ tranche-2 re-scopée à V2, achetable SEULEMENT si M-a-ter sans mort ; F0-cloud 
 **Les 5 pieds non mesurés consignés** : niveau 0 CPU 500k ; cube 3D ; fenêtres
 d'énergie (désormais budgétées V2) ; r_fovea (arbitre n/J) ; cadencement temporel
 (R4). Aucun n'est crédité d'avance.
+
+### §A16-complément — Blocage de parité résolu + lecture R3 précisée (2026-07-19, AVANT tout run M-a-ter)
+
+Le build M-a-ter a exposé un blocage réel (remonté, pas contourné — le driver a
+refusé fort plutôt que de padder) : V2 = 17 systèmes, impair ; la garde de
+`pas_f_fusionne` exigeait des paires. **Décisions Romain (gravées avant run) :**
+
+**S1 — Garde élargie à {1, 2} systèmes, avec TROIS VERROUS exigés :** (a) diff
+limité à la garde Python — kernel CUDA à diff vide ; (b) test de BIT-IDENTITÉ du
+chemin 2-systèmes avant/après (c'est lui qui porte l'ancre M-a′) ; (c) test
+d'équivalence du chemin 1-système contre le jetable mono-système. Motif gravé :
+la parité est un artefact d'INSTRUMENT (un assert, pas le calcul) — modifier le
+design épinglé pour satisfaire l'instrument serait l'inversion interdite ; c
+dégressif produira des comptes impairs en permanence. Le padding (surcompte
+0.843 ms = autre config) et la recomposition à 18 (design piloté par l'assert)
+sont REJETÉS — un 4e slot énergie reste possible PLUS TARD comme décision de
+design à son propre moment, découplée. Précédent de méthode : complément-3
+(amender sa propre consigne, avec preuves et trace). Le chemin 1-système est
+NEUF : son coût est un objet de la mesure (les 7 slots c=4 SONT des systèmes
+seuls — le design), sa correction est testée.
+
+**S2 — Lecture R3 PRÉCISÉE avant run :** le modèle (14.33 ms) prédit du CALCUL
+PUR (ancre M-a′) ; la frame du harnais inclut les transferts (~1.2–1.5 ms à V2,
+M-c réduit 27→12 fenêtres `[calculé]`). Donc : **bande [12.18, 16.48] appliquée à
+la composante calcul** (médiane frame − transferts médians, les DEUX reportés) ;
+**MORT sur la médiane frame COMPLÈTE > 16.7** (T2 est un budget de frame,
+transferts compris). Sans cette précision, un AUTRE prévu d'avance viderait le
+test du modèle. Gravé avant toute donnée = pré-enregistrement.
+
+**S3 — Répartition des 3 slots énergie : 2 au niveau le plus fin + 1 au second** —
+seule géométrie compatible B3 (deux offsets par niveau), nommée par Claude Code,
+endossée.
