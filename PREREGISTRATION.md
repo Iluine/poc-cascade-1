@@ -4002,3 +4002,21 @@ escalade n'est décidée ici. Décision Romain : SONDE D'ATTRIBUTION d'abord.
 - Chrono B6, natif, mêmes vérifs. SONDE = lecture remontée, AUCUN verdict,
   aucune décision d'escalade ou de design embarquée (l'attribution d'abord, le
   remède — design E4d ou borne fusionnée machinerie — en décision séparée).
+
+### §A16-lecture-M-a-ter, addendum sonde (2026-07-19, AVANT le run) — lecture à deux questions
+
+Le build de la sonde (fluide-reduit 38253d4, diffs vides prouvés sur kernel/chrono/
+substrats) a nommé AVANT run trois postes per-niveau présents au bras A et absents
+de l'ancre M-a′ (per-slot) : 18 lancements de kernel vs 2, 9 réductions CFL
+synchrones vs 1, orchestration CPU per-niveau — comptés au JSON
+(postes_residuels_bras_a), verrouillés par test. Conséquence : A peut sortir
+LÉGÈREMENT au-dessus de la bande sans que l'hypothèse machinerie soit fausse.
+**Lecture précisée en DEUX questions distinctes (gravée avant toute donnée) :**
+1. **Question modèle-F** (inchangée) : A ∈ [12.18, 16.48] ⇒ le modèle F tient au
+   bras A ; sinon, l'écart A − 14.33 est lu CONTRE les postes per-niveau nommés
+   (petit ~1–2 ms = postes plausibles ; grand = AUTRE, le modèle F lui-même).
+2. **Question attribution** (le but de la sonde) : l'hypothèse machinerie est
+   CONFIRMÉE ssi (V2_full − A) ≥ **12 ms** (≈75 % du résidu 16.16) ; en dessous,
+   elle est fausse ou partielle — AUTRE remonté. Décomposition reportée :
+   prédiction = B − A, remontée = 31.097 − B, somme de contrôle.
+Aucun seuil de verdict là-dedans : la sonde reste une lecture remontée.
