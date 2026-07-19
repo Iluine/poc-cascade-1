@@ -4108,3 +4108,36 @@ remontée OFF. Lecture mécanique : **prédiction_batchée = A_mobile − 14.432
 cible L1+L3 = 16.7 − 14.432 − prédiction_batchée, reportée sans interprétation.
 La décision (le design est-il jouable à cette cible, ou candidat/porte 33.3 par
 la porte de devant) revient à Romain à la lecture. Sonde : aucun verdict.
+
+### §A17-lecture-s2-mobile (2026-07-19) — cible L1+L3 NÉGATIVE ; décision : L4-design prédiction GPU-side
+
+**Lecture (run_f1_s2_mobile.py, natif)** : A_mobile = **17.251 ms** (p99 19.352) ;
+prédiction batchée = **2.819 ms** (vs 2.135 per-niveau — elle MONTE) ; **cible
+L1+L3 = −0.551 ms : NÉGATIVE**. F + prédiction dépassent 16.7 AVANT toute
+remontée — l'arithmétique V2@16.7 est fermée-négative, mesurée terme à terme
+(14.432 + 2.819 + remontée>0). Audit CFL propre. Nuance de cadence dyadique
+consignée au build (frame typique = 1-2 niveaux fins ; pire cas au p99).
+
+**Hypothèse de mécanisme (étiquetée, non prouvée)** : la marge du bras B vivait
+dans un régime déjà serialisé ; dans le pipeline async de s2, chaque intervention
+CPU (prédiction + H2D par niveau) cale un GPU libre — coût marginal supérieur.
+
+**Fait de périmètre (vérifiable aux gravés)** : le harnais prédit TOUTES les
+colonnes CPU depuis le niveau 0 (B4, choix de harnais) ; la spec §5 prévoit la
+descente parent→enfant, parents des niveaux 2..8 SUR GPU (seul le niveau 1 a un
+parent CPU). Le 2.819 mesure une SIMPLIFICATION DE HARNAIS — majorant de la
+topologie spécifiée. Prédiction GPU-side = design conforme au gravé,
+[TRANSPOSITION] tant que non mesurée.
+
+**Décision Romain (2026-07-19) : L4-design — prédiction GPU-side, pré-enregistrée :**
+- Build : prédiction des colonnes entrantes SUR GPU depuis les parents GPU
+  (niveaux ≥2) ; niveau 1 seul prédit CPU depuis monde 0 (+ son H2D). Chemin
+  VIVANT (Option A : f32 GPU légitime) ; verrous : aucune omission (mêmes
+  colonnes, mêmes écritures fenêtre+référence — comptage type s2-mobile),
+  équivalence à la prédiction CPU à tolérance f32 nommée. Kernel F intouché.
+- Mesure (bras s3) : config s2-mobile, prédiction GPU-side. Lecture mécanique :
+  prédiction_gpu = A_s3 − 14.432 ; **cible L1+L3 = 16.7 − A_s3**, reportées sans
+  interprétation. Sonde — la décision (design jouable / candidat aminci / porte
+  33.3) revient à Romain à la lecture.
+- Portes 33.3 (motif T2 : où vit le rendu — à traiter explicitement si ouverte)
+  et candidat aminci : RESTENT ouvertes-nommées, non instruites.
