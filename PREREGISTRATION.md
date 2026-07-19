@@ -4020,3 +4020,37 @@ LÉGÈREMENT au-dessus de la bande sans que l'hypothèse machinerie soit fausse.
    elle est fausse ou partielle — AUTRE remonté. Décomposition reportée :
    prédiction = B − A, remontée = 31.097 − B, somme de contrôle.
 Aucun seuil de verdict là-dedans : la sonde reste une lecture remontée.
+
+### §A16-lecture-sonde-attribution (2026-07-19) — décomposition acquise, hypothèse machinerie PARTIELLE
+
+**Lecture mécanique (run_f1_sonde_attribution.py, natif, critères de l'addendum
+5eac9bf)** : A_f_seul = **20.438 ms** (p99 21.773) ; B = 22.574 ;
+décomposition : **F seul 20.438 / prédiction 2.135 / remontée B4 8.523** ;
+somme de contrôle = 31.096 ✓ (vs full gravé 31.097).
+- **Q1 (modèle F) : AUTRE** — A hors bande, écart +6.11 ms ≫ les 1–2 ms des
+  postes per-niveau nommés au build. Le modèle F per-slot ne tient pas au
+  multi-niveaux tel qu'orchestré. Suspects rangés (HYPOTHÈSES) : (i) bloc
+  1-système > moitié d'un 2-systèmes (la « linéarité structurelle en systèmes »
+  n'a jamais été MESURÉE ; occupancy 262k vs 524k threads) ; (ii) 9 syncs CFL
+  (float(max()) = aller-retour device par niveau) ; (iii) 18 lancements non
+  batchés — B5 prévoyait lui-même que le moteur réel batcherait, et TOUS les
+  niveaux sont à 512² (batchables par construction).
+- **Q2 (attribution) : PARTIELLE, non confirmée au seuil** — V2_full − A =
+  10.66 ms < 12. La machinerie est réelle (66 % du résidu) mais 6.11 ms vivent
+  dans F-multi-niveaux. La lecture arithmétique d'avant-sonde (§A16-lecture-
+  M-a-ter) était partiellement fausse — consigné tel quel, c'est ce que la
+  sonde devait départager.
+- **Constat structurel** : même à machinerie NULLE, A = 20.4 > 16.7 — le chemin
+  vers le budget passe OBLIGATOIREMENT par F-multi-niveaux, la remontée seule
+  ne suffit pas.
+
+**Décision Romain (2026-07-19) : SÉANCE DESIGN (E4d + orchestration), avec deux
+micro-sondes pré-enregistrées en ouverture (§0 de la séance)** :
+- **s1 — ancre du bloc 1-système** : micro-mesure M-a′-style (1 niveau, B=1,
+  S=1) — mesure la linéarité supposée ;
+- **s2 — F batché inter-niveaux + CFL asynchrone** : bras A re-mesuré avec
+  l'orchestration que B5 prévoyait (2 groupes de shapes {1,2}-sys, ~4 lancements/
+  frame, réduction CFL restant on-device) — départage artefact d'orchestration
+  vs coût architectural dans les 6.11 ms.
+Les sondes SERVENT la séance (ancrer le design), elles ne la retardent pas —
+critères et attendus à figer au brouillon de séance, AVANT tout code.
