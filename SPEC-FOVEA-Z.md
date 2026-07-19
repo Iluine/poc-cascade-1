@@ -422,3 +422,18 @@ sinon tour d'ancêtres comptée au cap. **(Champs d'échelle)** : les champs
 au-delà de c_parent sont à contenu grossier nul par définition — prédiction =
 zéro exact ; un champ à contenu grossier existe à tous les niveaux. Candidat
 courant : **V4** (journal §A18), mesure gate : **M-a-quater**.
+
+---
+
+## §9. La projection — image et son comme readouts de z `[ENDOSSÉE 2026-07-19]`
+
+Pointeur : le détail faisant foi est au **journal §A20**. En résumé : image et son sont
+des projections **déterministes** de `z` (optique/acoustique appliquées à l'état, jamais
+génération) ; **invariant de projection** — aucun readout ne porte d'état propre
+load-bearing, l'état temporel de readout (réverbération, exposition, AA) est ÉPHÉMÈRE
+et n'entre jamais au registre ; `z` ne porte que les champs de matière et d'état que F
+fait évoluer. Les deux projections sont **hors de l'échelle de temps de F** (lumière à
+l'équilibre ; audio à ≥40 kHz) : ce sont un *solve* et une *synthèse*, pas des champs
+avancés par F. **Fork ouvert §A20-4** : feuilletage temporel de l'état (proche à `t`,
+lointain jusqu'à `t−4`) — deux référents distincts, dont un (latence moteur-visuelle)
+est un pin NEUF et gaté. Coût des deux projections : **NON MESURÉ**.

@@ -4667,3 +4667,101 @@ qui est à redéfinir. Dans les deux cas la lecture DÉTERMINE l'observable du
 nouveau pré-enregistrement EPS — qui reste dû, et qui ne s'écrira pas avant.
 EPS reste figé à 1e-4, k figé à 4 ; rien n'est réglé. Chiffrage M-b : toujours
 suspendu, mais son GATE D'INSTRUMENT est désormais dégagé.
+
+## §A20 — LA PROJECTION : image et son comme readouts de z (paper-grade, gravé 2026-07-19)
+
+> Section d'architecture endossée par Romain (2026-07-19). Elle ouvre la **moitié
+> PROJECTION** de la thèse, jamais construite jusqu'ici (état des lieux du jour).
+> Rien n'est mesuré ici : le coût des deux projections est ENTIÈREMENT OUVERT.
+
+### §A20-1 — Le principe (ENDOSSÉ)
+
+**Image et son sont des projections DÉTERMINISTES de `z`** — optique et acoustique
+appliquées à l'état, jamais génération. C'est la ligne de démarcation avec l'approche
+générative : chez PERSIST (ICML 2026) le shader neuronal *« can learn arbitrary
+rendering functions »* et prédit *« information not provided by 3D latents (texture,
+lighting, particle effects…) »*, d'où une **texture qui dérive alors que leur état 3D
+reste stable** (leur pas 1296). Une projection optique ne peut pas dériver ainsi :
+**`z` stable ⇒ image stable, par construction.** Corollaire acquis : l'image devient
+**FALSIFIABLE CONTRE L'ÉTAT** (« ce readout est-il la projection correcte de `z` ? »),
+question qu'un monde généré ne peut structurellement pas poser.
+
+**INVARIANT DE PROJECTION (le cœur) : aucun readout ne porte d'état propre
+LOAD-BEARING.** Pas de mémoire de readout qui soit porteuse d'histoire ⇒ aucun chemin
+de dérive. C'est cet invariant, pas le réalisme, qui protège la thèse.
+
+### §A20-2 — Les deux projections sont HORS de l'échelle de temps de F
+
+Contrainte quantitative posée AVANT qu'elle ne devienne hypothèse tacite. « Leurs
+évolutions calculées par F » ne tient pas au sens littéral, dans deux directions
+opposées `[calculs d'enveloppe, non mesurés]` :
+
+- **La lumière est trop RAPIDE.** 3·10⁸ m/s ⇒ traverser 1 m = 3,3 ns, contre un pas de
+  F de ~16 ms : rapport ~5·10⁶. Le transport lumineux est **à l'équilibre à chaque
+  instant de F** — un *solve* par état (elliptique), pas une évolution (hyperbolique).
+  Famille technique adossée : radiosité / light propagation volumes en cascade sur
+  grille voxel, qui s'accorde bien à une pyramide multirésolution.
+- **Le son est trop RAPIDE pour le pas de F.** Signal audible ⇒ ≥ 40 kHz
+  d'échantillonnage = **667× la fréquence de frame**. En ondes sur la grille fine
+  (h0/512 ≈ 2 mm), la CFL acoustique impose ~170 kHz, soit **~2800 sous-pas par
+  frame** : mort à l'arrivée. Coïncidence à NOMMER sans s'en servir de justification :
+  le plafond de LOD par distance devient mécaniquement un **plafond de fréquence**
+  (~340 Hz au niveau grossier à 1 m) — cela *ressemble* à l'absorption atmosphérique
+  des aigus, mais pour la mauvaise raison.
+
+### §A20-3 — L'architecture qui en découle (ENDOSSÉE)
+
+- **`z` porte les champs de matière et d'état** que F fait évoluer — albédo, humidité,
+  température, densité, géométrie : tout ce qui *détermine* les propriétés optiques et
+  acoustiques. Rien d'autre n'entre en `z` au titre de la projection.
+- **Readout optique** = solve d'équilibre, fonction déterministe de `z`.
+- **Readout auditif** = synthèse à taux audio, excitée par les ÉVÉNEMENTS et les ÉTATS
+  de `z`, propagée dans la géométrie de `z` (littérature mature : synthèse modale
+  temps réel, SYMPHONY, DiffSound — intégration, pas invention).
+- **État temporel côté readout** (queue de réverbération, adaptation d'exposition,
+  historique d'AA temporel) : **ÉPHÉMÈRE PAR DÉFINITION** — recalculable différemment
+  d'un replay à l'autre, n'entre JAMAIS au registre, jamais porteur d'histoire. La
+  frontière §3 existante le couvre ; aucun champ dépendant de l'observateur n'entre
+  dans `z`.
+
+### §A20-4 — FORK OUVERT (question Romain, NON décidée) : le feuilletage temporel
+
+**La question posée** : les projections de `z(t)` parviennent-elles au joueur à `t+1` ?
+
+**Reformulation exacte, qui est plus dure** : ce n'est pas *une* frame de retard (tout
+moteur en a ; 2 à 4 est la norme, 1 serait excellent) — c'est que **l'état est DÉJÀ
+temporellement hétérogène, par construction gravée** : le compteur à retard d'une frame
+(choix 6, borne L3, endossé) met le niveau 0 une frame derrière le fin, et L1 k=4 étale
+la remontée ⇒ une fenêtre peut être **à t−4, soit 66,7 ms** derrière la fovéa. Un rendu
+qui composite le proche à `t` et le lointain à `t−4` ne projette pas `z(t)` mais un
+**état feuilleté**, avec couture possible à la frontière de LOD pour tout ce qui bouge.
+
+**Ce n'est pas spéculatif** : la sonde EPS (§A19-lecture) a mesuré le symptôme —
+cellules rafraîchies du cycle **0.0109** vs cumulées périmées **0.0892**. L'attribution
+(b) en vol discrimine sa cause. Question et ligne de mesure CONVERGENT.
+
+**DEUX RÉFÉRENTS PERCEPTUELS DISTINCTS, à ne plus confondre :**
+1. **Péremption de contenu** — « l'image montre-t-elle un monde perceptiblement
+   différent de l'actuel ? ». **Mesurable avec le pin EXISTANT** : Δχ entre readouts
+   consécutifs (et entre readout du feuilleté vs readout de `z(t)` homogène) vs
+   jnd_sev, sur l'IC entier. **Sonde de minutes — À PRÉ-ENREGISTRER quand elle sera
+   armée**, pas maintenant.
+2. **Latence d'entrée / couplage moteur-visuel** — « le joueur sent-il le décalage
+   entre son geste et la réponse ? ». **Canal perceptuel TOUT AUTRE ; le pin spatial
+   n'en dit RIEN.** Référent NEUF, campagne humaine, **GATÉ** au même titre que
+   r_fovea. Aucune décision de pipeline (latence vs débit) ne se prend sans lui.
+
+**Contrainte AUDIO nommée** : si les événements d'excitation sont quantifiés au pas de
+frame, il en résulte **~16,7 ms de gigue sur les transitoires** — audible, et sous le
+seuil de désynchronisation audio-visuelle. **La quantification de `t_sim` au registre
+(§4, écrite pour les entrées joueur) est probablement trop grossière pour l'audio** :
+à trancher quand la projection auditive sera spécifiée, jamais par défaut.
+
+### §A20-5 — Portées (ce que cette section NE dit pas)
+
+Aucun coût mesuré, **ni pour l'optique ni pour l'auditif** — faisabilité hors de
+question (ingénierie connue, pas recherche), chiffrage entièrement ouvert. Le motif de
+T2 réserve l'autre moitié de la frame au rendu : **V4 à 16.589 ms signifie « 30 fps
+avec ~16,7 ms pour un rendu jamais chiffré »**. « Le moteur tient » reste hors de
+portée tant que cette moitié est vide. Rien ici ne modifie un seuil, ne gate ni ne
+dégate une mesure en cours.
