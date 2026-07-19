@@ -4449,3 +4449,56 @@ N1 peut changer l'enveloppe dans laquelle N2 sera mesurée ; l'inverse est faux.
 
 **Portées** : rien sur r_fovea, 3D, multi-vue, niveau 0 CPU à 500k (pied n°1),
 qualité produit (pin n=1), coût de l'Option B si M-b meurt.
+
+### §A19-complément — Vérification d'instrument de la sonde EPS (gravé 2026-07-19, AVANT tout run)
+
+Le build N1 (fluide-reduit fef6ef8, aucun fichier de src/ modifié, empreinte
+kernel F identique sur 9 commits) a remonté deux faits AVANT run :
+
+**(1) Bug d'offset attrapé et corrigé** : les indices émis par le kernel L3 sont
+relatifs au tableau passé (la TRANCHE du tour round-robin), pas au groupe. Un
+consommateur reconstruisant sans l'offset écrit tout dans le slot 0 ⇒ le vivant
+des autres slots n'avance jamais ⇒ **la sonde aurait remonté AUTRE avec une
+cause fausse**. Deux tests l'ont attrapé. **M-a-quater N'ÉTAIT PAS faussé** :
+il ne reconstruit rien, il transfère des octets (scoping vérifié).
+
+**(2) Risque de sonde MUETTE PAR CONSTRUCTION** : sur config réduite (non
+reportée comme résultat), facteur ~2000 sur les coefficients remontés pour
+**0.07 % de variation du Δχ max**, au-dessus du seuil partout. Signature d'un
+observable saturé : à k=4 une fenêtre ne remonte qu'une frame sur quatre, et la
+dérive de F entre deux remontées écrase la troncature du seuil. Un AUTRE
+signifierait alors « à k=4, le niveau 0 vivant est infidèle QUEL QUE SOIT EPS »
+— et non « EPS est trop grand » ; confondre les deux ferait resserrer EPS sans
+effet, en payant du trafic pour rien.
+
+**DÉCISIONS ROMAIN (avant toute donnée réelle) :**
+
+**(A) VÉRIFICATION D'INSTRUMENT AJOUTÉE — bras k=1, même balayage EPS, DUE
+AVANT toute lecture** (précédent §A14 : la sonde muette se détecte avant, pas
+après). Lectures PRÉ-ÉCRITES : (i) si k=1 DISCRIMINE (Δχ répond à EPS et au
+moins un EPS passe) ⇒ instrument VALIDE, l'AUTRE à k=4 est attribuable à la
+PÉREMPTION ; (ii) si k=1 ne discrimine pas non plus ⇒ **sonde MUETTE sur EPS,
+AUTRE D'INSTRUMENT — ne rien régler, remonter**. Nota : à k=1 subsiste une
+frame de retard (compteur endossé) — la vérification teste la discrimination
+sous péremption MINIMALE, pas nulle. Ce bras n'est PAS un balayage de k et ne
+décide aucun cadencement ; toute DÉCISION sur k reste gatée σ_ω (R4).
+
+**(B) ÉCHELLE DE LECTURE ÉPINGLÉE** : la règle Q2 lit le **Δχ DÉCIMÉ à
+l'échelle du niveau 0** (l'objet qui existe et sera consommé : le grossier
+comparé à ce que le grossier devrait être, à sa propre résolution). Le Δχ non
+décimé est reporté en DIAGNOSTIC seul — la décimation déplaçant les bandes
+porteuses que delta_chi lit, la relation n'est pas monotone.
+
+**(C) LOGIQUE DU CRITÈRE, gravée (fait de logique, pas de préférence)** : le
+joueur ne voit JAMAIS la référence. Donc Δχ < 0.0603 ⇒ **innocuité ÉTABLIE** ;
+Δχ > 0.0603 ⇒ **innocuité NON ÉTABLIE** — jamais « nocivité établie ». Un AUTRE
+ne justifie donc PAS de resserrer EPS ; le seul indice interne dont le joueur
+dispose est la cohérence proche/lointain, et c'est une MESURE DIFFÉRENTE
+(nommée, non armée).
+
+**(D) BRANCHE PRÉ-ÉCRITE** : si l'instrument est VALIDÉ mais qu'aucun EPS ne
+passe à k=4 ⇒ **la décision passe à k, et le RÉVEIL σ_ω devient LA décision
+explicite à prendre** (R4 : le cadencement se déciderait avec une question
+perceptuelle en main). L'EPS retenu serait alors celui que k=1 valide ; le
+budget transferts se traite ensuite. Aucun réveil silencieux, aucune
+reformulation après lecture.
