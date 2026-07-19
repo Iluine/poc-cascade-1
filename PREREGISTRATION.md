@@ -4349,3 +4349,47 @@ montré que le chemin est VIVANT (après prédiction à zéro, F repropage dès 
 frame suivante depuis les voisins mouillés ; la colonne nulle ne le reste pas).
 La fraction asséchée est MESURÉE et reportée ; l'assèchement réel est plus
 faible que la borne ne le suggère. Rien corrigé en douce.
+
+### §A18-lecture-M-a-quater (2026-07-19) — PAS DE MORT, mais V4 AU SEUIL ; AUTRE attribué ; M-b ouverte
+
+**Lecture mécanique (run_f1_ma_quater.py, natif)** : médiane frame complète
+**16.589 ms** — MORT (> 16.7) : **NON déclenchée**. p99 **19.652** (+3.063).
+Propriété E = True (11 slots / 15 blocs, 10 GPU-side / 1 CPU) ; L1 k=4 étalée
+[2,3,3,3], aucune frame ne remonte tout. **Hors bande [14.2, 15.9] : AUTRE
+(4e fois).**
+
+**Attribution COMPLÈTE de l'AUTRE (parts [DÉRIVÉ], somme = 16.589 ✓)** :
+- F = 12.655 `[ancre, exact par construction]` ;
+- **remontée = 1.280** vs 5.122/4 = 1.2805 prédits — **L1 étalée amortit à
+  quatre chiffres** : le modèle d'amortissement est CONFIRMÉ ;
+- **prédiction ≈ 0** (−0.073 = limite de la dérivation par soustraction, valeur
+  non physique) — le modèle « effondrement des stalls » avait RAISON contre le
+  modèle « résidu linéaire » : **la prédiction GPU-side emboîtée est GRATUITE**.
+  Gain architectural acquis (propriété E + descente parent→enfant GPU) ;
+- **transferts = 2.727** vs ~0.6 modélisés — **la TOTALITÉ du dépassement de
+  bande est là** : terme repris d'une mesure PÉRIMÉE (0.613 à 12 slots, remontée
+  CuPy seuillée, PAS émission L3). Le modèle n'est pas cassé : un terme était
+  périmé.
+- Assèchement champs d'échelle : **0.2 %** — le −16.9 % de la borne était bien
+  un MAJORANT lâche (chemin vivant, F repropage) ; le fil anti-minoration se
+  clôt : effet réel négligeable.
+
+**RÉSERVE GRAVÉE, EN ÉVIDENCE (la lecture honnête)** : marge = **0.111 ms =
+0.7 %**, INFÉRIEURE à la dérive machine mesurée le jour même (1.1 %,
+A_REF 14.277 vs 14.432). Le seuil n'est pas déplacé et le critère n'est pas
+franchi — mais ce qui est établi est « **V4 est AU seuil** », PAS « V4 tient le
+budget ». Zéro tête pour les 5 pieds non mesurés (niveau 0 CPU 500k, gameplay
+au-delà des 2 fenêtres d'énergie, r_fovea, cadencement, 3D), qui tous ajoutent.
+**p99 +3.06 NON RÉSOLU** : L1 étalée a supprimé le stutter de CADENCE, pas
+celui des BURSTS d'émission (tailles ×2.3, mesurées à la borne) — ~19.65 ms
+rate le 60 fps sur ces frames. Nommé, non minimisé.
+
+**Décision Romain (2026-07-19)** : sans-mort prononcé AVEC ces réserves ;
+**tranche-2 / M-b OUVERTE** (gate (iii) ; achetable — tranche-1 et M-a-quater
+sans mort). **Ajout au pré-enregistrement de M-b : BALAYAGE EPS_DETAIL** —
+mêmes émissions, seuils multiples, coût marginal nul : M-b rend son verdict
+Δχ live↔rederive ET la courbe qui arbitre le budget transferts + p99. Le
+paramètre `[NON-ANCRÉ perceptuel]` suspect depuis §A15-complément consigne 1
+cesse d'être réglé par budget : il devient MESURÉ. Un re-run de dispersion est
+ÉCARTÉ (ne changerait ni la suite ni le levier — critère tapis-roulant).
+Reste dû : F0-cloud (gate ii).
