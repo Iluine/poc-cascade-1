@@ -4237,3 +4237,30 @@ choisi par BUDGET, étiqueté [NON-ANCRÉ perceptuel], réveil σ_ω DIFFÉRÉ (
   (équivalence de motif au fusionné + émission), la borne M-a′ INTACTE et citée
   telle quelle ; géométrie emboîtée ; champs d'échelle. Chiffrage > 2 séances ⇒
   remonter avant achat.
+
+### §A18-complément — Gate d'achat M-a-quater tranché : DÉCOUPE A/B, achat A seul (2026-07-19)
+
+Chiffrage remonté (fluide-reduit claude/chiffrage-ma-quater.md) : 2.5–3.5
+séances > cap 2 ⇒ gate exercé. **Décisions Romain :**
+
+**ACHAT A SEUL (1.1–1.7 séance)** : borne L3 — kernel-moteur émettant
+|d| ≥ EPS_DETAIL en épilogue + compaction + transfert, mesurée SEULE (comme
+M-a′ borna F), géométrie intouchée. **B (géométrie emboîtée, champs d'échelle,
+driver, flag L1) GATÉ sur la lecture de A** : si la borne ne descend pas vers
+~1.5 ms, V4 meurt pour un achat au lieu de trois et le repli 33.3 devient LA
+décision. Plausibilité consignée (session critique) : les passes mémoire CuPy
+≈ 6.5 des 8.523 ms sont ce que l'épilogue supprime ; résidu = compaction
+(~0.2–0.5 calculé) + transfert (0.61 MESURÉ à 12 slots) — borne plausible à
+1.0–2.0 ms, pas confortable : la mesure tranche.
+
+**Protocole endossé (4 points)** : (1) compteur de compaction lu à RETARD D'UNE
+FRAME — pas de sync par frame (la maladie s2 ne rouvre pas) ; lag d'une frame
+étiqueté chemin vivant sous-JND ; (2) le deuxième système reste MOUILLÉ au
+harnais (majorant E4a reconduit) — seule la PRÉDICTION le traite en champ
+d'échelle ; vérification anti-minoration explicite (un système nul = fenêtre
+sèche sans divergence de warp, minorerait la mesure) ; (3) parts F/prédiction/
+remontée/transferts DÉRIVÉES des ancres gravées + comptage exact — étiquetées
+[DÉRIVÉ], la MORT restant sur la frame médiane MESURÉE ; la série de sondes
+reste close ; (4) garde-fous L3 : choix d'implémentation FIGÉS au protocole
+avant la première ligne, **CAP : L3 = dernière escalade sur la remontée**
+(comme M-a′ sur F), borne écrite comme mesure JETABLE et dite telle quelle.
