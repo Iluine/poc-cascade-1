@@ -5506,3 +5506,76 @@ exerçant le régime). **Ce qui reste — le MUR INTÉRIEUR (fidélité de bord 
 parent-grossier vs mur réfléchi du domaine 64² du rederive) — est une question de
 FIDÉLITÉ, donc de TRANCHE-2**, non bloquante pour une mesure de temps. Les choix de
 build seront remontés pour endossement selon la cadence maison.
+
+## §A29 — T1 PRÉ-ENREGISTRÉ et ENDOSSÉ ; C1 gaté à 1.8 séance (2026-07-19)
+
+Document : fluide-reduit d7a8414 (`claude/prereg-t1-fidele.md`). Aucune ligne, aucun run.
+
+**FAIT TECHNIQUE QUI DÉCIDE L'ARCHITECTURE** : le kernel figé a la signature
+`(q_in, q_base, q_out, dt, w_base, n, total)` — **aucune bathymétrie**, corrections
+hydrostatiques **structurellement nulles** (plat). Le F fidèle exige un opérateur
+**b-aware** (reconstruction d'Audusse à `b_eff = b0 + s`) : c'est un **KERNEL NEUF**
+(`_SOURCE_FIDELE`), pas une réutilisation. **Donc l'ancre 12.655 n'est qu'un PROXY, pas
+la mesure** — dit AVANT la mesure, pas après.
+
+**TROIS POINTS PLUS FORTS QUE CE QUI AVAIT ÉTÉ DEMANDÉ** :
+1. **Invariant liant par IDENTITÉ D'OBJET** : une seule fonction `pas_f_fidele`,
+   l'échelle est un paramètre de DONNÉES (shapes), jamais une branche ; les deux
+   drivers importent le même symbole et le test est `t1.pas_f_fidele is
+   t2.pas_f_fidele` — **structurellement vrai, pas surveillé**. Seule couture admise :
+   le BORD, injecté comme donnée (réfléchissant en t1, halo-parent en t2) ; l'opérateur
+   intérieur reste identique.
+2. **Confinement anti-dérive par construction** : tranche-1 ne mesure que du TEMPS,
+   donc **aucun bouton « le faire passer » n'existe côté fidélité** ; le critère de
+   fidélité appartient à tranche-2. Choix gelés d'avance — un chrono décevant lira
+   « ce design coûte tant », jamais « il faut mieux l'implémenter ».
+3. **Sémantique de champs gravée** : (h, hu, hv) évolués par le wetdry O2 sur `b_eff`,
+   `s` par un kernel Exner séparé, **non advecté** — la physique de `run_episode`, pas
+   le motif du jetable.
+
+**BANDE T1, PRÉ-ENREGISTRÉE ET GELÉE (règle §A25 : plus jamais de bande recomposée)** :
+F fidèle 10.8–15.2 + Exner 1.5–3.0 + (remontée L3 + transferts + dérive) 1.21–1.57 ⇒
+**bande [13.5, 19.8]**, centre ~16.4, **qui STRADDLE le seuil 16.7**. C'est
+précisément pourquoi T1 est verdictal : **sur le papier, la survie de V4-b est sur le
+fil, seule la mesure tranche.** Hors bande = **AUTRE** (modèle de coût faux), distinct
+du verdict de mort. **Réserve de halo explicite** : la bande est à bords réfléchissants,
+elle SOUS-COMPTE les halos de tranche-2 ; si la médiane dépasse 16.2, cette réserve
+seule peut la porter au-delà de 16.7 — le verdict rapportera les deux.
+
+**TROIS AMENDEMENTS EXIGÉS PAR ROMAIN (session critique) :**
+- **(A) LA BANDE EST LARGE PARCE QUE SON TERME DOMINANT EST INCONNU — dit AVANT le
+  run.** F fidèle : 40 % d'étalement ; bande totale : 47 %. **Une bande aussi large ne
+  peut presque pas échouer** ; « dans la bande » ne testera rien (§A25 a déjà coûté une
+  gravure pour avoir laissé une bande dire plus qu'elle ne pouvait). Elle reste honnête
+  — plus étroite serait de la fausse précision. **DONC : le DIAGNOSTIC PRINCIPAL de T1
+  devient `F_fidèle / F_proxy` (12.655), le RAPPORT DE REPRÉSENTATIVITÉ** — dérivable
+  comme les parts de M-a-quater (total − Exner − remontée − transferts). **C'est la
+  raison d'être originelle de T1** ; la bande passe au second rang.
+- **(B) LA MARGE CFL EST VÉRIFIÉE SUR LA SÉRIE, pas seulement à l'initialisation.** Le
+  well-balancing d'Audusse en **f32** est délicat ; une C-property cassée engendre des
+  vitesses parasites ⇒ `smax` monte, `dt_CFL` descend, et à `smax` ≈ 50 la marge de
+  4–12× est mangée : **la CFL est violée et le chrono mesurerait une simulation qui
+  DIVERGE**. Fail-loud si la marge s'effondre en cours de série. C'est le lien entre C1
+  et la validité de T1.
+- **(C) `_SOURCE_FIDELE` prend son VERROU D'EMPREINTE DÈS LE PREMIER COMMIT** — L3 est
+  resté sans verrou pendant des jours alors qu'il portait `reference += d`. On ne refait
+  pas cela sur un kernel neuf.
+
+**CAVEAT DE RÉGIME (câblage B9, reconduit)** : `verifier_regime` PASS ssi l'état
+synthétisé exerce le régime — fronts wet/dry (fraction mouillée ∈ [0.2, 0.8]) et CFL
+sollicitée à 4–12× de marge. Hors bande ⇒ **AUTRE d'instrument**. `lecture_t1` refuse
+fail-loud sans le PASS.
+
+**CE QUE LE BORD DE t1 IMPOSE À TRANCHE-2** : delta de coût borné (+0.2–0.5 ms, GPU
+sans transfert) ; une couture, pas une refonte ; et **interdiction de réutiliser le bord
+réfléchissant pour la fidélité** — physiquement faux, tranche-2 doit le remplacer par le
+halo-parent. **Tranche-1 est donc liée à rendre le bord PLUGGABLE**, sinon l'invariant
+liant tombe.
+
+**CHIFFRAGE ET GATE — DÉCISION ROMAIN** : total ~1 450–2 100 LOC, **2.6–4.1 séances**,
+la fourchette haute dépassant le cap 3.4. Ce qui fait basculer : **la reconstruction
+bien équilibrée à `b` réel n'a JAMAIS été exercée sur GPU** (le figé est plat) — c'est
+le débogage de fidélité qui glisse. **POINT DE CONTRÔLE C1 ENDOSSÉ : kernel b-aware +
+C-property vérifiée sur terrain réel, SEUIL PRÉ-ÉCRIT À 1.8 SÉANCE.** Si C1 glisse
+au-delà, **on le sait AVANT d'avoir construit le driver** — scission récursive du même
+motif que A/B et que la borne L3.
