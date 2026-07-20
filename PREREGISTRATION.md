@@ -5377,3 +5377,65 @@ NIVEAU / SOUS-CYCLAGE, D'ABORD.** Les deux seuls qui peuvent rendre le reste san
 objet, et les deux sont paper-grade. Les trois autres points — **vitesse de jeu K**,
 **p99 comme critère** (suspendu au régime, cf. supra), **condition de mur intérieur** —
 suivent, informés. **Aucun achat de M-b tranche-1 d'ici là.**
+
+## §A27 — DÉCOUVERTE DE SPEC : le substrat ne remplit aucun niveau ; T1 SÉPARABLE ; le sous-cyclage devient la question décisive (2026-07-19)
+
+Document : fluide-reduit 8d8fb40 (`claude/reconciliation-echelle-cfl.md`), paper-grade.
+
+**LE FAIT GÉOMÉTRIQUE, depuis le code** : `cote_monde(j) = n0·2^j`, n0 = 256,
+niveau_fin = 9 ⇒ le monde de V4 au plus fin fait **131 072²** cellules, la fovéa (512)
+en couvre **0.39 %**, `dx` varie de **2⁸ = 256** sur les 9 niveaux GPU. Et le fait
+décisif : **le substrat réel 64² est PLUS PETIT que le niveau le plus grossier (256²)
+— il ne remplit AUCUN niveau de la pyramide.**
+
+**RÉCONCILIATION D'ÉCHELLE** : le rederive est 64² CPU f64 INTOUCHÉ (la vérité-sol).
+Vers le haut, un rederive 131 072² n'existe pas et « intouché » l'interdit ; vers le
+bas, 64² < 256² fait **dégénérer** la pyramide. Donc toute mesure exigeant le rederive
+tourne à 64², où **l'ancre s'effondre de ~960× : 12.655 → ~0.013 ms** (4 096
+block-cells contre 3 932 160). Rapporté sans atténuation par Claude Code.
+
+**CE QUE V4 SIGNIFIE ENCORE** : sa victoire (14.490, gate (i) satisfait) est une
+**victoire de GRAND MONDE**, réelle à 131 072², établie par M-a-quater sur un F
+**coût-représentatif**. Ce qui s'effondre, c'est la capacité d'une mesure arrimée au
+rederive 64² à la tester à l'échelle où la fovéation sert.
+
+**CORRECTION DE LA SESSION CRITIQUE — T1 N'EST PAS VACANT, IL EST SÉPARABLE.**
+Claude Code concluait « T1 vacant à 64², un gate qui ne peut pas échouer n'est pas un
+gate ». **T1 est une mesure de TEMPS** — « la frame complète avec le F fidèle
+dépasse-t-elle 16.7 ? » — et **elle n'a PAS besoin du rederive** ; le rederive
+n'intervient que dans MORT-b (Δχ live↔rederive). La scission portait déjà cette
+structure (tranche-1 = F fidèle + Exner + pulse + T1, sans rederive ; tranche-2 =
+émissions + MORT-b). **DÉCISION ROMAIN : DEUX TRANCHES, DEUX ÉCHELLES** —
+**tranche-1 à l'ÉCHELLE V4** (coût réel du F fidèle sur la pyramide, T1 verdictal),
+**tranche-2 à 64²** (fidélité, MORT-b contre le rederive intouché). Deux échelles
+parce que **deux objets**, pas par défaut.
+- **INVARIANT LIANT GRAVÉ : le F fidèle doit être LE MÊME CODE dans les deux
+  tranches** — sinon l'une chronomètre ce que l'autre n'a pas validé.
+- **CAVEAT DE RÉGIME GRAVÉ** : à l'échelle V4 il faudra SYNTHÉTISER bathymétrie et
+  état initial ; **ils devront exercer le MÊME RÉGIME** (fronts wet/dry présents, CFL
+  sollicitée). Un domaine tout sec serait rapide et **le chrono ne vaudrait rien**.
+
+**ET CETTE CORRECTION RESSUSCITE L'AVERTISSEMENT DE CLAUDE CODE COMME LA QUESTION
+DÉCISIVE.** Il écrit : « pas de sous-cyclage » n'est vrai **qu'à l'échelle dégénérée
+64²** ; dès qu'on la quitte, si le niveau fin est sub-résolution la CFL y est violée,
+**le sous-cyclage est FORCÉ et le coût fin explose ~100–256×** (Σ n_slots(j)·2^(j−1),
+dominée par le fin). Or **tranche-1 tourne précisément à l'échelle V4**, où le niveau
+fin est massivement sub-résolution. Arithmétique grossière de la session critique, **à
+vérifier** : `dx` variant de 256 sur neuf niveaux ⇒ `dt_CFL(fin)` ~0.8 ms contre une
+frame de 16.7 ; en sous-cyclant seulement là où c'est nécessaire (j ≥ 4), la somme
+donne **~5× sur F, soit ~63 ms**. Le chiffre de Claude Code est pire. **Dans les deux
+cas, V4 MEURT.**
+Formulation consignée : la question posée en §A26 n'était **pas déplacée, elle était
+prématurée d'un cran** — elle ne mord pas à 64², elle mord **à l'échelle où V4 vit**.
+
+**DÉCISION ROMAIN — PROCHAIN PAS : CHIFFRER LE SOUS-CYCLAGE À L'ÉCHELLE V4**,
+paper-grade, aucun run, **avant tout achat**. Il peut **tuer V4 sur le papier** avant
+qu'une ligne ne soit écrite ; si F se multiplie par ~5 ou davantage, **les 14.490 ms et
+tout ce qui en découle sont à rouvrir**. C'est le **pied non mesuré n°7 arrivant à son
+échéance**, et il coûte une séance de papier contre trois de build.
+
+**Les trois décisions de spec remontées par Claude Code restent dues, après** : rôle de
+M-b à 64² (T1 étant désormais séparé, MORT-b y redevient le gate propre) ; test de coût
+grande échelle (résolu par tranche-1 à l'échelle V4, sans rederive) ; **résolution
+physique du niveau fin** — qui EST la question du sous-cyclage, et qui est **une
+question ouverte de la SPEC, pas un détail de M-b**.
