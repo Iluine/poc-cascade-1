@@ -5108,3 +5108,73 @@ tourner (natif, machine-instrument). Restent figés d'ici la lecture : EPS 1e-4 
 sont RIEN réglés par le run lui-même (le run PROPOSE un EPS via la règle Q2, il ne
 l'applique pas) ; `run_f1_attribution_b.py` reste GATÉ ; le miroir CPU (option 2) reste
 travail de production non construit ; toute décision sur k reste gatée σ_ω (R4).
+
+## §A23 — LECTURE SONDE EPS v2 : branche (i) INSTRUMENT VALIDE ; EPS = 1e-2 APPLIQUÉ (2026-07-19)
+
+Build : fluide-reduit c64c198 (amendement du plancher + levée du verrou). Run natif,
+machine-instrument. **Première sonde de la série qui mesure ce qu'elle vise.**
+
+**Branche (i) INSTRUMENT VALIDE, aux DEUX cadences.** L'observable VOIT EPS :
+amplitude **92.89 %, monotone** — l'exact inverse de la v1.
+
+| EPS | Δχ vérité(n) | Δχ vérité(n−1) | prix retard | octets/frame | médiane | p99 |
+|---|---|---|---|---|---|---|
+| 1e-5 | 0.00018 | 0.00016 | +0.00002 | 21 291 112 | 19.496 | 34.058 |
+| 1e-4 | 0.00030 | 0.00028 | +0.00002 | 12 749 856 | 16.996 | 20.494 |
+| 3e-4 | 0.00049 | 0.00048 | +0.00001 | 8 418 304 | 16.507 | 20.941 |
+| 1e-3 | 0.00104 | 0.00103 | +0.00001 | 3 630 404 | 15.732 | 18.609 |
+| 3e-3 | 0.00211 | 0.00210 | +0.00001 | 1 304 204 | 15.263 | 18.438 |
+| **1e-2** | **0.00252** | 0.00251 | +0.00001 | 371 996 | 15.195 | 18.527 |
+
+**Les six EPS passent, 1e-2 compris. Δχ max au pire = 0.00252, soit 24× SOUS ic_bas
+(0.0603) : INNOCUITÉ ÉTABLIE.** Règle Q2 ⇒ propose **1e-2**.
+
+**LEVIER MESURÉ (estimation de Claude Code confirmée à 0.01 ms près)** : de 1e-4 à
+1e-2, trafic **÷34.3**, transferts **−2.367 ms**, médiane **−1.801 ms**.
+
+**DÉCISION ROMAIN : EPS = 1e-2 APPLIQUÉ** — la règle était pré-enregistrée et elle a
+tiré ; ne pas l'appliquer après avoir vu la donnée serait aussi grave que d'en changer.
+**TROIS PORTÉES GRAVÉES AVEC L'APPLICATION** :
+1. **INNOCENT, pas OPTIMAL.** 1e-2 est la plus GRANDE valeur testée et elle passe : le
+   balayage **ne borne pas par le haut**. On ne sait pas où EPS cesse d'être innocent,
+   seulement que c'est ≥ 1e-2. Étendre le balayage serait choisir des valeurs **la donnée
+   en main** — cela exigerait son propre pré-enregistrement.
+2. **Le CANAL, pas le lointain.** La sonde crédite le CPU d'une prédiction identique à
+   celle du device (option 1). « Le canal est innocent à 1e-2 » ne dit PAS « le lointain
+   est fidèle à 1e-2 ». L'application repose sur l'argument de sûreté endossé avec
+   l'option 1 (si l'erreur de prédiction domine, EPS n'est pas la contrainte liante),
+   **toujours non mesuré** — le miroir CPU reste non construit.
+3. **CE substrat, CE régime.** Voir la réserve ci-dessous.
+
+**RÉSERVE DE LA SESSION CRITIQUE — la plus belle lecture est la plus limitée.**
+« La péremption ne coûte quasiment rien » (prix du retard ~1 % de l'observable, k=1
+confondu avec k=4 à la 5ᵉ décimale) est vrai **DANS CE RÉGIME**, où *tout* est 24 à 300×
+sous le seuil : sur ce substrat, la question du canal est simplement loin de la limite
+perceptuelle. Un substrat plus rapide (explosion, front d'eau vif) déplacerait davantage
+par frame. **L'attribution (a) est réfutée ICI, pas en général** — et la réserve de §A21
+(arbitrage péremption bornée vs perte non bornée) est levée **avec cette portée**.
+
+**CE QUE LE PLANCHER A FAIT : RIEN, et c'est consigné.** Plancher **exactement nul** sur
+3 répétitions, aux deux cadences, sur les quatre grandeurs — la chaîne est DÉTERMINISTE.
+Donc le critère d'échelle n'a pas travaillé, la règle d'indétermination ne pouvait pas
+tirer (3 × 0 = 0), et le critère de FORME a porté seul. **L'amendement du plancher exigé
+par la session critique s'est révélé INERTE** ; c'était le cas pré-déclaré par Claude
+Code, rien n'est surpris. Nota gravé de sa plume : **un plancher nul dit REPRODUCTIBLE,
+pas PRÉCIS — il ne borne aucune erreur systématique.**
+
+**LE STUTTER N'EST PAS RÉSOLU PAR EPS** : p99 passe de 20.494 (1e-4) à 18.527 (1e-2) —
+amélioré de ~2 ms, **toujours au-dessus de 16.7**.
+
+**AUCUNE CONSÉQUENCE BUDGÉTAIRE N'EST TIRÉE ICI — décision Romain.** La passe chrono
+donne 16.996 ms à 1e-4 contre **16.589 à M-a-quater sur la même config** : **+0.407 ms,
+au-dessus de la dérive machine (~0.18 ms), NON EXPLIQUÉ**. Deux hypothèses vivantes :
+(A) **appareil résiduel** de la sonde — D-2 avait mesuré 0.822 ms d'appareil en v1
+(17.249 vs 16.427 nu) ; l'option 1 en supprime une part (17.249 − 16.996 = 0.253),
+il resterait ~0.57 ms contre le nu ; (B) **régression réelle** — le ping-pong et le
+correctif d'offset coûtent ~0.4 ms. **(A) est l'hypothèse qui ARRANGE la session
+critique** (elle rendrait à V4 son 16.589) : elle est donc énoncée avec sa concurrente,
+pas à sa place.
+**PROCHAIN PAS ORDONNÉ : re-mesurer le CHRONO NU sur HEAD (méthode D-2, driver
+existant, minutes) pour séparer appareil et régression ; PUIS re-run M-a-quater à
+EPS = 1e-2 pour lire le budget de V4 sur des chiffres propres.** D'ici là, **aucun
+verdict budgétaire** — ni « V4 est mort à 16.996 », ni « V4 respire à 15.195 ».
