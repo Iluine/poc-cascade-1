@@ -5579,3 +5579,58 @@ le débogage de fidélité qui glisse. **POINT DE CONTRÔLE C1 ENDOSSÉ : kernel
 C-property vérifiée sur terrain réel, SEUIL PRÉ-ÉCRIT À 1.8 SÉANCE.** Si C1 glisse
 au-delà, **on le sait AVANT d'avoir construit le driver** — scission récursive du même
 motif que A/B et que la borne L3.
+
+### §A29-C1 — Kernel fidèle b-aware LIVRÉ et ENDOSSÉ ; halo RK2 et cadence Exner (2026-07-19)
+
+Build : fluide-reduit e78e79a. **Vérifié indépendamment** : `_SOURCE_FIDELE` 9248 car.
+**6dd207ca…6265d** ; `_SOURCE` fusionné 8223/**e18015f5** ; `_SOURCE_L3`
+9635/**9533a130** — les trois CONCORDENT ; arbre propre, kernels figés intouchés.
+**Le verrou d'empreinte est posé DÈS le premier commit** (amendement C) : la leçon de
+L3 est appliquée.
+
+**FAIT CONFIRMÉ AU CODE** : le kernel figé n'a **aucune entrée de bathymétrie**
+(η = h, z* = 0, corrections nulles) — il **ne peut pas** porter la physique réelle.
+`_SOURCE_FIDELE` est donc un kernel NEUF ; seul le préfixe b-agnostique
+(`#define`, structs, `desing`, `minmod`) est repris tel quel (`_PREFIXE_BASE`, même
+motif que L3). Neuf et b-aware : `lire_b`, `pentes_axe_b` (pentes sur η = h + b),
+`flux_1d_b` (**Audusse** : z* = max(bL,bR), h* = max(0, η − z*), pression
+(g/2)(h² − h*²)), `divergence_axe_b`, étage global.
+
+**C-PROPERTY PROUVÉE SUR TERRAIN RÉEL** — ce que le figé plat ne pouvait pas tester :
+lac au repos sur `default_terrain`, **vitesse parasite max ~1e-8** (soit **un ulp de
+f32** à h ≈ 0.363 : zéro machine), pleinement mouillé ET au front wet/dry, stable sur
+8 pas. **Premier coup sur GPU** — c'est le morceau que Claude Code avait lui-même
+désigné comme le plus susceptible de glisser, et il n'a pas glissé.
+
+**BORD PLUGGABLE, INVARIANT LIANT PROUVÉ** : le bord est une DONNÉE (`mode`), pas un
+fork — **mode 0 (mur) ≡ mode 1 (halo = réflexion exacte) = 0.000e+00 bit-exact**.
+L'opérateur intérieur est le même objet. L'invariant n'est pas surveillé, il est VRAI.
+
+**LA TROUVAILLE DU TOUR — le halo est partagé par les deux étages RK2.** En mode
+réfléchissant il est **auto-consistant** (la réflexion est fonction de l'intérieur,
+donc fraîche par construction) ; **en halo-parent il est PÉRIMÉ au second étage** ⇒
+tranche-2 devra le **rafraîchir entre étages**, la prédiction de halo tournant **deux
+fois par pas**. Le 0.186 initial était exactement cette péremption : **diagnostiqué,
+pas rustiné**. Conséquences chiffrées gravées :
+- poste halo : **0.2–0.5 → 0.4–1.0 ms** ;
+- le seuil de déclenchement de la réserve de bande **glisse de 16.2 à ~15.7**.
+
+**CE QUE CELA AFFINE DANS T1 (et qui rend l'amendement (A) plus juste que prévu)** :
+**le RAPPORT `F_fidèle / F_proxy` est PROPRE** — les deux tournent à bords
+réfléchissants, c'est apples-to-apples ; **le VERDICT ABSOLU SOUS-COMPTE la
+production**, qui utilise des halos-parents. Le diagnostic principal est donc le terme
+SAIN, et le verdictal porte la RÉSERVE. Note mineure : la C-property est vérifiée sur
+**8 pas** quand la série chrono en fait 300+ ; l'amendement (B) couvre la conséquence
+(divergence via `smax`), pas la dérive de la C-property elle-même.
+
+**AMENDEMENT ROMAIN AVANT C2 — LA CADENCE EXNER EST DÉRIVÉE, JAMAIS CHOISIE.** Le
+rederive fait ~600 pas wetdry pour ~300 Exner, soit **un Exner tous les deux pas**. Or
+la bande alloue « Exner (par frame) » 1.5–3.0 ms, ce qui suppose CHAQUE frame. **La
+cadence doit être DÉRIVÉE de la structure RÉELLE du rederive** (quelle qu'elle soit),
+pas fixée au build — **sinon tranche-2 comparerait deux physiques différentes, et
+l'invariant « même code F » ne couvre PAS la cadence.** Si la cadence réelle est une
+frame sur deux, le poste tombe à **0.75–1.5** et la bande haute descend à **~18.3**.
+
+**ENVELOPPE** : C1 a tenu sa fourchette (1.0–1.8 séance) — **aucun POINT D'ARRÊT de
+coût déclenché**. 386 tests F1 verts, suite complète 979 (gel bit-exact inclus).
+**DÉCISION ROMAIN : C1 ENDOSSÉ, poursuite C2–C5** avec les trois consignes ci-dessus.
