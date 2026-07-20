@@ -5634,3 +5634,59 @@ frame sur deux, le poste tombe à **0.75–1.5** et la bande haute descend à **
 **ENVELOPPE** : C1 a tenu sa fourchette (1.0–1.8 séance) — **aucun POINT D'ARRÊT de
 coût déclenché**. 386 tests F1 verts, suite complète 979 (gel bit-exact inclus).
 **DÉCISION ROMAIN : C1 ENDOSSÉ, poursuite C2–C5** avec les trois consignes ci-dessus.
+
+### §A29-C2/C4/C5 — TRANCHE-1 DE M-b CONSTRUITE ET ENDOSSÉE ; T1 prêt à courir (2026-07-19)
+
+Builds : fluide-reduit f2e1d7c (C2 Exner), d2afbfc (C4 régime), 558e06e (C5 driver).
+**Vérifié indépendamment** : QUATRE empreintes concordent — fidèle **6dd207ca**/9248,
+Exner **3533fd0b**/1251, fusionné **e18015f5**/8223, L3 **9533a130**/9635 ; kernels
+figés et C1 intouchés.
+
+**CADENCE EXNER — LUE, PAS CHOISIE (amendement §A29-C1)** : `run_episode` fait 300 pas
+Exner pour 600 wetdry (`save_every = 2`) ⇒ **un Exner tous les deux pas, exactement
+un-sur-deux**. `CADENCE_EXNER` **lit `SedimentParams.save_every`**, et une
+CONTRE-ÉPREUVE vérifie qu'elle **suivrait** un changement du rederive — « dérivée » au
+sens fort, pas recopiée. Conséquence conforme : poste Exner **[1.5, 3.0] → [0.75, 1.5]**.
+
+**C2 — Exner GPU** : portage pointwise de `_exner_step`, `s` évolué par ce kernel (non
+advecté) ; équivalence GPU↔CPU à **1.87e-9** (dépôt si θ<θc, érosion si θ>θc, masque
+wet, s ≥ 0). Verrou d'empreinte **dès le premier commit**.
+
+**C4 — RÉGIME SUR LA SÉRIE (amendement B)** : l'état synthétisé à l'échelle V4 (512²)
+**exerce** le régime — fronts wet/dry, marge CFL **5.42 ∈ [4, 12]**.
+`verifier_regime_serie` est **fail-loud si la marge s'effondre sur une SEULE frame**
+(C-property cassée ⇒ `smax` monte ⇒ le chrono mesurerait une divergence) ;
+`exiger_regime_pass` refuse toute lecture sans PASS. **Passe SÉPARÉE du chrono** pour
+ne pas y injecter la synchronisation de réduction — même hygiène que D-2.
+
+**C5 — driver T1, LIVRÉ NON EXÉCUTÉ** : **`F_fidèle / F_proxy` EN TÊTE** (amendement
+A), bande au second rang ; **bande RE-GELÉE [12.76, 18.27]** avant tout run et plus
+jamais recomposée (§A25) ; réserve de halo à part, seuil glissant **15.7** ; verdict sur
+la **MÉDIANE**, seuil 16.7 ; p99 en évidence.
+
+**DEUX VÉRIFICATIONS QUI ONT ÉVITÉ DES DEMANDES INUTILES** (consigné, parce que le
+contrôle vaut aussi quand il ne trouve rien) : (i) la bande recompose **exactement**
+(10.8+0.75+1.21 = 12.76 ; 15.2+1.5+1.57 = 18.27) ; (ii) **`F_fidèle` est
+CHRONOMÉTRÉ DIRECTEMENT** (`_chrono_f_fidele`, passe séparée) et **non dérivé par
+soustraction** — le piège de M-a-quater, où la prédiction calculée en SOLDE était
+ressortie NÉGATIVE, était déjà évité.
+
+**AMENDEMENT ROMAIN AVANT RUN — LE VERDICT PREND TROIS VALEURS PRÉ-ÉCRITES.** La
+réserve était reportée **à côté** du verdict (`verdict_sous_reserve`,
+`mediane_plus_reserve_haute_ms`) ; l'information y était, **le label non**. C'est le
+cadrage exact qui a rendu le 16.589 de M-a-quater lisible en diagonale comme un succès.
+Donc, gravé avant la mesure :
+> **médiane > 16.7 ⇒ MORT** ;
+> **médiane ∈ [15.7, 16.7] ⇒ SANS MORT SOUS RÉSERVE DE HALO** (T1 passe, mais la
+> production avec halo-parent dépasserait) ;
+> **médiane < 15.7 ⇒ SANS MORT.**
+
+**PORTÉE À FAIRE VOYAGER AVEC LE RAPPORT** : `F_fidèle / F_proxy ≈ 1` dira que les deux
+**COÛTENT** pareil — ce qui est bien la question de représentativité telle qu'elle fut
+posée — mais **NON qu'ils FONT la même chose** (le proxy fait 8 mises à jour de champ à
+fond plat ; le fidèle en fait 3 plus la reconstruction b-aware). **Un rapport proche de
+1 ne validera PAS le raisonnement E4a du « majorant honnête ».**
+
+**DÉCISION ROMAIN : TRANCHE-1 ENDOSSÉE, T1 PEUT COURIR** sur le label à trois valeurs
+intégré. 413 tests F1 verts (27 neufs). C'est **la première fois du projet qu'une
+physique RÉELLE tourne à l'échelle de la fovéa**.
