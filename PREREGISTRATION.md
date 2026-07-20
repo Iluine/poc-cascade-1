@@ -5309,3 +5309,71 @@ un budget qu'on découvrirait faux au premier run.
 
 **Reste inchangé** : k = 4 (σ_ω gaté) ; `run_f1_attribution_b.py` gaté ; miroir CPU non
 construit ; kernels intouchés ; gate (ii) F0-cloud toujours dû (~2 min).
+
+## §A26 — Ancre fidèle : mon attente FALSIFIÉE ; dt/frame tranché ; échelle et CFL-par-niveau d'abord (2026-07-19)
+
+Document : fluide-reduit 8ede2e7 (`claude/prereg-ancre-fidele.md`), paper-grade, aucun run.
+
+**ATTENTE DE LA SESSION CRITIQUE : FALSIFIÉE, et rapportée telle quelle.** §A25
+anticipait un rapport pas/frame **> 1** qui multiplierait l'ancre. Dérivé du CFL réel
+(g = 9.81, dx = 1, h_p = 0.363 ⇒ c = 1.886 ; dt_CFL : 0.212 s/pas au pic du pulse,
+0.071 au front type Ritter, 0.049–0.112 en moyenne d'épisode ; phase active
+0.05–0.07), il vaut **0.24–0.33, donc < 1**. Claude Code le consigne sans l'habiller :
+*« je ne l'ai pas retournée pour coller à l'intuition moteur lourd »*. **L'ancre ne se
+multiplie pas en temps réel.**
+
+**RECADRAGE DE LA SESSION CRITIQUE : « rapport < 1 » est de la TÊTE, pas un régime
+bursty forcé.** La CFL est une borne SUPÉRIEURE — rien n'oblige à prendre des pas de
+taille CFL. **DÉCISION ROMAIN : `dt` = TEMPS DE FRAME, UN PAS PAR FRAME.** Sous-CFL
+avec ~4× de marge au niveau grossier, lisse, l'ancre 12.655 s'applique directement, et
+c'est le point que M-a-quater a mesuré. **Conséquence sur σ_ω : ce choix NE RÉVEILLE
+PAS le fork** — c'est le conservateur (plus de mises à jour, pas moins). Le régime
+bursty (`dt` = dt_CFL) reste disponible, mais **décider que le saccadé est acceptable
+CONSOMMERAIT un référent temporel ⇒ réveil σ_ω (R4), décision explicite.**
+
+**CORRECTION D'UNE DÉCISION DE LA SESSION CRITIQUE (§A25).** T1 avait été fixé sur la
+MÉDIANE pour cohérence avec MORT-a. **Cette décision était CONTINGENTE à un choix de
+cadencement non encore fait** : à rapport < 1 la médiane serait une frame SANS pas,
+donc vide de sens, tout le coût migrant en p99 (et L1 étale la remontée, pas le pas de
+F — stutter que L1 ne couvre pas, comme Claude Code le remonte). **T1-médiane garde son
+sens SI ET SEULEMENT SI on prend un pas par frame** — ce qui est désormais tranché.
+Le point 2 de Claude Code (« p99 nommée critère ») est donc SUSPENDU à ce choix, non
+rejeté : il redeviendrait nécessaire si le régime bursty était un jour acheté.
+
+**RÉSERVE MAJEURE AJOUTÉE PAR LA SESSION CRITIQUE : LA DÉRIVATION EST FAITE À UN SEUL
+`dx`.** g/dx/h_p ⇒ c ⇒ dt_CFL, à `dx` = 1. Mais **la pyramide a NEUF niveaux dont le
+`dx` varie d'un facteur 2⁹** : la CFL est **PAR NIVEAU**, et au plus fin `dt_CFL` est
+~512× plus petit. Un schéma hyperbolique multi-niveaux **SOUS-CYCLE** (Berger-Oliger :
+le fin fait 2^k pas par pas grossier) et, à ~autant de cellules par niveau, le coût
+devient une somme géométrique — potentiellement catastrophique. **C'est le PIED NON
+MESURÉ n°7 tel qu'il était écrit** (« CFL locale ⇒ sous-pas par niveau »). La
+dérivation le résout pour UN niveau, **pas pour la pyramide**. Formulé comme QUESTION À
+TRANCHER, non comme condamnation : la session critique raisonne depuis les principes
+généraux du multi-niveaux, pas depuis le code.
+
+**HALOS — chiffrés, et ce n'est pas le runtime.** Halos ±2 ≈ **1.6 % de l'aire**
+(4·512·2 cellules/champ), issus du parent via la prédiction GPU-side prolongée de
+2 cellules ⇒ **sur GPU, sans H2D/D2H** ; lancements négligeables, **~0.2–0.5 ms**. Le
+coût des halos est le **LOC et la fidélité de bord** (halo parent-grossier vs mur
+réfléchi du domaine 64² du rederive), pas le temps.
+
+**RE-CHIFFRAGE TRANCHE-1 (budget frame-pas, 1 pas/frame)** : F 12.655 + bathy 0.1–0.3
++ halos 0.2–0.5 + Exner amorti 0.65–1.25 + remontée 1.28 + transferts 0.11 =
+**~15.0–16.1 ms**, marge **0.6–1.7** à 16.7. **T1-médiane n'est PAS déjà compromis —
+mais plausible SOUS CONDITION**, et la condition est une décision de design, pas de
+physique : temps réel < 1 pas/frame ⇒ passe trivialement ; **point M-a-quater
+(1 pas/frame, désormais tranché) ⇒ marge 0.6–1.7 ms, MINCE** (quelques fois la dérive) ;
+accéléré > ~2–4× temps réel ⇒ compromis. **Le paramètre décisif est la vitesse de jeu
+K, que le CFL ne fixe pas.**
+
+**ET LE TERME QUI PEUT TOUT DÉPLACER (point 4 de Claude Code)** : **l'ancre est à
+n_fov = 512, le substrat réel vit à 64².** Si M-b tourne à l'échelle 64, l'aire par
+fenêtre chute ~64× et **l'ancre F s'effondre (~0.2 ms, T1 trivial)**. Une ancre mesurée
+à 512² pour un substrat à 64² : **c'est la réconciliation d'échelle qui décide du
+verdict, pas les autres termes.**
+
+**DÉCISION ROMAIN — ORDRE : (1) RÉCONCILIATION D'ÉCHELLE 64² ↔ n_fov et (2) CFL PAR
+NIVEAU / SOUS-CYCLAGE, D'ABORD.** Les deux seuls qui peuvent rendre le reste sans
+objet, et les deux sont paper-grade. Les trois autres points — **vitesse de jeu K**,
+**p99 comme critère** (suspendu au régime, cf. supra), **condition de mur intérieur** —
+suivent, informés. **Aucun achat de M-b tranche-1 d'ici là.**
