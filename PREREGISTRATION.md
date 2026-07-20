@@ -4992,3 +4992,70 @@ vérité elle compare** — `vérité(n)` mesure ce que le joueur voit (canal + 
 acceptée), `vérité(n−1)` isole la fidélité du CANAL seul. Les deux sont légitimes, elles
 diffèrent d'exactement la péremption qu'on vient d'acheter, **et les confondre
 refabriquerait un artefact de décalage temporel** — la faute même qui a coûté la journée.
+
+### §A22 — Sonde EPS v2 : le verrou a mordu sur le correctif ; prereg ENDOSSÉ avec trois amendements (2026-07-19)
+
+Build : fluide-reduit 7a40303. **Vérifié indépendamment** : empreintes 8223/e18015f5
+et 9635/9533a130 concordent ; hunks de `substrat_l3.py` tous ≥256 dans `CompacteurL3`
+(bloc CUDA intact) ; verrou d'endossement `ENDOSSEMENT_PREREG_V2 = False` présent —
+**« aucun run avant endossement » est désormais MÉCANIQUE, pas une promesse.**
+
+**LE VERROU A MORDU SUR LE CORRECTIF QUE J'AVAIS DÉCLARÉ LIVRÉ.** En écrivant le test
+d'identité, Claude Code a trouvé que le ping-pong (§A21) déplaçait les **données** d'un
+tour à l'autre **sans déplacer leur OFFSET D'INDICES** : `_appliquer_f` calculait
+l'offset sur la tranche de la frame courante alors que les couples transférés étaient
+ceux de n−1 ⇒ **réindexation silencieuse dans le mauvais slot**, divergence grand livre
+vs `reference` de **~1.4e-4 dès la deuxième frame**. L'offset relève du même invariant
+que la taille et les données ; il est désormais confié au compacteur (`noter_offset` /
+`offset_precedent`) et voyage avec elles.
+
+**FAUTE DE LA SESSION CRITIQUE, consignée** : §A21-complément gravait « correctif livré,
+vérifié ». J'avais vérifié les EMPREINTES et la POSITION DES HUNKS — cheap et
+vérifiable — puis pris l'invariant sur la foi de tests qui éprouvaient la QUANTITÉ
+transférée, jamais les INDICES. **Je n'ai pas demandé ce que le jeu de tests ne couvrait
+pas.** Même faute que l'empreinte décorative : vérifier ce qu'on me présente au lieu de
+chercher ce qui manque. Ordre de grandeur qui donne la mesure du risque : la divergence
+1.4e-4 est **exactement celle du signal cherché** (livre de comptes vs vérité 1.1e-4) —
+elle l'aurait noyé. **L'invariant, lui, était correctement énoncé** (bijection de
+COUPLES (indice, valeur)) : c'est l'implémentation qui le violait, et le test l'a
+attrapée. C'est à cela que servent les invariants.
+
+**CE QUE LE PREREG V2 APPORTE (endossé)** : superseded assumé (aucune lecture v1
+reconduite — ni le plancher 0.082, ni la branche (ii), ni la comparaison restreinte) ;
+connaissance CPU **lue sur `reference`** (option 1) ; **instant de lecture GRAVÉ** —
+après le déplacement, avant l'émission, le seul où `reference` est dans les coordonnées
+de la frame courante ; **deux vérités déclarées avant run** — `vérité(n)` PORTE LA RÈGLE
+(le joueur ne perçoit pas un canal mais un écart au présent ; lire la règle sur la
+vérité transportée s'accorderait gratuitement le retard qu'il subit), `vérité(n−1)`
+DIAGNOSTIC, leur écart = `prix_peremption_une_frame` ; **portée déclarée qui VOYAGE DANS
+LA LECTURE** (`portee_option_1`) — la sonde crédite le CPU d'une prédiction identique à
+celle du device, donc elle mesure **le CANAL, jamais le lointain** : aucun résultat ne
+pourra s'énoncer « le lointain est fidèle ».
+
+**TROIS AMENDEMENTS EXIGÉS PAR ROMAIN AVANT RUN (session critique) :**
+- **(A) Critère de discrimination et PLANCHER DE BRUIT écrits dans le prereg, et le
+  plancher MESURÉ PAR RÉPLICAT, pas supposé.** La v1 portait un seuil relatif de 5 % en
+  dur dans le code ; l'observable a changé d'échelle (~0.082 artefact → ~1e-4 attendu),
+  et un seuil relatif ne se comporte pas pareil sur un signal 800× plus petit.
+- **(B) BRANCHE (iii-bis) PÉREMPTION, écrite avant le run.** La règle portant sur
+  `vérité(n)`, si aucun EPS ne passe sur `vérité(n)` **mais qu'ils passent sur
+  `vérité(n−1)`**, la cause est **LE RETARD, PAS LE MÉCANISME** — la branche (iii) telle
+  qu'écrite mal étiquetterait l'issue. Le discriminateur est déjà collecté
+  (`prix_peremption_une_frame`), il n'était pas câblé à la table.
+- **(C) LA DISCRIMINATION NE GATE QU'EN CAS D'ÉCHEC.** Si tout passe confortablement —
+  plausible : canal ~1e-4 contre seuil 0.0603 — Δχ sera **plat PARCE QUE TOUT VA BIEN**,
+  la discrimination échouera et (ii) MUETTE bloquerait un PASS parfaitement clair.
+  Règle amendée : *au moins un EPS passe ⇒ l'instrument suffit pour CETTE conclusion, la
+  discrimination passe en diagnostic ; aucun ne passe ⇒ la discrimination gate, et c'est
+  là que (ii) et (iii)/(iii-bis) se séparent.* Plat-et-bas est informatif ;
+  plat-et-haut ne l'est pas.
+
+**Sur ces trois amendements intégrés, `ENDOSSEMENT_PREREG_V2` peut être levé** et le
+balayage tourner. EPS reste 1e-4 et k reste 4 d'ici là.
+
+**Conséquences consignées** : `run_f1_attribution_b.py` reste GATÉ (bâti sur l'observable
+v1 ; le ré-armer est une décision distincte) ; la lecture D-2 gagne en cohérence
+(l'option 1 supprime la capture de coefficients dont la v1 avait besoin, ce qui va dans
+le sens des +0.822 ms attribués à l'appareil — pas une re-mesure) ; `ReconstructeurNiveau0`
+conservé et marqué SUPERSEDED (des lectures acquises en dépendent, on ne réécrit pas le
+passé).
