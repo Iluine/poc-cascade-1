@@ -4765,3 +4765,82 @@ T2 réserve l'autre moitié de la frame au rendu : **V4 à 16.589 ms signifie «
 avec ~16,7 ms pour un rendu jamais chiffré »**. « Le moteur tient » reste hors de
 portée tant que cette moitié est vide. Rien ici ne modifie un seuil, ne gate ni ne
 dégate une mesure en cours.
+
+### §A19-CORRECTION (2026-07-19) — l'attribution du plancher était FAUSSE ; la sonde EPS mesurait un ARTEFACT
+
+> **Entrée de correction append-only. Rien n'est effacé : l'erreur reste lisible.**
+> Elle SUPERSÈDE l'attribution de §A19-lecture-sonde-EPS et §A19-lecture-diagnostic.
+
+**Origine** : en armant l'attribution (b) (fluide-reduit ef2b3b2), Claude Code a vérifié
+l'identité que le schéma B4 pose — la `reference` côté device est le modèle de ce que le
+CPU sait (émettre d = etat − reference, transmettre d, puis reference += d) — et **elle
+casse**. Le device fait rouler `fenetres` ET `references` de dx à chaque frame (fovéa
+mobile) et y écrit les colonnes prédites GPU-side ; **le reconstructeur de la sonde ne
+fait ni l'un ni l'autre**. L'identité casse dès la frame 0, avec ZÉRO coefficient
+transféré : écart 0.196, plateau ~1.03.
+
+**Ce que la sonde EPS mesurait réellement** : un **DÉCALAGE SPATIAL**, pas une infidélité
+du grossier. Cela explique exactement ce qui était resté inexpliqué — l'indépendance
+simultanée à EPS **et** à k : on comparait des régions décalées, que ni le seuil ni la
+cadence ne peuvent bouger.
+
+**CE QUI EST FAUX ET EST RETIRÉ** (attribution seulement) :
+- « PLANCHER STRUCTUREL, signature §A14 muette par construction, suspect principal : le
+  DOMAINE DE COMPARAISON (cellules que nulle fenêtre ne remonte) » — **FAUX**. La cause
+  est le roll + la prédiction manquants dans le reconstructeur.
+- L'interprétation de D-1(b) (complet 0.0820 / cycle 0.0109 / cumulé 0.0892) tombe avec :
+  elle a été calculée sur l'observable défectueux. La branche « plancher de COUVERTURE »
+  a tiré sur un observable cassé.
+
+**CE QUI TIENT** : (i) la lecture mécanique « branche (ii) SONDE MUETTE » reste exacte
+COMME LECTURE DE CET OBSERVABLE-LÀ — il n'a effectivement pas répondu ; (ii) **rien n'a
+été réglé**, EPS est resté à 1e-4 — la lecture pré-écrite a protégé le projet d'un
+réglage fondé sur un artefact ; (iii) D-1(a) test à blanc EXACTEMENT NUL : le readout est
+propre, le gate d'instrument de M-b reste dégagé (il ne dépendait pas du reconstructeur).
+
+**CE QUE ÇA REND À L'ÉTAT OUVERT** : la question EPS n'est **PAS répondue** — sonde à
+réparer et à re-mesurer, avec un NOUVEAU pré-enregistrement. La question de la fidélité
+du grossier n'est pas répondue non plus.
+
+**LE FALSIFICATEUR AURAIT PRONONCÉ UN FAUX VERDICT** : armé tel quel, l'attribution (b)
+aurait lu « l'erreur persiste » ⇒ **ERREUR INHÉRENTE AU GROSSIER, l'exigence de fidélité
+est à redéfinir** — pour un défaut de reconstruction. Sur l'observable reconstruit les
+deux bras sont indistinguables (0.082814 courant vs 0.082870 témoin) ; sur le livre de
+comptes le témoin est ~8× meilleur. **La vérification d'identité avant run a évité un
+verdict architectural erroné.** (Chiffres de config réduite, NON verdictaux.)
+
+**RÉSULTAT POSITIF MAJEUR, à ne pas laisser passer** : le **livre de comptes contre
+vérité vaut 0.00011** — soit **~550× SOUS ic_bas (0.0603)**, seuillage à 1e-4 inclus.
+L'information TRANSMISE par la remontée est amplement suffisante ; l'inquiétude « le
+grossier est infidèle » s'évapore. Ce qui reste ouvert est **la capacité du CPU à s'en
+servir**, ce qui est une question de PRODUCTION, pas de harnais.
+
+**QUESTION D'ARCHITECTURE OUVERTE (conséquence directe)** : si le device roule sa
+`reference` et y écrit ses prédictions, alors **en production le CPU doit faire le même
+roll et la même prédiction**, sinon les deux modèles divergent. Le « miroir CPU » n'est
+donc pas un artifice de mesure : c'est **le premier morceau du côté CPU de production**,
+et il tombe sur le **pied non mesuré n°3** (niveau 0 vivant à 500k cellules, ×7.6 jamais
+chiffré). Les deux réparations candidates ne sont PAS équivalentes : (1) lire la
+connaissance du CPU sur `reference` — gratuit, mais suppose la prédiction CPU exacte,
+donc **borne inférieure de l'erreur** ; (2) miroir CPU complet — fidèle, mais c'est un
+vrai build. **L'écart entre les deux EST l'erreur de prédiction propagée**, candidate au
+terme dominant du lointain de la fovéa-z. NON TRANCHÉ.
+
+**MEA CULPA D'INSTRUMENT (session critique)** : l'empreinte `e8fcaad4…7f04`, exigée et
+citée sur une dizaine de tours comme preuve que le kernel est intouché, ne correspond
+**ni au fichier** (`9f3de30c…`) **ni au `_SOURCE`** (`c30ab2bd…`), et n'apparaît nulle
+part dans le kernel ni son test (vérifié 2026-07-19). J'ai accepté un jeton de preuve
+sans jamais vérifier ce qu'il hachait — **du rituel, pas de la vérification**. Ce qui
+protégeait réellement : le `git diff`, vérifié plusieurs fois. **Règle reconduite : une
+preuve doit être re-calculable par celui qui l'exige, sinon elle est décorative.**
+
+**DÉCISION ROMAIN (2026-07-19) : VÉRIFIER LES DEUX BUGS CANDIDATS D'ABORD** — questions
+de CORRECTION, indépendantes du fork de réparation, bon marché :
+- **(α) troncature du retard d'une frame** : des coefficients seraient perdus
+  DÉFINITIVEMENT (`reference += d` ayant déjà tourné côté device) — **cela
+  contredirait le nota endossé « le schéma incrémental ne perd rien »** ;
+- **(β) queue de tampon** : si une frame émet moins que la précédente, la queue non
+  réécrite serait retransférée et réappliquée.
+Les deux sont LUS DANS LE CODE, non vérifiés numériquement. Si (α) est réel, le schéma
+change et le choix de réparation change avec lui. Le fork de réparation (1) vs (2) se
+tranchera APRÈS, informé.
