@@ -5178,3 +5178,73 @@ pas à sa place.
 existant, minutes) pour séparer appareil et régression ; PUIS re-run M-a-quater à
 EPS = 1e-2 pour lire le budget de V4 sur des chiffres propres.** D'ici là, **aucun
 verdict budgétaire** — ni « V4 est mort à 16.996 », ni « V4 respire à 15.195 ».
+
+## §A24 — VERDICT M-a-quater : V4 **SANS MORT** (2026-07-19) — gate (i) satisfait
+
+Builds : fluide-reduit 02f0239 (application EPS), 6c24622 (chrono nu), d73c875
+(M-a-quater à 1e-2). Lectures versionnées désormais sous `claude/lectures/`
+(décision Claude Code : la LECTURE de chaque run est versionnée — meta,
+lecture_mecanique, table compacte, résidence — pas les tableaux par-frame).
+
+**INSTRUCTION ERRONÉE DE LA SESSION CRITIQUE, refusée à raison.** Mon prompt disait
+« `EPS_EN_VIGUEUR` passe à 1e-2 ». **Faux** : ce symbole est importé par D-1/D-2
+(`EPS_FIGE`) et attribution_b (`EPS_COURANT`) sous garde `exiger_rien_regle`, et
+`EPS_DETAIL` est la constante gravée de la borne L3 — bouger l'un ou l'autre aurait
+**réécrit des mesures acquises**. Claude Code a refusé et introduit `EPS_PRODUCTION`,
+distinct, au seul chemin de production, avec les trois portées §A23 et la citation
+b6c8807 au point du réglage ; un test échoue si la valeur bouge ou si citation et
+portées disparaissent.
+
+**§A23-2a — LE +0.407 ms EST DE L'APPAREIL, tranché par une règle écrite avant.**
+Chrono nu sur HEAD à 1e-4 : **16.297 ms**, soit **−0.292 sous le baseline 16.589**.
+**Le SIGNE tranche** : un terme de production non compté ne peut que rendre la mesure
+PLUS HAUTE ; le nu est plus BAS ⇒ appareil et dérive, **jamais régression**. C'est la
+règle D-2 corrigée (celle qui teste le dépassement vers le haut, et non |écart|) qui
+porte la conclusion. **Le ping-pong ne coûte pas de temps : il double la VRAM, pas le
+calcul. V4 garde son 16.589.** Consigné : **l'hypothèse qui arrangeait la session
+critique s'est trouvée juste SANS que la préférence n'ait décidé** — c'est la règle
+pré-écrite qui a tranché. Réserve de Claude Code reconduite : −0.292 dépasse d'un cheveu
+la dérive nominale (0.18), dans le sens favorable ; une seule passe, pas de
+surinterprétation.
+
+**§A23-2b — BUDGET V4 À EPS = 1e-2 :**
+
+| grandeur | valeur | référence |
+|---|---|---|
+| **médiane frame complète** | **14.490 ms** | baseline 1e-4 : 16.589 (**−2.099**) |
+| **MORT (médiane > 16.7)** | **NON** | marge **2.199 ms** (contre 0.111 auparavant) |
+| p99 (en évidence) | 16.853 ms | +2.363 vs médiane |
+| transferts | 0.110 ms | contre 2.449 à 1e-4 (trafic ÷ ~22) |
+| résidence | 0.564 Go | gate 1.35 — marge intacte |
+
+Le gain vient **entièrement des transferts** ; le calcul est inchangé.
+
+**VERDICT PRONONCÉ (Romain, 2026-07-19) : V4 SANS MORT.** Le critère MORT-a est
+pré-enregistré et porte sur la MÉDIANE : 14.490 < 16.7. **Le gate (i) de la spec est
+satisfait — et pour la première fois avec une VRAIE marge** (2.199 ms contre 0.111 au
+verdict précédent, qui était « au seuil » et sous la dérive machine).
+
+**QUATRE RÉSERVES GRAVÉES AVEC LE VERDICT :**
+1. **« Dans la bande [14.2, 15.9] » N'EST PAS UN TEST DE MODÈLE ICI.** Cette bande fut
+   pré-enregistrée pour la configuration à EPS = 1e-4, **transferts ~2.4 ms compris** ;
+   appliquer 1e-2 en a retiré 2.34. **Une bande qui ne bouge pas quand un terme de
+   2.3 ms disparaît ne teste plus rien** — que 14.490 y tombe est une COÏNCIDENCE, pas
+   une validation. Recalculée pour 1e-2 elle vaudrait ~14.0 (12.655 F + ~0 prédiction +
+   ~1.28 remontée + 0.110 transferts), soit un écart mesuré de **+0.45**. **À refaire
+   (arithmétique pure, aucun run) avant tout énoncé sur le modèle.**
+2. **p99 = 16.853 > 16.7** : dépasse l'allocation de **+0.9 % sur 1 % des frames** —
+   contre +17.7 % il y a quelques heures (19.652). Amélioration massive, **pas propre**.
+   Non verdictal par T2 (la mort porte sur la médiane), reporté en évidence.
+3. **Les trois portées de §A23 tiennent** : EPS 1e-2 est établi INNOCENT et non OPTIMAL
+   (le balayage ne borne pas par le haut) ; la sonde mesure le CANAL et non le lointain
+   (l'argument de sûreté de l'option 1 reste non mesuré, miroir CPU non construit) ; le
+   résultat est scopé à CE substrat, CE régime.
+4. **LA MOITIÉ RENDU DE LA FRAME RESTE NON MESURÉE** (§A20-5). Ce qui est établi est :
+   *la physique tient, avec marge, sur un proxy, à cette enveloppe, sur cette machine,
+   rendu non compté.* **« Le moteur tient » reste hors de portée.**
+
+**ÉTAT DES GATES DE LA SPEC** : **(i) M-a-quater sans mort — SATISFAIT** ;
+(ii) F0-cloud — **toujours dû** (~2 min, prochaine session cloud) ; (iii) M-b sans mort
+— non achetée. **DÉCISION ROMAIN : prochain achat = CHIFFRAGE DE M-b** (gate iii,
+3–5 séances, risque ÉLEVÉ) — son gate d'instrument est dégagé (readout propre, D-1(a)
+Δχ à blanc exactement nul), D-1/D-2 sont lus, la suspension du chiffrage est levée.
