@@ -5690,3 +5690,57 @@ fond plat ; le fidèle en fait 3 plus la reconstruction b-aware). **Un rapport p
 **DÉCISION ROMAIN : TRANCHE-1 ENDOSSÉE, T1 PEUT COURIR** sur le label à trois valeurs
 intégré. 413 tests F1 verts (27 neufs). C'est **la première fois du projet qu'une
 physique RÉELLE tourne à l'échelle de la fovéa**.
+
+## §A30 — VERDICT T1 : SANS MORT ; l'ancre était HONNÊTE ; tranche-2 achetée (2026-07-19)
+
+Run : fluide-reduit fb1a700, natif, machine-instrument. **Première fois du projet
+qu'une physique RÉELLE (Audusse bien équilibré + Exner + bathymétrie) tourne à
+l'échelle de la fovéa.**
+
+**CHIFFRE DE TÊTE — `F_fidèle / F_proxy` = 11.696 / 12.655 = 0.924.** Le moteur réel
+coûte **MOINS** que le proxy : le transport 8-champs à fond plat était un peu plus cher
+que 3 champs + reconstruction d'Audusse. **L'ancre sur laquelle repose TOUT le budget
+de V4 était honnête, et légèrement PESSIMISTE.** (Et cela **ne valide pas E4a** — cf.
+portée : coûter pareil n'est pas faire pareil.)
+
+**VERDICT T1 PRONONCÉ (Romain, 2026-07-19) : SANS MORT.** Médiane frame complète
+**13.332 ms**, bien sous le seuil de réserve 15.7 ; **même avec la réserve de halo
+haute (+1.0) ⇒ 14.332 < 16.7** : SANS MORT tient SOUS la réserve. Le label à trois
+valeurs, gravé avant le run, a fait son travail. **Régime PASS sur la série** (301
+frames, marge CFL stable [5.21, 6.92] ⊂ [4, 12], fraction wet ~0.45, pas
+d'effondrement) : le chrono mesure bien le F fidèle, **pas une divergence**. Bande
+(second rang, NON recomposée) : 13.332 ∈ [12.76, 18.27] ⇒ **pas un AUTRE**.
+Résidence 160 Mio. **V4-b survit T1 avec marge des deux côtés.**
+
+**QUATRE RÉSERVES GRAVÉES AVEC LE VERDICT :**
+1. **LA FRAME COMPLÈTE N'A PAS ÉTÉ MESURÉE BOUT-EN-BOUT : ELLE EST COMPOSÉE.**
+   11.942 MESURÉS (F + Exner) + **1.28 et 0.11 IMPORTÉS** de M-a-quater — donc mesurés
+   avec le F **JETABLE**, dont la distribution de détails émis n'est pas celle du
+   fidèle. Le verdict repose en partie sur des termes non re-mesurés. **Robuste** (il
+   faudrait TRIPLER les termes importés pour atteindre 15.7) — mais dit.
+2. **LA PLUS LOURDE — le fidèle tourne à 4 CHAMPS quand le budget était épinglé à
+   c = 8.** Proxy : 8 mises à jour à fond plat pour 12.655. Fidèle : 3 (plus Exner)
+   pour 11.696. **PAR CHAMP, le fidèle coûte ~2.5× le proxy.** Donc **le proxy était
+   conservateur EN TOTAL et OPTIMISTE PAR CHAMP** : tout enrichissement du substrat-jeu
+   — et le gameplay pousse dans ce sens (fenêtres d'énergie comme ressource) — partira
+   d'une base par-champ bien plus chère que l'ancre ne le suggère. **C'est la note de
+   §6 (« c = 8 est l'enveloppe de travail, à re-épingler quand le substrat v-jeu se
+   fige ») qui devient CONCRÈTE.**
+3. **Le poste EXNER était surestimé 3 à 6×** (0.246 mesuré/frame amorti contre
+   [0.75, 1.5] pré-enregistré) : la bande passe **en partie par compensation**, et le
+   modèle de coût a **un terme faux**. Reporté SANS recomposer — discipline §A25 tenue.
+4. **Le p99 = 12.284 N'EST PAS COMPARABLE à celui de M-a-quater** (16.853) : il mesure
+   F+Exner sur un **état synthétisé lisse**, sans les **bursts de remontée** qui
+   produisaient l'autre. « Pas de stutter » est scopé à cela.
+
+**DETTE NOMMÉE (non armée)** : mesure de la frame BOUT-EN-BOUT avec le F fidèle (pour
+remplacer les 1.39 ms importés). **Écarte par le critère du tapis roulant** : il
+faudrait tripler ces termes pour changer le verdict — la mesure ne peut pas changer la
+décision.
+
+**DÉCISION ROMAIN : ACHAT DE LA TRANCHE-2 DE M-b** (~1.5–2.3 séances) — émissions
+3 seeds {101,102,103} / Δt=4 / 6 émissions, **MORT-b PAR-SEED contre 0.0733**, à 64²
+contre le rederive INTOUCHÉ. C'est **le contenu réel de M-b et le gate (iii) de la
+spec** — celui qui décide **Option A** (quarantaine du non-déterminisme) ou **repli
+Option B**. Le **halo rafraîchi entre étages RK2** y est déjà nommé (§A29-C1), ainsi
+que l'interdiction de réutiliser le bord réfléchissant pour la fidélité.
