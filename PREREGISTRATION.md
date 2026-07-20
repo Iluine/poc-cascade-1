@@ -5744,3 +5744,58 @@ contre le rederive INTOUCHÉ. C'est **le contenu réel de M-b et le gate (iii) d
 spec** — celui qui décide **Option A** (quarantaine du non-déterminisme) ou **repli
 Option B**. Le **halo rafraîchi entre étages RK2** y est déjà nommé (§A29-C1), ainsi
 que l'interdiction de réutiliser le bord réfléchissant pour la fidélité.
+
+## §A31 — TRANCHE-2 pré-enregistrée : réconciliation 64² ENDOSSÉE + BRAS TÉMOIN exigé (2026-07-19)
+
+Document : fluide-reduit 88d3f87 (`claude/prereg-t2-fidelite.md`). Point d'arrêt honoré
+sur un choix load-bearing plutôt que préempté.
+
+**LA RÉCONCILIATION D'ÉCHELLE, ENDOSSÉE.** Au 64² du rederive la pyramide de V4
+dégénère (§A27), or §A29-C1 interdit le bord réfléchissant pour la fidélité — et un
+halo-parent n'existe que si la fovéa est une sous-fenêtre à bord INTÉRIEUR. D'où la
+**fovéation à DEUX NIVEAUX** : **grossier** = 64² décimé, **murs réfléchissants au VRAI
+bord** (= le rederive, physiquement correct) ; **fin** = fovéa pleine résolution, **bord
+halo-parent** depuis le grossier upsamplé. Cohérent avec le mipmap gravé (§2-rev2) : le
+fin est à la résolution de la physique. **Fovéa mobile E4c et décimation 2× endossées**
+— les plus proches de la production.
+
+**PROBLÈME DE SENS EXPOSÉ PAR CETTE STRUCTURE (session critique)** : l'écart
+live↔rederive aura **TROIS sources** — (a) arithmétique f32 GPU + ordre des réductions
+(**la cible déclarée**) ; (b) remontée seuillée à EPS = 1e-2, **perte délibérée** ;
+(c) **structure fovéale** (lointain décimé, halo-parent, colonnes entrantes). **Or le
+remède pré-écrit de MORT-b est Option B (« tout-déterministe »), qui ne corrige que
+(a).** Si la série traverse à cause de (b) ou (c), on prononcerait la mort d'Option A
+en appliquant un remède **incapable de guérir la cause**. Le contrat É2 portant bien
+sur le TOTAL (« tout readout émis est re-dérivable sous JND_sev »), mesurer le total
+est juste — **ce qui manquait, c'est de savoir LEQUEL des trois a parlé.**
+
+**AMENDEMENT ROMAIN — BRAS TÉMOIN ISOLANT (a), exigé avant build :** fidèle F sur GPU
+f32 au **64² PLEIN DOMAINE, UN SEUL NIVEAU**, murs réfléchissants — configuration
+**identique au rederive**, seule l'arithmétique diffère ; **pas de pyramide, pas de L3,
+pas de L1**. Nota : à cette configuration **l'objection de C1 tombe d'elle-même** — le
+bord y est le **VRAI** bord du domaine, donc réfléchissant est physiquement correct ;
+l'interdiction visait les bords **INTÉRIEURS** de fenêtre.
+**LECTURE PRÉ-ÉCRITE, décidable :**
+> **bras de production traverse ET témoin PASSE ⇒ la cause est (b)+(c) — OPTION B
+> N'EST PAS LE REMÈDE** (la décision porte alors sur EPS et/ou la structure fovéale) ;
+> **les deux traversent ⇒ c'est (a) — Option B EST le remède**, et MORT-b se prononce
+> comme gravé ; **aucun ne traverse ⇒ Option A tient**, gate (iii) satisfait.
+
+**DEUX PORTÉES À FAIRE VOYAGER AVEC LA LECTURE** : (1) à 64² sur deux niveaux, **la
+machinerie L1/L3 n'est exercée que MARGINALEMENT** (peu de slots, cadence k=4 quasi
+vide) — la mesure **ne les valide pas à l'échelle V4** ; (2) la fovéa mobile parcourra
+**~24 cellules sur les 6 émissions**, soit un tiers du domaine — **la contribution des
+colonnes entrantes y sera forte**.
+
+**GELÉ PAR AILLEURS (reconduit)** : cellule §A15 (3 seeds {101,102,103}, Δt=4,
+6 émissions, commits fenêtrés, k_fen aire-proportionnel, cap 10 %) ; **MORT-b = max de
+série Δχ > 0.0733 PAR-SEED** ; rederive `run_history` 64² CPU f64 **INTOUCHÉ** ;
+observable = Δχ readout sur la connaissance du CPU (option 1) contre la vérité f64
+pleine ; **halo-parent RAFRAÎCHI ENTRE LES ÉTAGES RK2** (trouvaille C1, dont le 0.186
+était la signature) — fait **au driver**, jamais en modifiant `pas_f_fidele` ;
+**invariant liant `t1.pas_f_fidele is t2.pas_f_fidele`** (identité, pas diff) ; cadence
+Exner toujours **lue** de `save_every`.
+
+**CHIFFRAGE** : ~1 120–1 650 LOC, **1.7–2.6 séances** (cohérent §A28), plus le bras
+témoin. Poste qui peut glisser : **le refresh halo inter-étage** (objet neuf, jamais
+tourné) — **POINT D'ARRÊT si au-delà de 0.3 séance avant le driver**.
