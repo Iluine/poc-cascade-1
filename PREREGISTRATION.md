@@ -5059,3 +5059,52 @@ v1 ; le ré-armer est une décision distincte) ; la lecture D-2 gagne en cohére
 le sens des +0.822 ms attribués à l'appareil — pas une re-mesure) ; `ReconstructeurNiveau0`
 conservé et marqué SUPERSEDED (des lectures acquises en dépendent, on ne réécrit pas le
 passé).
+
+### §A22-complément — Prereg v2 FINAL : amendement du plancher, puis levée du verrou (2026-07-19)
+
+Texte final remonté (fluide-reduit 2c1d64b) ; vérifié : amendements A/B/C intégrés,
+ordre des branches documenté comme choix remonté, verrou toujours à `False`, empreintes
+inchangées (8223/e18015f5, 9635/9533a130), `git diff -- src/` vide.
+
+**CONCESSION DE LA SESSION CRITIQUE sur l'amendement (A)** : Claude Code CONSERVE le
+seuil relatif de 5 %, et son argument est **meilleur que l'amendement qui l'a provoqué**
+— une amplitude relative est SANS ÉCHELLE, elle ne devient pas fausse quand l'observable
+passe de ~0.082 à ~1e-4 ; **en choisir une autre aujourd'hui reviendrait à la former en
+CONNAISSANT l'échelle de la donnée**, c'est-à-dire un seuil ajusté à la vue des chiffres.
+Le défaut n'était pas sa valeur mais son ISOLEMENT — il est corrigé par l'ajout du
+plancher, pas par un changement de valeur. Deux cas limites nommés plutôt que tus :
+plancher nul ⇒ chaîne déterministe (pas infiniment précise), le relatif porte seul et le
+driver l'annonce ; plancher non évalué ⇒ discrimination INDÉTERMINÉE, jamais prononcée
+sur la forme seule.
+
+**DEUX APPORTS AU-DELÀ DE CE QUI ÉTAIT DEMANDÉ :**
+1. **L'ATTRIBUTION (a) EST ARMÉE GRATUITEMENT.** Son falsificateur gravé (§A19-
+   complément-2) était « comparer contre la vérité DÉCALÉE d'une frame » — c'est
+   exactement `vérité(n−1)`. **La branche (iii-bis) EST sa lecture pré-écrite : un bras
+   ÉCONOMISÉ, pas ajouté.** Conséquence directe : **la réserve de §A21 est levable** —
+   l'arbitrage « péremption bornée d'une frame contre perte non bornée », que Romain
+   avait dû trancher au RAISONNEMENT, sera **MESURÉ en sous-produit**. (b) reste non
+   armée, son bras gaté.
+2. **ORDRE DES BRANCHES — choix remonté et ENDOSSÉ** : (iii-bis) est évaluée AVANT la
+   discrimination, parce qu'elle repose sur une MESURE DIRECTE et non sur la pente d'un
+   balayage. Une sonde peut être muette sur EPS tout en mesurant parfaitement le prix du
+   retard : les deux axes sont indépendants, et « la cause est le retard » est plus
+   informatif que « sonde muette ». À k=4, (iii-bis) porte le plus (la péremption L1
+   complète s'ajoutant au retard d'une frame) ; à k=1 elle est la plus lisible (la seule
+   péremption restante EST celle du compteur). Test de couverture sur les quatre issues.
+
+**DERNIER AMENDEMENT AVANT LEVÉE (décision Romain, sur point remonté par Claude Code
+qui a refusé de le préempter)** : le plancher n'avait qu'UN réplicat — deux passes, un
+seul écart, **aucune dispersion**. Décider APRÈS coup qu'il en faut plusieurs serait une
+décision post-hoc, précisément ce que le pré-enregistrement interdit ailleurs. Donc,
+gravé AVANT run :
+> **3 répétitions du même EPS** (au lieu de 2) ; **plancher = max des écarts observés** ;
+> et règle PRÉ-ÉCRITE : **si l'amplitude du balayage < 3 × plancher ⇒
+> INDÉTERMINÉ-INSTRUMENT, AUCUNE branche prononcée.**
+Coût : deux passes Δχ de plus (le réplicat coûtait une passe sur douze).
+
+**SUR CET AMENDEMENT INTÉGRÉ, `ENDOSSEMENT_PREREG_V2` EST LEVÉ** — le balayage peut
+tourner (natif, machine-instrument). Restent figés d'ici la lecture : EPS 1e-4 et k=4 ne
+sont RIEN réglés par le run lui-même (le run PROPOSE un EPS via la règle Q2, il ne
+l'applique pas) ; `run_f1_attribution_b.py` reste GATÉ ; le miroir CPU (option 2) reste
+travail de production non construit ; toute décision sur k reste gatée σ_ω (R4).
