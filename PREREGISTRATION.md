@@ -4844,3 +4844,84 @@ de CORRECTION, indépendantes du fork de réparation, bon marché :
 Les deux sont LUS DANS LE CODE, non vérifiés numériquement. Si (α) est réel, le schéma
 change et le choix de réparation change avec lui. Le fork de réparation (1) vs (2) se
 tranchera APRÈS, informé.
+
+### §A21 — B4 AMENDÉ : les deux bugs du retard d'une frame sont RÉELS ; invariant de transfert gravé (2026-07-19)
+
+> Suite de §A19-CORRECTION. Build de vérification : fluide-reduit fdc1dbf (cas
+> construits, attendus écrits d'avance, contre-épreuves incluses). Aucun run de mesure.
+
+**CAUSE COMMUNE, en une phrase** : dans `_appliquer_f`, **la TAILLE du transfert vient
+de la frame n−1, les DONNÉES de la frame n**. (α) et (β) sont les deux côtés du même
+décalage.
+
+**(α) TRONCATURE — RÉEL, et la perte est DÉFINITIVE.** Cas construit (5 émissions, puis
+40, puis trois frames à 40) : la frame qui émet 40 n'en transfère que 5, et les trois
+frames suivantes — qui ne tronquent rien et ont toute latitude — **ne rattrapent rien** :
+écart de grand livre de **35 couples exactement, strictement inchangé (atol 1e-12)**.
+Contre-épreuve : à tailles stables l'écart est **nul** — c'est bien la variabilité des
+tailles, pas le retard en soi.
+
+**(β) QUEUE DE TAMPON — RÉEL.** Cas construit (40, 40, puis 5) : `cloturer_frame` remet
+le compteur à zéro sans réécrire les buffers ⇒ **identité bit à bit** des positions
+[5, 40) avec la frame précédente (valeurs ET indices), et grand livre CPU **en excès de
+35 couples**.
+
+**CE N'EST PAS UN CAS LIMITE.** La condition de déclenchement est exactement
+`tailles_stables`, que le diagnostic mesure — et elle est **FAUSSE PARTOUT** dans les
+runs déjà enregistrés (lecture de `outputs/f1/`, aucun run neuf) : ma_quater
+447 965 → 844 768 et 222 755 → 1 064 750 ; borne_l3 deux groupes à 2.3× sur 330 frames.
+**Des centaines de milliers de coefficients perdus ou dupliqués à chaque frame.**
+
+**LE NOTA ENDOSSÉ EST RETIRÉ.** « Le schéma B4 étant incrémental, les résidus repassent
+le seuil : rien n'est perdu » supposait que le détail non transféré RESTE un résidu côté
+GPU. **Il ne le reste pas** : l'épilogue L3 fait `reference[p] += d` pour **tout couple
+ÉMIS, transféré ou non**. Le device inscrit dans sa référence une connaissance que le CPU
+n'a jamais reçue, et l'écart **ne repassera plus jamais le seuil**.
+**Conséquence architecturale, pas seulement de harnais : la garantie de convergence de
+B4 est VIDE sous ce transfert — l'erreur du lointain n'est bornée NI par EPS NI par la
+cadence, puisqu'elle s'accumule par un chemin que ni l'un ni l'autre ne contrôle.**
+
+**CORRECTION D'UNE SURCLAME DE LA SESSION CRITIQUE** : §A19-CORRECTION énonçait « la
+transmission est amplement suffisante, ~550× sous ic_bas ». **Faux comme formulé** : le
+livre de comptes mesure la COMPTABILITÉ DU DEVICE, dont on sait désormais qu'elle diverge
+en permanence de la réalité CPU. Énoncé correct : **le budget d'information du DESIGN est
+amplement suffisant (0.00011) ; c'est l'IMPLÉMENTATION DU TRANSFERT qui le perd.**
+
+**INVARIANT DE TRANSFERT (gravé, paper-grade — au-dessus du correctif) :**
+> **La référence du device n'avance QUE sur ce qui a été effectivement TRANSFÉRÉ,
+> jamais sur ce qui a été ÉMIS.** Toute implémentation qui viole cet invariant rend
+> non bornée l'erreur du chemin grossier, quels que soient le seuil et la cadence.
+
+**DÉCISION ROMAIN (2026-07-19) : CONSTRUIRE LE CORRECTIF PING-PONG.** Frame n écrit dans
+le jeu `n mod 2` ; on transfère le jeu de n−1 avec le compteur de n−1 — taille et données
+du même tour, **aucune synchronisation ajoutée (le choix 6 est préservé)**, et les deux
+défauts tombent ensemble. Coût : **+120 Mio de VRAM préallouée** (buffers actuels 64 +
+56 Mio) et **une frame de péremption sur les coefficients** (aujourd'hui les données sont
+fraîches, seule leur taille est fausse). **Motif de la décision, consigné : l'arbitrage
+est ASYMÉTRIQUE** — perte permanente NON BORNÉE contre péremption BORNÉE d'une frame, sur
+un grossier qui en porte déjà jusqu'à quatre (L1 k=4) ; et +120 Mio sur une résidence
+mesurée à 0.311 Go (gate 1.35) est immatériel. **Réserve nommée** : l'attribution « (a) le
+retard d'une frame suffit à lui seul » reste NON ARMÉE — l'arbitrage est raisonné, pas
+mesuré. Voies écartées et pourquoi : lecture synchrone du compteur (rétablit une
+synchronisation, viole le choix 6) ; estampillage de chaque coefficient (+33 % de D2H et
+modifie le kernel L3).
+
+**STATUT DES MESURES DÉJÀ GRAVÉES (décision Romain) : TEMPS VALIDES, CONTENU INVALIDE.**
+Le transfert déplace `taille(n−1)` octets à chaque frame ⇒ sur 300 frames le total est le
+même à un terme près, les MÉDIANES DE TEMPS tiennent : **M-a-quater 16.589, M-c 2.784,
+borne L3 5.122 sont conservées** avec cette réserve. Tout ce qui portait sur le CONTENU
+transféré tombe. Aucune re-mesure de temps n'est ordonnée ; le contenu sera re-mesuré par
+la sonde réparée.
+
+**DISJONCTION MAINTENUE** : ces deux défauts et le fork de réparation de la
+RECONSTRUCTION (lire `reference` vs miroir CPU complet) sont **disjoints** — corriger
+l'un ne répare pas l'autre. Le fork reste NON TRANCHÉ.
+
+**INSTRUMENT — empreinte rétablie et VÉRIFIÉE** : la seule signature que la suite
+verrouille réellement est
+`sha256(src.f1_gpu.substrat_fusionne._SOURCE) = e18015f57e14263414239b18c51d25cd335250f58dde2ccb892a6e2c1d6f30b4`
+(chaîne CUDA extraite, **8223 caractères**, pas le fichier). **Recalculée
+indépendamment par la session critique le 2026-07-19 : CONCORDE.** La citation
+`e8fcaad4…7f04` est abandonnée définitivement. **Signalé, non corrigé (cap) : le kernel
+L3 n'a AUCUN verrou d'empreinte** — seulement l'équivalence structurelle et l'état
+bit-identique. C'est pourtant lui qui porte `reference += d`.
