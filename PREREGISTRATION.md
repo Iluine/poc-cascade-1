@@ -5248,3 +5248,64 @@ verdict précédent, qui était « au seuil » et sous la dérive machine).
 — non achetée. **DÉCISION ROMAIN : prochain achat = CHIFFRAGE DE M-b** (gate iii,
 3–5 séances, risque ÉLEVÉ) — son gate d'instrument est dégagé (readout propre, D-1(a)
 Δχ à blanc exactement nul), D-1/D-2 sont lus, la suspension du chiffrage est levée.
+
+## §A25 — Bande recomposée (statut abaissé) ; chiffrage M-b ; T1 tranché ; DEUX TERMES À PRÉ-ENREGISTRER AVANT ACHAT (2026-07-19)
+
+Builds : fluide-reduit ca5ef3a (bande), e798d77 (chiffrage `claude/chiffrage-mb.md`).
+
+**BANDE RECOMPOSÉE — STATUT ABAISSÉ PAR LA SESSION CRITIQUE.** Point plancher :
+F 12.655 + remontée 5.122/4 = 1.280 + transferts 0.110 = **14.045** ; incertitude
+± (dérive 0.18 + amortissement L1 0.10), prédiction en plancher unilatéral [0, ~0.5]
+⇒ **[13.8, 14.8]**. Mesuré 14.490, écart **+0.445, dans la bande**.
+**MAIS : cette bande est construite APRÈS la mesure.** Ses composants sont des ancres
+indépendantes, mais la fourchette de prédiction [0, ~0.5] est CHOISIE et 14.490 en
+exige 0.445. **Un intervalle bâti la donnée en main ne peut pas prononcer « ce n'est
+pas un AUTRE »** — il dit seulement : *la mesure est COHÉRENTE avec les ancres*. C'est
+plus faible, et c'est suffisant ici. Réserve de Claude Code reconduite : la prédiction
+étant un SOLDE, elle absorbe par construction tout résidu non modélisé — le test dit
+que 0.445 est un coût plausible, pas qu'il est prédiction et rien d'autre.
+**CONSÉQUENCE CONSTRUCTIVE GRAVÉE : toute mesure de cette classe aura désormais sa
+bande PRÉ-ENREGISTRÉE pour sa config exacte** — trivial maintenant que les ancres
+existent.
+
+**CHIFFRAGE M-b** : total ~2 600–3 680 LOC, **3.6–5.7 séances** > 3 ⇒ **scission
+interne risqué-d'abord** (règle 3, comme A/B) : **tranche-1 = gate T1** (~2.1–3.4 :
+F fidèle + Exner + pulse/épisode + T1) — *la frame fidèle tient-elle sous 16.7 ?*, le
+moins cher qui peut tuer V4-b ; **tranche-2 = fidélité** (~1.5–2.3 : émissions
+3 seeds/Δt=4/6, MORT-b par-seed contre 0.0733) — la fidélité ne se mesure que si le
+coût passe. Fait structurel remonté : **M-b est le PREMIER build dont l'objet est un
+MOTEUR** (le F fidèle) et non un motif de coût — le morceau qui glisse
+mesure→prototype, **pire que L3** (L3 était greffé sur F ; ici le moteur EST l'objet,
+sans cap possible).
+
+**DÉCISION ROMAIN — T1 PORTE SUR LA MÉDIANE.** Le gravé §A19-Q3 disait « frame
+complète > 16.7 » sans lever médiane/p99, là où MORT-a tranche explicitement pour la
+médiane. **T1 = médiane frame complète (F fidèle) > 16.7 ⇒ V4 mort** — cohérent avec
+MORT-a et avec T2 qui a déclaré le p99 NON-VERDICTAL. **Le p99 reste reporté en
+évidence et la question du stutter reste NOMMÉE À PART** — ni fondue dans T1, ni
+enterrée. Motif consigné : ajouter aujourd'hui un seuil p99 **en sachant qu'il vaut
+16.853** reviendrait à le régler à la vue de la donnée.
+
+**RÉSERVE MAJEURE DE LA SESSION CRITIQUE : L'ANCRE 12.655 N'EST PEUT-ÊTRE PAS LA BONNE
+BASE POUR LE FIDÈLE.** Deux termes que l'ancre **n'a jamais portés** :
+1. **HALOS DE FENÊTRE.** Le jetable pade en **réfléchissant par fenêtre** — acceptable
+   pour un motif de coût, **faux pour la physique**. Le fidèle exige de VRAIS halos
+   entre fenêtres, donc un échange non mesuré.
+2. **MAPPING ÉPISODE↔FRAME.** L'ancre mesure **UNE** application de F. Si le CFL du
+   fidèle impose PLUSIEURS pas par frame pour avancer le temps réel, **le budget se
+   multiplie d'autant**. C'est le **pied non mesuré n°7 (cadencement)** qui arrive sur
+   le chemin critique, **déguisé en détail de protocole**. Le rederive fait pulse +
+   ~600 pas wetdry O2 CFL-adaptatif + ~300 pas Exner par épisode : le rapport
+   pas/frame décide de tout ce que T1 signifie.
+**Ces deux termes peuvent coûter plus que tout ce qui a été optimisé aujourd'hui, et
+aucun n'est dans les 14.490.**
+
+**DÉCISION ROMAIN : LES PRÉ-ENREGISTRER D'ABORD, PAPER-GRADE, AVANT TOUT ACHAT.**
+Aucun run, aucune ligne : (a) dériver le nombre de pas de F par frame depuis le **CFL
+réel du substrat**, et (b) chiffrer ce que coûtent de vrais halos entre fenêtres.
+Motif : **T1 est VERDICTAL** — mesurer sur un mapping choisi PENDANT le build, ce
+serait risquer de choisir celui qui passe. Et cela évite d'acheter 2 à 3 séances contre
+un budget qu'on découvrirait faux au premier run.
+
+**Reste inchangé** : k = 4 (σ_ω gaté) ; `run_f1_attribution_b.py` gaté ; miroir CPU non
+construit ; kernels intouchés ; gate (ii) F0-cloud toujours dû (~2 min).
