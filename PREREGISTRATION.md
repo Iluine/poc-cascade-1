@@ -4925,3 +4925,70 @@ indépendamment par la session critique le 2026-07-19 : CONCORDE.** La citation
 `e8fcaad4…7f04` est abandonnée définitivement. **Signalé, non corrigé (cap) : le kernel
 L3 n'a AUCUN verrou d'empreinte** — seulement l'équivalence structurelle et l'état
 bit-identique. C'est pourtant lui qui porte `reference += d`.
+
+### §A21-complément — Correctif ping-pong LIVRÉ ; invariant AMENDÉ à sa forme implémentable ; fork de reconstruction TRANCHÉ (2026-07-19)
+
+Build : fluide-reduit f5b3999. **Vérifié indépendamment par la session critique** :
+`_SOURCE` fusionné 8223 car. **e18015f5…30b4** CONCORDE ; `_SOURCE_L3` 9635 car.
+**9533a130…781a** CONCORDE ; diff de `substrat_fusionne.py` VIDE ; sur `substrat_l3.py`
+les hunks tombent en 14/57/60 (docstring) puis ≥181 (`CompacteurL3`) — **aucun entre
+76 et 175 : le bloc CUDA est intact par POSITION**, pas par affirmation. Le kernel L3 a
+désormais son propre verrou d'empreinte (il porte `reference += d`).
+
+**L'INVARIANT §A21 EST AMENDÉ — ma formulation n'était pas implémentable.** J'avais
+gravé « la référence du device n'avance QUE sur ce qui a été TRANSFÉRÉ » : or le kernel
+fait `+= d` à l'ÉMISSION et n'a aucun moyen de savoir ce qui sera transféré. La forme
+retenue, due à Claude Code, atteint la même fin et elle est TESTABLE :
+
+> **INVARIANT DE TRANSFERT (forme exacte) : bijection ÉMIS ↔ REÇU — chaque couple
+> transféré une fois et une seule, avec un décalage d'EXACTEMENT une frame :**
+> **`livre_cpu(après n) ≡ livre_device(après n−1)`.** Rien de moins (α réglé), rien de
+> plus (β réglé). Seule la dernière frame d'une série reste en attente — **borne
+> exacte, avec son propre test**. L'erreur du chemin grossier est alors bornée par une
+> frame de péremption, jamais accumulée.
+
+Le correctif ne supprime pas le retard : **il le rend honnête.** L'invariant est tenu
+par le COMPACTEUR (le kernel ne peut pas le tenir), `_appliquer_f` est intouché.
+
+**DEUX CORRECTIONS QUE LE BUILD IMPOSE À MES GRAVURES :**
+1. **Le compteur n'était PAS faux** : `hote[0]` portait déjà le compte de n−1 (choix 6,
+   conforme) — c'est la DONNÉE qui venait de la mauvaise frame. Mon « la taille vient de
+   n−1, les données de n » nommait le bon symptôme avec le mauvais coupable. **Le
+   mécanisme du choix 6 est CONSERVÉ, pas contourné.**
+2. **L'argument « temps valides » se RENFORCE** : avant on transférait `taille(n−1)`
+   octets depuis `buffer(n)` ; après, depuis `buffer(n−1)` — **volume par frame
+   IDENTIQUE, exactement**. M-a-quater 16.589 / M-c 2.784 / borne L3 5.122 ne sont plus
+   « valides à un terme près sur 300 frames » : elles sont **inchangées par
+   construction**.
+
+**Preuves apportées avec le build** : choix 6 préservé — **prouvé** par piège
+(points d'entrée de synchronisation remplacés par des levées, six frames par le chemin
+de production) **avec contre-épreuve que le piège est ARMÉ** (une synchronisation
+délibérée doit lever d'abord — *« un piège qui n'attrape rien ne prouverait rien »*).
+Les deux tests (α) et (β) passent d'« exhibe le défaut » à « prouve son absence »,
+mêmes cas construits, mêmes attendus, conditions de déclenchement toujours présentes.
+Test d'INVARIANT (pas de régression) sur les amplitudes RÉELLES lues dans `outputs/f1/`
+(2.3× borne_l3, 4.8× ma_quater, croissances et décroissances alternées), avec
+vérification que `tailles_stables` vaut bien **False** — l'invariant tient MALGRÉ
+l'instabilité. Résidence : **+120 Mio = 0.126 Go** chiffrés AVANT run sans allouer,
+reportés à part au JSON (résidence V2 0.311, gate 1.35 — marge intacte). Le nota « rien
+n'est perdu » est **retiré, pas nuancé** : disparu de la note du JSON (le seul texte
+qu'un lecteur de résultats voit), et un test interdit qu'il soit re-porté comme vrai.
+
+**DÉCISION ROMAIN — FORK DE RECONSTRUCTION TRANCHÉ : OPTION 1 (lire `reference`).**
+Motifs consignés : (i) le transfert étant corrigé, `reference(n−1)` ≡ connaissance
+CPU(n) **exactement** — l'hypothèse est bien plus mince qu'avant le correctif ;
+(ii) argument de sûreté : si l'erreur de prédiction domine, EPS n'est de toute façon pas
+la contrainte liante ; si elle ne domine pas, la réponse de l'option 1 est la bonne ;
+(iii) c'est une RÉPARATION DE SONDE, gratuite, qui débloque la question EPS (levier
+~2.5 ms alors que V4 ne tient qu'à 0.111 ms). **L'option 2 (miroir CPU complet) reste
+NOMMÉE comme travail de PRODUCTION** — premier jalon du côté CPU, sur le pied non mesuré
+n°3 (niveau 0 vivant à 500k, ×7.6) ; l'écart entre les deux options EST l'erreur de
+prédiction propagée, candidate au terme dominant du lointain. Non armée.
+
+**CONSIGNE PRÉ-ENREGISTRÉE POUR LA SONDE RÉPARÉE (session critique)** : au frame n, le
+CPU connaît l'état de **n−1**. La sonde doit donc **DÉCLARER AVANT RUN contre quelle
+vérité elle compare** — `vérité(n)` mesure ce que le joueur voit (canal + péremption
+acceptée), `vérité(n−1)` isole la fidélité du CANAL seul. Les deux sont légitimes, elles
+diffèrent d'exactement la péremption qu'on vient d'acheter, **et les confondre
+refabriquerait un artefact de décalage temporel** — la faute même qui a coûté la journée.
