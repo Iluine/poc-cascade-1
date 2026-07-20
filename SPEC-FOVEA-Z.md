@@ -437,3 +437,17 @@ l'équilibre ; audio à ≥40 kHz) : ce sont un *solve* et une *synthèse*, pas 
 avancés par F. **Fork ouvert §A20-4** : feuilletage temporel de l'état (proche à `t`,
 lointain jusqu'à `t−4`) — deux référents distincts, dont un (latence moteur-visuelle)
 est un pin NEUF et gaté. Coût des deux projections : **NON MESURÉ**.
+
+---
+
+## §2-rev2 (2026-07-19) — LA PYRAMIDE EST UN MIPMAP `[ENDOSSÉE 2026-07-19]`
+
+Propriété load-bearing, détail faisant foi au **journal §A28** : **le niveau fin est à
+la RÉSOLUTION DE LA PHYSIQUE ; les niveaux décimment vers l'extérieur, jamais ne
+raffinent sous la maille de base.** Motif : il n'existe aucune vérité sub-cellulaire —
+une fovéa sur-résolue mesurerait sa propre invention. Lecture correcte du pilier : la
+distance fixe un **PLAFOND** de LOD, pas un plancher sous la physique ; la fovéa sert à
+**ne pas payer le fin partout**. **PRIX** : raffiner sous la maille de base exigerait un
+modèle sous-maille ET ramènerait le sous-cyclage temporel (M ≈ n₉/2), tuant le budget
+dès ~4–12× de sur-résolution. **COROLLAIRE** : vitesse de jeu **K ≤ ~4.2×** le temps
+réel avant démarrage du sous-cyclage.

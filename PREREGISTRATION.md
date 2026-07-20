@@ -5439,3 +5439,70 @@ M-b à 64² (T1 étant désormais séparé, MORT-b y redevient le gate propre) ;
 grande échelle (résolu par tranche-1 à l'échelle V4, sans rederive) ; **résolution
 physique du niveau fin** — qui EST la question du sous-cyclage, et qui est **une
 question ouverte de la SPEC, pas un détail de M-b**.
+
+## §A28 — PROPRIÉTÉ MIPMAP gravée ; M = 1 établi ; V4 SURVIT ; tranche-1 ACHETÉE (2026-07-19)
+
+Document : fluide-reduit 69c9de5 (`claude/sous-cyclage-echelle-v4.md`), paper-grade.
+
+**LE DÉSACCORD EST TRANCHÉ, ET IL ÉTAIT STRUCTUREL.** Le multiplicateur sur F ne
+dépend que de **`n_9 = dt_frame / dt_CFL(fin)`** :
+`n_j = max(1, ⌈n_9 / 2^(9−j)⌉)` ; `M = Σ blocs(j)·n_j / 15` ; **`M ≈ n_9 / 2`**.
+**M est une FONCTION, pas une constante** — nos deux chiffres étaient deux points
+arbitraires sur la même courbe.
+- Le 100–256× de Claude Code : **faux structurellement** — 2^(j−1) appliqué en aveugle
+  (M = 128, indépendant de n_9), soit le Berger-Oliger plein, correct seulement si le
+  pas de frame est calé sur la CFL du plus grossier (n_9 = 256) ⇒ double hypothèse
+  jamais dite (fovéa sur-résolue 256× **et** ~12× le temps réel).
+- **CONCESSION DE LA SESSION CRITIQUE, plus précise que celle qui m'est accordée** : ma
+  règle (sous-cycler seulement où `dt_frame > dt_CFL(j)`) était BONNE, mais mon
+  placement était **À L'ENVERS** — j'ai mis la résolution de la physique au niveau LE
+  PLUS GROSSIER (dx = 1 au grossier, fin 256× plus fin), **fabriquant une fovéa
+  sur-résolue par construction**. Claude Code l'a placée où elle est : `run_episode`
+  EST le substrat, le niveau FIN EST la physique.
+
+**PROPRIÉTÉ DE SPEC GRAVÉE (load-bearing) :**
+> **LA PYRAMIDE EST UN MIPMAP.** Le niveau fin est à la RÉSOLUTION DE LA PHYSIQUE ;
+> les niveaux **décimment vers l'extérieur**, jamais ne raffinent **sous la maille de
+> base**.
+
+Justification (Claude Code) : `run_episode` est à dx = 1, **il n'existe aucune vérité
+sub-cellulaire — une fovéa sur-résolue mesurerait sa propre invention.** C'est la
+discipline du projet appliquée à la géométrie.
+
+**COHÉRENCE AVEC LE PILIER, et c'en est la bonne lecture** : « la distance fixe un
+**PLAFOND** de LOD » — un plafond, **pas un plancher sous la physique**. La fovéa ne
+sert pas à être plus fine que le substrat : elle sert à **NE PAS PAYER LE FIN
+PARTOUT**. Lointain décimé, proche à la résolution de la physique.
+
+**SON PRIX, gravé avec elle (une propriété load-bearing sans contrepartie chiffrée
+ressemble à un arrangement — le projet a déjà payé pour le nota non chiffré de B4)** :
+**raffiner un jour sous dx = 1 exigerait un MODÈLE SOUS-MAILLE, ET ramènerait le
+sous-cyclage** — M franchit 2–3 dès **~4–12× de sur-résolution** (la marge disparaît),
+et à span plein (256×) **M ≈ 11–31 : catastrophique**. La propriété n'est donc pas
+révocable sans conséquence.
+
+**CONSÉQUENCE — M = 1, V4 SURVIT.** À dx = 1, `dt_CFL(fin)` = 0.07–0.21 s et
+`dt_frame` = 0.0167 s siège **4–12× sous** ⇒ `n_9` = 0.08–0.24 < 1 ⇒ **AUCUN niveau ne
+sous-cycle, M = 1**. Le budget tranche-1 (~15.0–16.1 ms) tient **inchangé**. Et le
+caveat de régime de §A27 est **satisfait** : la CFL est SOLLICITÉE (fronts wet/dry,
+smax 1.9–5.7, marge 4–12×) sans être violée — **le chrono vaut**.
+
+**COROLLAIRE GRATUIT — la VITESSE DE JEU K est tranchée** (point 1 des quatre décisions
+dues) : à K× le temps réel il faut `K · 0.0167 ≤ dt_CFL(fin) = 0.07` ⇒ **K ≤ ~4.2×
+avant que le sous-cyclage ne démarre.** Au-delà, M croît et le budget se dégrade.
+
+**SI V4 MEURT UN JOUR (par sur-résolution)** — inventaire gravé de ce qui SURVIT, tout
+étant indépendant du dt : **le registre, la géométrie emboîtée (propriété E), L3, la
+prédiction gratuite, EPS 1e-2**. À rouvrir : l'intégration mono-dt, la victoire 14.490
+(vidée sous sous-cyclage, à re-mesurer), et la question même du besoin de raffiner sous
+la physique. **La seule issue qui sauverait une fovéa sur-résolue serait une propriété
+de STABILITÉ gravée** — schéma implicite, niveau fin non hyperbolique, ou borne
+d'énergie — **aucune n'est acquise**. En leur absence, le sous-cyclage est imposé.
+
+**DÉCISION ROMAIN : ACHAT DE LA TRANCHE-1 DE M-b.** M = 1 est établi, le chiffrage
+existe (~2.1–3.4 séances), T1 est verdictal sur la MÉDIANE, K ≤ 4.2 est acquis, et les
+deux gardes de §A27 tiennent (même code F dans les deux tranches ; état synthétisé
+exerçant le régime). **Ce qui reste — le MUR INTÉRIEUR (fidélité de bord : halo
+parent-grossier vs mur réfléchi du domaine 64² du rederive) — est une question de
+FIDÉLITÉ, donc de TRANCHE-2**, non bloquante pour une mesure de temps. Les choix de
+build seront remontés pour endossement selon la cadence maison.
