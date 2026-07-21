@@ -5799,3 +5799,49 @@ Exner toujours **lue** de `save_every`.
 **CHIFFRAGE** : ~1 120–1 650 LOC, **1.7–2.6 séances** (cohérent §A28), plus le bras
 témoin. Poste qui peut glisser : **le refresh halo inter-étage** (objet neuf, jamais
 tourné) — **POINT D'ARRÊT si au-delà de 0.3 séance avant le driver**.
+
+### §A31-build — Trois pièces load-bearing livrées ; GATE (iii) RE-SCOPÉ avant le run (2026-07-19)
+
+Builds : fluide-reduit 8710288 (lecture 3 branches), a06ab4a (refresh halo
+inter-étage), 74c5188 (bras témoin). **Point d'arrêt AVANT l'assemblage** — le bon
+réflexe : un moteur de fidélité assemblé à la va-vite serait le glissement que Claude
+Code avait lui-même nommé. 436 tests F1 verts, kernels figés + C1–C5 intouchés
+(quatre empreintes tenues).
+
+**LE BRAS TÉMOIN A DÉJÀ FAIT L'ESSENTIEL DE SON TRAVAIL AVANT DE TOURNER :
+(a) = 6e-5 d'écart relatif** (témoin f32 plein domaine vs rederive f64, config
+identique). Si l'arithmétique f32 contribue à ce niveau, elle siège **trois ordres sous
+le seuil 0.0733**. Conséquence sur la lecture pré-écrite : **la branche « les deux
+traversent ⇒ (a), Option B est le remède » devient TRÈS IMPROBABLE** ; si la production
+traverse, ce sera presque certainement **(b)+(c)** — donc avec un remède qui **n'est pas
+Option B**. C'est exactement ce que le bras témoin existait pour établir, et il
+l'établit avant la mesure. **RÉSERVE** : 6e-5 est une **vérification d'ÉTAT au build**,
+pas la mesure pré-enregistrée en **Δχ** sur la cellule — **le témoin doit tourner comme
+prévu, l'instrument n'est pas le même.**
+
+**LE REFRESH HALO CONFIRME LE DIAGNOSTIC DE C1 PAR UNE SECONDE MESURE INDÉPENDANTE**
+(0.34 contre figé — la signature du 0.186), avec **C-property 2-niveaux à 1.2e-8** : le
+bien-équilibré survit à la structure. Tenu en ~90 LOC, **bien sous le point d'arrêt de
+0.3 séance**. Fait à la couche t2, **jamais dans `pas_f_fidele`** — l'invariant liant
+tient.
+
+**PROBLÈME DE GATE, POSÉ AVANT LE RUN ET NON APRÈS.** Le gate (iii) est gravé
+« **M-b sans mort SUR V4** » (§A18). Or §A27 a établi que M-b **doit** tourner à **64²**
+— le rederive y vit et il est intouchable. **Le gate, tel qu'écrit, est STRUCTURELLEMENT
+INSATISFIABLE.** Et les deux portées de Claude Code disent pourquoi un PASS ne pourrait
+pas le fermer par surclame : à 64² sur deux niveaux, **L1 et L3 — la machinerie même qui
+pourrait rompre le contrat — ne sont exercées que MARGINALEMENT**, et le lointain n'a
+pas les neuf niveaux de décimation de V4.
+
+**DÉCISION ROMAIN — GATE (iii) RE-SCOPÉ, gravé AVANT la mesure :**
+> **(iii) M-b SANS MORT À 64², SUR FOVÉATION 2-NIVEAUX.** Le contrat à l'échelle V4 —
+> où L1/L3 travaillent pleinement et où le lointain porte neuf niveaux de décimation —
+> devient une **TRANSPOSITION NOMMÉE**, `[TRANSPOSITION-HYPOTHÈSE]`, **non mesurée**.
+> Son falsificateur exigerait un rederive à l'échelle V4, que la règle « rederive
+> INTOUCHÉ » interdit ; il reste donc **nommé et non armé**. **Un PASS à 64² ne pourra
+> pas être lu comme « le contrat tient à l'échelle V4 ».**
+
+**PROCHAIN PAS ENDOSSÉ : l'ASSEMBLAGE** — évolution production (fovéation 2-niveaux via
+`pas_deux_niveaux` + structure d'épisode du témoin + remontée L3 à EPS 1e-2 +
+connaissance CPU option 1) et driver (3 seeds, Δt=4, 6 émissions, MORT-b par-seed câblé
+à la lecture 3 branches), **construit-non-lancé**. Aucun run avant endossement.
