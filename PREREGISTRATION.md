@@ -5845,3 +5845,48 @@ pas les neuf niveaux de décimation de V4.
 `pas_deux_niveaux` + structure d'épisode du témoin + remontée L3 à EPS 1e-2 +
 connaissance CPU option 1) et driver (3 seeds, Δt=4, 6 émissions, MORT-b par-seed câblé
 à la lecture 3 branches), **construit-non-lancé**. Aucun run avant endossement.
+
+### §A31-assemblage — ENDOSSÉ, T2 prêt à courir ; ce qu'une traversée (b) rétroagirait (2026-07-19)
+
+Build : fluide-reduit 5d051f1. **Vérifié indépendamment** : quatre empreintes
+concordent (6dd207ca / 3533fd0b / e18015f5 / 9533a130), kernels figés + C1–C5
+intouchés. Re-scope du gate (iii) présent dans le champ de lecture.
+
+**LE VERROU DES CENTRES — la meilleure prise de l'assemblage.** Le rederive est
+intouché, il ne rend pas ses centres. Plutôt que de SUPPOSER que le tirage de la
+production reproduit le sien, un test **rejoue un épisode avec les centres de la
+production contre `run_history` lui-même** : bit-pour-bit. **Sans ce verrou, Δχ aurait
+mesuré un écart d'HISTOIRE lu comme un écart de FIDÉLITÉ** — exactement le trou qui a
+coûté la journée sur la sonde EPS, refermé ici par construction. `cellule_mb.py` fait
+partager aux deux bras la cellule, l'observable et le budget : **apples-to-apples
+STRUCTUREL, pas déclaratif.** Canal testé aux deux bouts (seuil ∞ ⇒ CPU muet même si le
+live a évolué ⇒ c'est bien la `reference` qui est lue, pas le champ ; seuil 0 + budget
+large ⇒ CPU exact).
+
+**CINQ CHOIX NON COUVERTS PAR LE GRAVÉ, ENDOSSÉS** : (1) cadence de remontée = une par
+épisode (le seuil mord 4× entre deux émissions) ; (2) le cap 10 % borne les détails L3
+transportés, plus gros |Δ| d'abord — sans cette lecture le cap serait décoratif ;
+(3) dt lockstep = min(CFL fin, CFL grossier) ; (4) **échelle de lecture = 64² PLEIN, pas
+décimé — le choix le plus SÉVÈRE, conservateur** (un PASS y est plus fort) ; (5)
+géométrie fovéa (côté 32, 1 cellule/épisode ⇒ ~un tiers du domaine parcouru, asserté).
+
+**ENJEU RÉTROACTIF NOMMÉ AVANT LE RUN (session critique)** : **T2 est la PREMIÈRE fois
+que la contribution d'EPS = 1e-2 à l'écart live↔rederive est mesurée contre le VRAI
+rederive f64.** La sonde EPS (§A23) avait établi l'innocuité du **CANAL** — Δχ contre
+une vérité DÉCIMÉE, connaissance CPU comprise. Ici la production porte sa remontée
+seuillée à 1e-2 contre la **vérité f64 PLEINE**. Donc **si la série traverse par (b)**,
+la lecture ne dit pas seulement « Option B n'est pas le remède » : elle dit que
+**l'application d'EPS = 1e-2 à la production (§A24) était trop lâche contre le contrat
+réel** — conséquence rétroactive sur une décision gravée. Le bras témoin sépare (a) ;
+**rien ne sépare (b) de (c) dans ce build**, mais **EPS est réglable et la structure ne
+l'est pas**, donc la branche (b)+(c) **rouvrirait d'abord EPS**. Déjà porté par la
+lecture 3 branches — rendu explicite ici, avant les chiffres.
+
+**RÉSERVES D'INSTRUMENT (Claude Code, reconduites)** : `ruff` **absent de
+l'environnement** — pas de « ruff clean » revendiqué ; contrôle F401 par AST fait à la
+place (rien, hors le faux positif `from __future__`). Coût du run : **~3.5 min**
+(3 seeds × 24 épisodes × 3 bras) — l'endossement ne coûte pas une séance.
+
+**DÉCISION ROMAIN : ASSEMBLAGE ENDOSSÉ, T2 PEUT COURIR.** 48 tests tranche-2 verts, 492
+sur la suite. Lecture mécanique remontée à trois branches, verdict à Romain — **c'est
+le dernier des trois gates de la spec.**
