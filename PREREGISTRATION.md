@@ -6002,3 +6002,82 @@ S'ASSÈCHENT.**
 
 **524 tests verts. DÉCISION ROMAIN : correction ENDOSSÉE avec la garde structurelle ;
 cellule §A15 INTACTE — c'est l'INSTRUMENT qui a plié, pas la mesure.**
+
+## §A32 — VERDICT MORT-b PRONONCÉ (2026-07-19) ; l'amplitude est diagnostique ; décomposition spatiale ordonnée
+
+Run : fluide-reduit 7e25009, natif, après correction d'instrument endossée (§A31-diagnostic).
+**Garde structurelle livrée et plus forte que la sonde qu'elle remplace** (testé sur
+nombres mesurés : à N_settle=10 / t_end=2.0, l'ancienne acceptait — 11 pas disponibles —
+là où la garde REJETTE, fenêtre à 1.9331 contre 2.0). Espion déléguant à
+`_relax_episode` sans la modifier (un appel par barreau au lieu de deux) ; **aucune garde
+au plafond gravé** — refuser là où l'original accepte créerait une divergence de domaine.
+RLIMIT_AS armé **après** l'init CUDA (qui réserve 6.43 Go d'espace d'adressage pour
+0.28 Go résident) ⇒ **plafond réglé sur VmSize, jamais sur RSS**, effectif 12.6 Go.
+Aucun OOM ; rederive 1.25–1.61 Go, le plus haut des trois bras (cohérent avec le poste
+diagnostiqué, et il tourne EN PREMIER donc pas un artefact de high-water).
+
+**LECTURE MÉCANIQUE — pin sévère 0.0733 :**
+
+| seed | production | témoin | branche |
+|---|---|---|---|
+| 101 | **0.70329** | **0.07731** | les deux traversent ⇒ (a) |
+| 102 | **0.70266** | 0.01481 | production seule ⇒ (b)+(c) |
+| 103 | **0.86958** | 0.05240 | production seule ⇒ (b)+(c) |
+
+**VERDICT PRONONCÉ (Romain, 2026-07-19) : MORT-b.** Les trois seeds traversent en
+production **d'un ordre de grandeur** (0.70–0.87 contre 0.0733) — **pas une marge
+manquée, un écart massif**, et **toutes les émissions traversent**, pas seulement le
+maximum. **Option A est MORTE par-seed.** Règle d'agrégation gravée appliquée : un seul
+seed en (b)+(c) suffit ⇒ **Option B N'EST PAS LE REMÈDE.**
+
+**LA RÉSERVE SUR LE TÉMOIN ÉTAIT LOAD-BEARING, ET LA MESURE LA VALIDE.** §A31-build
+prédisait la branche « les deux traversent » très improbable au vu des **6e-5** ; le
+témoin donne en réalité **0.0148 à 0.0773** — trois ordres au-dessus, assez pour faire
+traverser le seed 101. **L'instrument n'était effectivement pas le même** : 6e-5 était
+un écart d'ÉTAT, Δχ est une mesure SPECTRALE. Sans cette réserve, la branche 101 aurait
+été lue comme une anomalie.
+
+**DEUX FAITS REMONTÉS SANS LISSAGE (Claude Code)** : (i) le seed 101 traverse de **5.5 %
+au-dessus du pin** (0.07731 vs 0.0733), **sur une seule émission (la 20)** — sa branche
+est MARGINALE ; c'est le seul seed accusant (a), et il tient à un cheveu. Le verdict
+agrégé n'en dépend pas (102 et 103 suffisent), **mais l'attribution de 101 est fragile** ;
+(ii) le témoin est **NON MONOTONE** le long de l'histoire (101 : 0.026 → 0.003 → … →
+0.077 → 0.034) — **l'écart f32 ne s'accumule pas, il FLUCTUE.**
+
+**L'AMPLITUDE EST DIAGNOSTIQUE (session critique) — et le risque de raisonnement motivé
+est nommé d'abord** : le verdict est mauvais et la session critique produit une raison
+pour laquelle il pourrait ne pas dire ce qu'il dit. **Ce qui l'autorise, et rien de plus** :
+ni l'observable ni le critère ne sont touchés (tous deux pré-enregistrés, le choix le
+plus sévère ayant été endossé par la session critique elle-même) ; ce qui est demandé est
+un **DIAGNOSTIC SUR DONNÉES DÉJÀ ACQUISES**, pas une re-mesure sous critère plus aimable.
+
+- **FAIT DÉCLENCHEUR : 0.70–0.87 tombe DANS LA PLAGE DU CONTRÔLE DE CORRUPTION
+  DÉLIBÉRÉE de la manche 2** — shuf-commit, Δχ₂ = **0.693 / 0.752 / 1.028**
+  (§A13-résultat). Quand une mesure atterrit dans la plage de son propre
+  contrôle-scramble, la lecture honnête est **« suspecter qu'on mesure une DESTRUCTION,
+  pas une dégradation »**.
+- **MÉCANISME STRUCTUREL DISPONIBLE** : la fovéa fait 32² sur 64² ⇒ **25 % de l'aire
+  fine, 75 % décimée 2×** ; et l'observable lit **`max_carrier`**, des BANDES PORTEUSES
+  — qu'une décimation 2× **annihile** dans toute cette zone. Saturation quasi-tautologique.
+- **LE TÉMOIN DIT LA MÊME CHOSE PAR L'AUTRE BOUT** : 6e-5 d'écart d'état ⇒ jusqu'à 0.077
+  de Δχ, le f32 seul FRÔLE le pin. Si la simple précision est perceptuellement à la
+  limite sur ce substrat, ce n'est pas le f32 qui est en cause mais **la
+  COMMENSURABILITÉ de Δχ avec le pin DANS CETTE CONFIGURATION**.
+- **LE POINT DE SPEC, LE PLUS LOURD** : appliquer le pin **FOVÉAL** (jnd_sev, mesuré en
+  ABX au centre du regard) **UNIFORMÉMENT** à un champ **délibérément grossier en
+  périphérie** est **précisément la transposition que `r_fovea` devait résoudre** — et
+  `r_fovea` est **GATÉ et NON MESURÉ** depuis l'origine (§7, « LE pin manquant
+  load-bearing »). **Une architecture fovéale pourrait être STRUCTURELLEMENT incapable de
+  passer un critère JND-fovéal uniforme, et ce ne serait pas un échec d'Option A.**
+
+**DÉCISION ROMAIN : DÉCOMPOSITION SPATIALE, SUR LES CHAMPS DÉJÀ CAPTURÉS, AUCUN RUN** —
+Δχ **fovéa seule** contre vérité vs Δχ **grossier seul** contre vérité. **Lectures
+pré-écrites** : fovéa propre + grossier saturé ⇒ la cause est **(c) la DÉCIMATION**, et
+le remède n'est **ni Option B ni EPS** — c'est **le critère appliqué à la périphérie**
+qui est en cause, donc **`r_fovea`** ; fovéa également dégradée ⇒ la cause est **(b) EPS
+et/ou le canal**, et EPS se resserre. **Rien n'est décidé avant cette lecture** — en
+particulier, resserrer EPS maintenant paierait du trafic pour rien si (c) domine :
+0.70 ne descendra pas sous 0.0733 en resserrant un seuil qui gouverne le détail
+transporté, **pas la résolution du grossier**.
+
+**L'observation §A31-diagnostic sur l'effondrement du `dt` reste portée, non armée.**
