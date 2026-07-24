@@ -6081,3 +6081,73 @@ particulier, resserrer EPS maintenant paierait du trafic pour rien si (c) domine
 transporté, **pas la résolution du grossier**.
 
 **L'observation §A31-diagnostic sur l'effondrement du `dt` reste portée, non armée.**
+
+### §A32-décomposition — MON HYPOTHÈSE EST FALSIFIÉE ; aucun remède unilatéral ; bras EPS = 0 ordonné (2026-07-19)
+
+Lecture : fluide-reduit `claude/lectures/mb_t2_decomposition.lecture.json`. Aucun run neuf.
+
+**LA MÉTHODE, MEILLEURE QUE LA DEMANDE.** La restriction spatiale demandée par la
+session critique était **ILLÉGITIME**, deux fois : (i) le complément n'est pas
+rectangulaire (couronne en L), `chi_bands` fait une `fft2` et `_radial_bins` suppose
+H = W — zéro-remplir changerait `mean_a`, qui divise χ ; (ii) même la fovéa seule
+**change de base** (à 32², la bande (16, ∞) s'arrête au Nyquist 22.6 au lieu de 45.25)
+⇒ on comparerait **deux instruments** — le piège §A14 exactement. **Substitut retenu :
+MASQUER LA DIFFÉRENCE, PAS LE DOMAINE** — champ hybride (production dans la région,
+rederive ailleurs) sur 64² plein, observable appelé tel quel, **référence identique donc
+porteuses identiques** dans les trois évaluations ; masque plein ⇒ retour **au bit près**
+sur le Δχ mesuré (testé). Réserves : champs non persistés par le driver (scalaires
+seuls) ⇒ **re-matérialisés avec preuve d'identité bit-exacte sur les 18 Δχ publiés**,
+fail-loud sinon ; le masquage **fuit au bord**, donc les Δχ partiels ne s'additionnent
+pas — la partition d'énergie, exactement additive, sert de **second regard**.
+
+**RÉSULTAT — AUCUNE DES DEUX LECTURES PRÉ-ÉCRITES NE S'APPLIQUE :**
+
+| région | min | max | > pin |
+|---|---|---|---|
+| fovéa seule | 0.109 | 0.572 | **18/18** |
+| périphérie seule | 0.148 | 0.678 | **18/18** |
+
+L'hybride étant le **contrefactuel d'une région parfaitement réparée** : réparer
+parfaitement la périphérie (`r_fovea`) laisserait Δχ à **0.109–0.572** ; réparer
+parfaitement la fovéa (EPS) le laisserait à **0.148–0.678**. **AUCUN REMÈDE UNILATÉRAL
+NE RACHÈTE LE GATE (iii).** (Approximation nommée : réparer une région changerait
+l'autre par le couplage du halo.)
+
+**L'HYPOTHÈSE DE LA SESSION CRITIQUE EST FALSIFIÉE — concession immédiate et sans
+réserve :**
+- **« On mesure une destruction, pas une dégradation » : FAUX.** Corrélation
+  production/rederive **0.576–0.927** contre **|r| < 0.2** pour un vrai shuffle
+  (discriminant testé). **La production est structurellement corrélée à la vérité**,
+  avec une erreur d'amplitude et de grande échelle — **rien à voir avec du bruit**.
+  **Le verdict dit bien ce qu'il dit : ce n'est PAS un artefact de corruption.**
+- **Le mécanisme supposé est FAUX aussi, plus durement** : **la bande 16-31 N'EST PAS
+  PORTEUSE** (`porteuses['16-31'] = False`) ⇒ la décimation **ne peut pas** saturer
+  `max_carrier` en annihilant des porteuses fines : **elles n'y sont pas**. Bandes
+  dominantes : **2-3 et 4-7** — écart de **GRANDE ÉCHELLE**, pas perte de texture fine.
+- **Ce qui SURVIT de l'intuition** : l'asymétrie spatiale est réelle — la périphérie
+  porte **22× plus d'énergie d'erreur par cellule** (médian, **jusqu'à 169×**). La
+  périphérie est bien le lieu ; le mécanisme n'est pas celui qui avait été nommé.
+- Le risque de raisonnement motivé avait été nommé d'avance (§A32) ; **la mesure établit
+  qu'il était réel et que la session critique y était.** Consigné comme tel.
+
+**CE QUE LA DÉCOMPOSITION SPATIALE NE POUVAIT PAS VOIR (session critique, après
+falsification)** : **les deux régions passent par LE MÊME CANAL** — la connaissance du
+CPU sur la fovéa vient des coefficients L3 seuillés, celle sur la périphérie aussi, plus
+la décimation. **Une décomposition SPATIALE ne peut pas séparer un défaut DE CANAL : il
+est partout.** Et un écart de **grande échelle, corrélé à la vérité, d'amplitude
+fausse**, est la signature d'une **BANDE MORTE** — un seuil `|d| ≥ EPS` qui ne transmet
+jamais ce qui reste sous lui. Si **EPS = 1e-2 est comparable à l'amplitude du champ de
+sédiment réel**, le CPU n'apprend presque rien ; et §A23 avait établi l'innocuité d'EPS
+**sur un état SYNTHÉTISÉ à l'échelle V4**, pas sur ce substrat. **C'est exactement la
+conséquence rétroactive nommée en §A31-assemblage AVANT le run.**
+
+**DÉCISION ROMAIN : BRAS EPS = 0 — LE PLANCHER STRUCTUREL.** Le discriminateur qui
+manque n'est pas spatial, il est **PAR CANAL** : même structure 2-niveaux, budget large,
+seuil nul (machinerie déjà testée : « seuil nul ⇒ CPU exact »). **Lectures pré-écrites :**
+> **il PASSE ⇒ la cause est la BANDE MORTE du seuil — le remède est EPS** (et l'échelle
+> à laquelle §A23 l'avait validé est à re-poser) ;
+> **il ÉCHOUE ⇒ le plancher est STRUCTUREL** (décimation + halo) — **l'architecture
+> fovéale, telle que construite, ne peut pas satisfaire É2**, et c'est une question de
+> spec, pas de réglage.
+Coût : un run de ~3.5 min. **Le verdict MORT-b n'est pas rouvert** — ce bras attribue,
+il ne réhabilite pas.
