@@ -5931,3 +5931,74 @@ libérer entre seeds, streamer le rederive) — jamais la mesure.
 **LEÇON D'INSTRUMENT RECONDUITE** : les états d'échec se **persistent** (leçon gravée du
 FAIL cloud non persisté). Le diagnostic doit **capturer** le pic et la phase, pas
 seulement constater la mort du processus.
+
+### §A31-diagnostic — OOM ATTRIBUÉ (RAM hôte) ; correction d'instrument ENDOSSÉE ; risque neuf nommé (2026-07-19)
+
+Diagnostic : fluide-reduit 2402f78 (`claude/diagnostic-oom-t2.md`). Aucun run de mesure.
+
+**1. DISCRIMINATION — RAM HÔTE, verbatim.** Aucune trace Python (ni
+`cupy.cuda.memory.OutOfMemoryError`, ni traceback) : `dmesg` donne
+`Out of memory: Killed process 37234 (python) total-vm:33600364kB,
+anon-rss:23569692kB` puis un second à **25 088 636 kB**. **Mempool CuPy plafonné à
+34 Mo mesurés — le GPU est HORS DE CAUSE**, et une saturation VRAM aurait levé une
+exception, pas un SIGKILL. L'inspection de §A31-run est confirmée.
+
+**2. LE POSTE, AU CENTRE PRÈS** — seed 103, épisode 4, centre (0.3524, 0.6131). **Le
+`dt` ne s'effondre pas au départ : il s'effondre EN COURS d'épisode** —
+t_end 32 : 269 pas, dt médian 1.05e-1, 26 Mo ; t_end 64 : **3 173 pas**, dt médian
+5.5e-3, **312 Mo** ; t_end 130 (le réel) : **~254 000 pas, ~25 Go**. Les 601 pas
+retenus couvrent t = 48.44 sur 130 : **besoin réel 59 Mo, ~99.8 % calculé puis jeté.**
+`run_history` est hors de cause (ne stocke que les checkpoints, vérifié).
+
+**3. CORRECTION — LE REDERIVE RESTE INTOUCHÉ** (`git diff` vide sur `sediment.py` et
+`solver_wetdry.py`). `t_end` ne gouverne que **l'arrêt de boucle et l'écrêtage du
+dernier `dt`** ⇒ on consomme **au plus petit barreau d'une échelle plafonnée au `t_end`
+gravé**, le domaine de résultats restant exactement celui du rederive, dont le
+`RuntimeError` sert d'**oracle**. **Piège visé et fermé** : si le compte de pas tombait
+exactement à `N_settle`, la dernière entrée retenue serait le pas ÉCRÊTÉ, différent du
+rederive non borné — l'échelle cherchant le plus petit barreau qui passe, **ce cas est
+structurellement visé** ⇒ marge d'un pas.
+**DEUX ERREURS DE CLAUDE CODE, corrigées par la mesure et consignées** : (i) sa
+proposition de modifier `simulate_wetdry_o2` — exclue par §A31-run, le protocole fait le
+même travail sans toucher la vérité-sol ; (ii) son premier mémo **monotone**, FAUX :
+**ep3 exige 130, ep4 se contente de 64** — hériter du 130 tuait le processus ;
+**l'escalade repart du bas.** Propriété de sûreté nommée : *un épisode exigeant un
+`t_end` élevé a un `dt` large, donc peu de pas — l'épisode coûteux est justement celui
+qu'un `t_end` bas satisfait.* Cellule entière sous **RLIMIT_AS = 4 Go : pic 2.2 Go** —
+**la garde est une PREUVE, pas un correctif** (le processus n'aurait pas pu dépasser
+sans lever).
+
+**AMENDEMENT ROMAIN — GARDE STRUCTURELLE PAR ÉPISODE.** Le test de bit-exactitude à
+`N_settle = 600` est un **échantillon** ; la propriété se vérifie **par épisode et
+gratuitement** : **asserter que le temps du dernier pas RETENU est strictement inférieur
+à `t_end` moins la marge**. Alors le pas écrêté est hors fenêtre **par construction** —
+plus besoin de comparer contre une exécution non bornée, **impossible précisément là où
+le risque est maximal**. Motif « invariant plutôt que surveillance », reconduit.
+
+**MONKEYPATCH `_T_END_RELAX` — ENDOSSÉ, et la franchise est la bonne réponse.** Seul
+point d'entrée du `t_end` ; remplacé le temps de l'appel, restauré en `try/finally`
+(testé sur exception). `git diff` vide, sortie prouvée préfixe ⇒ **la vérité-sol n'est
+pas altérée**. **Mutation globale, NON THREAD-SAFE — T2 est mono-fil**, gravé tel quel :
+invisible, ce serait pire qu'une modification franche.
+
+**4. SONDE PERSISTÉE** (leçon du FAIL cloud non persisté, appliquée) : le SIGKILL ne
+déroule aucun `finally` ⇒ début écrit **avant** le travail, battements portant le pic
+**pendant**, fin avec exception ; JSON lines + `fsync`, relecture tolérant la dernière
+ligne coupée ; pic par bras et par phase. **Un run partiel qui atteint le pic le
+reporte.**
+
+**5. RISQUE NEUF NOMMÉ (session critique) — L'EFFONDREMENT DU `dt` DANS LA QUEUE DE
+RELAXATION.** Au barreau 64 : les **601 pas retenus couvrent t = 48.44** ⇒ `dt` moyen
+**0.081**, **exactement la fourchette de §A26** (0.049–0.112) — **la dérivation qui
+fonde M = 1 CONCORDE et n'est PAS invalidée**. Mais les 2 572 pas suivants couvrent
+t = 15.56 (`dt` ≈ **0.006**), et atteindre 130 demande ~254 000 pas (`dt` ≈ **5e-4**) :
+**le `dt` s'effondre de DEUX ORDRES DE GRANDEUR dans la queue, là où les cellules
+S'ASSÈCHENT.**
+> **RISQUE GRAVÉ, NON ARMÉ** : le substrat POSSÈDE des régimes où `dt_CFL` tombe très
+> en dessous du temps de frame, et **l'assèchement est omniprésent dans un jeu**. La
+> marge de 4–12× de T1 a été mesurée sur un **état synthétisé qui n'exerçait pas ce
+> régime**. **Falsificateur désigné** : mesurer la marge CFL sur un état qui SÈCHE.
+> **Non armé — T2 reste la priorité** (le gate (iii) est à un run de sa lecture).
+
+**524 tests verts. DÉCISION ROMAIN : correction ENDOSSÉE avec la garde structurelle ;
+cellule §A15 INTACTE — c'est l'INSTRUMENT qui a plié, pas la mesure.**
