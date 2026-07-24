@@ -6151,3 +6151,70 @@ seuil nul (machinerie déjà testée : « seuil nul ⇒ CPU exact »). **Lecture
 > spec, pas de réglage.
 Coût : un run de ~3.5 min. **Le verdict MORT-b n'est pas rouvert** — ce bras attribue,
 il ne réhabilite pas.
+
+## §A33 — PLANCHER STRUCTUREL ÉTABLI : É2 n'est pas satisfaisable par le vivant fovéal tel que construit (2026-07-19)
+
+Bras EPS = 0 : fluide-reduit 4295353, `claude/lectures/mb_t2_eps0.lecture.json`.
+
+**LA PRISE AVANT LE RUN, DÉCISIVE.** À EPS = 0, **le cap 10 % mordait à la place du
+seuil** — `|d| ≥ 0` vrai partout ⇒ 4096 candidats pour `budget_k_fen(4096) = 409`
+places. **Ce bras aurait mesuré LE CAP, pas la structure** : un plancher qui n'en est
+pas, qui n'aurait rien tranché. Budget forcé à H·W, transparence vérifiée par test.
+C'est exactement la question posée avant de courir, et elle a payé.
+Trois portées nommées : le canal ici est **le modèle numpy (option 1), pas le compacteur
+GPU L3** — sa capacité de buffer n'est pas exercée ; transparence à EPS = 0 à l'arrondi
+f32 près (**~1e-8 relatif, mesuré — sept ordres sous le pin**) ; remontée à chaque
+épisode et émissions en fin d'épisode ⇒ **aucune péremption ne se déguise en plancher**.
+
+**RÉSULTAT — BRANCHE « IL ÉCHOUE » : 3/3 seeds, 17/18 émissions au-dessus du pin.**
+À seuil nul et budget plein, **le canal ne retire déjà plus rien** ⇒ **resserrer EPS ne
+peut pas franchir ce plancher.**
+> **LE PLANCHER EST STRUCTUREL (décimation + halo). L'ARCHITECTURE FOVÉALE TELLE QUE
+> CONSTRUITE NE PEUT PAS SATISFAIRE É2 — question de SPEC, pas de réglage.**
+Part de structure (c) = EPS0 − témoin : **positive partout, 0.056 à 0.664** — terme
+dominant devant le témoin (0.015–0.077).
+
+**DEUX AUTO-CORRECTIONS DE CLAUDE CODE, toutes deux DURCISSANT la lecture :**
+1. **Attribuer par différence de MAXIMA était faux** — les maxima des trois bras tombent
+   à des **émissions différentes** (seed 101 : EPS0 culmine à l'émission 12, la
+   production à la 24) ; les soustraire **mélangeait des instants**. Attribution refaite
+   **par émission**.
+2. **L'EMBOÎTEMENT (a) ⊂ (a)+(c) ⊂ (a)+(b)+(c) N'EST PAS MONOTONE.** Sur **3/18
+   émissions, retirer le seuil AGGRAVE Δχ** (seed 101/12 : EPS0 = 0.668 contre
+   production = 0.483). **Fait neuf** : le seuil ne fait pas que perdre de l'information
+   — **il filtre aussi du désaccord de faible amplitude**, et Δχ étant un **rapport
+   spectral**, tout laisser passer peut **injecter du désaccord**. « Part du canal » est
+   un **écart SIGNÉ, pas une contribution additive** — les trois bras ne se lisent pas
+   comme une décomposition additive propre. Sans effet sur le verdict (EPS0 traverse
+   largement), mais interdit une lecture qui l'aurait suggéré.
+
+**MÉCANISME NOMMÉ (hypothèse de la session critique, pas un fait)** : à EPS = 0
+l'intérieur de la fovéa est alimenté **EXACTEMENT** ; son erreur résiduelle
+(0.109–0.572, 18/18) ne peut donc venir que de son **BORD**, c'est-à-dire du halo dérivé
+du grossier. **L'ERREUR DU LOINTAIN NE RESTE PAS DANS LE LOINTAIN : ELLE ENTRE DANS LA
+FOVÉA PAR LE HALO.** Conséquence immédiate : **`r_fovea` ne rachèterait rien** — un JND
+périphérique généreux ne protège pas contre une contamination qui **traverse**.
+
+**CAVEAT D'ÉCHELLE, nommé AVEC son apparence de sauvetage.** Sur un épisode,
+l'information traverse **`c·t = 1.886 × 48.44 ≈ 91 cellules`** ; **la fovéa fait 32**.
+Donc **à 64² le halo contamine la fovéa ENTIÈRE**, tandis qu'à l'échelle V4 (fovéa 512²)
+il n'atteindrait que **la couronne**. **La configuration 64²/32² est le PIRE CAS possible
+pour ce défaut.** **Cela ne rachète PAS le verdict** — le gate a été re-scopé à 64²
+précisément pour cela (§A31-build) — mais c'est une question que la séance papier doit
+peser, **avec sa contre-épreuve**, et non un motif d'action.
+
+**PORTÉE DU BRAS** : il **ATTRIBUE, il ne RÉHABILITE PAS**. **MORT-b n'est pas rouvert,
+Option A reste morte**, la production reste ce qu'elle est.
+
+**DÉCISION ROMAIN : SÉANCE PAPIER SUR É2 ET L'ARCHITECTURE — pas de quatrième
+diagnostic** (engagement pris au tour précédent, tenu). Trois questions que la mesure
+rend inévitables :
+1. **É2 doit-il comparer des ÉTATS ou des PROJECTIONS ?** S'il compare des projections,
+   **il est NON MESURABLE tant que la moitié projection n'existe pas** (§A20) — et le
+   projet devrait le dire au lieu de mesurer un proxy d'état.
+2. **La contamination du halo est-elle un DÉFAUT RÉPARABLE** (recouvrement plus profond,
+   fovéa portant son propre bord, bord commis au registre) **ou INHÉRENTE** au
+   couplage grossier→fin ?
+3. **Le caveat d'échelle** (91 cellules de propagation contre 32 de fovéa) — et **quelle
+   contre-épreuve** le rendrait falsifiable sans devenir un quatrième diagnostic
+   déguisé.
