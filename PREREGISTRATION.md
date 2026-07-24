@@ -5890,3 +5890,44 @@ place (rien, hors le faux positif `from __future__`). Coût du run : **~3.5 min*
 **DÉCISION ROMAIN : ASSEMBLAGE ENDOSSÉ, T2 PEUT COURIR.** 48 tests tranche-2 verts, 492
 sur la suite. Lecture mécanique remontée à trois branches, verdict à Romain — **c'est
 le dernier des trois gates de la spec.**
+
+### §A31-run — ÉCHEC D'INSTRUMENT sur T2 (OOM) : le gate (iii) est NON MESURÉ (2026-07-19)
+
+**Le run de T2 n'aboutit pas : OOM, processus tué par le système.** Consigné comme
+**ÉCHEC D'INSTRUMENT, PAS COMME RÉSULTAT** : le gate (iii) n'est **pas raté**, il est
+**NON MESURÉ**. Aucune lecture, aucun verdict, aucune branche prononcée.
+
+**CE QUE L'INSPECTION DU CODE ÉTABLIT (session critique, avant tout diagnostic
+d'exécution)** : **rien dans T2 n'explique un OOM à 64²**. La configuration est
+correcte (n = 64, `N_FOVEA` = 32) ; les buffers L3 sont dimensionnés pire-cas mais sur
+**4096 cellules** ; la production n'alloue que des champs minuscules ; le driver libère
+le mempool (`free_all_blocks`). **T1 tournait à 512² sur 301 frames avec 0.564 Go sans
+incident.** ⇒ **le débordement ne vient vraisemblablement PAS du GPU.**
+
+**CE QUI EST NEUF DANS T2** : le **rederive CPU f64 sur 72 épisodes** (3 seeds × 24), et
+« le système coupe les runs » est la signature de l'**OOM killer Linux** ⇒ **RAM HÔTE**.
+**Candidat précis, issu de Claude Code lui-même** : *« `_relax_episode` intègre toujours
+jusqu'à `_T_END_RELAX` puis tronque »* — si cette intégration MATÉRIALISE la trajectoire
+complète avant de tronquer, elle alloue un ordre de grandeur au-dessus de ce que la
+cellule demande, **72 fois**. `run_history` ne stocke que les checkpoints (vérifié), donc
+l'accumulation, si elle existe, est en amont.
+
+**DISCRIMINATEUR À UNE COMMANDE** : `cupy.cuda.memory.OutOfMemoryError` dans la trace ⇒
+**VRAM** ; simplement `Killed` (ou `dmesg | grep -i oom`) ⇒ **RAM HÔTE**. Les deux ont
+des causes et des remèdes disjoints.
+
+**DÉCISION ROMAIN : DIAGNOSTIQUER L'ALLOCATION, CELLULE INTACTE.** Instrumenter le pic
+mémoire **par bras et par phase** (VRAM via mempool, RAM hôte via `resource`/`psutil`),
+identifier le poste qui déborde, et **corriger l'INSTRUMENT** (séquencer les épisodes,
+libérer entre seeds, streamer le rederive) — jamais la mesure.
+
+> **INTERDIT EXPLICITE, gravé : la cellule §A15 ne bouge pas.** 3 seeds {101,102,103},
+> Δt = 4, 6 émissions. **Rétrécir la mesure pour qu'elle entre dans l'instrument est
+> l'INVERSION INTERDITE** — refusée à l'identique sur la parité des 17 blocs
+> (§A22-complément : « modifier le design épinglé pour satisfaire l'instrument aurait
+> été l'inversion interdite »). Et **MORT-b est PAR-SEED** : sur un seul seed, le
+> critère perdrait son sens.
+
+**LEÇON D'INSTRUMENT RECONDUITE** : les états d'échec se **persistent** (leçon gravée du
+FAIL cloud non persisté). Le diagnostic doit **capturer** le pic et la phase, pas
+seulement constater la mort du processus.
