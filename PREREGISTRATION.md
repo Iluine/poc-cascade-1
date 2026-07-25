@@ -6795,3 +6795,58 @@ sans re-dérivation.*
 
 **POINT D'ARRÊT : chantier 4 amendé (critère unifié), le runner re-prononce
 mécaniquement, puis le chrono P2 est LANCÉ PAR ROMAIN. Rien d'autre ne bouge.**
+
+## §A39 — VERDICT P2 : LA PREMIÈRE ANCRE DE LA MOITIÉ RENDU EXISTE (2026-07-25)
+
+> Deux runs verdict-grade lancés par Romain (iluin-tworings3, natif, 300/30,
+> `verdict_grade=True`, empreinte R1 c5ac8757… citée et verte dans le JSON).
+> Run de référence : calibration d'Arc C (1920/597/750 — ppd 42.099, 77 px, la
+> géométrie de la campagne du pin) ; premier run (1920/600/800 — ppd 44.682,
+> 82 px) conservé comme contrôle de stabilité. Lecture versionnée :
+> `pocPhysicator/claude/lectures/p2_chiffrage_rendu.lecture.json`.
+
+**CELLULE 1 — DANS_BANDE, branche 1, CONSOMMÉE** : médiane 0.1194 ms
+(p95 0.1300 ; 0.1372 sur l'autre géométrie) ≤ 5 ms ⇒ **le rendu est INVISIBLE
+dans les timings de session P3** (régime sévère §C0) ; aucune modification de
+protocole ; **le pré-requis 3 du prereg P3 (pré-calcul des stimuli) est SANS
+OBJET**.
+
+**CELLULE 2 — ÉQUIVALENCE : PASSE** au critère de nature unifié
+(§A38-CORRECTION-3) : recopie à jour (sha vérifié à l'exécution), bascule pure
+sur CHAQUE bras de CHAQUE champ (isolation 0/6/2/4 ; f32 complet 13/20/19/23
+désaccords sur 2 073 600 — tous |Δ| = 1, distance max à la bascule ≤ 2.11·10⁻⁵) ;
+attribution surfacée en diagnostic, jamais jugée. **L'ancre est légitime.**
+
+**CELLULE 2 — CHRONO : AUTRE, zone silencieuse, prononcé mécanique honoré** :
+médiane **0.9811 ms** (p95 1.0051) hors bande [0.02, 0.5] ; entre le haut de
+bande et la marge V4 ⇒ aucune branche prononcée, ratio surfacé. **Stabilité
+mesurée** : 0.9811 / 0.9898 ms sur deux géométries de session (charge écran
+fixe), Δ ~0.9 % — l'ordre de la dérive machine.
+
+**DÉCISION ROMAIN : (i) — l'ancre consignée TELLE QUELLE** :
+> **L'étage minimal du rendu (Y = A + encodage sRGB + quantification uint8,
+> chaîne CuPy NON FUSIONNÉE) coûte ~0.98 ms à l'échelle écran 1920×1080 sur
+> 3050 Ti** — soit 0.446 × la marge physique V4 (2.199 ms), soit 5.9 % de la
+> moitié rendu (~16.7 ms réservés par le motif de T2).
+
+Consigné avec : **la bande papier était fausse d'un facteur ~2 sur son haut**
+(la leçon MORT-a en miniature — les enveloppes mentent, c'est pourquoi P2
+existait) ; **l'hypothèse d'attribution du ×20 vs l'enveloppe bande passante
+(chaîne élémentaire non fusionnée, ~100 Mo de trafic au lieu de ~10) est NOMMÉE,
+NON MESURÉE, DORMANTE sous D17** — elle ne se mesure que le jour où une décision
+de budget rendu en dépend (aucune avant compositeur et R2). Option (ii) sonde
+fusionnée : NON RETENUE — diagnostic sans décision consommatrice, la définition
+du tapis roulant.
+
+**PORTÉE, dite deux fois à dessein (D-P1-1)** : P2 a chiffré le NOYAU — « la
+première ancre de la moitié manquante, PAS la moitié entière » ; le coût de la
+COMPOSITION (gather pyramide→écran) et de l'optique au-delà de Y = A reste la
+dette nommée. « Le rendu tient » n'est pas prononçable ; « l'étage minimal est
+petit devant la moitié rendu » l'est.
+
+**LE GATE P2 EST FRANCHI. POINT D'ARRÊT : il reste UNE mesure devant l'arc —
+la session humaine P3 (transport du pin), tous pré-requis verts (garde de
+comparabilité ✓, liaison sidecar↔log ✓, pré-calcul sans objet ✓), protocole et
+lectures pré-écrites gravés (prereg P3 + corrections). Elle part sur décision
+explicite de Romain, à la géométrie pic-CSF, avec son bras témoin. Aucun
+enchaînement.**
