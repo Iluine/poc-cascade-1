@@ -6747,3 +6747,51 @@ proposition non endossée).
 **POINT D'ARRÊT : micro-mission d'implémentation du critère (chantier 4 de
 `mission-prerequis-p2p3.md`), puis le chrono P2 est LANCÉ PAR ROMAIN,
 verdict-grade natif. La session humaine P3 : après P2, décision explicite.**
+
+### §A38-CORRECTION-3 (2026-07-25) — le point 2 du critère de nature (« isolation ⇒ ZÉRO ») est FALSIFIÉ à son tour ; critère UNIFIÉ retenu
+
+> Troisième correction du jour par la même règle. Chantier 4 livré (pocPhysicator
+> 6f094db, **1205 tests verts**, empreinte R1 verte, intouchés en diff vide) ; le
+> runner a prononcé AUTRE conformément au gravé, **chrono non lancé, aucun
+> critère relâché**.
+
+**LE FAIT** : l'isolation « chaîne f64 à entrée castée f32 ⇒ ZÉRO désaccord »
+échoue sur les champs uniformes gravés — 6/2/4 désaccords (seeds 0/1/2), tous de
+1 niveau, tous à ≤ 2.68·10⁻⁶ de la bascule ; la rampe rend 0. Le « déjà
+mesuré : 0 » de §A38-CORRECTION-2 était PARTIEL (rampe seule) et n'avait pas été
+dit partiel. Dérivation (sans GPU) : le cast f64→f32 perturbe v·255 de ~10⁻⁶ ;
+sur 2·10⁶ valeurs distinctes, quelques franchissements de frontière de `rint`
+sont l'ATTENTE, pas l'exception — un comptage ZÉRO n'est exigible sur aucun bras
+dès que la couverture est dense. **Le 0 de la rampe est un tirage, pas une
+propriété.** Le point 2 reproduisait sur l'ENTRÉE la structure exacte que
+§A38-CORRECTION-2 venait de falsifier sur la SORTIE.
+
+**CONCESSION CONSIGNÉE (session critique, la deuxième sur le même chantier)** :
+généralisation d'une mesure partielle en gate booléen, sur des champs jamais
+passés par le test — reconstruction du motif falsifié, dans le geste même de sa
+correction.
+
+**DÉCISION ROMAIN : (A) — CRITÈRE DE NATURE UNIFIÉ, un seul, appliqué à CHAQUE
+bras** : tout désaccord — dans le bras d'isolation (f64, entrée castée f32)
+COMME dans le bras f32 complet — doit être une **bascule pure**,
+|Δniveau| == 1, sinon AUTRE. **L'attribution par cause redevient ce qu'elle
+était : un DIAGNOSTIC** — comptages surfacés au JSON par champ et par bras,
+jamais jugés. Le point 2 cesse d'exister comme clause séparée. Aucun seuil,
+aucune exception. Options (B) juger le seul bras f32 (un désaccord de 2 niveaux
+dans l'isolation passerait en silence) et (C) zéro maintenu sur la rampe seule
+(un tirage n'est pas une propriété) : NON RETENUES.
+
+**GRAVÉ AVEC (livraisons du chantier acceptées)** : le point 1 rendu MÉCANIQUE —
+le sha de la recopie vérifié À L'EXÉCUTION contre le fichier (« déjà en place »
+était déclaratif ; une recopie périmée rendait un chiffre au lieu d'AUTRE) ; le
+falsifieur du point 3 (sonde décalée de 2 niveaux ⇒ la case sait échouer) ;
+l'agrégation SANS moyenne (un champ en échec ⇒ AUTRE) ; les champs et leur
+densité (> 2·10⁶ valeurs distinctes) verrouillés par test.
+
+**LEÇON GRAVÉE (troisième prise de la même règle en un jour — ruff, garde
+d'acuité, isolation)** : *un zéro mesuré est un tirage tant que sa structure
+n'est pas dérivée ; une attribution diagnostique ne se convertit pas en gate
+sans re-dérivation.*
+
+**POINT D'ARRÊT : chantier 4 amendé (critère unifié), le runner re-prononce
+mécaniquement, puis le chrono P2 est LANCÉ PAR ROMAIN. Rien d'autre ne bouge.**
