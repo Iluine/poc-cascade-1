@@ -6653,3 +6653,48 @@ BLOQUANTE, liaison sidecar↔log par sha256, pré-calcul conditionnel.
 les cellules P2 sont LANCÉES PAR ROMAIN, verdict-grade natif ; la session humaine
 P3 vient APRÈS pré-requis verts, P2 couru, et décision explicite. Chaque verdict
 remonte avant toute suite.**
+
+### §A38-CORRECTION (2026-07-25) — le pré-requis « garde d'acuité bloquante » est FALSIFIÉ avant build ; remplacé par une garde de COMPARABILITÉ
+
+> Entrée de correction append-only (tradition §A19/§A33). Remontée de la session
+> Claude Code AVANT toute construction — la vérification la moins chère d'abord,
+> appliquée à l'ordre de mission lui-même. Vérifiée indépendamment par la session
+> critique (arithmétique + manifeste + docstring).
+
+**LE FAIT** : à la géométrie pic-CSF, la taille angulaire d'une cellule ne dépend
+pas de l'écran — ppd entre dans `taille_domaine_px` et en ressort :
+cellule = (porteuse/c_deg)·60/64 = (5.5/3)·60/64 = **1.71875 arcmin**, contre un
+seuil d'acuité de 1.0. `cellule ≥ seuil` est vrai PARTOUT (mesuré de 400 à
+1500 mm : 1.713–1.724, seule la troncature entière de `taille_domaine_px` bouge le
+chiffre). La garde gravée en §A38 aurait refusé toute session pic-CSF — **y
+compris la campagne du 2026-07-05 dont sort le pin** (manifeste : ppd 42.099,
+77 px, cellule réalisée 1.715 arcmin, ratio 1.71). Le seul mode passant
+(`plafond`, ratio 0.9973 — de 0.27 %, par grâce d'arrondi entier) casserait le
+protocole P3 (« un seul changement ») et la comparabilité du bras témoin à l'IC
+gravé, mesuré à pic-CSF.
+
+**CONCESSION CONSIGNÉE (session critique)** : la garde bloquante était SA
+recommandation, endossée sur sa parole ; le fait était écrit au docstring de
+`observation_cellule_pic_csf` (`arcC_calibration.py` l.117-120 : « pic-CSF est
+DÉJÀ au-dessus (ou au) plafond d'acuité — tension attendue », « AUCUNE décision
+n'est prise ici ») — un non-choix DÉLIBÉRÉ de §C7 pièce 3, converti en gate dur
+sans re-dérivation, falsifiable à coût nul. Le seuil d'acuité n'est pas touché :
+un seuil se copie, il ne s'ajuste pas.
+
+**DÉCISION ROMAIN : (A) GARDE DE COMPARABILITÉ, bloquante** — sous
+`--sujet humain`, la géométrie de session doit être `pic-csf` (celle du pin
+gravé) ; `RuntimeError` d'aiguillage sinon. Le report §C7 reste un CHIFFRE
+SURFACÉ au sidecar, jamais un booléen (le refus délibéré de la pièce 3 est
+PRÉSERVÉ). Cette garde aurait passé la campagne du pin par identité ; elle bloque
+le seul scénario dangereux — une session à une AUTRE géométrie, comparabilité
+cassée en silence. Options (B) report seul (strictement dominée) et (C) P3 à
+`plafond` (deux changements à la fois) : consignées NON RETENUES.
+
+**CE QUI SURVIT de l'inquiétude d'acuité** : la tension est PORTÉE PAR LE PIN
+lui-même (mesuré à ratio 1.71, blocs compris dans le stimulus vu) et SYMÉTRIQUE
+entre les bras de P3 (même 64², même taille, deux chemins) — une propriété du
+référent, pas un confondeur du transport.
+
+**Chantiers 1 (runner P2) et 3 (sidecar↔log) : indépendants du point, LANCÉS tels
+quels.** Le prereg P3 porte sa correction explicite ; le chantier 2 de
+`mission-prerequis-p2p3.md` est ré-écrit sur le critère retenu.
