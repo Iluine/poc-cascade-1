@@ -6598,3 +6598,58 @@ calibration, monotonie de chaîne, garde d'acuité) ; ils GATENT l'achat de P2.
 (`mission-p1-rendu-instrument.md`), sur décision explicite de Romain. RIEN ne se
 code avant ; les tests d'acceptation se développent où l'on veut, le verdict P3
 restera iluin-tworings3 natif.**
+
+## §A38 — P1 CONSTRUIT ET CONFORME ; P2 ET P3 PRÉ-ENREGISTRÉS ET ENDOSSÉS (2026-07-25)
+
+> Revue critique de la remontée mission P1, puis endossement Romain des deux
+> pré-enregistrements (`prereg-p2-chiffrage-rendu.md`, `prereg-p3-transport-pin.md`,
+> pocPhysicator). Aucune mesure dans cette entrée.
+
+**P1 CONSTRUIT (mission exécutée, commit pocPhysicator 2bbcca2)** : `arcC_rendu.py`
+pur, ordre d'étages amendé (linéaire → sRGB → uint8 unique), gardes fail-loud,
+**empreinte-verrou c5ac8757… (15 770 octets)** ; sélecteur `--rendu` obligatoire,
+provenance au sidecar (viridis à sha=None — la vérité du chemin historique) ;
+**1168 tests verts (+44)**. Revue critique : **CONFORME, rien à refaire** —
+modules protégés vérifiés à diff VIDE, empreinte recalculée exacte, tolérance de
+porteuse 0.90 pré-enregistrée AVANT ses mesures (0.962–0.988, fréquence intacte).
+Quatre déviations remontées et ACCEPTÉES : sidecar au lieu d'un en-tête JSONL
+inexistant (abx intouchable) ; extension `run_arcC_orchestration.py` hors liste
+(sans elle, une campagne humaine héritait d'un chemin d'affichage EN SILENCE —
+la négation du flag) ; `CHEMINS_RENDU` en source unique ; falsifieur du
+court-circuit ajouté. Deux « non faits » adressés par décision : cohérence
+inverse étendue = couverte (identité bit-exacte + porteuse) ; garde d'acuité =
+BLOQUANTE en pré-requis P3 (D17 : son consommateur est P3).
+
+**FAIT D'INSTRUMENT CORRIGÉ (première application payante de la règle §A37-3)** :
+`ruff` vit dans `pocCascade2phys/.venv/bin/ruff` (0.15.20), **ABSENT de
+`pocPhysicator/.venv`**, aucune config aux dépôts — le « INSTALLÉ dans .venv » du
+brief du matin était imprécis de DÉPÔT bien que « vérifié ». Brief corrigé
+(43c7501). Lint effectif du projet : `--line-length 100 --select E,F,W`.
+
+**P2 ENDOSSÉ** (`prereg-p2-chiffrage-rendu.md`) : deux cellules, chacune avec son
+consommateur D17 — cellule 1 (R1 numpy, bande 0.05–5 ms) → l'intégrité des
+timings du régime sévère, avec décision de pré-calcul des stimuli si dépassée ;
+cellule 2 (encodage sRGB à l'échelle V4, GPU, bande 0.02–0.5 ms, build gaté
+0.5 séance, équivalence numpy exigée à tolérance zéro sinon remonté chiffré) →
+la ligne de budget « ~16.7 ms pour un rendu jamais chiffré ». **Lecture
+inconfortable gravée d'avance** : si la cellule 2 rend « quasi gratuit », la
+gravure dit « la dette se DÉPLACE vers la composition et l'optique, elle ne
+rétrécit pas » — interdiction pré-écrite de conclure « le rendu tient ».
+
+**P3 ENDOSSÉ** (`prereg-p3-transport-pin.md`) : protocole IDENTIQUE à la campagne
+du pin (mêmes 20 sources, même escalier, mêmes gardes §C5, même IC, sévère seul),
+**un seul changement : `--rendu r1`** ; **BRAS TÉMOIN viridis dans la même
+session** avec garde de validité — hors de l'IC gravé [6.03, 8.67] ⇒ session
+INDÉTERMINÉE, aucune lecture de transport (sans ce bras, un écart serait
+inattribuable entre le chemin et une dérive sujet/écran). Trois lectures
+pré-écrites, dont l'ANTI-SURCLAME : « compatible avec 1 » n'établit QUE la
+condition transport du caveat D14 — la pondération d'excentricité n'est PAS
+mesurée (stimulus fovéal ~2°), **la scission D14 ne se referme pas ici, quoi que
+P3 rende** ; « transport ≠ 1 » donne au gate (iii′) son échelle et **AUCUN seuil
+d'état ne bouge rétroactivement**. Pré-requis de build gatés : garde d'acuité
+BLOQUANTE, liaison sidecar↔log par sha256, pré-calcul conditionnel.
+
+**POINT D'ARRÊT : ordre de mission des pré-requis (`mission-prerequis-p2p3.md`) ;
+les cellules P2 sont LANCÉES PAR ROMAIN, verdict-grade natif ; la session humaine
+P3 vient APRÈS pré-requis verts, P2 couru, et décision explicite. Chaque verdict
+remonte avant toute suite.**
