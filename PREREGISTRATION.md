@@ -6850,3 +6850,49 @@ comparabilité ✓, liaison sidecar↔log ✓, pré-calcul sans objet ✓), prot
 lectures pré-écrites gravés (prereg P3 + corrections). Elle part sur décision
 explicite de Romain, à la géométrie pic-CSF, avec son bras témoin. Aucun
 enchaînement.**
+
+### §A39-CORRECTION (2026-07-25 soir) — l'ancre de la cellule 2 désignait DEUX objets ; cellule 2b (noyau fusionné) pré-enregistrée ; « (ii) non retenue » contredite par décision explicite
+
+> Entrée de correction append-only. Origine : remontée diagnostic de la session
+> Claude Code sur le run P2, puis **décision Romain de mesurer la version
+> fusionnée** — ce qui contredit la clause « option (ii) sonde fusionnée NON
+> RETENUE » de §A39 ; la contradiction passe par cette entrée, jamais par
+> silence.
+
+**LE FAIT** : le prereg P2 était intérieurement INCOHÉRENT — la bande [0.02, 0.5]
+venait d'un modèle à UNE passe (« ~10 Mo à 224 Go/s ») ; le texte gravait une
+implémentation à DIX passes (« sonde CuPy élémentaire », ~100 Mo de trafic).
+Deux objets sous la même phrase ; l'AUTRE du run signalait l'incohérence.
+Diagnostic (même protocole 300/30) : une passe élémentaire 0.1115 ms =
+**148.8 Go/s effectifs** ; `cp.power(·, 1/2.4)` seul 0.1195 ms — **la
+transcendante est quasi gratuite, le coût est le NOMBRE DE PASSES** (sonde =
+8.8× une passe). Version fusionnée (un kernel, constantes en paramètres) :
+**0.1200 ms, DANS_BANDE, équivalence PASS au critère de nature unifié** (9/21
+désaccords, bascule pure, jugée au même étalon) — chiffre DIAGNOSTIC-GRADE
+(session de build) : **pas une ancre** tant que le runner ne l'a pas prononcé
+sur un run de Romain.
+
+**CONCESSION CONSIGNÉE (session critique, la troisième du jour)** : le refus de
+(ii) invoquait « aucun consommateur » — le consommateur existait : **le SENS de
+l'ancre**, rendu ambigu par l'incohérence bande/objet du prereg, de la même
+plume. La décision de Romain a tranché ce que le D17 mal appliqué aurait laissé
+dormir.
+
+**DÉCISIONS ROMAIN** : **cellule 2b pré-enregistrée** — objet = le noyau
+FUSIONNÉ (celui que la bande a toujours modélisé), même bande, même critère,
+mêmes zones, prononcé mécanique, **run verdict-grade par Romain** (chantier 5) ;
+la cellule 2a et son AUTRE restent gravés — le coût de l'implémentation naïve,
+leçon consignée ; le script diagnostic de scratchpad MEURT (sa substance vit au
+prereg corrigé et dans le runner testé). Consigné avec : même fusionné, le
+papier restait optimiste **×2.4** (86.4 Go/s effectifs, écritures uint8
+étroites — même sens que MORT-a, moindre ampleur, absorbé par la marge ×10).
+
+**GRAVÉ AVEC (préparation P3, décisions Romain du soir)** : position du témoin =
+**3e des 4 staircases** (R1, R1, témoin viridis, R1 — fatigue et apprentissage
+répartis) ; **session aux conditions du pin** : lumière du jour stable, OSD
+80 %, sujet frais — la session de nuit du 25/07 explicitement REFUSÉE (le pin
+est pré-enregistré pour sa config exacte) ; outillage : `--regime` et
+`--temoin-viridis` (chantier 6), comportement historique intact par défaut.
+
+**POINT D'ARRÊT : chantiers 5-6 à Claude Code ; run cellule 2b par Romain ;
+puis la session P3, demain, lumière du jour. Chaque verdict remonte.**
