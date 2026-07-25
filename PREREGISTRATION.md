@@ -6698,3 +6698,52 @@ référent, pas un confondeur du transport.
 **Chantiers 1 (runner P2) et 3 (sidecar↔log) : indépendants du point, LANCÉS tels
 quels.** Le prereg P3 porte sa correction explicite ; le chantier 2 de
 `mission-prerequis-p2p3.md` est ré-écrit sur le critère retenu.
+
+### §A38-CORRECTION-2 (2026-07-25) — l'équivalence « tolérance zéro » de la cellule 2 est FALSIFIÉE STRUCTURELLEMENT ; critère de NATURE retenu
+
+> Deuxième correction du jour née de la même règle — la vérification la moins
+> chère d'abord, appliquée par la session Claude Code à son propre chantier.
+> Mission pré-requis exécutée (pocPhysicator d875834) : **1202 tests verts**,
+> empreinte R1 c5ac8757… verte (re-vérifiée par la session critique), garde de
+> comparabilité en source unique importée par la campagne, bandes verrouillées
+> par test, champ `verdict_grade` qui dénonce les runs raccourcis.
+
+**LE FAIT** : l'équivalence f32/f64 de la sonde CuPy (cellule 2) échoue à
+tolérance zéro — **13 px sur 2 073 600** (6.3·10⁻⁶), tous de 1 niveau, tous à
+< 1.73·10⁻⁵ de la bascule de `np.rint` ; attribution MESURÉE par isolation :
+cast f32 de l'entrée = 0 désaccord, **arithmétique f32 de la puissance
+1/2.4 = 13** — exactement le risque que le prereg avait nommé. Conformément au
+gravé, le runner s'est arrêté, verdict AUTRE, **chrono non lancé, aucune
+tolérance relâchée**. Et le confondeur du champ test est démasqué AVANT d'avoir
+fabriqué un faux : un champ 64×64 a **au plus 4096 valeurs distinctes par
+construction** — le champ réel pavé rend 0 désaccord par PAUVRETÉ
+d'échantillons ; la rampe (2.07·10⁶ valeurs, les deux branches sRGB) était le
+choix adverse. « Tolérance zéro » est donc structurellement inatteignable sur
+tout champ test à couverture dense : le critère devait changer, pas la mesure.
+
+**DÉCISION ROMAIN : (A) — CRITÈRE DE NATURE, aucun seuil inventé** (gravé en
+correction explicite du prereg P2) : (1) équivalence structurelle des formules
+(recopie + sha — elle juge la FORMULE) ; (2) isolation booléenne : chaîne f64 à
+entrée castée f32 ⇒ ZÉRO désaccord, sinon AUTRE ; (3) tout désaccord résiduel =
+**bascule pure**, |Δniveau| == 1 exactement, sinon AUTRE ; (4) taux et distance
+à la bascule SURFACÉS, jamais jugés. Portée dite : le critère de nature juge
+l'ARITHMÉTIQUE, la recopie juge la formule. Options (B) chrono f64 (coût que la
+production f32 ne paierait pas, bit-exact non garanti non plus) et (C) abandon
+de la cellule (budget sans ancre) : NON RETENUES. **Les 13 désaccords mesurés
+satisfont déjà le critère — mais il est gravé AVANT relance, et c'est le runner
+qui re-prononcera mécaniquement.**
+
+**GRAVÉ AVEC** : la règle des zones de la cellule 2 (le « ≪ » sans nombre était
+un flou de plume de la session critique, consigné) — branche 1 si
+médiane ≤ 0.5 ms (haut de bande = 0.227×marge), branche 2 si ≥ 2.199 ms (la
+marge V4), entre les deux RIEN n'est prononcé, ratio surfacé. Les cinq
+remontées de mission ACCEPTÉES (garde appelée depuis la campagne ; manettes
+--n-appels/--n-chauffe avec `verdict_grade` ; `distance_max_a_la_bascule` ;
+test de suite n'affirmant que la décidabilité). **Écho consigné, à ne pas
+instruire** : même bête que le fait d'instrument CPU/BLAS de la manche 2 — une
+pièce au dossier de « quantification du commis par format » (note v2 §5,
+proposition non endossée).
+
+**POINT D'ARRÊT : micro-mission d'implémentation du critère (chantier 4 de
+`mission-prerequis-p2p3.md`), puis le chrono P2 est LANCÉ PAR ROMAIN,
+verdict-grade natif. La session humaine P3 : après P2, décision explicite.**
