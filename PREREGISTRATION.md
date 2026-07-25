@@ -6896,3 +6896,49 @@ est pré-enregistré pour sa config exacte) ; outillage : `--regime` et
 
 **POINT D'ARRÊT : chantiers 5-6 à Claude Code ; run cellule 2b par Romain ;
 puis la session P3, demain, lumière du jour. Chaque verdict remonte.**
+
+### §A38-CORRECTION-4 (2026-07-26) — le prereg P3 attribuait au pin une méthode d'IC qui n'est pas la sienne ; min/max contre min/max retenu
+
+> Quatrième correction du même motif, attrapée par la session Claude Code
+> PENDANT la construction du chantier 7 (lecture P3 mécanique) — en lisant
+> l'artefact plutôt qu'en citant la mémoire.
+
+**LE FAIT** : le prereg P3 disait « même méthode d'IC (mean±2SEM combiné) ».
+L'artefact `pins_spatial.json` fait foi : **`methode_ic_primaire =
+min_max_seuils`** ; la branche à-cheval (le mean±2SEM combiné) n'a **jamais
+tourné** (`branche_combinee_active = False`) ; [6.03, 8.67] est EXACTEMENT le
+min/max des trois seuils du pin (0.06033 / 0.07295 / 0.08674 — leur 2SEM
+donnerait [5.81, 8.86]). **L'asymétrie avait un sens et il était mauvais** :
+2SEM (large) au bras R1 contre min/max (étroit) au pin favorisait le
+recouvrement — donc la branche 1, la confortable. Un instrument penché vers le
+confort, câblé par le prereg lui-même.
+
+**CONCESSION CONSIGNÉE (session critique, quatrième du motif en 24 h)** : la
+méthode a été attribuée depuis la mémoire du projet — qui consignait la méthode
+PRÉ-ENREGISTRÉE d'une branche jamais activée — au lieu d'être lue dans
+l'artefact. Un fait d'instrument porte sa date ET sa source.
+
+**DÉCISION ROMAIN : (A)** — même méthode = **celle que l'artefact du pin
+déclare** : l'IC du bras R1 est le MIN/MAX de ses trois seuils, la comparaison
+des branches est min/max contre min/max ; le mean±2SEM reste SURFACÉ en
+diagnostic avec le texte d'asymétrie, jamais décideur. **Choix adverse** :
+min/max est ici le plus étroit — le recouvrement devient plus dur. (B)
+recalculer le pin en 2SEM : REJETÉE, un référent gravé ne se recalcule jamais.
+(C) l'asymétrie telle qu'implémentée : REJETÉE, penchée vers le confort.
+
+**CONSIGNÉ AVEC** : la garde de liaison sidecar↔log a MORDU sur données réelles
+— les deux pré-vols du 25/07 au soir sont REFUSÉS par la lecture (le second par
+la garde anti-chevrons seule, son rôle posthume ; le premier aussi par la
+liaison : 3/4 sha en désaccord — mystère RÉSOLU, le mélange était de la main de
+la session critique elle-même : logs du pin restaurés au chemin canonique sous
+les sidecars du soir, la résolution « chemin enregistré d'abord » a trouvé le
+Frankenstein et l'a refusé ; comportement parfait, le dossier pré-vol reste
+cohérent en lui-même). Trois choix de build ENDOSSÉS : seuils R1 ni imprimés NI
+ÉCRITS sous témoin échoué (un fichier se lit) ; toutes les gardes évaluées,
+jamais court-circuitées (une mesure humaine ne se relance pas une fois par
+garde) ; `--conditions` absent vaut gabarit (« rien » n'est pas une
+observation).
+
+**POINT D'ARRÊT : bascule min/max au chantier 7 (une ligne), remontée complète
+de la suite, puis LA SESSION DE JOUR — cellule 2b et P3, lancées par Romain.
+Chaque verdict remonte avant toute suite.**
