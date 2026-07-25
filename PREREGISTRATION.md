@@ -6942,3 +6942,54 @@ observation).
 **POINT D'ARRÊT : bascule min/max au chantier 7 (une ligne), remontée complète
 de la suite, puis LA SESSION DE JOUR — cellule 2b et P3, lancées par Romain.
 Chaque verdict remonte avant toute suite.**
+
+## §A40 — VERDICTS DU 26/07 : CELLULE 2b DANS_BANDE (l'ancre fusionnée) ; SESSION P3 INDÉTERMINÉE — LE TÉMOIN A TENU SON POSTE (2026-07-26)
+
+> Deux runs verdict-grade lancés par Romain (iluin-tworings3, natif, lumière du
+> jour, calibration Arc C 1920/597/750). Lectures versionnées :
+> `p2_chiffrage_rendu.lecture.json` (mise à jour, 2a+2b),
+> `p3_transport_pin.lecture.json`. Lecture mécanique intégrale — aucun chiffre
+> lu à l'œil, aucun seuil R1 divulgué.
+
+**CELLULE 2b — DANS_BANDE, branche 1, l'ancre §A39-CORRECTION est PRONONCÉE** :
+le noyau FUSIONNÉ (un kernel, une passe) à **0.0936 ms** médiane (p95 0.1252),
+équivalence PASS au critère unifié ; la 2a re-confirme **1.0028 ms** (AUTRE,
+stable au ‰ sur trois runs). Le rapport ~10.7× élémentaire/fusionné est mesuré
+des deux côtés au même critère. La lecture gravée d'avance s'applique telle
+quelle : le coût inconnu du rendu vit dans la COMPOSITION et l'optique au-delà
+de Y = A — la dette se déplace, elle ne rétrécit pas ; interdiction maintenue
+de conclure « le rendu tient ».
+
+**SESSION P3 — INDÉTERMINÉE, branche 3, prononcée mécaniquement** : les quatre
+gardes PASSENT (gabarit, ordre r1-r1-viridis-r1, §C5, liaison sidecar↔log) ;
+**le TÉMOIN viridis rend 5.06 % — HORS de l'IC gravé [6.03, 8.67], PAR LE
+BAS** ; les seuils R1 ne sont NI lus NI écrits, comme gravé. **Cause
+parcimonieuse, nommée AVANT la session (25/07 au soir)** : l'effet
+d'apprentissage des deux pré-vols nocturnes (~250 essais de pratique en 12 h) —
+le sujet discrimine MIEUX qu'au pin. Le témoin a fait exactement son office :
+refuser de laisser lire un bras R1 contre un référent que le sujet a quitté.
+Chaîne causale consignée sans lissage : **les deux runs de nuit ont coûté la
+session du matin.** Le pin gravé [6.03, 8.67] reste INTOUCHÉ comme référent
+d'instrument (ses consommateurs d'état ne bougent pas) ; ce qui est établi :
+**la comparaison trans-sessions à trois semaines est illisible pour CE sujet
+désormais** — la pratique ne se désapprend pas.
+
+**FUITE CONSIGNÉE (session critique, même motif, troisième fois)** :
+`--conditions "…ce que tu observes…"` — le gabarit à points de suspension a
+traversé la garde anti-chevrons (trop étroite). Sans effet sur le verdict
+(INDÉTERMINÉE par le témoin), mais la provenance de session porte un gabarit.
+Durcissement dû ; règle pour la session critique : plus jamais de
+`--conditions` pré-rempli dans une commande fournie.
+
+**DÉCISION OUVERTE (Romain — AUCUNE prise ici)** : le chemin de mesure du
+transport. (α) **P3′ intra-session** : re-pré-enregistrement — trois staircases
+viridis + trois R1 ENTRELACÉES le même jour, transport = ratio intra-sujet
+intra-état (jnd_R1/jnd_viridis du jour), le pin gravé restant le référent du
+harnais ; c'est la comparaison que la dérive ne peut plus casser. (β) re-pin
+complet (campagne viridis neuve) puis P3 contre le pin neuf — plus lourd, et le
+pin neuf dériverait aussi. (γ) reposer P3 tel quel plus tard — sans espoir : la
+pratique est acquise. Chaque option est un pré-enregistrement AVANT toute
+session ; le sujet a déjà quatre staircases dans les bras aujourd'hui — rien ne
+se re-mesure ce jour.
+
+**POINT D'ARRÊT : la décision α/β/γ remonte à Romain. Aucun enchaînement.**
