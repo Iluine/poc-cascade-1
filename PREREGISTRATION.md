@@ -6530,3 +6530,71 @@ s'applique à tout l'arc.
 
 **POINT D'ARRÊT : prochain livrable = la spec P1, paper grade, revue avant toute
 construction. Aucun enchaînement.**
+
+## §A37 — SPEC P1 ENDOSSÉE : le rendu-instrument R1, Option B ; trois gravures adjointes (2026-07-25)
+
+> Revue Romain de `pocPhysicator/claude/spec-p1-rendu-instrument-2026-07-25.md`
+> (paper grade, aucun run). Quatre décisions tranchées ; la spec passe à ENDOSSÉE
+> telle qu'amendée. Rien ne se code avant l'ordre de mission (décision séparée).
+
+**FAIT DE CODE GRAVÉ, fondement de la spec** : le pin jnd_sev 7.33 % a été mesuré
+à travers `imshow(cmap="viridis", vmin=0, vmax=1)` (`run_arcC_session.py:107`) —
+en PSEUDO-COULEUR, avec le rééchantillonnage par défaut d'imshow, sans gestion
+d'EOTF. La dette §C4-3 (albédo→luminance) est concrète. Portée double, sans
+sauvetage ni alarme : viridis est par conception monotone et quasi-linéaire en
+clarté — le transport pourrait être ≈ 1 ; « pourrait » est ce que P3 mesure.
+
+**DÉCISIONS ROMAIN (P1, 2026-07-25)** :
+- **D-P1-1 : OPTION B** — pleine résolution d'abord, noyau R1 seul. Fondement D17 :
+  les paires ABX de P3 sont mono-niveau par construction ; aucune décision nommée
+  ne consomme le compositeur avant P3. Interface gravée périmètre-neutre (champ
+  albédo pleine résolution → luminance calibrée) ; le compositeur (structure réelle
+  fovéa+grossier, couture) = incrément post-P3, sa décision de couture prise le pin
+  transporté en main. CONSÉQUENCE PRÉ-ÉCRITE sur P2 : P2 chiffrera le NOYAU, pas la
+  composition — « première ancre de la moitié manquante », pas la moitié entière ;
+  le coût de composition reste une dette nommée (à l'échelle V4, gather écran du
+  même ordre que le shading [CALCUL]).
+- **D-P1-3 : (a)** — chemin lumineux IDENTITÉ Y = A : une nouveauté à la fois, P3
+  mesure le transport sur la seule variable changée (pseudo-couleur → luminance).
+  Le lambertien (`relief_shaded`) = incrément R2 post-P3, avec sa propre mesure de
+  transport s'il est acheté.
+- **D-P1-4 : (a)** — inverse-EOTF sRGB gravé en formule dans R1. Linéarité SUPPOSÉE
+  sRGB, jamais mesurée au photomètre, jamais surclamée : l'ABX exige le déterminisme
+  et la stabilité (biais commun aux deux stimuli d'un essai), pas la linéarité
+  absolue. Conditions de session gravées d'Arc C inchangées.
+- **D-P1-2 : (a)** — rééchantillonnage BILINÉAIRE gravé comme étage de R1 (numpy,
+  testé, déterministe) — plus jamais délégué à une option de bibliothèque
+  d'affichage.
+
+**Le contrat R1 en une ligne** : fonction PURE, sans RNG, sans état (plus dur que
+§A20-3 : l'état éphémère de readout est interdit tout court dans l'instrument),
+albédo [0,1] → sRGB quantifié uint8 affiché à `taille_domaine_px` (calibration §C7
+héritée, VALEURS d'écran re-mesurées à chaque session). L'observable Δχ et le pin
+sont INTOUCHÉS. Six falsifieurs d'acceptation nommés dans la spec (déterminisme
+bit, stabilité z-stable⇒image-stable, test à blanc, cohérence inverse de
+calibration, monotonie de chaîne, garde d'acuité) ; ils GATENT l'achat de P2.
+
+**TROIS GRAVURES ADJOINTES (décisions Romain du 25/07)** :
+1. **Les six pistes de la note d'orientation v2 (§7), gravées par référence** :
+   (i) sauter au lieu de tourner, exception météo globale = ENABLER du saut ;
+   (ii) le ledger est aussi l'interface d'auteur [ACTÉ] ; (iii) versionnage de F =
+   clause de sauvegarde (dette de spec née du correctif Δx) ; (iv) le rembobinage
+   est gratuit ; (v) checklist de plausibilité sans référence [post-P3] ;
+   (vi) hystérésis d'élagage + statut des PNJ-témoins [à trancher avant v1.1].
+   Aucune n'apporte de solution à P1 (vérifié piste à piste, spec §6) ; chaque
+   falsifieur attend sa décision (règle D17).
+2. **Lecture différée O-Voxel/TRELLIS.2** (séance dédiée, jamais gravée jusqu'ici) :
+   EXCLU comme base de `z` (readout-space, pas state-space ; « field-free » est un
+   anti-feature pour des lois de conservation volumiques ; codec de snapshots sans
+   sémantique temporelle ni structure de commit) ; candidat couche
+   readout/commit-surface de PRODUCTION (conversion →mesh < 100 ms) ; réexamen
+   post-P3. Hors de R1 par construction.
+3. **Règle d'hygiène des faits d'instrument** (née du résidu « ruff absent »,
+   deux occurrences le même jour) : *un fait d'instrument porte sa date ; à la
+   reprise, re-vérifier les moins chers (un `ls`, un `--version`) avant de les
+   citer.* Ajoutée à la discipline du brief de reprise.
+
+**POINT D'ARRÊT : prochaine étape = ordre de mission Claude Code
+(`mission-p1-rendu-instrument.md`), sur décision explicite de Romain. RIEN ne se
+code avant ; les tests d'acceptation se développent où l'on veut, le verdict P3
+restera iluin-tworings3 natif.**
