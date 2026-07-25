@@ -6218,3 +6218,315 @@ rend inévitables :
 3. **Le caveat d'échelle** (91 cellules de propagation contre 32 de fovéa) — et **quelle
    contre-épreuve** le rendrait falsifiable sans devenir un quatrième diagnostic
    déguisé.
+
+## §A33-CORRECTION (2026-07-25) — SUSPENSION des attributions de §A32, §A32-décomposition et §A33 : un défaut d'instrument les précède
+
+> **Entrée de correction append-only (tradition §A19-CORRECTION). Rien n'est effacé :
+> les FAITS mesurés restent lisibles tels quels ; seules les ATTRIBUTIONS sont marquées
+> EN SUSPENS.** Décisions Romain du 2026-07-25 : **D19-a** test unitaire AUTORISÉ ;
+> **D19-b** suspension GRAVÉE MAINTENANT ; lectures décisionnelles D19-c/d **volontairement
+> NON pré-enregistrées** — Romain décide après le résultat (dérogation nommée à la règle
+> des lectures pré-écrites, portée par lui, consignée ici).
+
+**ORIGINE.** Séance É2 (`pocPhysicator/claude/seance-e2-2026-07-24.md`), §0 : soupçon
+que le niveau GROSSIER de T2 est avancé au Δx du fin. Vérification demandée par Romain,
+**CONFIRMÉE PAR LECTURE DE CODE** le 2026-07-25
+(`pocPhysicator/claude/verif-echelle-grossier-2026-07-25.md`, tout re-vérifiable au
+grep) : (1) la référence `_rhs_o2` (`solver_wetdry.py`) **divise par Δx** ; le kernel
+`_SOURCE_FIDELE` qui déclare la porter **ne reçoit aucune longueur** (ses `dx`/`dy` sont
+des décalages de stencil ±1) — portage exact **uniquement à Δx = 1** ; (2)
+`reduction_cfl_fidele` calcule le dt du grossier **à Δx = 1** aussi ; le « choix 3 : le
+grossier à dx = 2 » de `production_fidele` existe **en prose, nulle part en code** ; (3)
+`grep _rhs_o2 tests/` ne retournait **RIEN** — le portage n'avait JAMAIS été comparé à sa
+référence ; tous les tests du chemin sont des propriétés d'équilibre (flux nuls) ou
+d'identité, **aveugles par construction** à un facteur multiplicatif sur `L`.
+**Conséquence si la lecture tient** : `L_grossier` = 2× le correct, dt partagé en
+lockstep ⇒ le grossier avance à ~2× la vitesse physique du fin. Le substrat relaxant,
+**aucune amplitude n'est prédite ; rien ici n'annonce un PASS** (le témoin frôle déjà le
+pin à 0.077).
+
+**CE QUI EST SUSPENDU (attributions seulement)** :
+- §A32 : « **MORT-b** » et « **Option A est morte** » — le verdict se prononce sur le
+  bras de PRODUCTION, qui EST la structure à deux niveaux ; son Δχ est porté par un
+  grossier possiblement à mauvaise échelle. Par la gravure du projet — *« un échec
+  d'instrument n'est pas un résultat »*, *« corriger l'INSTRUMENT, jamais la mesure »*
+  (§A31) — l'attribution est suspendue, comme l'OOM avait suspendu le gate (iii) au lieu
+  de le rendre.
+- §A32-décomposition : l'INTERPRÉTATION causale de l'écart (bande morte éliminée ⇒
+  structure par élimination) — un grossier à mauvaise échelle est un candidat qui
+  n'avait jamais été mis dans la liste des éliminés.
+- §A33 : « **LE PLANCHER EST STRUCTUREL** » et « **l'architecture fovéale telle que
+  construite ne peut pas satisfaire É2** » — l'attribution à la STRUCTURE est suspendue ;
+  un instrument à mauvaise échelle occupe exactement la même case.
+- La phrase « **MORT-b n'est pas rouvert** » (§A32-décomposition, §A33) est **RETIRÉE** —
+  concession de la session critique, consignée en §5 de la vérification : elle était
+  incompatible avec le soupçon de §0 et la formulation confortable avait été gardée.
+
+**CE QUI TIENT, inchangé** : tous les CHIFFRES (production 0.70–0.87 ; décomposition
+fovéa 0.109–0.572 / périphérie 0.148–0.678 ; EPS0 0.056–0.664 ; témoin 0.0015–0.077) ;
+**le bras témoin est PROPRE** (mono-niveau, Δx = 1, correct par construction) et avec lui
+« **Option B n'est pas le remède** » ; **le lieu** (la périphérie porte 22×, jusqu'à
+169×, d'énergie d'erreur par cellule — exactement là où le défaut vivrait) ; **la
+méthode** (masquer la DIFFÉRENCE, jamais le domaine) ; la prise cap-à-EPS0 ; les deux
+auto-corrections (attribution par émission, non-monotonie 3/18). INTACT car sans
+grossier fidèle : le pin, §A13/§A14, le modèle de coût F1, M-a-quater/V4, T1 (ancre
+0.924), le diagnostic OOM, la propriété E, le mipmap, L3.
+
+**LE FALSIFICATEUR (D19-a, autorisé)** : `pocPhysicator/tests/test_portage_rhs_o2.py` —
+le test unitaire manquant depuis C1, PAS un quatrième diagnostic (un pas, aucun chrono,
+aucun épisode ; utile quel que soit son résultat). Prédictions factuelles pré-écrites
+(verif §6) : lecture tient ⇒ `L_gpu ≡ L_ref(Δx=1)` et `L_ref(Δx=1) = 2·L_ref(Δx=2)`
+exactement ; fausse ⇒ `L_gpu ≡ L_ref(Δx=2)`. Les deux branches sont décidables ; le test
+n'échoue que si AUCUNE ne tient (troisième fait, à remonter tel quel). Exécution GPU sur
+iluin-tworings3 (`pytest -s tests/test_portage_rhs_o2.py`) ; la branche CPU (échelle de
+la référence) tourne partout.
+
+**POINT D'ARRÊT OBLIGATOIRE** : le résultat se remonte à Romain ; D19-c/d se décident
+sur lui ; AUCUN enchaînement. Tant que le test n'a pas tourné, le gate (iii) se dit :
+« l'architecture fovéale telle que construite ne reproduit pas la vérité pleine
+résolution sous le pin d'instrument ; que ce plancher soit STRUCTUREL reste à confirmer
+(D19) ; qu'il constitue un échec du contrat É2 est l'objet de D14/D15, non tranché. »
+
+### §A33-CORRECTION-résultat (2026-07-25) — le falsificateur a tranché : CONFIRMÉ
+
+**Exécution** : iluin-tworings3, terminal natif,
+`.venv/bin/python -m pytest -s tests/test_portage_rhs_o2.py` (pocPhysicator) — 2 passed.
+- CPU : `L_ref(Δx=1) = 2·L_ref(Δx=2)` **EXACTEMENT** (`array_equal`), champ à flux non
+  nuls (la garde anti-aveuglement §3 a mordu : max|L| > 1e-3 vérifié).
+- GPU : **err(Δx=1) = 3.297e-05** (bruit f32) ; **err(Δx=2) = 5.000e-01** (la signature
+  exacte du facteur 2 — quatre ordres de grandeur entre les deux branches).
+
+> **Lecture (pré-écrite, prononcée telle quelle)** : `L_gpu ≡ L_ref(Δx=1)` → **le
+> grossier de T2 (Δx=2) tourne à MAUVAISE ÉCHELLE. Le soupçon de §0 de la séance É2 est
+> CONFIRMÉ PAR EXÉCUTION.** La suspension des attributions de §A32, §A32-décomposition
+> et §A33 passe de « en attente du test » à **fondée sur un fait exécuté** : le défaut
+> d'instrument est établi, l'attribution « STRUCTUREL » ne peut pas être revendiquée en
+> l'état. Le témoin (mono-niveau, Δx=1) reste propre ; « Option B n'est pas le remède »
+> et le lieu (périphérie 22×–169×) restent acquis.
+
+**DÉCISIONS ROMAIN (2026-07-25, prises APRÈS résultat — c/d volontairement non
+pré-enregistrées, dérogation consignée en §A33-CORRECTION)** :
+- **D19-c ENDOSSÉ** : correctif = **kernel Δx-conscient** (paramètre de maille dans la
+  signature, comme `_rhs_o2`) ; l'empreinte du CUDA se re-grave via son verrou, avec
+  provenance datée ; `reduction_cfl_fidele` reste à Δx=1 (CONSERVATRICE pour le
+  grossier — dt plus petit que sa limite, jamais faux) ; **jamais un ajustement de dt,
+  jamais la mesure, aucun seuil, aucune bande**.
+- **T2 se re-court INCHANGÉ par ailleurs** (mêmes seuils, mêmes seeds, mêmes bandes,
+  cellule §A15 intacte), verdict-grade sur iluin-tworings3, APRÈS revue du correctif et
+  suite de tests verte.
+- **Implémentation : Claude Code, séance dédiée** — ordre de mission :
+  `pocPhysicator/claude/mission-correctif-dx-2026-07-25.md`.
+
+**POINT D'ARRÊT** : tests verts → remonter → **Romain lance lui-même le re-run T2** ;
+son verdict remonte avant toute suite — D14, D15, D16, D17, D18 se reposent dessus.
+
+### §A33-CORRECTION-exécution (2026-07-25) — correctif appliqué ; portée du re-run T2 gravée AVANT le run
+
+**Mission exécutée** (Claude Code, ordre `pocPhysicator/claude/mission-correctif-dx-2026-07-25.md`,
+commit 26d53e2) : kernel Δx-conscient (`inv_dx` dans la signature, grossier à
+Δx = DECIMATION aux quatre appels d'étage), `reduction_cfl_fidele` INTOUCHÉE, aucun dt
+ajusté, aucun seuil, aucune bande ; `_SOURCE`/L3/EXNER : diff vide vérifié.
+**Empreinte re-gravée** — le verrou a parlé, c'est son rôle : 6dd207ca… (9248) →
+**aef7237d… (9646)**, onze citations à jour. **1124 tests verts.** Le portage est
+désormais GARDÉ en permanence par trois tests : inv_dx = 1.0 → err(Δx=1) = 3.297e-05
+(le chiffre exact d'avant correctif : le régime Δx = 1 n'a rien vu passer) ;
+inv_dx = 0.5 → err(Δx=2) = 6.331e-05. **Non-régression MESURÉE, pas argumentée** :
+ancien kernel reconstruit en mémoire, écart max **0.000e+00 bit à bit** sur champ non
+trivial — le témoin de T2, l'ancre T1 et la vérification de régime C4 portent sur le
+même objet numérique. (Vérification gardée HORS suite, délibérément : un test qui
+reconstruit une source re-verrouillerait ce que la mission vient de corriger.)
+
+**DETTE NOMMÉE — chrono T1 (décision Romain 2026-07-25 : DIFFÉRÉ)** : bit-exact n'est
+pas iso-coût (+1 multiplication/cellule/étage) ; l'ancre 0.924 et le coût 11.696 ms
+restent **datés sur 6dd207ca…**, et le rapport T1 le dit désormais explicitement.
+**Condition de réveil** : re-chrono DÛ avant toute décision qui consommerait le coût du
+fidèle à la marge. Aucune décision pendante ne le consomme (V4/gate (i) tourne sur le
+PROXY `_SOURCE`, intouché ; le re-run T2 mesure du Δχ, pas du temps).
+
+**PORTÉE DU RE-RUN T2, pré-écrite AVANT toute donnée** : le grossier corrigé évolue
+différemment à chaque pas ⇒ `reduction_cfl_fidele(q_c)` rend d'autres valeurs ⇒ la
+suite des dt change ⇒ un épisode couvre un AUTRE temps physique. Mécanisme
+identifiable ; **direction et amplitude NON prédites**. Conséquences de lecture,
+gravées maintenant :
+1. **un gros écart de Δχ vs l'ancien run n'est PAS suspect a priori** — c'est le
+   comportement attendu d'un instrument réparé ;
+2. **la seule comparaison légitime est contre la vérité f64 pleine résolution** —
+   jamais contre le run contaminé ;
+3. le verdict se lit au **combinateur pré-enregistré de §A15/T2, inchangé** — mêmes
+   seuils, mêmes seeds, mêmes bandes, cellule intacte ;
+4. **rien n'annonce un PASS** — le témoin propre frôle le pin à 0.077 ; un échec
+   confirmé sur instrument juste serait PLUS solide qu'avant, pas moins.
+
+Documents datés (`diagnostic-oom-t2.md`, prereg-*) : **NON réécrits** — ce sont des
+relevés d'époque ; la trace de la re-gravure vit ici, dans le verrou et dans le commit.
+
+**Le re-run T2 est LANCÉ PAR ROMAIN, verdict-grade sur iluin-tworings3 ; son verdict
+remonte avant toute suite (D14–D18).**
+
+## §A34 — RE-RUN T2 SUR INSTRUMENT VALIDÉ (2026-07-25) : MORT-b RE-PRONONCÉ, PLUS LARGE QU'AVANT
+
+Re-run décidé en §A33-CORRECTION (D19-c), instrument réparé (kernel Δx-conscient,
+empreinte aef7237d…, portage désormais GARDÉ par trois tests contre `_rhs_o2`),
+protocole INCHANGÉ : mêmes seuils, mêmes seeds, mêmes bandes, cellule §A15 intacte.
+Empreinte de config **9dd95077aa3baf40** — le changement d'empreinte a invalidé le
+report contaminé EN BLOC (aucun mélange de configs possible) ; l'ancien run est archivé
+(`outputs/f1/mb_t2_avant-correctif-dx.json`) ; lecture versionnée :
+`pocPhysicator/claude/lectures/mb_t2_rerun_dx.lecture.json`. Gate d'instrument
+(`gel_bit_exact`) exigé et passé avant mesure ; iluin-tworings3, terminal natif.
+
+**RÉSULTAT (combinateur pré-enregistré, lecture mécanique, AUCUNE lecture à l'œil)** —
+pin sévère 0.0733, seeds traversants : 101, 102, 103 :
+
+| seed | production Δχ_max | témoin Δχ_max | branche par-seed |
+|---|---|---|---|
+| 101 | 1.46957 | **0.07731** | (a) — **le témoin traverse** |
+| 102 | 2.09089 | 0.01481 | (b)+(c) |
+| 103 | 2.41833 | 0.05240 | (b)+(c) |
+
+> **VERDICT : MORT-b — Option B N'EST PAS le remède** (règle d'agrégation : 102 et 103
+> en (b)+(c)).
+
+**Les lectures pré-écrites de §A33-CORRECTION-exécution s'appliquent telles quelles** :
+l'écart vs l'ancien run n'est PAS suspect (la suite des dt du grossier a changé, un
+épisode couvre un autre temps physique) ; la seule comparaison légitime est contre la
+vérité f64, et c'est celle que le combinateur a faite.
+
+**CHIFFRES INCONFORTABLES, en évidence :**
+1. **La production diverge PLUS qu'avant correctif** : 1.47–2.42 contre 0.70–0.87
+   (20–33× le pin, contre 9.6–11.9×). L'instrument corrigé AGGRAVE l'écart mesuré —
+   direction que personne n'avait prédite, et que personne n'avait le droit de prédire.
+2. Les trois valeurs sont **AU-DESSUS de la plage du contrôle de corruption délibérée**
+   de la manche 2 (shuf-commit 0.693–1.028) — l'ancien run, lui, tombait DANS la plage.
+3. **LE TÉMOIN SEED 101 TRAVERSE : 0.07731 > 0.0733.** La réserve de §A31 (« le témoin
+   frôle ») devient une traversée pour un seed sur trois — la cause (a) seule (f32)
+   suffit à franchir le pin pour ce seed, lecture mécanique par-seed. Portée, sans
+   déplacer aucun seuil : 0.07731 est dans l'IC du pin [0.0603, 0.0867] ; le
+   combinateur utilise le point gravé et c'est lui qui fait foi — cette note est une
+   note de portée, pas un sauvetage.
+
+**CE QUE LE RE-RUN ÉTABLIT / N'ÉTABLIT PAS :**
+- **ÉTABLI**, désormais sur un instrument confronté à sa référence : à 64², fovéation
+  2-niveaux, la production diverge de la vérité f64 largement au-dessus du pin
+  d'instrument, 3/3 seeds, toutes émissions confondues au max de série. **Le FAIT de
+  §A32/§A33 est re-fondé, PLUS SOLIDE qu'avant.**
+- **NON ÉTABLI** : les attributions fines restent SUSPENDUES (§A33-CORRECTION) — la
+  part (b) vs (c), « le plancher est STRUCTUREL », « l'erreur entre dans la fovéa par
+  le halo » : leurs diagnostics (décomposition spatiale, bras EPS = 0) ont tourné sur
+  les champs contaminés et n'ont pas été refaits.
+
+**DÉCISION ROMAIN (2026-07-25)** : PAS de re-attribution (décomposition/EPS = 0)
+maintenant — règle anti-tapis-roulant : la décision ouverte est une décision de SPEC,
+et aucune de D14–D18 ne dépend de b-vs-c ; re-diagnostic seulement si une décision
+prise en dépend explicitement. **Prochain pas : les décisions D14–D18 de la séance É2,
+paper grade, sur les chiffres du re-run.** Point d'arrêt à chaque décision.
+
+## §A35 — SÉANCE É2 : DÉCISIONS D14–D18 (2026-07-25, sur les chiffres de §A34)
+
+> Séance paper, aucun run. Décisions Romain, gravées avec leurs caveats. La part qui
+> contredit §A33 (« gate (iii) MORT ») passe par **entrée de CORRECTION explicite**
+> (tradition §A19-CORRECTION) — rien n'est effacé.
+
+**Correction d'inventaire préalable (session critique)** : la fermeture de la branche
+(γ) (« critère fovéa-conscient, fermé par la mesure 0.109–0.572 ») reposait sur la
+décomposition des champs CONTAMINÉS — elle est **SUSPENDUE avec son bras**. (γ) a été
+remise sur la table de D15 en toute connaissance, et n'a pas été retenue.
+
+**(D14) ENDOSSÉE — SCISSION DE É2** : **É2-état** (readout d'instrument vs vérité f64 —
+ce que le harnais mesure) / **É2-projection** (clause d'observateur — indistinguabilité
+à travers le rendu, gatée sur son existence). La scission est un énoncé sur le TEXTE de
+§A13-0, qui quantifie sur un observateur ET se déclare mesurable à une date où aucune
+projection n'existait. **CAVEAT gravé, qui voyage avec** : l'atténuation de l'état des
+lieux §1.2 — le rendu étant une fonction déterministe de `z`, le pin peut se transporter
+PAR CONSTRUCTION ; si le transport est ≈ 1 et sans pondération d'excentricité,
+É2-état ≡ É2-projection et la scission se referme d'elle-même. Faits pesés : pondération
+spatiale plate sur une périphérie par-conception lointaine ; hypersensibilité
+6e-5 → 0.077 ; **témoin 101 traversant (la f32 seule franchit le pin, §A34)**.
+
+**(D15) ENDOSSÉE — α + SUCCESSEUR** :
+- **Gate (iii) : ÉCHOUÉ sur É2-état, PRONONCÉ, définitif** — sur instrument validé
+  contre sa référence (§A34), 3/3 seeds, 20–33× le pin, Option B n'est pas le remède.
+  **La spec fovéa-z (SPEC-FOVEA-Z.md) NE FAIT PAS FOI en l'état.**
+- **Gate (iii′) : NÉ — É2-projection**, non mesurable tant que la moitié projection
+  n'existe pas ; la construction de la projection (image rendue d'abord, puis son)
+  devient **LE CHEMIN CRITIQUE** de sa mesure. Ni fuite (l'échec est prononcé), ni
+  surclame (la clause d'observateur précède le résultat).
+- α sec, β, γ : consignés NON RETENUS.
+
+**(D16) GRAVÉE — étiquette de portée sur §A34** : la plage production **1.47–2.42 est
+mesurée en régime SATURÉ** (64²/32², fovéa entièrement traversée, Π ≫ 1). Le SENS de la
+variation vers Π < 1 (V4) est connu ; **l'amplitude ne l'est pas et ne se transpose
+JAMAIS**. L'ancienne assiette (0.056–0.664, bras EPS = 0) reste suspendue avec son bras.
+
+**(D17) GRAVÉE — refus du profil radial entériné, et la RÈGLE en toutes lettres** :
+*aucun diagnostic sans une décision nommée qui en dépend explicitement.* C'est elle —
+et elle seule — qui rouvrirait une décomposition propre si (γ) redevenait vivante.
+
+**(D18) ENDOSSÉE VERBATIM — la formule publique** (remplace « gate (iii) MORT ») :
+> « Le gate (iii) est **ÉCHOUÉ sur É2-état** : à 64², sur un instrument validé contre
+> sa référence, l'architecture fovéale telle que construite diverge de la vérité pleine
+> résolution à 20–33× le pin d'instrument, 3/3 seeds ; Option B n'est pas le remède.
+> L'attribution fine de cet écart (seuil vs structure) n'est pas re-mesurée. La clause
+> d'observateur du contrat vit dans le **gate (iii′) — É2-projection — non mesurable
+> tant que la projection n'existe pas**. La spec fovéa-z ne fait pas foi en l'état ; la
+> question de spec ouverte est : **contre quoi la fovéa doit-elle être fidèle.** »
+
+**CE QUE LA SÉANCE OUVRE (décisions neuves, AUCUNE prise ici)** : (1) la spec de la
+MOITIÉ PROJECTION — image rendue d'abord, chemin critique du gate (iii′) ; son coût
+n'est mesuré nulle part et s'ajoute à un budget V4 déjà « ~16.7 ms pour un rendu jamais
+chiffré » ; (2) la question v2 : « contre quoi la fovéa doit-elle être fidèle » ;
+(3) le sort des attributions suspendues (b vs c) : dormantes sous la règle D17.
+
+**POINT D'ARRÊT : la séance est close. Aucun chantier n'est lancé sans décision neuve
+de Romain.**
+
+## §A36 — ARC PROJECTION OUVERT : P0 TRANCHÉE — LE CONTRAT DE FIDÉLITÉ DE LA FOVÉA (2026-07-25)
+
+> Décisions Romain (P0-a..d), sur `pocPhysicator/claude/seance-fidelite-2026-07-25.md`
+> nourrie par `note-orientation-v2-2026-07-25.md`. Paper grade, aucun run, aucun seuil.
+
+**(P0-a) C-uni** (identité-sous-JND à la vérité f64, uniforme) : **MORT comme contrat
+de la fovéa** — échoué par la mesure (§A34), fermé par l'arithmétique de ses remèdes —
+**VIVANT comme étalon du harnais du registre** (le rederive f64 reste le juge de la
+re-dérivabilité des commits ; REGISTRE_FERME y tient inchangé).
+
+**(P0-b) LE CONTRAT DE LA FOVÉA : C-STRAT, VERSION F-UNIQUE.** Trois clauses :
+1. **le COMMIS est contracté à l'identité-sous-JND** — tenu, mesuré, borné ;
+2. **le VIVANT est contracté au TÉMOIGNAGE** — plausible, et non-contradictoire avec
+   le commis et le perçu ; la vérité f64 n'est plus son référent ;
+3. **le JUGE est la projection pondérée-observateur** (le gate (iii′), né en §A35) —
+   jamais l'espace d'état.
+
+Forme opératoire endossée (reformulation Romain) : **UN SEUL F**, scale-aware à deux
+titres (Δx — réglé §A33-CORRECTION — et fermeture sous-maille, OUVERTE) ; **tirage de
+naissance** des branches, conditionnel, semé, contraint par le ledger ; **projection**
+pour tout ce qui n'est pas état. **Falsifieur unifié : AUCUNE TRANSITION N'EST
+DÉTECTABLE PAR L'OBSERVATEUR** (naissance/élagage de branche, frontière
+feuille/projection, instant de commit) — l'ABX de substitution. **Le caveat D14
+voyage** : si P3 montre un transport ≈ 1 et une pondération plate, la clause 3 utilise
+ce pin tel quel — le contrat ne s'affaiblit pas, son juge se durcit.
+
+**(P0-c) P1 LANCÉ** : spec du rendu minimal d'instrumentation (albédo→luminance,
+déterministe, calibration cycles/degré héritée d'Arc C), s'ouvrant sur **sa décision
+de périmètre** — projeter la structure réelle (fovéa + grossier upsamplé) ou la pleine
+résolution d'abord — coûts chiffrés au papier AVANT le choix.
+
+**(P0-d) PRINCIPES v2 ENDOSSÉS, gravés par référence** (détail et étiquetage :
+`note-orientation-v2-2026-07-25.md`) : conservation = squelette, plausibilité = chair
+(la forme peut être phénoménologique, jamais le bilan) ; `z` = forêt d'arbres de
+coefficients élagués (l'élagage est spatial, la politique de raffinement est la
+politique de croissance) ; **τ_dec par champ** — la frontière éphémère/persistant
+devient une grandeur mesurée (falsifieur nommé, dormant jusqu'à consommateur, règle
+D17) ; stockage **snapshot + queue** (le snapshot matérialise, **la queue reste la
+vérité** — le ledger porte les entrées ET les commits, et ne se vide jamais dans un
+snapshot) ; météo à support grossier natif + canal causal mince vers le fin.
+Propositions NON endossées, consignées séparément dans la note : file de priorité
+JND-par-FLOP, quantification du commis par format, fovéa en pente.
+
+**LES GATES DE L'ARC** : P0 ✓ (cette entrée) → **P1** spec du rendu-instrument
+(papier) → **P2** chiffrage du rendu (première ancre de la moitié manquante du budget
+V4) → **P3** transport du pin (falsifie l'atténuation D14 ; donne son échelle au gate
+(iii′) et son consommateur à `r_fovea`). Chaque gate sur le précédent ; la règle D17
+s'applique à tout l'arc.
+
+**POINT D'ARRÊT : prochain livrable = la spec P1, paper grade, revue avant toute
+construction. Aucun enchaînement.**
