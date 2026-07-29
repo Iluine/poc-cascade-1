@@ -7096,3 +7096,57 @@ implémenté au dépôt, RAS.
 
 **POINT D'ARRÊT : inchangé — revue de P3′ v2 par Romain (D-P3′-1, D-P3′-2),
 endossement = gravure §A42. Aucun enchaînement.**
+
+## §A42 (2026-07-29, 23h — date lue à l'horloge, pas recopiée) — PREREG P3′ ENDOSSÉ EN v2.1 ; D-P3′-1 ET D-P3′-2 TRANCHÉS ; correction à §A41-ERRATUM (le « RAS » sub-bin)
+
+**REVUE RENDUE (session critique, 2026-07-29 soir)** : P3′ v2 ENDOSSABLE avec
+deux corrections nommées. **DÉCISION Romain : endossé avec les deux
+corrections** — gravées au prereg en `[v2.1]` AVANT toute construction, le
+document porte le statut « ENDOSSÉ — version faisant foi : §A42 ».
+
+**CORRECTION 1 — la plage horaire remplace le surclame.** La v2 écrivait
+« lumière du jour VÉRIFIÉE par la garde, pas déclarée » — FAUX à la lettre :
+la garde (b) vérifie l'honnêteté de l'heure (déclarée ↔ machine ±2 h), pas la
+lumière. Une session nocturne VÉRIDIQUE (« 00h30, plafonnier », date du jour)
+passait (a)-(c) intégralement ; le 26/07 n'était refusé que pour absence
+d'heure lisible et ellipses, pas parce qu'il faisait nuit. Clause (d) gravée :
+`date_session` ∈ [09:00, 19:00] locale, sinon session REFUSÉE — la condition
+du pin devient mécanique. Champ d'essai ajouté : un manifeste véridique hors
+plage doit être refusé par (d) SEULE.
+
+**CORRECTION 2 — graines brûlées.** La garde de la v2 refusait `20260705`
+nominativement : un futur P3″ pouvait reconduire `20260729` avec exactement
+la faille B1a. Principe gravé : une graine présentée à un sujet humain ne
+sert qu'UNE fois ; la garde refuse la LISTE des graines brûlées (aujourd'hui
+{20260705} ; après la session P3′, 20260729 y entre). Le champ d'essai teste
+la liste, pas une valeur.
+
+**D-P3′-1 TRANCHÉ : V, R, R, V, V, R — le miroir REFUSÉ.** Raison adverse,
+nommée : après échauffement, le résidu dominant est la fatigue de fin de
+session, qui pèse sur le bras de plus grand Σk² — R ({2,3,6}, Σk² = 49 contre
+V = 42) — donc gonfle jnd_R, donc biaise T VERS 1, CONTRE la branche 2
+anticipée (T ≈ 0.5, non-cécité consignée au prereg). Le miroir R,V,V,R,R,V
+biaiserait dans le sens confortable : refusé explicitement.
+
+**D-P3′-2 TRANCHÉ : λ = 1.5.** Raison chiffrée : [1/1.5, 1.5] est une fenêtre
+de largeur 2.25 face à un IC_T attendu de largeur ~2.5–3 — la branche 1b
+n'est atteignable que par une session à faible dispersion centrée sur 1,
+exactement la sémantique que « ÉTABLIE » doit exiger. λ = 1.25 la rendrait
+lettre morte ; λ = 2 affaiblirait D14 sous l'utile.
+
+**CORRECTION à §A41-ERRATUM (l'entrée reste telle quelle, contredite, jamais
+réécrite)** : la ligne « L'estimateur sub-bin de `dominant_frequency` : déjà
+implémenté au dépôt, RAS » ferme un constat qui n'était pas le constat. La
+review disait : implémentation existante (validée une fois au journal contre
+un synthétique), **TEST COMMITÉ MANQUANT**. Vérifié à la gravure :
+`dominant_frequency` (zero-pad ×8 + interpolation parabolique,
+`cascade/metrics/spectral.py:22-55`) est consommé par quatre expériences et
+n'apparaît dans AUCUN fichier de `tests/` (grep vide). Consignation juste :
+« implémenté oui, test toujours manquant — DIFFÉRÉ », onzième entrée de la
+liste des différés de §A41-ERRATUM. Le constat avait MUÉ entre deux documents
+— même famille que le motif « recopié plutôt que lu », attrapé ici avant de
+coûter.
+
+**POINT D'ARRÊT : ordre de mission chantier 8 sur décision explicite (les
+champs d'essai du prereg v2.1 font partie de la mission) ; puis la session,
+un jour neuf, `date_session` dans la plage gravée. Aucun enchaînement.**
