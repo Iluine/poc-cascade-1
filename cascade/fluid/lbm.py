@@ -42,7 +42,7 @@ class FluidConfig:
     seed_perturb: float = 1e-3  # bruit initial pour amorcer le lâcher (brise la symétrie)
     seed: int = 0               # graine du bruit initial. Le prereg exige « ≥ 5 seeds »
                                 # pour C2 : câblée à 0 jusqu'ici, la clause n'a JAMAIS été
-                                # exécutable (review 28/07, M13). Exposée AVANT toute
+                                # exécutable (review 29/07, M13). Exposée AVANT toute
                                 # réutilisation de l'instrument en T1.5.
     inflow: float | None = None  # vitesse aux BC/IC ; None => u_in. Mettre 0 pour fluide quiescent
                                  # (la viscosité reste fixée par u_in/Re ci-dessus).

@@ -50,7 +50,7 @@ def roll_metrics(S, rank, stride, label):
     St_r, _ = dominant_frequency(sig, dt=stride, band=(0.3 * F_SHED, 3 * F_SHED))
     St_r = St_r * D / U if np.isfinite(St_r) else np.nan
     r999 = rank_for_energy(S, 0.999)
-    # La FRÉQUENCE entre dans le verdict (review 28/07, M14) : St_roll était
+    # La FRÉQUENCE entre dans le verdict (review 29/07, M14) : St_roll était
     # calculé et imprimé mais jamais jugé — un expert dérivant de 30 % en
     # fréquence passait. Tolérance nommée : ±20 %, la même que G0.
     st_ok = bool(np.isfinite(St_r)) and abs(St_r - ST) / ST <= 0.20
@@ -107,7 +107,7 @@ def main(nx=512, ny=192, stride=40, n_snap=700, warm_periods=35, rank=30, levels
     r_iface = roll_metrics(S_iface, rank, stride, "INTERFACE")
     # solide : on rapporte la fréquence de disp_y, SEULE chose mesurée ici.
     # (Un `Ssolid = stack(disp, vel)` était construit puis jamais testé —
-    # supprimé, review 28/07 M14 : « trivialement bas-rang » est une évidence
+    # supprimé, review 29/07 M14 : « trivialement bas-rang » est une évidence
     # dimensionnelle (2 DOF), pas le résultat d'un test qui n'a pas tourné.)
     St_solid, _ = dominant_frequency(dys, dt=stride, band=(0.3*F_SHED, 3*F_SHED))
     print(f"  [SOLID    ] DOF=2 (oscillateur)  St={St_solid*D/U:.4f}  (bas-rang par dimension)")

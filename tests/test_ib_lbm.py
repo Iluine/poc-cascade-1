@@ -4,7 +4,7 @@
 `−Σ F_L·ds`, et la source eulérienne `g` doit injecter EXACTEMENT cette quantité
 de mouvement dans le fluide. C'est un invariant mathématique du couple
 interpolate/spread (partition de l'unité de φ4), pas une tolérance arbitraire —
-il était vérifié analytiquement juste mais jamais testé (review 28/07)."""
+il était vérifié analytiquement juste mais jamais testé (review 29/07)."""
 
 import types
 

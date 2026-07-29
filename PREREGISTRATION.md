@@ -7052,3 +7052,47 @@ run-contrôle ne s'écrase JAMAIS en place.
 soumis à revue Romain — endossement = gravure §A42. Aucune session humaine
 avant. §A39-CORRECTION et §A40 restent gravés tels quels — contredits par
 cette entrée, jamais réécrits.**
+
+### §A41-ERRATUM (2026-07-29) — §A41 viole sa propre règle : sa date d'en-tête est FAUSSE ; différés de la review consignés
+
+> Entrée append-only. Origine : contre-vérification de Romain (2026-07-29),
+> qui a attrapé l'erreur dans sa propre review — la source est nommée.
+
+**LE FAIT** : §A41 porte l'en-tête « (2026-07-28) » et cite partout « review
+du 2026-07-28 ». La review a eu lieu le 29/07, et la gravure de §A41 date du
+29/07 au soir (commits `2c4eef8`/`be948cc`, 2026-07-29 ~22h40). §A41 grave
+lui-même « la date d'en-tête d'une entrée est celle de la GRAVURE » — et la
+viole, dans l'entrée même qui énonce la règle. **Source de l'erreur, nommée :
+l'en-tête du rapport de review (« Date : 2026-07-28 »), recopié au lieu de
+lire l'horloge.** Le motif « recopié plutôt que lu », une fois de plus — et
+cette fois dans sa propre entrée de correction. La leçon en clair : une règle
+gravée ne se suffit pas, elle doit être OUTILLÉE (la date d'une entrée
+devrait venir d'un horodatage machine au moment de la gravure, jamais d'un
+document).
+
+**PROPAGATION** : les messages des commits `2c4eef8` (pocPhysicator) et
+`be948cc` (pocCascade2phys) portent la date fausse — l'historique git ne se
+réécrit pas, ils restent tels quels et cet erratum les contredit ; les
+commentaires de code et documents AMENDABLES (« review 28/07 ») sont corrigés
+en « 29/07 » dans le commit qui porte cette entrée. §A41 lui-même reste tel
+quel — contredit, jamais réécrit.
+
+**DIFFÉRÉS DE LA REVIEW (consignés, pas silencieux — AUCUN n'est tranché
+ici, chacun attend une décision nommée ou une consignation « accepté tel
+quel »)** : gate d'achat contournable par les phases individuelles (`--cell`
+etc. ne vérifient pas `GATE_PATH`) ; comptage « EXACT » du gate faux de
+1.8 % (192 épisodes réels vs 144 comptés) ; contrôle corruption tautologique
+(`fraction_energie_localisee` ≡ 1.0 par construction) ; garde base-sous-JND
+du shuf ; triplication de la logique déplacement/roll/colonnes dans f1_gpu
+(la cicatrice sonde v1 existe) ; ledger non récupérable après un append
+déchiré (un kill mal placé poisonne un run de nuit « reprenable ») ;
+allocations par pas de la fovéa 2 niveaux (contredit B2) ; G0a jugé contre
+St_ref non confiné sur 33 T_shed (contrat : ≥ 100) ; vorticité `jnp.roll`
+fausse aux bords d'un canal non périodique (incluse dans le quantile de
+calibration) ; caveat de puissance de c2_action_perceptual (« memoize
+partout optimal » établi sur 2 scalaires/fenêtre, ~6.8 T_shed, sans
+continuité temporelle). L'estimateur sub-bin de `dominant_frequency` : déjà
+implémenté au dépôt, RAS.
+
+**POINT D'ARRÊT : inchangé — revue de P3′ v2 par Romain (D-P3′-1, D-P3′-2),
+endossement = gravure §A42. Aucun enchaînement.**

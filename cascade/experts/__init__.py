@@ -8,7 +8,7 @@ Anti-circularité (feedback critique) : les régimes sont définis par la PHYSIQ
 vs nul) deviendrait invérifiable. Voir :mod:`cascade.experts.regimes`.
 
 Bus minimal = (ρ, ρu) — hypothèse nulle du RECADRAGE gravé ; la POD est construite sur ce
-bus. (« Flux par face » était l'ancien plan, abandonné — docstring purgée, review 28/07.)
+bus. (« Flux par face » était l'ancien plan, abandonné — docstring purgée, review 29/07.)
 """
 
 from cascade.experts.regimes import (  # noqa: F401

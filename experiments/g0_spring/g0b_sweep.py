@@ -7,7 +7,7 @@ m*=5, ζ_struct=0, crossflow, m_eff=m_corps−ρ_f·V.
 Par point : A_y/D (enveloppe stationnaire), f_struct, f_lift, M4 (cohérence lift↔disp),
 ET stationnarité de l'enveloppe (la variable LENTE — feedback) en 3 blocs.
 
-Lock-in = ENTRAÎNEMENT DE FRÉQUENCE (review 28/07, M11) : la portance est au voisinage
+Lock-in = ENTRAÎNEMENT DE FRÉQUENCE (review 29/07, M11) : la portance est au voisinage
 de f_n (|fr_lift − fr_n| ≤ 0.1, couvre le centre où f_n ≈ f_shed0 rend « quitter
 f_shed0 » indécidable) OU strictement plus proche de f_n que de f_shed0 (elle l'a
 quitté). L'ancien critère portait deux sous-critères qui ne pouvaient pas échouer

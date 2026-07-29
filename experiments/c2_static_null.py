@@ -73,7 +73,7 @@ def main(nx=512, ny=192, stride=40, n_snap=500, warm_periods=35):
     # `transpose(0,1,2,3).reshape(3,-1).T` (transpose identité + reshape
     # C-order) donnait à l'instance 0 les canaux des snapshots 0, 2 et 4 —
     # le « preview séparabilité halo » a été calculé sur des features
-    # mélangées et imprimait un SIGNAL fabriqué sur du bruit (review 28/07,
+    # mélangées et imprimait un SIGNAL fabriqué sur du bruit (review 29/07,
     # M12 ; diagnostic déjà invalidé au journal pour une raison indépendante).
     halo_f = halo.transpose(0, 2, 3, 1).reshape(-1, 3)     # (N,3)
 

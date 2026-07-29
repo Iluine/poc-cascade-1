@@ -46,7 +46,7 @@ cascade/
   accounting/  ⬜ VIDE (planifié)    — requis pour C3
   configs/     ⬜ VIDE (planifié)
 ```
-> Marquage ✅/⬜ ajouté le 2026-07-28 : ce README présentait les 9 modules comme
+> Marquage ✅/⬜ ajouté le 2026-07-29 : ce README présentait les 9 modules comme
 > construits ; 5 le sont (cf. CLAUDE.md, même table). C2 est perceptuellement
 > VACANT à Re=100 2D — T1 clos, suite = T1.5 (`experiments/mixed_substrate.py`).
 

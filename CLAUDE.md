@@ -40,7 +40,7 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > Statut au dernier commit : **T1 clos.** Instrument FSI validé (G0 a/b/c) ; **C2 perceptuellement
 > vacant à Re=100 2D** (substrat (quasi-)périodique → mémoïser-partout perceptuellement optimal).
 > Suite = **T1.5** : trouver un substrat qui SOLLICITE les trois sorties. `experiments/mixed_substrate.py`
-> (commité — cette ligne disait « non commité » à tort, corrigé le 28/07) est le WIP T1.5.
+> (commité — cette ligne disait « non commité » à tort, corrigé le 29/07) est le WIP T1.5.
 > Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A41**
 > (correction conditions/dates + règle « la machine lit, la session ne recopie pas »).
 

@@ -111,7 +111,7 @@ def inertial_slope(k, Ek, krange):
 def phase_coherence(x, y, dt=1.0, band=None, nperseg=None):
     """M4 — lock-in : cohérence quadratique MAXIMALE entre sillage ``x`` et structure
     ``y`` sur ``band`` (max, PAS moyenne — la docstring disait l'inverse du code,
-    review 28/07). Le max est GÉNÉREUX : un seul bin cohérent suffit à scorer haut.
+    review 29/07). Le max est GÉNÉREUX : un seul bin cohérent suffit à scorer haut.
     Depuis M11/M14, M4 est SURFACÉ en diagnostic, il ne juge plus aucun verdict."""
     x = _as1d(x); y = _as1d(y)
     n = min(len(x), len(y))

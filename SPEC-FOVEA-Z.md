@@ -1,7 +1,7 @@
 # SPEC FOVÉA-Z — v0 (PAPER GRADE, EN CONSTRUCTION)
 
 > **⚠ NE FAIT PAS FOI — §A35-D15 (2026-07-25), amendement in-situ du
-> 2026-07-28.** Le gate (iii) est **ÉCHOUÉ sur É2-état, prononcé, définitif**
+> 2026-07-29.** Le gate (iii) est **ÉCHOUÉ sur É2-état, prononcé, définitif**
 > (20–33× le pin, 3/3 seeds, instrument validé §A34 ; Option B n'est pas le
 > remède) ; la clause d'observateur vit désormais dans le gate (iii′) —
 > É2-projection — non mesurable tant que la projection n'existe pas. **La
