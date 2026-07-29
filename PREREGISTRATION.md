@@ -7150,3 +7150,49 @@ coûter.
 **POINT D'ARRÊT : ordre de mission chantier 8 sur décision explicite (les
 champs d'essai du prereg v2.1 font partie de la mission) ; puis la session,
 un jour neuf, `date_session` dans la plage gravée. Aucun enchaînement.**
+
+## §A42-COMPLÉMENT (2026-07-29, 23h45 — horloge lue) — deux trous résiduels attrapés à la re-scrutée du feu vert : précédence 1b/2 non gravée (résolution β, α refusée), portée de la garde-liste (entrée seule)
+
+**ORIGINE** : re-lecture de Romain avant feu vert du chantier 8 — les deux
+trous sont les siens ; la résolution du premier est de la session critique,
+CONTRE sa recommandation, avec son accord de délégation explicite.
+
+**TROU 1 — les branches 1b et 2 du prereg v2.1 pouvaient tirer EN MÊME
+TEMPS.** Le cas existe : V = {0.070, 0.071, 0.072}, R = {0.080, 0.081,
+0.083} — IC min/max disjoints (branche 2, « ≠ 1 ») ET IC_T = [1.11, 1.19] ⊂
+[0.667, 1.5] (branche 1b, « équivalent à λ près »). Aucune précédence
+gravée : la décision se serait prise EN SÉANCE — le motif exact, attrapé
+avant de coûter cette fois. **RÉSOLUTION β GRAVÉE, α REFUSÉE.** α (la
+recommandation de Romain : 1b exige le recouvrement, disjoint ⇒ 2 toujours)
+est disqualifiée par le critère du projet lui-même : sous α, une session
+strictement plus précise PERD l'établissement de D14 qu'une session plus
+bruitée OBTIENT — il suffit de dégrader la mesure jusqu'au recouvrement pour
+acheter la branche confortable. Non-monotone en qualité d'instrument, le
+mécanisme de B1b réincarné. β est monotone (moins de bruit n'affaiblit
+jamais l'établissement) et statistiquement propre (TOST : « ≠ 1 ET borné
+dans la marge » est un résultat cohérent, le plus fort disponible pour un
+consommateur qui ne demande que la borne). **Partition gravée, close et
+exclusive, sur la grille inclusion × recouvrement** : 1a (recouvrement sans
+inclusion), 1b (inclusion ET recouvrement), 2 (disjoints sans inclusion),
+**2-équiv (disjoints ET inclusion ⇒ PRONONCÉ DOUBLE : ≠ 1 avec direction et
+facteur, ET équivalence à λ établie AU SENS BORNÉ — jamais au sens
+d'identité ; les deux moitiés voyagent ensemble, en citer une seule est un
+surclame)**, 3 (INDÉTERMINÉE). Champ d'essai imposé : le manifeste
+synthétique ci-dessus rend EXACTEMENT le prononcé double.
+
+**TROU 2 — la garde-liste à la lecture rendait l'archive P3′ illisible après
+le brûlage.** Séquence fatale : session courue à 20260729 → verdict → acte
+de gravure « 20260729 entre dans la liste » → toute re-lecture d'audit de
+l'archive P3′ refusée par la moitié « liste » de la garde double.
+**RÉSOLUTION (celle de Romain, confirmée)** : la liste ne mord qu'à
+L'ENTRÉE (empêcher la réutilisation sur un sujet) ; à la LECTURE, l'ÉGALITÉ
+au gravé suffit et pinne tout (une graine quelconque ET 20260705 tombent par
+l'égalité). L'archive reste re-jouable à l'identique après le brûlage — la
+re-dérivabilité promise par le prereg. Champ d'essai imposé : archive à
+20260729 avec 20260729 dans la liste ⇒ LISIBLE en lecture, REFUSÉE à
+l'entrée.
+
+**Gravé au prereg en `[v2.2]` (statut mis à jour : ENDOSSÉ §A42 + ce
+complément) ; ordre de mission chantier 8 porté en v3. POINT D'ARRÊT
+INCHANGÉ : feu vert explicite de Romain sur la mission, puis build, puis la
+session un jour neuf. Aucun enchaînement.**
