@@ -7,7 +7,15 @@ m*=5, ζ_struct=0, crossflow, m_eff=m_corps−ρ_f·V.
 Par point : A_y/D (enveloppe stationnaire), f_struct, f_lift, M4 (cohérence lift↔disp),
 ET stationnarité de l'enveloppe (la variable LENTE — feedback) en 3 blocs.
 
-Lock-in = synchronisation (f_lift suit f_n=f_struct, quitte f_shed0) + A_y grande + M4>0.8.
+Lock-in = ENTRAÎNEMENT DE FRÉQUENCE (review 28/07, M11) : la portance est au voisinage
+de f_n (|fr_lift − fr_n| ≤ 0.1, couvre le centre où f_n ≈ f_shed0 rend « quitter
+f_shed0 » indécidable) OU strictement plus proche de f_n que de f_shed0 (elle l'a
+quitté). L'ancien critère portait deux sous-critères qui ne pouvaient pas échouer
+(f_lift == f_struct : même crête spectrale par construction ; M4 ≥ 0.99 partout) et le
+juge réel était un seuil d'amplitude NON pré-enregistré (A_y > 0.05) — il imprimait
+[4.25, 7.5] là où le journal consigne [4.5, 7.5]. Le critère de fréquence, rejoué sur
+les .npz commités, rend [4.5, 7.5] avec tous les points intérieurs verrouillés. A_y et
+M4 restent SURFACÉS en diagnostic, jamais juges.
 Verdict = bornes onset/offset vs théorie VIV (±20%), centre retiré du confinement.
 """
 import functools, math, sys
@@ -69,10 +77,17 @@ def main():
         print(f"{r['Ur']:>5.2f} {r['k']:>8.4f} {r['A_y']:>7.3f} "
               f"{r['fr_lift']:>10.3f} {r['fr_n']:>7.3f} {r['M4']:>9.2f} {r['sat']:>6.2f}{flag}")
     np.save("experiments/g0_spring/g0b_sweep.npy", rows, allow_pickle=True)
-    # bande : points synchronisés (f_lift suit f_struct ~ f_n) + M4>0.8 + A_y notable
-    locked = [r for r in rows if r["M4"] > 0.8 and abs(r["fr_lift"] - r["fr_struct"]) < 0.1 and r["A_y"] > 0.05]
+    # bande : ENTRAÎNEMENT DE FRÉQUENCE (M11) — au voisinage de f_n (tolérance
+    # nommée 0.1·f_shed0 ; couvre le centre, où f_n ≈ f_shed0 rend « quitter
+    # f_shed0 » indécidable), OU strictement plus proche de f_n que de
+    # f_shed0. A_y/M4 : diagnostic seulement.
+    TOL_SUIVI = 0.1
+    locked = [r for r in rows
+              if abs(r["fr_lift"] - r["fr_n"]) <= TOL_SUIVI
+              or abs(r["fr_lift"] - r["fr_n"]) < abs(r["fr_lift"] - 1.0)]
     if locked:
-        print(f"\nbande lock-in (M4>0.8, synchronisé) : Ur ∈ [{min(r['Ur'] for r in locked):.2f}, "
+        print(f"\nbande lock-in (entraînement : |f_lift−f_n|≤{TOL_SUIVI}·f0 OU plus près "
+              f"de f_n que de f0) : Ur ∈ [{min(r['Ur'] for r in locked):.2f}, "
               f"{max(r['Ur'] for r in locked):.2f}]  (théorie VIV ~[4,8], ±20%)")
     else:
         print("\naucun point clairement verrouillé — à investiguer")

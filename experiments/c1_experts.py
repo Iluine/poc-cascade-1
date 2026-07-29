@@ -50,7 +50,11 @@ def roll_metrics(S, rank, stride, label):
     St_r, _ = dominant_frequency(sig, dt=stride, band=(0.3 * F_SHED, 3 * F_SHED))
     St_r = St_r * D / U if np.isfinite(St_r) else np.nan
     r999 = rank_for_energy(S, 0.999)
-    ok = finite and sr < 1.02 and drift < 0.20
+    # La FRÉQUENCE entre dans le verdict (review 28/07, M14) : St_roll était
+    # calculé et imprimé mais jamais jugé — un expert dérivant de 30 % en
+    # fréquence passait. Tolérance nommée : ±20 %, la même que G0.
+    st_ok = bool(np.isfinite(St_r)) and abs(St_r - ST) / ST <= 0.20
+    ok = finite and sr < 1.02 and drift < 0.20 and st_ok
     print(f"  [{label:9}] rang99.9%={r999:>3}  én(r={rank})={en:.4f}  sr={sr:.3f}  "
           f"St_roll={St_r:.4f}  dérive={100*drift:4.1f}%  -> {'ok' if ok else 'CASSE'}")
     return dict(label=label, r999=r999, sr=sr, drift=drift, St=St_r, ok=ok)
@@ -101,10 +105,12 @@ def main(nx=512, ny=192, stride=40, n_snap=700, warm_periods=35, rank=30, levels
     print("\n========== C1 — experts isolés (lock-in, corps mobile) ==========")
     r_wake = roll_metrics(S_wake, rank, stride, "WAKE")
     r_iface = roll_metrics(S_iface, rank, stride, "INTERFACE")
-    # solide : (disp, vel) -> ici disp seul, ROM trivial 2D ; on rapporte sa fréquence
-    Ssolid = np.stack([dys, np.gradient(dys)], axis=0)   # (2, ncol)
+    # solide : on rapporte la fréquence de disp_y, SEULE chose mesurée ici.
+    # (Un `Ssolid = stack(disp, vel)` était construit puis jamais testé —
+    # supprimé, review 28/07 M14 : « trivialement bas-rang » est une évidence
+    # dimensionnelle (2 DOF), pas le résultat d'un test qui n'a pas tourné.)
     St_solid, _ = dominant_frequency(dys, dt=stride, band=(0.3*F_SHED, 3*F_SHED))
-    print(f"  [SOLID    ] DOF=2 (oscillateur)  St={St_solid*D/U:.4f}  (trivialement bas-rang)")
+    print(f"  [SOLID    ] DOF=2 (oscillateur)  St={St_solid*D/U:.4f}  (bas-rang par dimension)")
 
     print("\nLecture : WAKE bas-rang attendu ; INTERFACE = test de largeur de Kolmogorov.")
     print(f"  rang99.9% interface/wake = {r_iface['r999']}/{r_wake['r999']} "

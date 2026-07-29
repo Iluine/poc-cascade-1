@@ -1,5 +1,16 @@
 # SPEC FOVÉA-Z — v0 (PAPER GRADE, EN CONSTRUCTION)
 
+> **⚠ NE FAIT PAS FOI — §A35-D15 (2026-07-25), amendement in-situ du
+> 2026-07-28.** Le gate (iii) est **ÉCHOUÉ sur É2-état, prononcé, définitif**
+> (20–33× le pin, 3/3 seeds, instrument validé §A34 ; Option B n'est pas le
+> remède) ; la clause d'observateur vit désormais dans le gate (iii′) —
+> É2-projection — non mesurable tant que la projection n'existe pas. **La
+> question de spec ouverte est : contre quoi la fovéa doit-elle être fidèle
+> (D18).** Tout ce qui suit, y compris la phrase « CONTRAT COMPLET en attente
+> de ses mesures : il FERA FOI après » (§ contrat, plus bas), est CONTREDIT
+> par §A35 — conservé lisible, jamais réécrit. Toute session qui se réamorce
+> ici doit lire §A35 du journal D'ABORD.
+
 > **Statut : BROUILLON.** Gate d'ouverture : décision (d) + §A13-résultat (PREREGISTRATION,
 > 2026-07-18). Chaque section est soumise à Romain et marquée `[ENDOSSÉE]` ou `[EN COURS]` ;
 > rien ne fait foi avant endossement. Aucun code de spec avant que le paper grade soit

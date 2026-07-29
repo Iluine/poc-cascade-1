@@ -6993,3 +6993,62 @@ session ; le sujet a déjà quatre staircases dans les bras aujourd'hui — rien
 se re-mesure ce jour.
 
 **POINT D'ARRÊT : la décision α/β/γ remonte à Romain. Aucun enchaînement.**
+
+## §A41 — ENTRÉE DE CORRECTION (2026-07-28) : un fait de conditions FAUX au journal (§A39-CORRECTION/§A40) ; huit verdicts antidatés (§A23–§A33) ; règle structurelle gravée
+
+> Entrée de correction append-only. Origine : review en profondeur du
+> 2026-07-28 (cinq relectures parallèles, puis contre-vérification de chaque
+> constat bloquant sur le code et les artefacts exacts) ; chaque fait ci-dessous
+> a été RELU sur son artefact avant gravure, jamais recopié de la review.
+
+**LE FAIT 1 — la session P3 a couru LA MÊME NUIT, pas « demain, lumière du
+jour ».** §A39-CORRECTION grave : « session aux conditions du pin : lumière du
+jour stable, OSD 80 %, sujet frais — la session de nuit du 25/07 explicitement
+REFUSÉE », puis « la session P3, demain, lumière du jour » ; §A40 grave
+« lumière du jour » dans son en-tête. L'artefact fait foi :
+`pocPhysicator/outputs/arcC/manifeste_p3.json` → `date_session:
+2026-07-26T00:27:49`, fichier écrit à 00:33, lecture et gravure §A40 dans la
+demi-heure. La session P3 a couru **~34 minutes après le second pré-vol
+(23:45), la même nuit** — et le « ~250 essais de pratique en 12 h » de §A40
+masque un écart réel de ~35–45 minutes. À décharge, consigné sans lissage : le
+témoin mécanique a rendu la session INDÉTERMINÉE — aucun faux résultat n'a été
+consommé. Mais un journal dont la doctrine est « un fait porte sa date ET sa
+source » contenait un fait de conditions FAUX, non corrigé jusqu'à cette
+entrée. La garde qui devait l'attraper (« ce que tu observes, heure
+comprise ») a été neutralisée par la fuite de gabarit que §A40 consigne
+lui-même — l'heure, précisément, jamais observée.
+
+**LE FAIT 2 — huit verdicts antidatés.** §A23 à §A33 sont estampillés
+« 2026-07-19 » ; leurs artefacts datent du 20 au 24/07 (`outputs/f1/
+sonde_eps.json` : 20/07 21:31 ; `outputs/f1/mb_t2_eps0.json` : 24/07 23:23 ;
+`claude/seance-e2-2026-07-24.md` le confirme). Cause probable : propagation du
+label de session sur plusieurs jours de travail. Les verdicts eux-mêmes ne
+sont pas contestés (recalculés conformes par la review du 28/07) ; leurs
+DATES l'étaient.
+
+**CONCESSION CONSIGNÉE (le motif, nommé en entier)** : sur la fenêtre
+24–26/07, tout ce qui a attrapé une erreur avant qu'elle coûte est un
+MÉCANISME (témoin viridis, verdicts AUTRE, empreintes-verrous, liaison
+sidecar↔log) ; tout ce qui a échoué est DÉCLARATIF (dates d'entrées,
+conditions de session, faits « vérifiés » recopiés de mémoire). Le remède
+§A37-3 (« re-vérifier avant de citer ») est incantatoire — il demande à
+l'agent défaillant de se surveiller lui-même — et il a été violé deux fois la
+nuit même de la quatrième concession du motif.
+
+**RÈGLE STRUCTURELLE (gravée, remplace l'incantation)** : **tout fait consommé
+par un verdict doit être LU PAR UNE MACHINE dans un artefact, jamais recopié
+par une session.** Déclinaisons immédiates : (a) toute entrée de verdict cite
+la date DE L'ARTEFACT — la date d'en-tête d'une entrée est celle de la
+GRAVURE, jamais celle de la session qu'elle raconte ; (b) les conditions de
+session sont VÉRIFIÉES par une garde ancrée sur `date_session` (date du jour
+exigée dans la chaîne, heure déclarée ↔ horodatage machine ±2 h) — le
+falsificateur le moins cher de toute la review : il aurait attrapé à la fois
+la fuite du gabarit, la session de nuit et le fait faux ; gravée au prereg
+P3′ v2 (garde 1), implémentée au chantier 8 ; (c) les artefacts verdict-grade
+sont scellés (sha256 dans la provenance, JSON de verdict trackés) et un
+run-contrôle ne s'écrase JAMAIS en place.
+
+**POINT D'ARRÊT : prereg P3′ v2 (BROUILLON révisé, bloquants B1a/B1b purgés)
+soumis à revue Romain — endossement = gravure §A42. Aucune session humaine
+avant. §A39-CORRECTION et §A40 restent gravés tels quels — contredits par
+cette entrée, jamais réécrits.**

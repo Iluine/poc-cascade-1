@@ -40,6 +40,10 @@ class FluidConfig:
     reynolds: float = 100.0     # Re = u_in · D / ν
     walls: Literal["freestream", "bounceback"] = "bounceback"
     seed_perturb: float = 1e-3  # bruit initial pour amorcer le lâcher (brise la symétrie)
+    seed: int = 0               # graine du bruit initial. Le prereg exige « ≥ 5 seeds »
+                                # pour C2 : câblée à 0 jusqu'ici, la clause n'a JAMAIS été
+                                # exécutable (review 28/07, M13). Exposée AVANT toute
+                                # réutilisation de l'instrument en T1.5.
     inflow: float | None = None  # vitesse aux BC/IC ; None => u_in. Mettre 0 pour fluide quiescent
                                  # (la viscosité reste fixée par u_in/Re ci-dessus).
 
@@ -121,7 +125,7 @@ def build_fluid(cfg: FluidConfig) -> Fluid:
 
     # Condition initiale : flux uniforme (ρ=1, u=(u_in,0)) + petit bruit pour amorcer le lâcher.
     rho0 = jnp.ones((1, cfg.nx, cfg.ny), dtype=f_0.dtype)
-    key = jax.random.PRNGKey(0)
+    key = jax.random.PRNGKey(cfg.seed)
     noise = cfg.seed_perturb * jax.random.normal(key, (2, cfg.nx, cfg.ny), dtype=f_0.dtype)
     u0 = jnp.stack(
         [jnp.full((cfg.nx, cfg.ny), u_in, dtype=f_0.dtype), jnp.zeros((cfg.nx, cfg.ny), f_0.dtype)]

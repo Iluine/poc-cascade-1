@@ -7,7 +7,8 @@ Anti-circularité (feedback critique) : les régimes sont définis par la PHYSIQ
 (seuil de détail) serait un classificateur de régime parfait par construction et C2 (appris
 vs nul) deviendrait invérifiable. Voir :mod:`cascade.experts.regimes`.
 
-Sortie = flux par face (forme conservative = le bus). POD construite sur les flux directement.
+Bus minimal = (ρ, ρu) — hypothèse nulle du RECADRAGE gravé ; la POD est construite sur ce
+bus. (« Flux par face » était l'ancien plan, abandonné — docstring purgée, review 28/07.)
 """
 
 from cascade.experts.regimes import (  # noqa: F401

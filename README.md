@@ -36,16 +36,19 @@ Harten codé en dur**.
 
 ```
 cascade/
-  fluid/       wrapper XLB        — oracle fluide + champ d'entrée des experts
-  solid/       wrapper jax-fem    — oracle solide
-  coupling/    IB Peskin          — bus = flux par face (forme conservative)
-  harten/      fenêtrage 2–3 niv. — granularité de routage native
-  router/      3 sorties          — nul (Harten codé dur) | appris
-  experts/     POD+DMD fluide, POD solide
-  metrics/     M1–M4 perceptuel   — JAMAIS L2 comme critère
-  accounting/  FLOPs + wall-clock
-  configs/     ressort | poteau
+  fluid/       ✅ wrapper XLB        — oracle fluide + champ d'entrée des experts
+  solid/       ⬜ VIDE (planifié)    — wrapper jax-fem (config poteau, T1.5)
+  coupling/    ✅ IB Peskin          — bus minimal = (ρ, ρu) (RECADRAGE gravé)
+  harten/      ✅ fenêtrage 2–3 niv. — granularité de routage native
+  router/      ⬜ VIDE (planifié)    — le routeur nul vit inline dans les expériences C2
+  experts/     ✅ POD+DMD fluide     — régimes physiques (anti-circularité)
+  metrics/     ✅ M1–M4 perceptuel   — JAMAIS L2 comme critère
+  accounting/  ⬜ VIDE (planifié)    — requis pour C3
+  configs/     ⬜ VIDE (planifié)
 ```
+> Marquage ✅/⬜ ajouté le 2026-07-28 : ce README présentait les 9 modules comme
+> construits ; 5 le sont (cf. CLAUDE.md, même table). C2 est perceptuellement
+> VACANT à Re=100 2D — T1 clos, suite = T1.5 (`experiments/mixed_substrate.py`).
 
 ## Ordre d'exécution (gaté)
 
