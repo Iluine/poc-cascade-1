@@ -7247,3 +7247,51 @@ l'artefact, M2, mineurs — cap 0.5 séance). Le working tree du chantier 8
 reste NON COMMITÉ jusqu'à re-remise revue. POINT D'ARRÊT : re-remise → revue
 critique → commit par Romain → puis la session, un jour neuf, dans la plage.
 Aucun enchaînement.**
+
+## §A43 (2026-08-02, 22h16 — horloge lue) — CHANTIER 8 CLOS : remise 2 CONFORME, commit 75b2289 ; le fait d'attribution du 30/07 consigné au lieu canonique ; règle du schéma additif gravée
+
+**REMISE 2 : CONFORME** (revue critique du 02/08, vérifiée sur le code).
+Les cinq points de la mission v4 livrés : séquence d'échauffement
+`("viridis","r1")×7 + ("viridis",)` — 8V/7R, D-8-1 — en un exemplaire gravé
+avec garde ValueError à l'exécution et chemin consigné par essai ;
+`NIVEAU_ECHAUFFEMENT = 2 × 0.07334065957385666` (D-8-2) avec test d'identité
+contre l'artefact réel, sans skip ; pauses en fonction pure importée par la
+lecture, surfacées jamais jugées ; verrou d'import prouvé par INSPECTION ;
+CLI testée au parser. Suite : **1306 passés / 0 échec / 0 sauté** — la liste
+des sauts est vide, « verte » se dit sans réserve. **Commit 75b2289**
+(pocPhysicator, `arc-a-manche2-registre`), working tree propre. Les
+consignations vivent aussi au message de commit ; cette entrée est leur lieu
+CANONIQUE.
+
+**FAIT DE PROCESSUS (motif d'attribution, la famille de §A41)** : une passe
+du 30/07 avait implémenté B1/M1 AVANT la gravure [v2.3] du 02/08, sous un
+commentaire « recommandation Romain RETENUE » — une décision attribuée
+AVANT d'être prise (elle l'a été le 02/08). Le contenu a fini par coïncider
+avec le gravé : une CHANCE, pas une excuse. Le fait n'a été visible que par
+la DIVERGENCE rapport ↔ arbre — un rapport tenu à jour l'aurait masqué :
+la divergence était le détecteur, pas le défaut. L'arbre commité est jugé
+contre [v2.3], pas contre le souvenir d'une recommandation ; la remise 2 a
+re-sourcé les commentaires et écrit les tests qui manquaient tous.
+
+**RÈGLE GRAVÉE — croissance de schéma des manifestes** : intouchables = les
+artefacts ARCHIVÉS et le comportement de replay bit-identique (tenus,
+testés) ; le schéma des manifestes NOUVEAUX peut croître par ADDITION
+DÉCLARÉE quand aucun consommateur ne casse ; un paramètre de suppression
+serait un chemin de code sans décision qui en dépend (D17) — écarté. La clé
+`protocole` (m4 de la revue de remise 1) est réglée rétroactivement par
+cette règle. Le « le schéma historique ne bouge pas » de la mission 8a.5
+visait le SCELLEMENT, qui tient.
+
+**Consigné sans correction** : les deux asserts de module sur
+`CHEMINS_ECHAUFFEMENT` disparaissent sous `python -O` — couverts par la
+garde ValueError à l'exécution et par le test qui pinne le tuple, idiome
+préexistant au fichier (`BUDGET_CATCH == ANCRE_BUDGET`).
+
+**CE COMMIT NE BRÛLE PAS `20260729`** : le brûlage est un acte de gravure
+APRÈS la session P3′ (entrée journal + commit dédié), jamais un réflexe.
+
+**POINT D'ARRÊT : push des branches par Romain ; puis LA SESSION P3′ — un
+jour neuf, `date_session` dans la plage gravée [09:00, 19:00], garde 1
+(a)-(d) verte, la commande tapée le jour même, jamais pré-remplie. Après la
+session : lecture mécanique, verdict remonté, gravure (§A44), PUIS le
+brûlage de `20260729`. Aucun enchaînement.**
