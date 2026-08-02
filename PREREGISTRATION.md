@@ -7196,3 +7196,54 @@ l'entrée.
 complément) ; ordre de mission chantier 8 porté en v3. POINT D'ARRÊT
 INCHANGÉ : feu vert explicite de Romain sur la mission, puis build, puis la
 session un jour neuf. Aucun enchaînement.**
+
+## §A42-COMPLÉMENT-2 (2026-08-02, 21h20 — horloge lue) — revue de remise du chantier 8 : NON CONFORME ; D-8-1 et D-8-2 tranchés ; mission de correction v4
+
+**LA REMISE** : chantier 8 construit (cap 1 séance tenu, 1291 tests verts
+sur la machine-instrument, +28), rien de commité — le point d'arrêt de la
+mission a été honoré. **REVUE CRITIQUE (2026-08-02) : NON CONFORME.** Ce qui
+est conforme et vérifié sur le code (y compris sur l'artefact réel du
+26/07) : plan en un exemplaire importé, sept gardes toutes évaluées,
+partition close 1a/1b/2/2-équiv/3 à bornes incluses, scellement procédural
+sans fuite sur les chemins rouges, égalité seule à la lecture (la liste non
+importée), tous les champs d'essai imposés — dont la frontière IC_T = 1.5
+frappée en valeurs dyadiques exactes. Les constats :
+
+- **B1 (bloquant)** : l'échauffement d'une session HUMAINE P3′ crashe en
+  IndexError garanti (`chemins[99]` sur le plan à six) — l'outil ne peut pas
+  courir la session pour laquelle il a été construit ; les tests ne le
+  voyaient pas (fabrique synthétique insensible à l'indice). Fail-loud, zéro
+  perte, mais la correction exigeait une décision NON GRAVÉE : le chemin
+  d'affichage de l'échauffement.
+- **M1 (majeur)** : niveau d'échauffement = 0.05 du harnais — SUB-seuil face
+  au pin viridis (IC bas 0.0603) — pour le bras que le bloc doit précisément
+  protéger ; l'étiquette « départ gravé §C3 » était inexacte (§C3 grave
+  l'escalier, pas le départ) ; la tension avec « supra-seuil » gravé n'a pas
+  été remontée — le motif « affirmé sans être vérifié ».
+- **M2 (majeur)** : mission 8a.6 (pauses consignées) absente ET non déclarée
+  au rapport de remise — la déviation non déclarée type.
+- Mineurs : décompte du rapport inexact ; test du brûlage par monkeypatch qui
+  ne verrouille pas l'absence d'import ; câblage CLI p3prime non testé ; clé
+  `protocole` ajoutée au manifeste historique non déclarée.
+
+**DÉCISIONS Romain (2026-08-02, sur analyse de la session critique)** :
+
+- **D-8-1 — chemin d'affichage de l'échauffement : ENTRELACÉ V,R,V,…,V
+  (8V/7R, commence et finit par V).** Principe nommé : l'échauffement règle
+  une MESURE de ratio, pas une garde — l'objectif est « quasi-neutre, résidu
+  adverse », pas « le plus adverse possible » ; une dose asymétrique
+  déformerait l'échelle T que les branches 2/2-équiv livrent au gate (iii′).
+  Résidu d'un essai penchant T vers 1 (adverse) ; l'alternance de la session
+  échauffée avec elle ; la position 1 amorcée sur son chemin. Viridis-seul
+  (biais adverse mais gros) et R1-seul (biais favorable) : REFUSÉS.
+- **D-8-2 — niveau : 2 × jnd_sev du pin gravé = 0.1466** (source
+  `pins_spatial.json` ; la convention ≥2× de l'Arc C réutilisée dans son
+  sens ; supra pour les deux bras — 2× viridis, 4-10× R1 — et sous l'ancre
+  du banc, présentable tel quel).
+
+**Gravé au prereg `[v2.3]` ; mission portée en v4 (correction : B1 avec test
+de régression à fabrique sensible au chemin, M1 avec test d'identité à
+l'artefact, M2, mineurs — cap 0.5 séance). Le working tree du chantier 8
+reste NON COMMITÉ jusqu'à re-remise revue. POINT D'ARRÊT : re-remise → revue
+critique → commit par Romain → puis la session, un jour neuf, dans la plage.
+Aucun enchaînement.**
