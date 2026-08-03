@@ -234,10 +234,27 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > ~3 % sur 3 min ; §A53 mesurait 2D et 3D côte à côte, deux runs à 0,63 %).
 > **Rien n'est rétracté** : aucune conclusion de gate n'en dépend.
 >
-> **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
-> désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
-> **C-A n'est PAS un feu vert** : l'autre moitié — rendu, ombrage, régime mobile, **non-F
-> 3D** — reste inconnue, et le non-F ne peut que réduire le cap. Rien ne s'enchaîne.
+> **SUITE — DEUX CHOSES DEVANT, DANS CET ORDRE, ET AUCUNE N'EST UNE MESURE 3D.**
+>
+> **(1) NE PAS LANCER DE MESURE 3D ABSOLUE.** §A61 : l'instrument n'est pas qualifié —
+> machine plafondée en puissance, pas de plateau, dérive monotone. Le prochain chiffre
+> coûterait plus cher à interpréter qu'à produire. Ce qu'une re-qualification demandera :
+> **rang d'exécution apparié** (mesures alternées ou répétées aux deux bouts),
+> **non-stationnarité MESURÉE** (dérive du plateau contre température) et **estimateur
+> robuste à la dérive** plutôt qu'une médiane sur population mouvante. Chacun des trois
+> corrige une faute constatée. *Les rapports intra-run entre points adjacents restent
+> plausibles — à ÉTABLIR, pas à supposer.*
+>
+> **(2) OÙ VIT LE RENDU** — dû de `PREREGISTRATION.md:4142`, exigible depuis le 19/07, et
+> **aucun cap calculé n'inclut le rendu**. C'est le verrou réel.
+>
+> **LA CADENCE APPARTIENT À ROMAIN, et les nombres sont ceux-ci** (tous **hors rendu**) :
+> **6,12 fenêtres à 60 Hz** · **7,61 à 30 Hz sous la réserve de la porte** (`:4217-4219`
+> réserve ~13 ms au rendu 60 fps) · V4 en demande **11**.
+> ⚠ Le « **12,97 à 30 Hz** » de §A55 est **SUPERSÉÉ par §A57** — il accordait à la
+> physique les 33,3 ms entières. *Sous sa propre définition, la porte 33,3 ne tient pas
+> V4 davantage que le 60 Hz.* La ligne est au registre de supersessions.
+> **Rien ne s'enchaîne.**
 
 ## Commandes
 

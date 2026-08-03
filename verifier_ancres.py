@@ -141,6 +141,18 @@ SUPERSESSIONS: tuple[Supersession, ...] = (
         superseant="PREREGISTRATION.md:8319 « Contradiction interne de la "
                    "spec, NOMMÉE, NON RÉSOLUE »",
         fragments=("Candidat courant",)),
+    Supersession(
+        fichier="PREREGISTRATION.md", ligne_debut=9016, ligne_fin=9062,
+        portee="le CAP À 30 Hz et la marge de 14,3 % : §A55 donne 12,97 "
+               "fenêtres en accordant à la physique les 33,3 ms ENTIÈRES. "
+               "La porte 33,3 en réserve ~13 au rendu 60 fps ; le budget "
+               "physique est ~20,3 ms, le cap 7,61 fenêtres, et V4 (11) NE "
+               "TIENT PAS non plus à 30 Hz. Le reste de §A55 — C = 2,4293, "
+               "ρ_c = 1,4623, la marche d'occupancy, les trois monnaies — "
+               "est INTACT.",
+        superseant="PREREGISTRATION.md:8972 « Le moins cher qui peut "
+                   "échouer, avant la »",
+        fragments=("12,97", "la porte 33,3 tient V4", "14,3 %")),
 )
 
 # CITATIONS NON VERBATIM DÉCLARÉES — chacune vérifiée à la main, chacune
