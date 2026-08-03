@@ -59,21 +59,41 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A49**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A52**
 > (2026-08-03). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
 > post-P3 ; un **`chemin-de-coût`** jugé au coût SEUL est autorisé avant, sous quatre gardes) ;
-> **§A49 P0-son TRANCHÉ : β3**.
-> **P0-b est TRANCHÉ depuis §A36 (2026-07-25) : C-STRAT, version F-unique** — plusieurs documents
-> l'ont porté comme ouvert pendant neuf jours ; ne pas se réamorcer sur eux. **Même règle pour
-> P0-son et l'échange compositeur, tranchés le 2026-08-03** (§A49, §A48) : plusieurs documents les
-> portent encore comme ouverts.
-> **Une méta-donnée n'est jamais autorité contre le fichier qu'elle décrit** (§A47-PRÉCISION-2) :
-> une table des matières périmée a fait affirmer deux faits faux le 03/08. En cas de doute, le CORPS.
-> Suite convenue : **la séance-table** (lecture conditionnelle tant que le rendu n'est pas chiffré),
-> puis **la tranche verticale** — z + registre + F + rendu naïf + chemin-de-coût, qui produit le
-> premier chiffre ne venant pas du papier.
+> **§A49 P0-son TRANCHÉ : β3** ; **§A50 l'ancre textuelle** ; **§A51 la séance-table tenue** ;
+> **§A52 le premier chiffre mesuré**.
+>
+> **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
+> **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
+> jours. **P0-son** (β3, §A49) et **l'échange compositeur** (§A48) depuis le 2026-08-03.
+>
+> **§A51 — SÉANCE-TABLE TENUE.** Vocabulaire épinglé, **c_fin 3D = 7,5 éq-f32**, dérivé ligne à
+> ligne (roche creusable ⇒ `b0` = occupation volumique ; `id-matériau` u16 ; `e_ch` dérivé du
+> ledger ; `e_th` = **enthalpie**, ce qui rend la fraction de glace gratuite). Enveloppe lue sous
+> le **CAP D'EMPLACEMENTS** — *la formule dense est SUPERSÉÉE depuis §A16* — les deux branches en
+> **B1** : la VRAM n'est pas la contrainte. **β est mort comme coefficient** (`M = 2·Σb_prim +
+> Σb_dér`). **Streaming VRAM↔RAM promu** de levier à question dont dépend un facteur 5,8.
+>
+> **§A52 — PREMIER CHIFFRE.** Le **gather-plancher coûte 0,449 ms** à 1920×1080 (**2,7 %** du
+> budget) ⇒ **G1**. La prédiction VRAM de §A51 tombe **au bit près**. Machine réelle :
+> **3 781 Mo** de VRAM, pas 4 096.
+>
+> **RÈGLES LOAD-BEARING, nées le 03/08 :**
+> - Toute ancre **SORTANTE** porte son texte : `` `fichier:NNN` « fragment exact » `` — **le texte
+>   fait foi, le numéro est le chemin** (§A50 ; 13 ancres nues sur 19 étaient fausses).
+> - Une **méta-donnée** n'est jamais autorité contre ce qu'elle décrit — TOC, en-tête, numéro de
+>   ligne (§A47-PRÉCISION-2). En cas de doute, **le CORPS**.
+> - Le **pré-enregistrement se commit SEUL, AVANT le premier run** (§A52).
+> - Une **sortie de console n'est pas un artefact** (§A52, famille §A41).
+> - Un **chiffre défavorable n'est pas plus sûr** qu'un favorable ; un **critère d'indétermination
+>   se vérifie sur le cas FAVORABLE** aussi (§A52).
+>
+> **SUITE : le coût de F en 3D** — l'INDÉTERMINÉE de §A51 que §A52 n'a pas levée (toutes les ancres
+> de coût sont 2D). Puis l'ombrage/éclairage réels, et le régime mobile.
 
 ## Commandes
 
