@@ -71,14 +71,15 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A54**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A55**
 > (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
 > post-P3 ; un **`chemin-de-coût`** jugé au coût SEUL est autorisé avant, sous quatre gardes) ;
 > **§A49 P0-son TRANCHÉ : β3** ; **§A50 l'ancre textuelle** ; **§A51 la séance-table tenue** ;
 > **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz** ;
-> **§A54 le vérificateur d'ancres livré**.
+> **§A54 le vérificateur d'ancres livré** ;
+> **§A55 le multiplicateur `c` — la fourchette du cap est FERMÉE**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -132,17 +133,25 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 >   arithmétique et nul en valeur** (corrections de pression à `b ≡ 0`, réconciliation positivité)
 >   se retire sans changer un chiffre — seul un **inventaire STRUCTUREL** l'attrape.
 >
-> **SUITE — BORNER LE MULTIPLICATEUR `c` AVANT D'ARBITRER (ordre posé par Romain, §A54-5).**
-> Le cap de §A53 — **8 blocs à 60 Hz, 18 à 30 Hz** — est un **PLAFOND** : deux réductions
-> nommées l'attendent, et l'une est bon marché. Le multiplicateur `c` se **borne avec le
-> jouet 3D existant** (paramétrer le nombre de scalaires advectés), **sans trancher le
-> schéma eau 3D** — c'est un encadrement, pas un choix, et il est neutre au schéma
-> (l'advection de `s`, `e_th`, `ρ_s` est la même partout). Borne haute connue : **×1,50**
-> (champs facturés comme des systèmes) ; borne basse **inconnue** — sans elle le cap n'est
-> que « entre 5 et 8 blocs », trop lâche pour décider. *Le moins cher qui peut échouer,
-> avant la décision qui ne peut plus être défaite.* Prereg commité SEUL avant le run.
-> Ensuite : le **non-F 3D**, puis l'arbitrage de cadence (Romain), puis
-> l'ombrage/éclairage réels et le régime mobile.
+> **§A55 — LE MULTIPLICATEUR `c` MESURÉ, LA FOURCHETTE EST FERMÉE.** Une fenêtre 64³ au
+> **vocabulaire réel** (1 système + 3 scalaires advectés + 2 statiques lus) coûte
+> **`C` = 2,4293 ms** ⇒ **`ρ_c` = 1,4623**, juste sous la borne haute ×1,50. **CAP :
+> 6 fenêtres à 60 Hz, 12,97 à 30 Hz** ; V4 en demande 11 ⇒ **branche C-A, la porte 33,3
+> tient V4** avec 14,3 % de marge (il faudrait que le non-F 3D TRIPLE pour la renverser).
+> Décomposition : scalaires seuls ×1,3377 (**sous** le compte d'opérations 1,4348 —
+> l'argument « une advection n'a pas de solveur de Riemann » est juste), **statiques
+> +9,3 %** que la borne ignorait (elle comptait des champs, pas des octets lus).
+> **LE COÛT N'EST PAS AFFINE, IL EST EN MARCHE D'OCCUPANCY** : 72→80→94→96 registres,
+> 3 blocs/SM jusqu'à 2 scalaires puis 2 blocs/SM — l'occupancy tombe de 50 % à 33 %
+> exactement là où l'incrément triple (+0,167 / **+0,394** / +0,267 ms). La pente est
+> reportée (I-c4 passé à 94 % de sa bande) mais **ce n'est pas une loi**. Deux réductions
+> nommées, non mesurées, toutes deux favorables : `id-matériau` lu au centre plutôt que
+> dans le halo, et f16 sur `e_th`/`ρ_s`.
+>
+> **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
+> désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
+> **C-A n'est PAS un feu vert** : l'autre moitié — rendu, ombrage, régime mobile, **non-F
+> 3D** — reste inconnue, et le non-F ne peut que réduire le cap. Rien ne s'enchaîne.
 
 ## Commandes
 
