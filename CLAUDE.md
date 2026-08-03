@@ -9,6 +9,17 @@ T1 »). Il teste un seul claim (un routeur deux-physiques sur interface FSI cont
 routeur de Harten codé en dur, en espace perceptuel, à compute inférieur ?). Le code est
 l'instrument ; le **livrable est un verdict honnête**, pas une fonctionnalité.
 
+> **PORTÉE DE LA PHRASE CI-DESSUS — lire avant de l'appliquer (précisé 2026-08-03).** Elle est
+> vraie **de T1**, une question fermée à laquelle un verdict répond. Elle **ne gouverne pas le
+> programme Cascade**, dont le but gravé est *« un moteur de monde voxel pour un jeu sandbox »*
+> (note d'orientation v2 §1, ENDOSSÉ) — **un moteur qui tourne, jamais une publication**. Dans un
+> programme de moteur, un verdict négatif est un blocage à contourner, pas un livrable.
+> Conséquence opératoire : la **rigueur verdict-grade est proportionnelle au coût de se tromper**
+> — réservée à ce dont l'erreur oblige à tout reconstruire (enveloppe mémoire, budget de frame,
+> « un seul F » / fermeture sous-maille, contrat du registre). Partout ailleurs : **build par
+> défaut, mesure quand une décision en dépend**. Cette phrase, appliquée sans sa portée, a produit
+> six semaines de verdicts honnêtes et aucun moteur.
+
 - **`PREREGISTRATION.md` est le contrat et fait foi.** Seuils et critères figés *avant* le code.
   **Un seuil manqué est un résultat, pas un bug à corriger a posteriori.** Ne jamais déplacer un
   seuil pour faire passer un gate.
@@ -39,10 +50,20 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 
 > Statut au dernier commit : **T1 clos.** Instrument FSI validé (G0 a/b/c) ; **C2 perceptuellement
 > vacant à Re=100 2D** (substrat (quasi-)périodique → mémoïser-partout perceptuellement optimal).
-> Suite = **T1.5** : trouver un substrat qui SOLLICITE les trois sorties. `experiments/mixed_substrate.py`
-> (commité — cette ligne disait « non commité » à tort, corrigé le 29/07) est le WIP T1.5.
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A41**
-> (correction conditions/dates + règle « la machine lit, la session ne recopie pas »).
+> **T1.5 : consommateur INCERTAIN (2026-08-03).** Sous la note d'orientation v2, il n'y a plus de
+> routeur à trois sorties comme objet premier — la question « `descend` jamais sollicitée » se
+> reformule en « la politique d'élagage/croissance paie-t-elle son coût en JND-par-FLOP ? », qui
+> appartient à la tranche-moteur, pas à un C2-bis sur cylindre. Par D17, **si aucune décision
+> moteur n'en dépend, T1.5 se ferme** — décision Romain, non prise. S'il court, ce sera sur le
+> substrat qui a déjà de la structure (inondation shallow-water), **jamais sur
+> `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
+> (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
+> consommée par `experiments/c2_static_null.py:46`).
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A47**
+> (+ §A47-PRÉCISION) : §A45 portée du corollaire de falsifiabilité (image seule), §A46 re-scoping
+> audio impulsif et couplage τ_dec, §A47 règle des deux classes de document.
+> **P0-b est TRANCHÉ depuis §A36 (2026-07-25) : C-STRAT, version F-unique** — plusieurs documents
+> l'ont porté comme ouvert pendant neuf jours ; ne pas se réamorcer sur eux.
 
 ## Commandes
 
