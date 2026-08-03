@@ -59,6 +59,13 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
      Et un terme **payé en arithmétique, nul en valeur** (bathymétrie plate, réconciliation
      positivité) ne se garde que **structurellement** — le retirer ne change aucun chiffre, passe
      tous les verrous numériques, et allège le code : la minoration silencieuse parfaite.
+8. **L'APPARIEMENT EST LA CONDITION D'EXISTENCE DU CONTRASTE** (§A59/§A60/§A61 — trois
+   fois violée en une nuit). *Une comparaison ne vaut que si ses deux termes ne diffèrent
+   QUE par la variable testée* — et « en plus » inclut **le rang dans l'exécution**.
+   Nommer un confondant ne le contrôle pas : seul l'appariement le contrôle. Les trois
+   occurrences : groupes non appariés en **taille** (§A59) ; **filtrer puis agréger** sans
+   re-nommer le périmètre (§A60) ; contrôle non apparié dans le **temps** — 1ʳᵉ mesure
+   contre 4ᵉ, +25 °C (§A61).
 
 > Statut au dernier commit : **T1 clos.** Instrument FSI validé (G0 a/b/c) ; **C2 perceptuellement
 > vacant à Re=100 2D** (substrat (quasi-)périodique → mémoïser-partout perceptuellement optimal).
@@ -71,7 +78,7 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A60**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A61**
 > (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
@@ -83,7 +90,8 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > **§A56 la table a TROIS monnaies, une seule linéaire** ; **§A57 la porte 33,3 réserve
 > ~13 ms au rendu — V4 ne tient pas non plus à 30 Hz** ; **§A58 la machinerie n'exige que la
 > parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ** ;
-> **§A60 l'instrument lui-même est en cause**.
+> **§A60 l'instrument lui-même est en cause** ;
+> **§A61 la machine n'a pas de point de fonctionnement stable**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -212,6 +220,19 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > Seul survivant du run : **T32**, puissance 0,56 %, `Δ = −1,99 %` significatif —
 > l'alignement paie, **mais 5× trop peu** pour déplacer le candidat. Un triplet ne fait
 > pas un verdict.
+>
+> **§A61 — LA MACHINE N'A PAS DE POINT DE FONCTIONNEMENT STABLE.** Throttle `0x4` = **SW
+> Power Cap** dans les cinq séries sondées ; horloge SM de **1 035 à 1 732 MHz** selon la
+> mesure ; un « plateau » parfois **plus bas** que le premier relevé ; température
+> **54 → 79 °C** sur le run, avec dérive **monotone** des plateaux (6,038 → 6,243 ms à
+> 64³). `T_conv` = **2,5 s** à 64³, **19,3 s** à 128³, **22,1 s** à 32³ — **aucune
+> constante, ni en secondes ni en frames**. ⇒ **le protocole gravé suppose un processus
+> STATIONNAIRE qui ne l'est pas** ; aucun warmup ne converge vers un plateau inexistant.
+> **La re-qualification n'est PAS acquise, et aucune mesure 3D ABSOLUE ne devrait être
+> produite avant qu'elle le soit.** Reste probablement sain — **à établir, pas à
+> supposer** — les rapports **intra-run entre points adjacents dans le temps** (dérive
+> ~3 % sur 3 min ; §A53 mesurait 2D et 3D côte à côte, deux runs à 0,63 %).
+> **Rien n'est rétracté** : aucune conclusion de gate n'en dépend.
 >
 > **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
 > désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
