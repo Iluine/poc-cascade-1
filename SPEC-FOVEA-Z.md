@@ -438,7 +438,12 @@ courant : **V4** (journal §A18), mesure gate : **M-a-quater**.
 
 ## §9. La projection — image et son comme readouts de z `[ENDOSSÉE 2026-07-19]`
 
-Pointeur : le détail faisant foi est au **journal §A20**. En résumé : image et son sont
+Pointeur : le détail faisant foi est au **journal §A20**, **amendé par §A45** (la portée
+du corollaire de falsifiabilité de §A20-1 est IMAGE-SEULE ; « co-égal » se dit en
+JUGEMENT, pas en FALSIFIABILITÉ) **et §A46** (la clause « éphémère par définition » de
+§A20-3 est re-scopée pour le canal auditif, classe impulsive : « re-dérivable
+DÉTERMINISTIQUEMENT depuis (ledger, graines) » ; la classe continue n'est pas couverte).
+En résumé : image et son sont
 des projections **déterministes** de `z` (optique/acoustique appliquées à l'état, jamais
 génération) ; **invariant de projection** — aucun readout ne porte d'état propre
 load-bearing, l'état temporel de readout (réverbération, exposition, AA) est ÉPHÉMÈRE

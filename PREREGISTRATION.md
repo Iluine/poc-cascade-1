@@ -7386,3 +7386,167 @@ documentait sa propre obsolescence (« passe aujourd'hui ; ajouté à la liste,
 REFUSÉ »). Tout P3″ éventuel court sur une graine NEUVE ; sa décision reste
 OUVERTE (§A44). Entrée rédigée par la session Claude sur la même délégation
 que §A44 ; l'endossement est le commit de Romain.
+
+## §A45 (2026-08-03, 15:56 — horloge lue) — PORTÉE DU COROLLAIRE DE FALSIFIABILITÉ (§A20-1) : IL NE SE TRANSPOSE PAS AU SON
+
+> **Entrée de correction append-only. Rien n'est effacé : l'erreur reste lisible.**
+> Elle ne SUPERSÈDE aucun énoncé : elle BORNE la portée du corollaire de §A20-1 et
+> interdit une lecture qui n'a jamais été mesurée. Aucune décision d'orientation
+> n'est prise ici (P0-son reste OUVERTE).
+
+**Origine** : doute soulevé par Romain le 2026-08-03 sur l'orientation du son, pris
+comme consommateur D17 ; relecture machine de §A20 (aucun run, aucun seuil).
+
+**LE FAIT, LU DANS L'ARTEFACT.** §A20-1 (`PREREGISTRATION.md:4685-4687`) tire son
+corollaire d'une propriété nommée : « **`z` stable ⇒ image stable, par construction.**
+Corollaire acquis : l'image devient **FALSIFIABLE CONTRE L'ÉTAT** ». Cette propriété
+est celle du **solve d'équilibre** optique (§A20-2, `:4699-4703` : rapport ~5·10⁶, « un
+*solve* par état (elliptique), pas une évolution »). Deux paragraphes plus bas, le même
+§A20-2 (`:4704-4707`) grave que le solve acoustique est **mort à l'arrivée** : « la CFL
+acoustique impose ~170 kHz, soit **~2800 sous-pas par frame** : mort à l'arrivée ». Et
+§A20-3 (`:4718-4720`) le remplace par une « **synthèse** à taux audio ». Une synthèse
+n'est pas un solve : **il n'existe aucun référent pour « ce son est-il la projection
+correcte de `z` ? »**, et c'est §A20-2 lui-même qui l'a rendu indisponible.
+
+**CE QUE CETTE ENTRÉE ÉTABLIT — deux référents distincts, et P0-b n'en a déplacé
+qu'un.**
+1. **Référent d'ESPACE D'ÉTAT** (Δχ contre une vérité pleine) : mort par la mesure
+   (§A34) et prononcé en §A36 (P0-a) — « C-uni : **MORT comme contrat de la fovéa**,
+   VIVANT comme étalon du harnais du registre ». Perte **PARTAGÉE** : image et son la
+   subissent également. C'est le mouvement de P0-b.
+2. **Référent de NIVEAU PROJECTION** (§A20-1) : propriété du **solve** optique, PAS du
+   contrat de fidélité. P0-b n'y touche pas ; l'image la garde intacte sous C-strat ; le
+   son ne l'a **jamais** eue. Déficit à un étage que P0-b n'a pas visité — **seconde
+   perte, indépendante**.
+
+**LA CONTRAINTE DE RÉDACTION QUI EN DÉCOULE.** Tout texte de thèse conservant le mot
+« co-égal » (note d'orientation v2 §1, ENDOSSÉ) doit désormais porter la distinction en
+toutes lettres : **co-égal en JUGEMENT** — même type de juge (§A36, P0-b clause 3 : « le
+JUGE est la projection pondérée-observateur — jamais l'espace d'état »), mêmes
+invariants, même ABX de substitution — **et NON co-égal en FALSIFIABILITÉ** : le
+corollaire de §A20-1 est image-seule. Sans cette phrase, la thèse promet ce que §A20-2 a
+tué : c'est un surclame, de la famille que §A41 légifère.
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Elle ne tranche pas P0-son (rétrograder
+le son / garder « co-égal » avec un falsifieur relatif / statu quo) — décision Romain,
+OUVERTE. Elle ne modifie aucun seuil, ne gate ni ne dégate aucune mesure. Elle
+n'autorise aucun code audio. Elle ne dit rien du COÛT des projections, qui reste
+« ENTIÈREMENT OUVERT » (§A20-5, `:4762`).
+
+**CE QU'ELLE REND DÛ** : la phrase de distinction, partout où « co-égal » est écrit —
+un travail papier, indépendant de la branche P0-son choisie.
+
+Entrée rédigée par la session Claude sur délégation explicite de Romain (même forme que
+§A44) ; l'endossement est son commit.
+
+## §A46 (2026-08-03, 15:56 — horloge lue) — « ÉPHÉMÈRE PAR DÉFINITION » (§A20-3) EST TROP LÂCHE POUR LE CANAL AUDITIF ; RE-SCOPING DE LA CLASSE IMPULSIVE
+
+> **Entrée de correction append-only. Rien n'est effacé : l'erreur reste lisible.**
+> Elle SUPERSÈDE la clause « recalculable différemment d'un replay à l'autre » de
+> §A20-3 **pour le canal auditif, classe impulsive seulement** — l'image et la classe
+> continue restent régies par §A20-3 tel quel.
+
+**LE FAIT, LU DANS L'ARTEFACT.** §A20-3 (`PREREGISTRATION.md:4721-4725`) range la queue
+de réverbération avec l'adaptation d'exposition et l'historique d'AA temporel :
+« **ÉPHÉMÈRE PAR DÉFINITION — recalculable différemment d'un replay à l'autre**, n'entre
+JAMAIS au registre, jamais porteur d'histoire ».
+
+**POURQUOI C'EST TROP LÂCHE ICI.** « Recalculable différemment d'un replay à l'autre »
+est *exactement* l'énoncé que l'ABX de substitution est chargé de mettre à l'épreuve
+(§A36 : « falsifieur unifié : AUCUNE TRANSITION N'EST DÉTECTABLE PAR L'OBSERVATEUR »).
+Dans le canal image, une adaptation d'exposition qui repart est inoffensive ; dans le
+canal auditif, une re-dérivation qui diffère **à l'instant d'un commit** est un clic.
+Déclarer la grandeur éphémère **par définition** ne fait pas passer la mesure : ça la
+retire du périmètre par décret — famille « un seuil déplacé avant d'avoir été atteint ».
+
+**LE RE-SCOPING, BORNÉ À LA CLASSE IMPULSIVE.** §A20-3 grave deux classes d'excitation :
+« excitée par les **ÉVÉNEMENTS** et les **ÉTATS** de `z` ». Pour la classe
+**événementielle impulsive** : la frappe est un événement du LEDGER ; des oscillateurs
+amortis sont la classe jumpable par excellence (forme close) ; l'état modal à `t` est
+donc une **fonction déterministe de (événements du ledger, `t`)** — un **cache
+matérialisé**, pas un état porteur d'histoire. La clause devient, pour cette classe :
+**« re-dérivable DÉTERMINISTIQUEMENT depuis (ledger, graines) »** — composantes
+stochastiques semées comme les tirages de naissance (§A36, P0-b : « tirage de naissance
+des branches, conditionnel, semé, contraint par le ledger »). Ni clic, ni violation de l'invariant de
+projection (§A20-1, `:4689-4691`).
+
+**LA MOITIÉ QUE CE RE-SCOPING NE COUVRE PAS, dite en toutes lettres.** La classe
+**continue pilotée par l'état** (rivière, vent, pluie) n'est pas jumpable : sa
+réalisation — la phase fine du bruit — est précisément l'endroit où vit la couture de
+commit. Elle n'est PAS traitée ici.
+
+**LE COUPLAGE, NOMMÉ POUR LA PREMIÈRE FOIS.** La note d'orientation v2 (point 4,
+ENDOSSÉ ; repris en §A36 P0-d) applique sa licence de re-tirage la plus large à la
+source sonore la plus continue d'un monde sandbox : « **eau vive (τ courts) → synthèse
+généreuse** », sur l'argument « au-delà de τ_dec, la vérité fine y est épistémiquement
+vide ». C'est un énoncé de vérité **PRÉDICTIVE**. Le re-tirage est sûr pour l'œil
+(statistiques spatiales, intégration ~16,7 ms) et sûr pour l'oreille **en régime
+établi** ; il n'est **PAS établi sûr pour l'oreille À LA COUTURE**, où il devient une
+discontinuité temporelle `[TRANSPOSITION-HYPOTHÈSE : sensibilité auditive aux
+discontinuités ~ms, deux à trois ordres de grandeur sous la grille de frame sur laquelle
+la frontière éphémère/persistant a été raisonnée ; NON MESURÉ ici]`. Cas qui s'entendrait :
+le transitoire EN VOL — l'attaque entendue dont la suite vient d'un autre tirage.
+**Conséquence : τ_dec acquiert un SECOND consommateur, à tolérance temporelle beaucoup
+plus serrée que le premier.**
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Elle ne tranche pas P0-son. Elle
+n'autorise aucun code audio. Elle ne pré-enregistre aucune sonde : le clic au commit
+reste **LA mesure** qui testera ce re-scoping, au lieu d'être préemptée par lui. Elle ne
+touche ni un seuil ni une garde.
+
+**CE QU'ELLE REND DÛ** : (1) le re-scoping ci-dessus reporté dans la spec §9 le jour où
+un texte audio s'écrit ; (2) le prereg de la sonde τ_dec (falsifieur nommé, dormant
+jusqu'à consommateur — D17) doit désormais nommer ce second consommateur, et la question
+de son canal événementiel (détecteurs mécaniques pré-enregistrés ; gigue de timing vs
+divergence d'existence) est POSÉE ici, **non tranchée** — elle appartient à ce prereg,
+pas à cette entrée.
+
+Entrée rédigée par la session Claude sur la même délégation que §A45 ; l'endossement est
+le commit de Romain.
+
+## §A47 (2026-08-03, 16:12 — horloge lue) — RÈGLE STRUCTURELLE : DEUX CLASSES DE DOCUMENT, DEUX RÉGIMES DE CORRECTION
+
+> **Entrée structurelle.** Elle ne corrige aucun fait et ne supersède aucun énoncé :
+> elle grave une règle de méthode dégagée en appliquant §A45/§A46, pour qu'elle
+> tranche les prochains cas sans re-litige. Aucun seuil, aucune garde, aucune mesure.
+
+**LE TEST QUI TRANCHE** : le document porte-t-il un en-tête qui **défère au journal**
+(« le journal fait foi ; ce document raisonne sur lui et ne le remplace pas ») **ou qui
+se déclare périmé** ?
+
+- **NON ⇒ document VIVANT** (une thèse, une spec en vigueur, un contrat : il parle en
+  son nom propre, au présent). Il s'amende **À LA LIGNE**, en **bornant sans amputer** :
+  l'énoncé fautif ou incomplet reste lisible, la précision le suit, datée et référencée
+  au § qui la porte.
+- **OUI ⇒ document DATÉ DÉFÉRENT** (instantané, séance, note de travail). Il est couvert
+  **EN BLOC** par son en-tête et **ne se retouche pas**. Y tamponner une précision
+  postérieure affaiblit le mécanisme même qui le protège, et brouille sa provenance.
+
+**COROLLAIRE — la provenance ne se rafraîchit pas.** Une mention du type « (fin de
+fichier : §AXX) » à l'intérieur d'une clause déférente est un **FAIT DE PROVENANCE** —
+l'état du journal contre lequel le document a effectivement raisonné — et non un
+pointeur de navigation. La mettre à jour **fabriquerait une provenance fausse** : c'est
+la famille des verdicts antidatés, légiférée en §A41. On la laisse.
+
+**CAS JUGÉS LE 2026-08-03 SOUS CETTE RÈGLE** (application, pas doctrine) :
+- `note-orientation-v2-2026-07-25.md` — VIVANT (thèse en vigueur, aucun en-tête
+  déférent) ⇒ amendé à la ligne : §1 (portée de « co-égales », §A45) et §8 (précision
+  §A45/§A46 ; et la ligne « P0-a..d restent À TRANCHER », conservée et marquée PÉRIMÉE
+  le jour même — §A36 fait foi).
+- `spec-p1-rendu-instrument-2026-07-25.md` — spec EN VIGUEUR ⇒ amendement de pointeur,
+  proportionné à ce que la ligne affirme (une portée, pas une revendication).
+- `etat-des-lieux-2026-07-19.md` — en-tête « ⚠ PÉRIMÉ… ne rien citer d'ici sans
+  re-vérifier au journal » ⇒ **NON touché**, bien qu'il porte deux occurrences de
+  « co-égales ».
+- `seance-fidelite-2026-07-25.md` — en-tête déférent dès la naissance ⇒ **NON touché**,
+  y compris sa mention de provenance « (fin de fichier : §A35) », qui reste exacte comme
+  fait historique et deviendrait fausse si on la rafraîchissait.
+
+**POURQUOI ÇA VAUT UNE ENTRÉE** : le mode de défaillance dominant du programme n'est
+plus la fabrication de PASS mais la **désynchronisation des méta-données** — §A45/§A46
+en ont fourni un exemplaire coûteux (une ligne périmée le jour même de son écriture,
+lue comme vivante pendant neuf jours). Cette règle dit où l'on tamponne et où l'on ne
+tamponne pas ; sans elle, chaque correction future re-litige le même arbitrage.
+
+Entrée rédigée par la session Claude sur la même délégation que §A45/§A46 ;
+l'endossement est le commit de Romain.
