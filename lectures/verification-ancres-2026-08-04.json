@@ -1,0 +1,1694 @@
+{
+ "comptes": {
+  "nue": 147,
+  "exacte": 21,
+  "non-verbatim-déclarée": 3,
+  "exacte-typographie": 3,
+  "exacte-emphase": 10
+ },
+ "ancres": [
+  {
+   "source": "CLAUDE.md",
+   "ligne_source": 72,
+   "citation": "cascade/experts/regimes.py:28-32",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "CLAUDE.md",
+   "ligne_source": 73,
+   "citation": "experiments/c2_static_null.py:46",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 6541,
+   "citation": "run_arcC_session.py:107",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7143,
+   "citation": "cascade/metrics/spectral.py:22-55",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7400,
+   "citation": "PREREGISTRATION.md:4685-4687",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7403,
+   "citation": "PREREGISTRATION.md:4699-4703",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7405,
+   "citation": "PREREGISTRATION.md:4704-4707",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7407,
+   "citation": "PREREGISTRATION.md:4718-4720",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7434,
+   "citation": "PREREGISTRATION.md:4762",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7449,
+   "citation": "PREREGISTRATION.md:4721-4725",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7471,
+   "citation": "PREREGISTRATION.md:4689-4691",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7597,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:4-5",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7599,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7513-7515",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7600,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7517",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7601,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7536-7537",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7604,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7549",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7615,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7525-7529",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7626,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7545-7548",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7629,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:7531-7543",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7636,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:24-40",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7637,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:411",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7637,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:426",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7637,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:439",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7637,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:459",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7640,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:27",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7640,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:95",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7641,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:131",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7674,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:68-70",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7677,
+   "citation": "spec-p1-rendu-instrument-2026-07-25.md:62-67",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7682,
+   "citation": "prereg-p3-transport-pin.md:114-115",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7683,
+   "citation": "prereg-p3-transport-pin.md:126",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7697,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:74-80",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7723,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:97-123",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7726,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:131",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7726,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:429-432",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7728,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:461-466",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7738,
+   "citation": "PREREGISTRATION.md:7285-7288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7745,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:78-79",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7747,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:79-80",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7751,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:65-67",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7753,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:114-115",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7757,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:68-70",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7758,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:269-270",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7772,
+   "citation": "PREREGISTRATION.md:7266-7274",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7780,
+   "citation": "PREREGISTRATION.md:7468",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7780,
+   "citation": "PREREGISTRATION.md:7497",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7788,
+   "citation": "PREREGISTRATION.md:7473-7476",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7789,
+   "citation": "PREREGISTRATION.md:7493-7494",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7791,
+   "citation": "PREREGISTRATION.md:7485-7487",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7810,
+   "citation": "PREREGISTRATION.md:7485-7487",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7817,
+   "citation": "PREREGISTRATION.md:7285-7288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7825,
+   "citation": "PREREGISTRATION.md:7489-7490",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7828,
+   "citation": "PREREGISTRATION.md:7460",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7839,
+   "citation": "PREREGISTRATION.md:7497",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7840,
+   "citation": "SPEC-FOVEA-Z.md:439",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7842,
+   "citation": "SPEC-FOVEA-Z.md:441-445",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7853,
+   "citation": "PREREGISTRATION.md:7493-7494",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7855,
+   "citation": "PREREGISTRATION.md:7499-7502",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7878,
+   "citation": "PREREGISTRATION.md:269-270",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7898,
+   "citation": "SPEC-FOVEA-Z.md:288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7899,
+   "citation": "SPEC-FOVEA-Z.md:302",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7899,
+   "citation": "SPEC-FOVEA-Z.md:288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7906,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:5",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7920,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:411",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7920,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:425",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7921,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:426",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7921,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:440",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7922,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:439",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7922,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:453",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7923,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:459",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7923,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:473",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7924,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:95",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7924,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:109",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7925,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:131",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7925,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:145",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7926,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:97-123",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7926,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:111-137",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7927,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:131",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7927,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:145",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7928,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:429-432",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7928,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:443-446",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7929,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:461-466",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7929,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:475-480",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7930,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:269-270",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7930,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:279-280",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7931,
+   "citation": "SPEC-FOVEA-Z.md:439",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7931,
+   "citation": "SPEC-FOVEA-Z.md:453",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7932,
+   "citation": "SPEC-FOVEA-Z.md:441-445",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7932,
+   "citation": "SPEC-FOVEA-Z.md:455-459",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7934,
+   "citation": "SPEC-FOVEA-Z.md:27",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7935,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:62-67",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7935,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:68-70",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7936,
+   "citation": "prereg-p3-transport-pin.md:114-115",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7936,
+   "citation": "prereg-p3-transport-pin.md:126",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7937,
+   "citation": "prereg-p3-transport-pin.md:24-40",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7939,
+   "citation": "prereg-p3-transport-pin.md:54",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7970,
+   "citation": "SPEC-FOVEA-Z.md:288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7970,
+   "citation": "SPEC-FOVEA-Z.md:292",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7976,
+   "citation": "src/f1_gpu/backend.py:66",
+   "etat": "exacte",
+   "ligne_trouvee": 66,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7976,
+   "citation": "src/summary_quadtree.py:79-86",
+   "etat": "non-verbatim-déclarée",
+   "ligne_trouvee": null,
+   "detail": "le fragment a DISPARU de la cible — changement de fond, jamais une renumérotation (§A50)",
+   "notes": [
+    "DÉCLARÉE — §A50 cite « COPIE float64 (jamais une vue -- anti-fuite) » ; la source (:79) écrit « … -- anti-fuite : `summarize_qt` ne doit » — la citation FERME une parenthèse que la source n'y ferme pas. L'ancre pointe juste et le sens est intact ; le fragment, lui, est inventé. Consignée, non amendée : §A50 est une entrée de journal APPEND-ONLY."
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7977,
+   "citation": "src/f1_gpu/ledger.py:164",
+   "etat": "exacte",
+   "ligne_trouvee": 164,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7978,
+   "citation": "src/f1_gpu/ledger.py:166-172",
+   "etat": "exacte",
+   "ligne_trouvee": 167,
+   "detail": "",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> src/f1_gpu/ledger.py"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7986,
+   "citation": "src/f1_gpu/ledger.py:27",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7986,
+   "citation": "src/f1_gpu/ledger.py:109",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 7986,
+   "citation": "src/f1_gpu/ledger.py:145",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8010,
+   "citation": "PREREGISTRATION.md:7266-7274",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8017,
+   "citation": "annexe-enveloppe-jeu-2026-07-19.md:48-49",
+   "etat": "exacte",
+   "ligne_trouvee": 48,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8033,
+   "citation": "src/sediment.py:5",
+   "etat": "exacte",
+   "ligne_trouvee": 5,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8071,
+   "citation": "SPEC-FOVEA-Z.md:61",
+   "etat": "exacte",
+   "ligne_trouvee": 61,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8072,
+   "citation": "SPEC-FOVEA-Z.md:116-117",
+   "etat": "exacte",
+   "ligne_trouvee": 116,
+   "detail": "",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> SPEC-FOVEA-Z.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8074,
+   "citation": "note-budget-vram-2026-07-18.md:12",
+   "etat": "exacte",
+   "ligne_trouvee": 11,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8144,
+   "citation": "SPEC-FOVEA-Z.md:443-446",
+   "etat": "exacte",
+   "ligne_trouvee": 444,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8156,
+   "citation": "PREREGISTRATION.md:7473-7476",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8160,
+   "citation": "PREREGISTRATION.md:6494",
+   "etat": "exacte",
+   "ligne_trouvee": 6494,
+   "detail": "",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8174,
+   "citation": "PREREGISTRATION.md:1032-1033",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8178,
+   "citation": "PREREGISTRATION.md:4221",
+   "etat": "non-verbatim-déclarée",
+   "ligne_trouvee": null,
+   "detail": "le fragment n'existe qu'au site de citation — la cible ne le porte pas",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md",
+    "DÉCLARÉE — troisième variante du même défaut : §A51 cite `:4221` « P4 — L1 EN RÉSERVE : cadence k=2 » là où la source écrit « **P4 — L1 EN RÉSERVE pré-enregistrée** : cadence k=2 si L3 ne suffit pas ». Un mot SUPPRIMÉ sans marque d'élision — la citation se resserre en silence. Ancre juste, sens intact, fragment inexistant. Entrée append-only : consignée."
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8183,
+   "citation": "PREREGISTRATION.md:4217",
+   "etat": "exacte-typographie",
+   "ligne_trouvee": 4217,
+   "detail": "ancre JUSTE, citation NON VERBATIM : le séparateur décimal diffère de la source",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8197,
+   "citation": "PREREGISTRATION.md:3890-3892",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8248,
+   "citation": "SPEC-FOVEA-Z.md:130",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 130,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8273,
+   "citation": "src/solver_wetdry.py:29",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 29,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8285,
+   "citation": "note-budget-vram-2026-07-18.md:33-34",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8292,
+   "citation": "SPEC-FOVEA-Z.md:129",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8302,
+   "citation": "SPEC-FOVEA-Z.md:431",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8305,
+   "citation": "PREREGISTRATION.md:4214",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 4214,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8312,
+   "citation": "SPEC-FOVEA-Z.md:61",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8313,
+   "citation": "PREREGISTRATION.md:3896",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 3896,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8319,
+   "citation": "SPEC-FOVEA-Z.md:425",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8321,
+   "citation": "SPEC-FOVEA-Z.md:449",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8326,
+   "citation": "SPEC-FOVEA-Z.md:117",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8327,
+   "citation": "SPEC-FOVEA-Z.md:985-986",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8328,
+   "citation": "PREREGISTRATION.md:1030-1031",
+   "etat": "exacte",
+   "ligne_trouvee": 1031,
+   "detail": "",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8340,
+   "citation": "SPEC-FOVEA-Z.md:27",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8340,
+   "citation": "SPEC-FOVEA-Z.md:109",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8340,
+   "citation": "SPEC-FOVEA-Z.md:145",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8376,
+   "citation": "pocPhysicator/claude/annexe-enveloppe-jeu-2026-07-19.md:48-49",
+   "etat": "exacte",
+   "ligne_trouvee": 48,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8598,
+   "citation": "PREREGISTRATION.md:8254",
+   "etat": "exacte",
+   "ligne_trouvee": 8254,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8633,
+   "citation": "PREREGISTRATION.md:8200",
+   "etat": "exacte",
+   "ligne_trouvee": 8200,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8706,
+   "citation": "PREREGISTRATION.md:8183",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8708,
+   "citation": "PREREGISTRATION.md:4217",
+   "etat": "exacte-typographie",
+   "ligne_trouvee": 4217,
+   "detail": "ancre JUSTE, citation NON VERBATIM : le séparateur décimal diffère de la source",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8720,
+   "citation": "PREREGISTRATION.md:8339",
+   "etat": "exacte",
+   "ligne_trouvee": 8338,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8730,
+   "citation": "PREREGISTRATION.md:8258",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8733,
+   "citation": "PREREGISTRATION.md:5215",
+   "etat": "exacte",
+   "ligne_trouvee": 5215,
+   "detail": "",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8735,
+   "citation": "PREREGISTRATION.md:5222",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8778,
+   "citation": "substrat_fusionne.py:8-9",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8794,
+   "citation": "substrat_jetable.py:5-6",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 4,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8812,
+   "citation": "PREREGISTRATION.md:6461",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 6461,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "SPEC-FOVEA-Z.md",
+   "ligne_source": 51,
+   "citation": "PREREGISTRATION.md:131",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 19,
+   "citation": "PREREGISTRATION.md:8254",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 27,
+   "citation": "PREREGISTRATION.md:6461",
+   "etat": "exacte",
+   "ligne_trouvee": 6461,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 32,
+   "citation": "PREREGISTRATION.md:8183",
+   "etat": "exacte",
+   "ligne_trouvee": 8182,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 44,
+   "citation": "PREREGISTRATION.md:8258",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 48,
+   "citation": "PREREGISTRATION.md:5215",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 53,
+   "citation": "PREREGISTRATION.md:5222",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 60,
+   "citation": "claude/prereg-tranche-cout-rendu-2026-08-03.md:52",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 78,
+   "citation": "PREREGISTRATION.md:8339",
+   "etat": "exacte",
+   "ligne_trouvee": 8338,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 83,
+   "citation": "src/f1_gpu/substrat_jetable.py:5-6",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 122,
+   "citation": "src/f1_gpu/substrat_fusionne.py:8-9",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 124,
+   "citation": "substrat_jetable.py:6-8",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 150,
+   "citation": ".gitignore:5",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 5,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 172,
+   "citation": "PREREGISTRATION.md:8200",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 195,
+   "citation": "src/f1_gpu/chrono.py:3-6",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 277,
+   "citation": "src/f1_gpu/chrono.py:8200",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-cout-f-3d-2026-08-03.md",
+   "ligne_source": 315,
+   "citation": "src/f1_gpu/chrono.py:8042",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-p3prime-transport-intra-session.md",
+   "ligne_source": 76,
+   "citation": "src/arcC_abx.py:493-494",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 16,
+   "citation": "PREREGISTRATION.md:1032-1033",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 37,
+   "citation": "claude/annexe-enveloppe-jeu-2026-07-19.md:48-49",
+   "etat": "exacte",
+   "ligne_trouvee": 48,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 50,
+   "citation": "PREREGISTRATION.md:4214",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 4214,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 61,
+   "citation": "src/f1_gpu/backend.py:4-6",
+   "etat": "non-verbatim-déclarée",
+   "ligne_trouvee": null,
+   "detail": "le fragment a DISPARU de la cible — changement de fond, jamais une renumérotation (§A50)",
+   "notes": [
+    "DÉCLARÉE — même défaut : « (pas de mesure valide) » referme une parenthèse que la source (:6) poursuit en « (pas de mesure valide, kill 45 s) », plus une capitale initiale abaissée. Ancre juste, sens intact. Clause de PROVENANCE d'un pré-enregistrement daté : couverte en bloc, non amendée (régime §A47-PRÉCISION-2)."
+   ]
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 62,
+   "citation": "src/f1_gpu/pyramide.py:75",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 75,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 64,
+   "citation": "PREREGISTRATION.md:5386",
+   "etat": "exacte",
+   "ligne_trouvee": 5386,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 70,
+   "citation": "PREREGISTRATION.md:4214",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 71,
+   "citation": "PREREGISTRATION.md:3967",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 3967,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md"
+   ]
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 121,
+   "citation": "src/f1_gpu/chrono.py:3-6",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-tranche-cout-rendu-2026-08-03.md",
+   "ligne_source": 164,
+   "citation": "PREREGISTRATION.md:4217",
+   "etat": "exacte-typographie",
+   "ligne_trouvee": 4217,
+   "detail": "ancre JUSTE, citation NON VERBATIM : le séparateur décimal diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 49,
+   "citation": "PREREGISTRATION.md:288",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 80,
+   "citation": "src/f1_gpu/backend.py:66",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 82,
+   "citation": "src/summary_quadtree.py:79-86",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 83,
+   "citation": "src/summary_quadtree.py:95",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 84,
+   "citation": "src/f1_gpu/ledger.py:164",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/seance-table-entree-2026-08-03.md",
+   "ligne_source": 272,
+   "citation": "src/f1_gpu/ledger.py:292",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/spec-p1-rendu-instrument-2026-07-25.md",
+   "ligne_source": 77,
+   "citation": "PREREGISTRATION.md:74-80",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/spec-p1-rendu-instrument-2026-07-25.md",
+   "ligne_source": 103,
+   "citation": "scripts/run_arcC_session.py:107",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/spec-p1-rendu-instrument-2026-07-25.md",
+   "ligne_source": 114,
+   "citation": "src/albedo.py:96-139",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/spec-p1-rendu-instrument-2026-07-25.md",
+   "ligne_source": 137,
+   "citation": "run_arcC_session.py:102-107",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  }
+ ]
+}

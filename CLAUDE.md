@@ -47,6 +47,18 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
    là où l'artefact apparaît.
 6. **Ne pas surclamer**, dans aucun sens. Documenter la portée EXACTE d'un verdict (cf. la conclusion
    T1 : verdict réel mais sur 2 sorties de routeur sur 3 — la 3ᵉ, `descend`, n'a jamais été sollicitée).
+7. **LES TROIS FABRICATIONS — une seule règle, trouvée trois fois en une semaine (2026-08-03).**
+   Un instrument qui ne peut pas produire le verdict contraire ne produit pas de verdict.
+   - **Ne pas fabriquer un PASS** : un seuil manqué est un RÉSULTAT. Ne jamais déplacer un seuil,
+     ni relâcher une garde, ni relancer une mesure jusqu'à ce qu'elle passe.
+   - **Ne pas fabriquer un INDÉTERMINÉ** (§A52) : un critère d'indétermination se vérifie sur le
+     cas **FAVORABLE** autant que sur le défavorable — sinon il punit la qualité qu'il contrôle.
+     Corollaire : *un chiffre défavorable n'est pas plus sûr qu'un chiffre favorable*.
+   - **Ne pas fabriquer un VERT** (§A53) : *un verrou numérique ne garde que ce que son ÉTAT DE
+     TEST allume*. Un test qui ne peut pas échouer sur l'objet qu'il prétend tester ne teste rien.
+     Et un terme **payé en arithmétique, nul en valeur** (bathymétrie plate, réconciliation
+     positivité) ne se garde que **structurellement** — le retirer ne change aucun chiffre, passe
+     tous les verrous numériques, et allège le code : la minoration silencieuse parfaite.
 
 > Statut au dernier commit : **T1 clos.** Instrument FSI validé (G0 a/b/c) ; **C2 perceptuellement
 > vacant à Re=100 2D** (substrat (quasi-)périodique → mémoïser-partout perceptuellement optimal).
