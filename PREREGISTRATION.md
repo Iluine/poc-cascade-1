@@ -8350,3 +8350,244 @@ question vers le temps et le rendu, elle ne la ferme pas. Elle n'autorise aucun 
 l'autorisation du `chemin-de-coût` reste celle de §A48, sous ses quatre gardes.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+---
+
+## §A52 (2026-08-03, 22:52 — horloge lue) — TRANCHE, PREMIER CHIFFRE : le GATHER-PLANCHER coûte **0,449 ms** à 1920×1080 (2,7 % du budget) ; la prédiction VRAM de §A51 est confirmée **AU BIT PRÈS** ; le run 1 est resté INDÉTERMINÉ et c'est ce qui a sauvé la lecture
+
+Première mesure du programme qui ne vienne pas du papier. Protocole
+pré-enregistré **avant** l'écriture du driver :
+`pocPhysicator/claude/prereg-tranche-cout-rendu-2026-08-03.md`. Artefact :
+`pocPhysicator/claude/lectures/tranche-cout-rendu-2026-08-03.json`. Code et
+artefact au commit `4dda6a6` (`pocPhysicator`).
+
+> **CE QUE LA SESSION PROPOSE** : la lecture **G1** ci-dessous, et les réserves
+> qui l'accompagnent. **CE QUI APPARTIENT À ROMAIN** : le prononcé de la
+> branche. Les branches G1/G2/G3 et R-A/R-B/R-C étaient écrites **avant** le
+> run, ainsi que le seuil de prononçabilité (§5-bis). **L'endossement est le
+> commit.**
+
+---
+
+### §A52-1 — LA MACHINE, MESURÉE
+
+RTX 3050 Ti Laptop, pilote 570.211.01, cupy 14.1.1. **VRAM totale : 3 781 Mo**
+(3 682 libres au repos). C'est bien la machine cible —
+`pocPhysicator/claude/annexe-enveloppe-jeu-2026-07-19.md:48-49` « la 3050 Ti est
+le GPU minimal pour 1920, pas une machine 4K ».
+
+**PREMIÈRE CORRECTION APPORTÉE PAR LA MACHINE.** §A51 a lu l'enveloppe contre
+**4 Go**. Le budget réel est **3 781 Mo**, soit **7,7 % de moins**. Aucune
+branche ne bouge — résidence conique ⇒ ~3,5 Go de reste ; omnidirectionnelle ⇒
+~2,5 Go ; **les deux restent en B1** — mais l'écart est consigné, non absorbé.
+
+---
+
+### §A52-2 — M-1 : LA PRÉDICTION DE §A51 TOMBE EXACTEMENT
+
+| | |
+|---|---|
+| prédit au papier (préreg §3) | **125 829 120 octets** |
+| mesuré (`octets_etat`) | **125 829 120 octets** = 120,0 Mio |
+| écart | **NUL** |
+
+**Branche R-A**, et mieux que R-A : le modèle **`2·Σb_primitifs` par cellule
+active** de §A51 — le facteur 2 correspondant exactement à la paire
+`fenetres`/`references` — n'est pas « du bon ordre », il est **exact**. C'est le
+premier appui mesuré de la lecture d'enveloppe de la séance-table.
+
+*(L'affichage « ~126 Mo » du pré-enregistrement était en mégaoctets décimaux, le
+driver affiche en mébioctets : même nombre, deux unités. Aucun écart réel.)*
+
+**PORTÉE EXACTE, à ne pas surclamer.** `memGetInfo` donne le même chiffre, donc
+un **écart mempool de 0,0 Mo** — mais il a été lu **juste après construction,
+avant tout gather**. Il dit « à la construction, rien de plus que les buffers » ;
+il ne dit **rien** de la résidence en régime, où les temporaires vivent.
+
+---
+
+### §A52-3 — M-2b : LE CHIFFRE
+
+| grandeur | valeur |
+|---|---|
+| **gather-plancher à 1920×1080** | **0,449 ms** |
+| part du budget de frame (16,7 ms) | **2,7 %** |
+| loi | **0,23 ns/px** + ordonnée −0,024 ms, résidu max 0,023 ms |
+| témoin de dégénérescence (512 vs 1920, calculé sur M-2) | **se distingue** — **10,327** contre **5,458** ns/px, écart **89,2 %** |
+
+**DEUX BASES D'ÉCRAN, déclarées ici une fois pour toute l'entrée.** Les
+**médianes** sont mesurées sur des écrans **CARRÉS** `cote_px²` ; les chiffres de
+titre (0,449 ms ; 12,26 ms ; facteur 27×) sont des **déductions par la loi à
+1920×1080**, rectangulaire. Les deux ne se divisent pas l'une par l'autre : à
+1920² le kernel vaut 0,820 ms et la boucle Python 20,12 ms. Chaque nombre de
+cette entrée porte donc sa base — `1920²` pour les médianes et les ratios,
+`1920×1080` pour les déductions.
+| ratio sur la bande passante (M-2b / M-5) | **4,5×** — seuil de prononçabilité : 10 |
+
+**LECTURE PROPOSÉE : G1.** Telle qu'écrite avant le run : « *le gather-plancher
+n'est pas un poste budgétaire ; la question du coût de rendu se déplace
+entièrement vers ce que cette tranche NE mesure pas — ombrage, éclairage,
+composition réelle* ».
+
+---
+
+### §A52-4 — DEUX RUNS, ET LE PREMIER EST RESTÉ INDÉTERMINÉ
+
+**Run 1** — gather en boucle Python sur 11 slots, indexation avancée :
+**12,2 ms** à 1920×1080, soit 73 % du budget. Pris au mot : **G3**, c'est-à-dire
+« le rendu fovéal à 60 Hz n'est pas atteignable sur cette machine sans repli ».
+
+**Ce prononcé aurait été faux, et faux sur du code de session.** À `1920²` — même
+base — la boucle Python coûte **20,12 ms** quand le témoin de bande passante
+(M-5) en coûte **0,183** pour écrire le même écran : **ratio 109,8×**. Le chiffre
+mesurait la lenteur de l'implémentation, pas la structure
+creuse. `§A48` garde 1 impose un plancher sur l'**ARITHMÉTIQUE** (« naïf dans
+l'opérateur, réel dans la structure ») — **elle ne dit rien de
+l'implémentation**, et l'implémentation dominait d'un facteur cent.
+
+**LA FAUTE ÉVITÉE EST LA FAUTE HABITUELLE, PRISE EN SENS INVERSE.** Le journal
+traque d'ordinaire l'optimisme — un seuil déplacé pour qu'un gate passe. Ici le
+risque était un **verdict pessimiste** fabriqué par un artefact de code, et il
+condamnait un pan entier de l'architecture. **Un chiffre défavorable n'est pas
+plus sûr qu'un chiffre favorable : les deux exigent de savoir ce qu'ils
+mesurent.**
+
+**Run 2 — M-2b, un kernel.** Un thread par pixel, zéro copie (pointeurs device
+des fenêtres, jamais leur contenu), parcours **FIN→GROSSIER avec arrêt au
+premier slot couvrant** — strictement équivalent à l'insertion dure
+grossier→fin, une seule écriture par pixel. **L'ARITHMÉTIQUE EST INCHANGÉE** :
+division entière, plus proche voisin, aucune interpolation.
+
+**L'équivalence est TESTÉE BIT À BIT** sur trois tailles
+(`pocPhysicator/tests/test_chemin_de_cout.py`), jamais supposée. Sans ce test, on
+aurait pu changer l'**arithmétique** en croyant ne changer que
+l'**implémentation**, et les deux chiffres cesseraient d'être comparables.
+Facteur mesuré : **27×**.
+
+---
+
+### §A52-5 — TROIS POSTES QUE LE PRÉ-ENREGISTREMENT N'AVAIT PAS ISOLÉS
+
+Tous apparus **à l'écriture du driver**, tous déclarés plutôt qu'absorbés :
+
+| poste | mesuré | part de M-2b | ce qu'il apprend |
+|---|---|---|---|
+| **M-3** verrou (garde 2) | 0,0017 ms | **0,21 %** | **la serrure est gratuite** — le module refusait de le supposer, il fallait le mesurer |
+| **M-4** contrôle fail-loud | 0,187 ms | **22,8 %** | il pesait 0,9 % de la boucle Python ; il pèse **près d'un quart** du kernel |
+| **M-5** bande passante | 0,183 ms | témoin | **il décide de toute l'interprétation**, et rien ne le prévoyait |
+
+**M-4 en détail** : le contrôle force une **synchronisation device→hôte** par
+appel. Le gather **net** vaut **0,633 ms** à 1920² (contre 0,820 avec contrôle).
+**Il n'a PAS été retiré** : un moteur réel ne le ferait pas chaque frame, mais
+l'affaiblir pour embellir un chiffre est exactement ce que le protocole existe
+pour empêcher. Le chiffre annoncé (0,449 ms) **inclut** le contrôle.
+
+**QUATRIÈME DÉCOUVERTE — un critère du pré-enregistrement était MAL FORMÉ, et ne
+s'est pas déclenché par chance.** Le « témoin de dégénérescence » exigeait que le
+coût par pixel à `cote_px=512` se distingue de celui à 1920, faute de quoi la
+lecture serait INDÉTERMINÉE. Le driver le calcule sur **M-2**, où il vaut **10,327**
+contre **5,458** ns/px (**89,2 %**) : vert. **Calculé sur M-2b il aurait donné
+0,2029 contre 0,2225 ns/px — 9,2 %, sous le seuil de 10 %, donc INDÉTERMINÉE
+prononcée à tort.**
+
+La raison : le critère teste en fait *« y a-t-il un gros coût fixe ? »*. Vrai de
+la boucle Python (ordonnée 1,82 ms), **faux d'un bon kernel** (ordonnée
+−0,024 ms). Un coût par pixel **constant** est la signature d'une mesure
+**propre**, pas d'une mesure dégénérée — le critère punissait exactement la
+qualité qu'il devait vérifier.
+
+Ce que le témoin voulait attraper existe pourtant : à `cote_px=512` l'écran
+coïncide avec la fenêtre fovéale fine, donc le gather y est **mono-niveau**. Le
+fait mesuré est alors un **résultat**, et un bon : traverser onze slots avec
+arrêt au premier couvrant ne coûte que **~10 % de plus** que le cas trivial.
+**Le multi-niveaux est presque gratuit.**
+
+**DEUX FAUTES DE PROCESSUS, consignées et non effacées.**
+
+**(a) UN CHIFFRE RECOPIÉ D'UNE CONSOLE, PAS LU DANS L'ARTEFACT — famille §A41,
+à la source.** La première rédaction de cette entrée portait, pour le témoin,
+« 10,00 contre 5,44 ns/px, écart 84 % ». Ces valeurs sont celles affichées en
+**console au run 2** ; l'artefact conservé provient du **run 3** et dit 10,327 /
+5,458 / 89,2 %. Les trois nombres étaient cohérents entre eux — donc
+indétectables par relecture interne — et **faux contre l'artefact**. Ils
+figuraient de surcroît dans une entrée déclarant « chaque chiffre recoupé par la
+machine et non recopié », et sur la ligne même qui consigne le critère mal formé.
+La leçon n'est pas nouvelle, elle est **confirmée dans le pire endroit possible** :
+*une sortie de console n'est pas un artefact ; seul le fichier conservé fait foi,
+et il faut le relire même quand on croit s'en souvenir.*
+
+**(b) LE PRÉ-ENREGISTREMENT ET LE DRIVER SONT NÉS DANS LE MÊME COMMIT.**
+`pocPhysicator 4dda6a6` porte à la fois `claude/prereg-tranche-cout-rendu-
+2026-08-03.md`, le driver, le kernel et l'artefact. L'antériorité du protocole
+sur le run est donc attestée **par la seule parole de session**, jamais par
+l'histoire git — alors que toute la discipline des arcs grave le protocole dans
+**son propre commit, antérieur au premier run**. L'antériorité réelle n'est pas
+en cause ; **elle est invérifiable, ce qui pour ce journal revient au même**.
+**RÈGLE POUR LA SUITE : le pré-enregistrement se commit SEUL, avant le premier
+run ; le driver, le code et l'artefact viennent après, dans des commits
+distincts.**
+
+**Fait de méthode.** Trois postes décisifs ont échappé à un pré-enregistrement
+écrit avec soin, et un quatrième critère y était mal formé — tous découverts en
+écrivant le code qui l'exécute, ou en recoupant le chiffre contre l'artefact.
+**Un protocole ne se complète qu'au contact de son instrument** — d'où les deux
+règles que cette entrée propose : *tout poste découvert à l'implémentation
+s'isole et se déclare, jamais il ne se fond dans le chiffre principal* ; et *un
+critère d'indétermination se vérifie sur le cas FAVORABLE autant que sur le cas
+défavorable, sinon il punit la qualité qu'il prétend contrôler*.
+
+---
+
+### §A52-6 — LE 4,5× RÉPOND À UNE QUESTION DE §A48
+
+`§A48` garde 1 posait : « le gather **creux** est dispersé, et le rapport
+cohérent/dispersé **n'est pas une marge, c'est le terme dominant** ».
+
+**Ce rapport est désormais MESURÉ : 4,5.** Il est bien dominant — un facteur 4,5
+n'est pas une marge — et il n'est pas catastrophique. La garde avait raison sur
+la nature du terme ; sa magnitude, personne ne la connaissait.
+
+---
+
+### §A52-7 — ANTI-SURCLAME (§A48 garde 4) ET RÉSERVES
+
+**Ce chiffre dit : « LE GATHER-PLANCHER coûte 0,449 ms ». Il ne dit PAS « le
+rendu coûte 0,449 ms ».** Ne sont mesurés ni l'ombrage, ni l'éclairage, ni la
+composition réelle, ni `frame()`, ni le readout albédo.
+
+1. **PLANCHER** : l'opérateur de couture réel ajoutera de l'arithmétique
+   (stencil de prédiction). Toute lecture d'enveloppe traite ce chiffre en
+   **plancher + marge**.
+2. **FOVÉA IMMOBILE** : les métadonnées de slots sont en cache et ne se
+   reconstruisent que si `centre_fin` bouge. Amorties à zéro ici ; **pas en
+   régime mobile**, où la fovéa se déplace à chaque frame. Second plancher.
+3. **2D** : V4 est un scénario 2D. Le coût temps d'un slot **en 3D** reste
+   l'INDÉTERMINÉE de §A51, **non levée par cette mesure**.
+4. **La dette « mesurable quand le compositeur existera » reste OUVERTE** — ce
+   chiffre l'avance, il ne la solde pas.
+5. **Aucune fidélité n'a été mesurée** ni approchée : `violations_consignees()`
+   est vide, la garde 2 n'a jamais été sollicitée.
+
+---
+
+### §A52-8 — CE QUE CETTE MESURE DÉPLACE
+
+Deux résultats indépendants disent maintenant que les postes **structurels**
+sont petits : la **VRAM** (§A51 B1, confirmée exactement) et le **gather** (G1).
+Ce que le programme ignore encore s'est resserré sur trois objets :
+
+- **le coût de F en 3D** — INDÉTERMINÉE de §A51, aucune ancre hors 2D ;
+- **l'ombrage et l'éclairage réels** — jamais mesurés, des deux côtés ;
+- **le régime mobile** — la fovéa immobile est un plancher de plus.
+
+**DÛ, avec consommateur nommé** : le **streaming VRAM↔RAM** (promu par §A51,
+facteur 5,8) reste sans mesure ; le **vérificateur d'ancres** de §A50 et son état
+`fait périmé` ; les quatre dûs de §A49.
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Elle ne prononce aucun verdict de
+gate. Elle ne touche ni seuil ni garde. Elle n'autorise aucun code au-delà de ce
+que `§A48` autorise déjà, et le `chemin-de-coût` reste **jetable par
+construction**, superséé par le compositeur instrument post-P3.
+
+Entrée rédigée par la session Claude ; **le prononcé de la branche et
+l'endossement sont le commit de Romain.**
