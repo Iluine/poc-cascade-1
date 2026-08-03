@@ -7295,3 +7295,77 @@ jour neuf, `date_session` dans la plage gravée [09:00, 19:00], garde 1
 (a)-(d) verte, la commande tapée le jour même, jamais pré-remplie. Après la
 session : lecture mécanique, verdict remonté, gravure (§A44), PUIS le
 brûlage de `20260729`. Aucun enchaînement.**
+
+## §A44 (2026-08-03, 11:22 — horloge lue) — VERDICT P3′ : INDÉTERMINÉE (branche 3, garde de dispersion §C5) ; séance valide, faits consignés ; la décision de suite OUVERTE
+
+**LA SÉANCE** : 2026-08-03, 10:06→10:28, harnais 75b2289, machine-instrument
+(iluin-TwoRings3), commande tapée par Romain le jour même, clause (d)
+satisfaite (10:06 ∈ [09:00, 19:00]), graine 20260729 (égalité au gravé,
+absente des brûlées à l'entrée). Plan D-P3′-1 tenu — V,R,R,V,V,R vérifié par
+garde ; échauffement 15 essais au niveau D-8-2 (2 × jnd_sev = 0.14668…,
+source citée au manifeste), NON-ANALYSÉ ; pause libre ~12 min entre les
+staircases 3 et 4, consignée, jamais jugée ; bras complets 3+3 ; liaison
+sidecar↔log verte par sha256 sur les six.
+
+**LA LECTURE MÉCANIQUE** (10:40, `p3prime_transport.lecture.json`, recopiée à
+`claude/lectures/`) : les SEPT gardes toutes évaluées, toutes vertes.
+Dispersion §C5 par bras : viridis n=3 **CV = 41.1 % — HORS CLOUS** (json en
+pleine précision : 0.41091…) ; r1 n=3 CV = 11.8 % — cohérent. **VERDICT :
+INDÉTERMINÉE, branche 3.** Lecture pré-écrite appliquée telle quelle : « un
+résultat, consigné, jamais re-couru en relâchant » ; table D17 : « la
+décision suivante appartient à Romain — aucune lecture par défaut ». Le gate
+(iii′) ne reçoit rien ; la condition D14 reste OUVERTE, consignée telle
+quelle.
+
+**LES SEUILS RESTENT SCELLÉS** : ni imprimés ni écrits par la lecture (seul
+le CV est surfacé) ; `seuils_scelles_p3prime.json` archivé tel quel, sha au
+manifeste de séance. Ni cette entrée ni la session qui l'a rédigée n'ont
+ouvert le fichier. Le descellement éventuel est une décision explicite — NON
+prise ici.
+
+**LU AVEC LA RÉSERVE M4 (non-cécité, gravée au prereg)** : le prereg
+anticipait « vraisemblablement la branche 2 avec T ≈ 0.5 » ; le prononcé est
+INDÉTERMINÉE, par la garde CV ajoutée en [v2] précisément contre le
+mécanisme complaisant de B1b. Fait de référence posé SANS interprétation :
+le 26/07, c'est le bras R1 qui dispersait (CV 42.7 %) ; aujourd'hui R1 est
+cohérent (11.8 %) et c'est viridis qui disperse (41.1 %) — la dispersion a
+changé de bras entre les deux sessions. Toute analyse vient APRÈS cette
+gravure.
+
+**DÉCLARATIONS §C9 (consignées le jour même, mémoire fraîche —
+`CONSIGNATION_post_session.md`, archivée avec la séance, commit 026a053)** :
+`--conditions` était ELLIPTIQUE à la CLI (les mots de la spec, pas les
+valeurs — la famille du refus du 26/07 ; la garde de gabarit ne l'attrape
+pas : défaut d'outillage nommé, non corrigé ici). Précisions consignées :
+luminosité = **OSD 80 %** (10:34) ; éclairage = plafonnier + lumière du
+jour, volet légèrement clos pour une lumière uniforme et stable (10:35,
+avec une faute d'horloge de la session Claude nommée et corrigée dans la
+note) ; distance 775 mm **mesurée à la règle**, pas de repère permanent —
+tenue de la distance en séance non re-vérifiée (10:43).
+
+**FAITS DE PROCESSUS** : (1) COLLISION DE CHEMINS (famille B1) — la séance a
+écrit sous les noms par défaut de la campagne du pin et écrasé sept fichiers
+trackés du 05/07 dans le working tree ; séance sauvegardée byte-identique
+AVANT tout geste ; pin RESTAURÉ depuis 75b2289 après comparaison sha256
+(sept/sept identiques — c'est la vérification, pas la confiance, qui a
+autorisé l'écrasement) ; séance versée à son adresse propre (026a053) ;
+correctifs : chemins par protocole + garde anti-écrasement (756b1b4),
+fail-loud du manifeste absent (2c31c69) ; suite 1313/0/0 sur l'instrument.
+(2) CÂBLAGE N°2 — l'orchestration p3prime écrivait son manifeste au nom par
+défaut HISTORIQUE quand la lecture attend `manifeste_p3prime.json` ; lecture
+courue avec `--manifeste` explicite (voie prévue par l'outil) ; réglé par
+756b1b4. (3) PUSH non fait avant la séance, que §A43 le plaçait avant —
+fait après, consigné. (4) CETTE ENTRÉE est rédigée par la session Claude sur
+DÉLÉGATION EXPLICITE de Romain ; l'endossement est son commit. La recopie de
+la lecture versionnée : « jamais par la machine » est lu comme interdisant
+l'enchaînement AUTOMATIQUE par le pipeline, pas une recopie décidée par
+Romain après verdict et exécutée par délégation — cette lecture de la clause
+est elle-même consignée, contestable à la revue.
+
+**DÉCISION DE SUITE : OUVERTE** — aucune lecture par défaut (D17). Ni P3″,
+ni descellement, ni relâchement de la garde CV ne se décident ici.
+
+**POINT D'ARRÊT : commit de cette entrée par Romain (= endossement), PUIS le
+brûlage de `20260729` — entrée dédiée au journal + commit dédié au code
+(`GRAINES_BRULEES` et son test, qui documente déjà sa propre mise à jour).
+Aucun enchaînement.**
