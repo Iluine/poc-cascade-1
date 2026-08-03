@@ -8836,3 +8836,179 @@ double** (§A53). Les postes structurels sont petits ; **le calcul est cher**.
 
 Entrée rédigée par la session Claude ; **le prononcé de la branche et
 l'endossement sont le commit de Romain.**
+
+## §A54 (2026-08-04, 00:02 — horloge lue) — LE VÉRIFICATEUR D'ANCRES EST LIVRÉ : **80 % du corpus est invérifiable par construction** ; trois formes de citation non verbatim exhumées, dont deux de la session ; l'ordre des gestes suivant est posé
+
+Le dû de §A50 est acquitté. Instrument : `verifier_ancres.py` (commit `a40cefe`),
+20 verrous dans `tests/test_verifier_ancres.py`, artefact
+`lectures/verification-ancres-2026-08-04.json`. Ce n'est pas une entrée de
+mesure : c'est la livraison de l'outil que quatre consommateurs attendaient — et
+que **deux ont attendu deux fois**.
+
+---
+
+### §A54-1 — LE CHIFFRE QUI DIT À QUOI IL SERT
+
+**184 ancres dans 57 documents des deux dépôts. 147 sont NUES — 80 %.**
+*(Lecture prise **avant** que cette entrée n'existe ; §A54 ajoute les siennes et
+porte le total à 196. Une entrée qui décrit le corpus le modifie — l'artefact
+archive l'état LU, jamais l'état d'après.)*
+
+Une ancre nue n'est pas fausse : elle est **invérifiable par construction**. La
+règle textuelle de §A50 date du 2026-08-03 ; tout le corpus antérieur la précède.
+Ce n'est donc pas une dette d'hygiène, c'est l'état réel du fonds : **quatre
+ancres sur cinq ne peuvent être contrôlées par personne**, ni machine ni humain,
+puisque rien ne dit ce qu'elles étaient censées désigner.
+
+Sur les 37 vérifiables : **21 exactes**, **10 exactes au balisage markdown près**,
+**3 exactes à la typographie près**, **3 non verbatim déclarées**. **Zéro ancre
+morte non déclarée** — c'est le verrou d'intégration, et il fait sortir l'outil
+en code non nul s'il tombe.
+
+---
+
+### §A54-2 — TROIS FORMES DE CITATION NON VERBATIM, EXHUMÉES
+
+Toutes trois ont la même signature : **l'ancre pointe juste, le sens est intact,
+et le fragment cité n'a jamais existé dans la source**. Aucune n'est détectable à
+l'œil ; aucune ne l'était par grep.
+
+1. **La citation qui referme une parenthèse.** On tronque au milieu d'une incise
+   et l'on ferme proprement. Le fragment obtenu est **bien formé** et paraît
+   verbatim. Deux occurrences, toutes deux de la session : §A50 citant
+   `src/summary_quadtree.py:79-86` — la source poursuit « anti-fuite :
+   `summarize_qt` ne doit » là où la citation écrit « anti-fuite) » — et le
+   prereg de la tranche citant `src/f1_gpu/backend.py:4-6`, où « (pas de mesure
+   valide) » referme ce que la source continue en « (pas de mesure valide, kill
+   45 s) ».
+2. **Le mot supprimé sans marque d'élision.** §A51 cite `:4221`
+   « P4 — L1 EN RÉSERVE : cadence k=2 » là où la source porte « P4 — L1 EN
+   RÉSERVE **pré-enregistrée** : cadence k=2 si L3 ne suffit pas ». La citation
+   se resserre en silence.
+3. **Le séparateur décimal « corrigé ».** Trois occurrences de « Porte 33,3 »
+   pour une source qui écrit « Porte 33.3 » — §A51, le prereg de la tranche, et
+   **§A53 lui-même**. Une citation qui corrige la typographie de sa source
+   affaiblit le principe « le texte fait foi » sans que personne ne s'en aperçoive.
+
+**Les trois sont DÉCLARÉES**, avec leur raison, dans le vérificateur. Déclarées
+n'est pas absoutes : elles restent affichées à chaque passe, dans leur propre
+section. Ce que la déclaration change est le **code de sortie** — pour qu'un
+problème neuf ne se noie pas dans un problème connu. *Un vérificateur qui échoue
+toujours n'est plus lu ; un vérificateur qu'on ne lit plus ne garde rien.*
+Aucune n'est amendée : §A50 et §A51 sont des entrées **append-only**, et le
+prereg de la tranche porte une clause de **provenance**, couverte en bloc
+(régime §A47-PRÉCISION-2).
+
+---
+
+### §A54-3 — CE QUE L'OUTIL A TROUVÉ CONTRE LUI-MÊME
+
+Quatre défauts de ma première version, chacun corrigé, chacun instructif. Ils
+sont consignés parce qu'un instrument de chemin-verdict doit exposer ses propres
+ratés.
+
+1. **26 ancres jetées EN SILENCE.** Le corpus abrège : `SPEC:431`,
+   `spec-p1:269`, `§A43:7266`. Sans table d'alias, l'extracteur les ignorait
+   faute d'extension reconnue. **Une ancre ignorée est pire qu'une ancre
+   fausse : elle ne se signale jamais.** La faute même que §A51-7 consigne — la
+   citation du quadruplet mort sous `SPEC:431` — vivait dans cet angle mort.
+2. **La forme nue de fichier (`:NNN`) est AMBIGUË**, et §A50 ne l'avait pas
+   nommée. §A51 écrit `:4214` pour le journal et `:116-117` pour la spec **dans
+   la même entrée** : la cible s'hérite du dernier fichier nommé, sauf quand elle
+   ne s'hérite pas. Ni « toujours le journal » ni « hériter » n'est vrai partout.
+   L'outil **essaie les deux et NOMME la cible retenue** plutôt que de choisir en
+   silence.
+3. **Mon registre était trop large et fabriquait de faux périmés.** Déclarée par
+   PLAGE seule, l'entrée « modèle dense » marquait périmées la **descente par
+   l'énergie** — `SPEC-FOVEA-Z.md:116-117` « c'est l'ÉNERGIE qui décide du
+   raffinement effectif (pilier existant) » — et le **streaming** —
+   `SPEC-FOVEA-Z.md:130` « Le streaming VRAM↔RAM hors fovéa est un levier
+   **nommé, pas une exigence v1** » —, tous deux parfaitement vivants. Une supersession
+   porte désormais ses **fragments** : elle ne mord que si la citation reprend le
+   texte superséé. *Un lecteur qui voit de faux périmés cesse de lire les vrais* —
+   c'est le même mécanisme de ruine que la déclaration ci-dessus prévient.
+4. **Une correspondance stricte HORS plage masquait une correspondance permissive
+   DANS la plage** : l'ancre `:4217`, juste, était rendue « décalée ». C'est ce
+   bug qui cachait les vraies découvertes à la première passe.
+
+---
+
+### §A54-4 — LE REGISTRE DE SUPERSESSIONS, ET CE QU'IL NE FAIT PAS
+
+Le troisième état de §A51-7 — *ancre exacte, contenu superséé* — est
+**indétectable par le texte** : le fragment cité est bel et bien là. Il exige un
+registre déclaré. Quatre entrées, chacune vérifiée sur disque avant d'être
+écrite : **V2 → V4** ; **marge 0,111 ms → 2,199 ms** ; **modèle dense → cap
+d'emplacements** ; et la **contradiction §6-rev1 / §2-rev1**, portée en état
+`contestée` et non `périmée` — *le vérificateur signale, il ne choisit pas*.
+
+**Le registre se vérifie lui-même** : chaque superséant y est écrit comme une
+ancre, contrôlée à chaque passe. Un registre faux est pire qu'un registre vide,
+puisqu'il certifie des supersessions qui n'existent pas.
+
+**UNE LIMITE TROUVÉE EN RELISANT CETTE ENTRÉE MÊME.** §A54 porte **onze ancres
+nues** — dans la page qui compte les ancres nues. Neuf d'entre elles ne sont pas
+des ancres : ce sont des **mentions de syntaxe** (`SPEC:431`, `:4214`, `:116-117`
+cités comme EXEMPLES de formes ambiguës). **Le vérificateur ne distingue pas une
+ancre MENTIONNÉE d'une ancre UTILISÉE** — il ne peut pas : la forme est la même.
+Les deux qui étaient de vraies citations ont reçu leur texte ci-dessus. La limite
+est nommée plutôt que contournée : la seule parade serait une convention
+d'échappement pour les mentions, qui n'existe pas et qu'aucune décision ne réclame
+aujourd'hui.
+
+**PORTÉES.** Le vérificateur ne prononce aucun verdict de fond, ne corrige aucun
+document, n'arbitre aucune contradiction. Il ne sait rien des 147 ancres nues,
+sinon qu'elles sont nues. Il ne détecte une supersession que si elle a été
+**déclarée** — donc il ne remplace pas la relecture, il la rend **cumulative**.
+
+---
+
+### §A54-5 — L'ORDRE DES GESTES, POSÉ PAR ROMAIN
+
+> **Ne pas arbitrer la porte 33,3 tout de suite.** Le cap de 8 blocs de §A53 est
+> un **plafond** avec **deux réductions nommées en attente**. L'une des deux est
+> bon marché : le multiplicateur `c` se **borne avec le jouet existant**, sans
+> trancher le schéma eau 3D — c'est un encadrement, pas un choix. L'autre, le
+> non-F 3D, demande du build. *« Le moins cher qui peut échouer, avant la
+> décision qui ne peut plus être défaite »* — la règle 3 du projet, appliquée à
+> sa propre porte.
+
+**Endossé, avec une précision de la session qui rend la mesure plus nécessaire,
+non moins.** La linéarité mesurée par §A53 (2,03 en 2D, 1,94 en 3D) est une
+linéarité **en SYSTÈMES** — chaque système ajouté porte son propre solveur de
+Riemann. Ajouter un champ **DANS** un système est beaucoup moins cher : un
+scalaire advecté coûte une pente limitée et un upwind par face, pas une
+résolution HLL. Donc la borne haute (`7,5 / 5 = ×1,50`, champs facturés comme
+des systèmes) est **connue**, et la borne basse ne l'est pas : sans mesure, le
+cap n'est que « entre 5 et 8 blocs », **trop lâche pour décider**. La mesure
+**ferme** la fourchette au lieu de la déplacer.
+
+**Elle est neutre au schéma** : ce qu'un schéma eau 3D tranche est le traitement
+de l'impulsion et de la pression. L'advection de `s`, `e_th`, `ρ_s` est la même
+sous tous les schémas — c'est ce qui autorise à la mesurer sans rien décider.
+
+**Réserve d'honnêteté sur le coût du geste** : « même harnais » n'est pas exact.
+Le kernel 3D est câblé à cinq champs ; borner `c` demande de **paramétrer le
+nombre de scalaires advectés**. C'est petit, ce n'est pas gratuit, et cela
+appellera son propre pré-enregistrement, **commité seul, avant le run**.
+
+---
+
+### §A54-6 — CE QUI RESTE DÛ
+
+**Les 147 ancres nues.** Elles ne se convertissent pas d'un geste : chacune exige
+de relire ce qu'elle désignait. La conversion **au fil de l'eau** — toute entrée
+neuve au format textuel, toute ancre touchée convertie — est la seule voie qui ne
+fabrique pas une reconstruction rétrospective. **Non tranché**, et c'est une
+décision de coût.
+
+**Le registre est SEMÉ, non complet.** Quatre supersessions y sont ; le corpus en
+porte d'autres, non recensées. Chaque verdict qui en supersède un autre devrait y
+ajouter sa ligne — sans quoi le troisième état retombe à la vigilance humaine,
+qui a échoué deux fois sur la même valeur en deux jours.
+
+**Inchangés** : le `c` 3D et le non-F 3D (les deux multiplicateurs de §A53) ; le
+streaming VRAM↔RAM (facteur 5,8) ; les quatre dûs de §A49 ; les arbitrages de
+`§A51-8`, auxquels s'ajoute désormais **la cadence**.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**

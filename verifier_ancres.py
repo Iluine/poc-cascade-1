@@ -200,7 +200,15 @@ CITATIONS_NON_VERBATIM: tuple[CitationDeclaree, ...] = (
 # correction, entrées qui consignent une faute. Les y signaler serait
 # crier au loup, et un vérificateur qu'on apprend à ignorer ne garde
 # plus rien. Chaque exclusion nomme sa raison.
-ZONES_NON_NORMATIVES: tuple[tuple[str, int, int, str], ...] = ()
+ZONES_NON_NORMATIVES: tuple[tuple[str, int, int, str], ...] = (
+    ("PREREGISTRATION.md", 8867, 8900,
+     "§A54-2 CONSIGNE les trois formes de citation non verbatim, donc il "
+     "les CITE. Une entrée qui documente une faute doit pouvoir la "
+     "reproduire sans que l'outil la lui reproche — et sans que le "
+     "fragment fautif, désormais présent à deux endroits du journal, "
+     "fasse croire à une ancre simplement décalée. Zone tenue AU PLUS "
+     "SERRÉ : la seule section qui cite des fragments fautifs."),
+)
 
 
 # --------------------------------------------------------------------
@@ -422,6 +430,12 @@ def _verifier_contre(ancre: Ancre, cible_nom: str) -> Ancre:
                 curseur = suivant + len(suite)
             if complet:
                 trouvees.append(ligne_de_offset(m.start()))
+        # Les zones qui CONSIGNENT des fautes en citent les fragments.
+        # Les compter comme correspondances ferait passer une ancre morte
+        # pour une ancre décalée — l'entrée qui documente le défaut
+        # deviendrait la preuve qu'il n'existe pas.
+        trouvees = [n for n in trouvees
+                    if not _dans_zone_non_normative(chemin.name, n)]
         if memes_fichiers:
             hors_site = [n for n in trouvees
                          if abs(n - ancre.ligne_source) > 3]
@@ -509,6 +523,14 @@ def verifier(ancre: Ancre) -> Ancre:
     return retenu
 
 
+def _dans_zone_non_normative(nom_fichier: str, ligne: int) -> bool:
+    for fichier, debut, fin, _ in ZONES_NON_NORMATIVES:
+        if (pathlib.PurePath(fichier).name == nom_fichier
+                and debut <= ligne <= fin):
+            return True
+    return False
+
+
 def _est_declaree(ancre: Ancre) -> CitationDeclaree | None:
     for c in CITATIONS_NON_VERBATIM:
         if (ancre.source == c.source
@@ -528,10 +550,13 @@ def appliquer_registre(ancre: Ancre) -> Ancre:
     """Le troisième et le quatrième état — indétectables par le texte."""
     if not (ancre.etat.startswith("exacte") or ancre.etat == "décalée"):
         return ancre
-    for zone in ZONES_NON_NORMATIVES:
-        fichier, debut, fin, _ = zone
-        if ancre.source == fichier and debut <= ancre.ligne_source <= fin:
-            ancre.notes.append("citation historique déclarée non normative")
+    for fichier, debut, fin, raison in ZONES_NON_NORMATIVES:
+        if (pathlib.PurePath(fichier).name
+                == pathlib.PurePath(ancre.source).name
+                and debut <= ancre.ligne_source <= fin):
+            ancre.notes.append(f"ZONE NON NORMATIVE — {raison}")
+            if ancre.etat in ("introuvable", "auto-citation", "décalée"):
+                ancre.etat = "non-verbatim-déclarée"
             return ancre
     ligne = ancre.ligne_trouvee or ancre.debut
     cite = _normaliser(_sans_emphase(ancre.fragment or ""))
