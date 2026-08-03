@@ -59,13 +59,13 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A52**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A53**
 > (2026-08-03). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
 > post-P3 ; un **`chemin-de-coût`** jugé au coût SEUL est autorisé avant, sous quatre gardes) ;
 > **§A49 P0-son TRANCHÉ : β3** ; **§A50 l'ancre textuelle** ; **§A51 la séance-table tenue** ;
-> **§A52 le premier chiffre mesuré**.
+> **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -82,6 +82,19 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > budget) ⇒ **G1**. La prédiction VRAM de §A51 tombe **au bit près**. Machine réelle :
 > **3 781 Mo** de VRAM, pas 4 096.
 >
+> **§A53 — LE COÛT DE F EN 3D, l'INDÉTERMINÉE de §A51 LEVÉE.** À nombre de cellules **identique**
+> (262 144 : 512² en 2D, 64³ en 3D), un **bloc** coûte 0,845 ms en 2D et **1,714 ms en 3D** ⇒
+> **ρ = 2,03**. F seul, pour les 15 blocs de V4, coûte **25,7 ms = 1,54 × le budget de frame
+> ENTIER** ⇒ branche pré-écrite **R-3, mort INCONDITIONNELLE** de V4 transposé.
+> **Ce qui meurt est le COMPTE DE BLOCS à 60 Hz — ni la 3D, ni V4 en 2D.** Le cap se lit
+> aussitôt : **8 blocs à 60 Hz, 18 à 30 Hz** ; V4 en demande 15. **La porte 33,3 cesse d'être un
+> repli de gameplay pour devenir l'arbitrage de la dimension — À TRANCHER (Romain).**
+> Deux multiplicateurs restent DUS et ne peuvent que réduire les 8 : le **non-F en 3D** (halos
+> ~20 % des cellules contre ~2 %) et le **`c` 3D** (un bloc mesuré porte 5 champs ; §A51 en pose
+> 7,5) — ce dernier dépend du **schéma eau 3D**, non tranché.
+> **CORRIGE §A51:8258** : la marge 2D de V4 n'est pas 0,7 % (chiffre du 19/07, superséé le même
+> jour par §A23-2b) mais **13,2 %** — ancre exacte, contenu périmé.
+>
 > **RÈGLES LOAD-BEARING, nées le 03/08 :**
 > - Toute ancre **SORTANTE** porte son texte : `` `fichier:NNN` « fragment exact » `` — **le texte
 >   fait foi, le numéro est le chemin** (§A50 ; 13 ancres nues sur 19 étaient fausses).
@@ -91,9 +104,14 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > - Une **sortie de console n'est pas un artefact** (§A52, famille §A41).
 > - Un **chiffre défavorable n'est pas plus sûr** qu'un favorable ; un **critère d'indétermination
 >   se vérifie sur le cas FAVORABLE** aussi (§A52).
+> - Un **verrou numérique ne garde que ce que son état allume** (§A53) : un terme **payé en
+>   arithmétique et nul en valeur** (corrections de pression à `b ≡ 0`, réconciliation positivité)
+>   se retire sans changer un chiffre — seul un **inventaire STRUCTUREL** l'attrape.
 >
-> **SUITE : le coût de F en 3D** — l'INDÉTERMINÉE de §A51 que §A52 n'a pas levée (toutes les ancres
-> de coût sont 2D). Puis l'ombrage/éclairage réels, et le régime mobile.
+> **SUITE — LA DÉCISION D'ABORD, PAS UNE MESURE.** §A53 a rendu le chiffre dont dépendait
+> l'arbitrage : **60 Hz à 8 blocs contre 30 Hz à 18** (V4 en demande 15). C'est à Romain, et rien
+> ne s'enchaîne automatiquement. Ensuite seulement : le **non-F 3D** et le **`c` 3D** (les deux
+> multiplicateurs dus), puis l'ombrage/éclairage réels et le régime mobile.
 
 ## Commandes
 
