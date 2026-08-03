@@ -7550,3 +7550,39 @@ tamponne pas ; sans elle, chaque correction future re-litige le même arbitrage.
 
 Entrée rédigée par la session Claude sur la même délégation que §A45/§A46 ;
 l'endossement est le commit de Romain.
+
+### §A47-PRÉCISION (2026-08-03, 17:19 — horloge lue) — provenance PÉRIMÉE PAR LE TEMPS vs provenance INEXACTE À LA NAISSANCE
+
+**Origine** : le premier cas est arrivé moins d'une heure après §A47 — un document
+d'entrée de séance rédigé le 2026-08-03 déclarait « le journal fait foi (fin de
+fichier : **§A46**) » alors que §A47 existait au moment de son écriture.
+
+**LE COROLLAIRE DE §A47 NE COUVRAIT QU'UN DES DEUX CAS.** « La provenance ne se
+rafraîchit pas » protège une provenance **EXACTE À L'ÉCRITURE**, que la croissance du
+journal a rendue périmée : la rafraîchir affirmerait un raisonnement qui n'a pas eu
+lieu — famille des verdicts antidatés (§A41). Ce n'est PAS le cas d'une provenance
+**INEXACTE À LA NAISSANCE** : le document y déclare un état du journal qui n'était pas
+celui du jour de son écriture. Ce n'est pas une péremption, c'est une **erreur**. La
+corriger ne fabrique aucune provenance — elle rétablit l'identité entre *ce que le
+document pouvait voir* et *ce qu'il déclare avoir vu*.
+
+**LE TEST QUI SÉPARE** : comparer l'état déclaré à l'état du journal **à la date
+d'écriture du document** (pas à aujourd'hui).
+- Égaux ⇒ provenance exacte, périmée par le temps ⇒ **ne pas toucher** (§A47).
+- Différents ⇒ **erreur de naissance** ⇒ corriger.
+
+**COMMENT CORRIGER, SELON LE STATUT** — c'est ici que la précision porte :
+- **Document non tracké, avant tout endossement** : correction silencieuse. Rien n'a
+  été endossé, personne n'a lu la version fausse. Régime appliqué au cas du 03/08.
+- **Document DÉJÀ COMMITÉ** : correction **MARQUÉE**, jamais silencieuse — un lecteur
+  a pu voir la version fausse, et une provenance qui change sans trace est exactement
+  ce que la discipline interdit. L'énoncé fautif reste lisible, la correction le suit,
+  datée. C'est le régime « amendement à la ligne » de §A47, appliqué à la clause de
+  provenance elle-même.
+
+**PORTÉES** : ne change pas §A47, en précise la portée. Aucun seuil, aucune garde,
+aucune mesure. Le cas dur (document commité) n'est PAS encore survenu — cette entrée
+est écrite avant lui, pour qu'il ne se re-litige pas au moment où il arrivera.
+
+Précision rédigée par la session Claude sur invitation explicite de Romain
+(2026-08-03) ; l'endossement est son commit.
