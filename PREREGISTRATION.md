@@ -9564,3 +9564,136 @@ le 19/07 ; **(3)** alors seulement la cadence et le côté, ensemble, avec la
 re-dérivation de la monnaie du slot — porte 3.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A59 (2026-08-04, 01:14 — horloge lue) — BALAYAGE DE TAILLES : **l'indétermination pré-écrite a tiré du côté FAVORABLE**, le chiffre n'est pas consommé ; **les deux causes sont des fautes du protocole**, et l'une d'elles est le confondant que le protocole avait lui-même nommé
+
+Premier run du programme qui **ne rend aucun chiffre**. C'est un résultat.
+
+Artefact : `pocPhysicator/claude/lectures/balayage-tailles-3d-2026-08-04.json`.
+Protocole `089b3f8` (commité seul), driver `b3b544b` (commité avant le run),
+artefact `5b41ba6`.
+
+---
+
+### §A59-1 — CE QUI S'EST PASSÉ
+
+| côté | groupe | bord | **ns / cellule** |
+|---|---|---|---|
+| 32 | aligné | 17,6 % | **10,4115** |
+| 40 | chevauchant | 14,3 % | **7,6533** |
+| 48 | chevauchant | 12,0 % | 7,7777 |
+| 52 | chevauchant | 11,1 % | 8,7671 |
+| 56 | chevauchant | 10,3 % | 8,2857 |
+| 64 | aligné | 9,1 % | 9,2058 |
+| 96 | aligné | 6,1 % | 8,9684 |
+| 128 | aligné | 4,6 % | 9,4137 |
+
+**Contraste chevauchants/alignés = 0,855** — les côtés *chevauchants* sont
+**moins chers**, l'inverse exact du mécanisme prédit. Et `s = 40` sort sous
+**tous** les alignés.
+
+**`I-t3` a tiré** : le critère qui, seul de tous, ne se déclenche **que du côté
+favorable**. Le prononcé est **INDÉTERMINÉ** ; aucun côté n'est retenu, le
+chiffre n'est pas consommé.
+
+---
+
+### §A59-2 — PREMIÈRE CAUSE : MES DEUX GROUPES NE SONT PAS APPARIÉS
+
+| groupe | côtés | **bord moyen** |
+|---|---|---|
+| alignés | 32, 64, 96, **128** | **9,36 %** |
+| chevauchants | 40, 48, 52, 56 | **11,92 %** |
+
+Les alignés portent les **deux plus grands côtés** ; les chevauchants tiennent
+tous dans 40–56. **Le « contraste conçu » mesure donc la TAILLE, pas
+l'alignement.**
+
+Et la faute est plus lourde qu'une maladresse : le prereg **nommait lui-même le
+confondant** au paragraphe suivant celui qui l'introduisait. Son §2 déclarait,
+avant le run, que la fraction de bord favorise les petites fenêtres. **C'est
+exactement ce qui contamine le contraste du §1** — les deux paragraphes se
+contredisaient et personne ne l'a vu, ni à la rédaction ni au commit. *Nommer un
+confondant ne le contrôle pas ; seul l'appariement le contrôle.*
+
+Le prereg annonçait « **une prédiction falsifiable, écrite avant, et non une
+courbe qu'on interprétera après** ». **Elle ne l'était pas** : aucun résultat de
+ce balayage ne pouvait départager alignement et taille.
+
+---
+
+### §A59-3 — SECONDE CAUSE : LA GIGUE AUX PETITS CÔTÉS
+
+Le même balayage, lu sur le **minimum** au lieu de la médiane :
+
+| lecture | étendue | `s = 32` |
+|---|---|---|
+| **médiane** (protocole) | **36,0 %** | **10,41 ns — le plus cher** |
+| minimum (diagnostic) | **12,2 %** | **7,71 ns — dans le peloton** |
+
+**L'« anomalie s = 32 » (+45 %) se dissout.** À ce côté la frame dure **1,02 ms**
+et 330 frames ne stabilisent pas une médiane : le rapport médiane/minimum vaut
+**1,35** à `s = 32` contre **1,04** à `s = 40`.
+
+**La lecture n'est PAS basculée sur le minimum.** Le protocole est gravé sur la
+médiane — `src/f1_gpu/chrono.py:3-6` — et changer d'instrument après avoir vu le
+résultat serait précisément la faute que tout ce journal surveille. C'est un
+**diagnostic** qui nomme une cause, pas une relecture qui produit un chiffre. Ce
+qu'il établit est une **limite du protocole** : *une série de 330 frames ne
+mesure pas un kernel d'une milliseconde sur cette machine.*
+
+---
+
+### §A59-4 — CE QUI TIENT
+
+1. **`I-t1` : le témoin `64³`, RE-MESURÉ dans le balayage, reproduit §A55 à
+   0,66 %** (9,2058 contre 9,2669 ns/cellule). Le harnais est le bon — et le
+   témoin a valu ce qu'il coûtait, exactement comme celui de §A58-2.
+2. **`I-t2`** : registres constants d'un côté à l'autre.
+3. **L'effet de bord, déclaré AVANT le run, explique la tendance** hors `s = 32`
+   à **6,9 %** près. Il n'est pas invalidé : il est le confondant, ce qui est
+   une autre façon d'être vrai.
+4. **`I-t4` a également échoué** : point fixe **54** par interpolation, **52** par
+   plus-proche-mesuré. Le prereg l'exigeait — le résultat serait au mieux
+   l'**intervalle [52, 54]**, jamais un côté.
+
+---
+
+### §A59-5 — CE QUE CETTE ENTRÉE PRONONCE, ET CE QU'ELLE NE PRONONCE PAS
+
+**PRONONCÉ** : la porte 2 de §A58 **reste ouverte**. Le coût par cellule **n'est
+pas établi stable** en taille — l'étendue mesurée est 36 % sur l'instrument gravé
+— donc **l'inversion `s_max(budget) = 52,6` reste invalidée**, et aucune constante
+de côté ne peut en sortir aujourd'hui.
+
+**NON PRONONCÉ** : que l'alignement de warps ne pèse rien. **Ce balayage ne
+pouvait pas le dire**, et son silence n'est pas une infirmation du mécanisme de
+Romain — c'est l'aveu d'un plan d'expérience qui ne le testait pas.
+
+**PORTÉES** : rien sur la cadence, rien sur le rendu (le dû de
+`PREREGISTRATION.md:4142` reste le verrou réel), rien sur la re-dérivation de la
+monnaie du slot (porte 3).
+
+---
+
+### §A59-6 — CE QU'IL FAUDRAIT, ET CE QUE CE RUN A COÛTÉ
+
+**Le plan qui répondrait** : des **paires APPARIÉES EN TAILLE** où seul
+l'alignement diffère — `(62, 64)`, `(94, 96)`, `(126, 128)`, `(34, 32)` — dont
+les fractions de bord ne diffèrent que de quelques dixièmes de point. Plus une
+**série plus longue aux petits côtés**, dimensionnée sur la durée de frame et non
+sur un compte fixe. Nouveau protocole, nouveau pré-enregistrement.
+
+**Ce que ce run a coûté** : quarante secondes de GPU. **Ce qu'il a rendu** : deux
+fautes de protocole nommées, une limite d'instrument mesurée, et la démonstration
+qu'un critère d'indétermination braqué sur le **cas favorable** attrape ce
+qu'aucune relecture n'aurait vu — le chiffre était **bon pour la thèse en cours**
+(des fenêtres plus petites moins chères par cellule, donc un `s_max` plus
+généreux) et c'est **exactement pour cela** qu'il ne devait pas être encaissé.
+
+**Règle confirmée, pas neuve** : *un chiffre défavorable n'est pas plus sûr qu'un
+chiffre favorable* (§A52). Elle vient de payer pour la troisième fois en deux
+jours — §A55 (la prédiction hors fourchette), §A57 (la marge de 14,3 % sur un
+30 Hz qui n'existe pas), et ici.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
