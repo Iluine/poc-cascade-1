@@ -71,7 +71,7 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A59**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A60**
 > (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
@@ -82,7 +82,8 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > **§A55 le multiplicateur `c` — la fourchette du cap est FERMÉE** ;
 > **§A56 la table a TROIS monnaies, une seule linéaire** ; **§A57 la porte 33,3 réserve
 > ~13 ms au rendu — V4 ne tient pas non plus à 30 Hz** ; **§A58 la machinerie n'exige que la
-> parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ**.
+> parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ** ;
+> **§A60 l'instrument lui-même est en cause**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -194,6 +195,23 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `s_max = 52,6` reste INVALIDÉE**, aucune constante de côté n'en sort. Le plan qui
 > répondrait : des **paires appariées** `(62,64) (94,96) (126,128) (34,32)`, et une série
 > dimensionnée sur la DURÉE de frame, non sur un compte fixe.
+>
+> **§A60 — L'INSTRUMENT EST EN CAUSE, ET ÇA TOUCHE §A53/§A55/§A59.** Le plancher gravé
+> « série ≥ 300 frames » (`chrono.py:3-6`) a été écrit pour le harnais 2D ; sur les kernels
+> 3D il **ne dilue pas le transitoire de montée en fréquence du GPU**. Les neuf grands
+> côtés ACCÉLÈRENT pendant leur série (2ᵈᵉ moitié 12–18 % plus rapide) ; les petits, avec
+> 2 200–2 900 frames, sont stables à 1 %. ⇒ **les absolus 3D du programme sont
+> PESSIMISTES d'environ 15 %** — §A55 donnait 7,288 ms à 64³, la 1ʳᵉ moitié d'aujourd'hui
+> 7,457 et la 2ᵈᵉ **6,117**. **Les rapports y échappent peut-être, ce n'est PAS établi**
+> (en 2D les frames sont plus courtes, donc 300 frames y couvrent moins de temps : `ρ`
+> pourrait être SOUS-estimé). **DÛ NEUF : re-qualifier l'instrument** — caractériser le
+> transitoire et en déduire un warmup MESURÉ, pas décrété — **avant toute mesure 3D**.
+> §A53/§A55/§A59 ne sont **pas rétractées** (protocoles respectés, témoins reproduits) et
+> **aucune conclusion de gate n'en dépend** : la mort de V4 en 3D tenait à 1,54× le budget
+> entier, qu'un biais de 15 % ne renverse pas.
+> Seul survivant du run : **T32**, puissance 0,56 %, `Δ = −1,99 %` significatif —
+> l'alignement paie, **mais 5× trop peu** pour déplacer le candidat. Un triplet ne fait
+> pas un verdict.
 >
 > **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
 > désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
