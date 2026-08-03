@@ -9208,3 +9208,127 @@ au registre.
 
 Entrée rédigée par la session Claude ; **le prononcé de la branche et
 l'endossement sont le commit de Romain.**
+
+## §A56 (2026-08-04, 00:33 — horloge lue) — RELECTURE DE §A55 ENDOSSÉE ; **le budget ne compte NI des champs NI des octets lus** — l'artefact contient une paire iso-octets à 25 % d'écart ; la table gagne une **seconde monnaie** (registres) et une **falaise**
+
+Entrée courte, de consignation. §A55 est relue ligne à ligne contre son artefact
+par Romain — `C`, `ρ_c`, la marche, le test des statiques, la reproduction, les
+caps, la marge recomputée (`33,333 − 1,835 − 11 × 2,4293 = 4,78 ms`) et le seuil
+de renversement (**×3,60** le non-F retenu — « tripler » était conservateur).
+**Rien à corriger** sur §A55.
+
+---
+
+### §A56-1 — CE QUE ROMAIN A PRONONCÉ, ET CE QU'IL N'A PAS PRONONCÉ
+
+**PRONONCÉ** : la mesure est endossée ; la division du travail entre un argument
+et une borne est nommée — *« l'argument prédit la direction, la borne paie pour
+ce que l'argument ignore »* ; le traitement d'`I-c4` est validé (reporté parce
+que pré-écrit, avec interdiction d'extrapoler en toutes lettres) — *« la loi
+affine meurt comme β est mort, remplacée par de la STRUCTURE, pas par un meilleur
+coefficient »*.
+
+**NON PRONONCÉ, et explicitement tenu** : la **cadence**. *« Les deux plateaux de
+la balance sont chargés et étiquetés ; le choix est à Romain, et rien ne
+s'enchaîne. »*
+
+---
+
+### §A56-2 — CORRECTION D'UN NOMBRE PROPOSÉ POUR LA TABLE
+
+La relecture propose de graver : *« le budget compte des octets lus, pas des
+champs — **720 octets par cellule** au vocabulaire réel »*. **Le nombre est celui
+du JOUET, pas du vocabulaire réel.** Relu dans l'artefact
+(`comptes_statiques.octets_lus`, par cellule et par étage) :
+
+| configuration | champs | **octets lus** |
+|---|---|---|
+| M-c1 — le jouet de §A53 (1 scalaire) | 5 | **720** |
+| **M-c5 — le vocabulaire réel** (3 scalaires + 2 statiques) | **9** | **1 296** |
+
+`1 296 = 36 lectures × 9 champs × 4 octets`. L'écart avec 720 est exactement le
+rapport des champs, 9/5 — la ligne du jouet a été prise pour celle du
+vocabulaire.
+
+---
+
+### §A56-3 — ET LA THÈSE ELLE-MÊME EST FALSIFIÉE PAR L'ARTEFACT
+
+En cherchant le bon nombre, la session a trouvé dans les six points une **PAIRE
+ISO-OCTETS** que ni la relecture ni la rédaction de §A55 n'avaient vue. C'est une
+expérience contrôlée gratuite, déjà payée :
+
+| | champs | **octets lus** | minmods | upwinds | registres | **ms** |
+|---|---|---|---|---|---|---|
+| **M-c3** (3 scalaires, 0 statique) | 7 | **1 008** | 63 | 30 | 94 | **2,2223** |
+| **M-c6** (1 scalaire, 2 statiques) | 7 | **1 008** | 45 | 18 | 72 | **1,7768** |
+
+> **Mêmes champs, MÊMES OCTETS LUS, et 25,1 % d'écart de coût.**
+
+**Le budget ne compte donc pas des octets lus.** Il ne comptait déjà pas des
+champs — §A55 l'avait montré en trouvant les statiques à +9,3 % là où la borne
+en champs ne les voyait pas. **Aucune monnaie unique ne décrit ce plateau.** Ce
+qui sépare les deux lignes est double, et les deux poussent dans le même sens :
+l'**arithmétique** (63 minmods contre 45, 30 upwinds contre 18) et
+l'**occupancy** (94 registres ⇒ 2 blocs/SM, contre 72 ⇒ 3).
+
+*(Le « coût par octet lu » varie de 1,76 à 2,31 µs sur les six points — un
+facteur 1,31. Une monnaie qui varie de 31 % n'est pas une monnaie.)*
+
+---
+
+### §A56-4 — LA LIGNE POUR LA TABLE, RÉÉCRITE
+
+La relecture propose une **seconde monnaie** et une **falaise**, et c'est juste —
+avec une monnaie de plus que prévu :
+
+> **La table a TROIS monnaies, et une seule est linéaire.**
+> **(1) Les champs** — l'arithmétique de flux. Un scalaire advecté ajoute 9
+> minmods et 6 upwinds par cellule et par étage, et **zéro solveur de Riemann**.
+> **(2) Les octets lus** — la bande passante. Un champ statique n'ajoute QUE
+> cela, et cela pèse déjà **+9,3 %**.
+> **(3) Les registres** — l'occupancy, **et c'est la seule qui ait une FALAISE**.
+> Le prix du huitième champ n'est pas celui du sixième : entre 2 et 3 scalaires,
+> l'occupancy tombe de 50 % à 33 % et l'incrément **triple** (+0,167 → +0,394 ms).
+
+**Conséquence opératoire, telle que la relecture la pose** : la **réserve de
+4 éq-f32** de §A51 a désormais **un prix non linéaire qui dépend de l'endroit où
+elle s'encaisse**. Et *« un kernel monolithique ou des passes séparées deviennent
+un levier à prix mesurable, pas un détail d'implémentation »* — un découpage en
+passes échange de la bande passante contre de l'occupancy, et le taux de change
+vient d'être mesuré.
+
+**PORTÉE : c'est une ligne pour la table, pas une décision d'aujourd'hui.**
+Aucune mesure n'est demandée, aucun kernel n'est à découper. La monnaie est
+nommée pour que le prochain arbitrage de vocabulaire ne se fasse pas en
+éq-f32 seuls.
+
+---
+
+### §A56-5 — DEUX NOTES DE FORME, DONT UNE DETTE DE RELECTURE
+
+**§A55 est la première entrée née sous vérificateur, à zéro ancre morte.** La
+chaîne — prereg seul, kernel, driver, artefact, entrée — avec la prédiction
+consignée **avant** le premier chiffre *y compris son propre échec* (`C` hors
+fourchette, cause nommée) est la discipline de §A52 devenue routine en
+vingt-quatre heures.
+
+**DETTE OUVERTE, à la demande de la session** : `§A54` — le vérificateur — **est
+passé sans relecture**. La session en réclame une, et sur deux points précis, qui
+sont les seuls où elle a exercé une autorité sur le corpus au lieu de le décrire :
+
+1. **Les trois citations non verbatim DÉCLARÉES.** Les déclarer, c'est décider
+   qu'elles restent telles quelles (ancre juste, fragment inexistant) plutôt que
+   d'être amendées. C'est défendable — append-only, clause de provenance — mais
+   **c'est un arbitrage sur le corpus, pas un constat**, et la session l'a pris
+   seule.
+2. **Le REGISTRE DE SUPERSESSIONS.** Ses quatre entrées décident **ce qui est
+   périmé** dans des documents endossés. Le registre est ce qui rendra le
+   troisième état de §A51-7 mécanique — donc ce qui fera taire ou parler les
+   futures lectures. **Une autorité de cette nature ne devrait pas être écrite
+   par une session seule.**
+
+Le reste de §A54 est descriptif et se vérifie tout seul : 80 % d'ancres nues,
+les trois formes de citation, les quatre défauts de l'outil contre lui-même.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
