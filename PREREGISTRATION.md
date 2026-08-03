@@ -9697,3 +9697,141 @@ jours — §A55 (la prédiction hors fourchette), §A57 (la marge de 14,3 % sur 
 30 Hz qui n'existe pas), et ici.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A60 (2026-08-04, 01:25 — horloge lue) — PAIRES APPARIÉES : `I-p2` a tiré, et **la cause atteint l'INSTRUMENT de tout ce qui précède** — le plancher gravé de 300 frames ne dilue pas la montée en fréquence du GPU ; **les absolus 3D sont pessimistes d'environ 15 %**
+
+Deuxième run consécutif qui ne rend aucun chiffre de verdict. Il rend autre
+chose : **une faute d'instrument qui touche §A53, §A55 et §A59**.
+
+Artefact : `pocPhysicator/claude/lectures/paires-appariees-3d-2026-08-04.json`.
+Protocole `2acf0c5` (commité seul), driver `6a18126` (commité avant le run),
+artefact `d46b2a9`.
+
+---
+
+### §A60-1 — CE QUI S'EST PASSÉ, ET LE MOTIF INVERSE
+
+**Trois triplets sur quatre écartés** par `I-p2` (désaccord des demi-séries).
+Prononcé : **INDÉTERMINÉ**.
+
+| côtés | série | désaccord des demi-séries | sens |
+|---|---|---|---|
+| 30, 32, 34 | **2 241 – 2 923** | **0,03 – 1,07 %** | stable |
+| 62 … 130 | **300 – 404** | **11,5 – 19,6 %** | **accélération monotone** |
+
+**La prédiction du prereg était inverse.** `§A59` avait montré de la gigue aux
+**petits** côtés ; j'ai dimensionné la série pour eux, et ce sont les **grands**
+qui tombent. Mieux : l'écart entre demi-séries **n'est pas du bruit** — les neuf
+grands côtés **accélèrent tous**, seconde moitié **12 à 18 % plus rapide** que la
+première. Ce n'est pas un throttle thermique, qui ralentirait : **c'est le GPU qui
+monte en fréquence pendant la série.**
+
+Les petits côtés sont stables **parce que** la série dimensionnée sur la durée
+leur donne 2 200 à 2 900 frames : le transitoire y est dilué. Les grands tombent
+sur le **plancher gravé de 300** et le transitoire occupe une fraction visible de
+leur série.
+
+---
+
+### §A60-2 — LA CONSÉQUENCE, QUI DÉPASSE CE RUN
+
+`src/f1_gpu/chrono.py:3-6` grave « série ≥ 300 frames ». Ce plancher a été écrit
+pour le **harnais 2D**. Sur les kernels 3D, **il ne dilue pas le transitoire**, et
+**toutes** les mesures 3D du programme l'ont utilisé.
+
+Le point `64³` le montre sans détour — trois lectures du même objet :
+
+| lecture | médiane |
+|---|---|
+| **§A55** (300 frames) | **7,2878 ms** |
+| aujourd'hui, 1ʳᵉ moitié | 7,4567 ms — **le régime de §A55**, à −2,3 % |
+| aujourd'hui, 2ᵈᵉ moitié | **6,1168 ms** — §A55 est **+19,1 %** au-dessus |
+
+> **§A55 mesurait le régime NON MONTÉ. Les absolus 3D du programme sont
+> systématiquement PESSIMISTES d'environ 15 %.**
+
+**Ce qui n'est PAS établi, et qu'il serait commode de conclure** : que les
+**rapports** y échappent. Ils y sont moins sensibles, mais rien ne le prouve — en
+2D les frames sont **plus courtes**, donc 300 frames y couvrent moins de temps et
+le transitoire y pèse **davantage**. `ρ = 2,03` pourrait être biaisé dans un sens
+que ce run ne détermine pas. **C'est un DÛ, pas une correction que la session
+aurait le droit de faire par arithmétique.**
+
+*(Le sens du biais possible est défavorable à la prudence : si le 2D était plus
+ralenti que le 3D, `ρ` serait SOUS-estimé, et le coût de la dimension pire que
+mesuré. Nommer le sens n'est pas le mesurer.)*
+
+---
+
+### §A60-3 — DÉFAUT DE MA PROPRE LECTURE, CONSIGNÉ
+
+Le driver calcule l'étendue de **Q2** sur les seuls points à **série stable** —
+c'est-à-dire sur **30, 32 et 34**. Le « **S-A, étendue 5,1 %** » écrit dans
+l'artefact porte donc sur **trois côtés compris entre 30 et 34** et **ne dit rien
+de la stabilité en taille**. Il est dans le fichier ; **il ne doit pas être lu**.
+
+C'est la même famille que la faute de `§A59` : un filtre légitime pris isolément
+(écarter les points instables) rend une statistique globale (l'étendue) qui n'a
+plus de sens sur ce qu'il en reste. **Filtrer puis agréger sans re-nommer le
+périmètre est une fabrication silencieuse.**
+
+---
+
+### §A60-4 — CE QUI SURVIT
+
+**`I-p1`** : le témoin `64³` re-mesuré reproduit §A55 à **6,3 %** — dans la bande
+de 10 %, et l'écart est **exactement** le transitoire décrit ci-dessus.
+
+**`T32`, seul triplet retenu, avec une puissance excellente** — effet détectable
+**0,56 %**, très en dessous des 10 % pertinents :
+
+> `Δ(32) = −0,157 ns`, soit **−1,99 %**, **significatif**.
+
+**L'aligné EST moins cher** — mais de **2 %**, très en deçà des **10 %** qui
+déplaceraient le candidat de 52 à 48. La règle du NUL (`prereg §4`) fonctionne
+ici à l'envers et c'est ce qu'on lui demandait : la puissance étant excellente,
+elle permet de dire non seulement *qu'il y a un effet*, mais *qu'il est trop
+petit pour compter*.
+
+**Un triplet ne fait pas un verdict** : `I-p4` exige la cohérence des quatre, et
+trois manquent. **P-A n'est pas prononcé.**
+
+---
+
+### §A60-5 — CE QUE CETTE ENTRÉE PRONONCE
+
+**PRONONCÉ** : le **plancher de 300 frames est insuffisant** pour les kernels 3D
+de ce programme. La série doit se dimensionner sur la **durée** — ce que le
+prereg avait fait — **mais avec une cible bien au-dessus de 3 000 ms aux grands
+côtés**, ou avec un **warmup compté en frames et non en fraction**.
+
+**NON PRONONCÉ** : rien sur l'alignement (un seul triplet), rien sur la stabilité
+en taille (Q2 inexploitable), rien sur la cadence, rien sur le rendu.
+
+**PORTÉE SUR LES ENTRÉES ANTÉRIEURES** : `§A53`, `§A55` et `§A59` **ne sont pas
+rétractées**. Leurs protocoles étaient respectés, leurs gardes ont tenu, leurs
+témoins ont reproduit. Ce qui est établi est que leur **instrument** portait un
+biais systématique alors inconnu, dans le sens **pessimiste**, d'environ 15 % sur
+les absolus. **Aucune conclusion de gate n'en dépend** : `ρ = 2,03` restait au
+milieu de son encadrement statique, et la mort de V4 en 3D tenait avec un facteur
+1,54 sur le budget entier — un biais de 15 % ne la renverse pas.
+
+---
+
+### §A60-6 — CE QUI RESTE DÛ
+
+**Neuf** : **re-qualifier l'instrument** avant toute nouvelle mesure 3D —
+caractériser le transitoire de montée en fréquence (durée, amplitude) et en
+déduire un warmup **mesuré**, pas décrété. Consommateur : toute mesure 3D
+future, et la question de savoir si `ρ` est biaisé.
+
+**Inchangés** : la porte 2 (alignement) reste ouverte ; la porte 3 (monnaie du
+slot) ; **le rendu**, dû de `PREREGISTRATION.md:4142`, toujours devant ; la
+cadence, à Romain.
+
+**Ce que deux runs sans chiffre ont coûté et rendu** : trois minutes de GPU. En
+retour, `§A59` a nommé un confondant de plan et `§A60` un biais d'instrument
+vieux de trois entrées. **Les deux ont été trouvés par des critères pré-écrits
+qui visaient le cas favorable**, et par aucune relecture.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
