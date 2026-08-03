@@ -9835,3 +9835,128 @@ vieux de trois entrées. **Les deux ont été trouvés par des critères pré-é
 qui visaient le cas favorable**, et par aucune relecture.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A61 (2026-08-04, 01:39 — horloge lue) — RE-QUALIFICATION : **troisième INDÉTERMINÉ**, et le diagnostic est plus lourd qu'un warmup — **la machine n'a pas de point de fonctionnement stable** ; trois fautes de plan en trois runs, **toutes de la même famille**
+
+Artefact : `pocPhysicator/claude/lectures/requalification-instrument-3d-2026-08-04.json`.
+Protocole `33b49be` (commité seul), driver `61575f7` (commité avant le run),
+artefact `7ba9b61`. **Qualification d'INSTRUMENT** — par la règle 1 de
+`CLAUDE.md`, rien ici ne prononce sur V4, la cadence, le côté ou le budget.
+
+---
+
+### §A61-1 — LA BRANCHE PRONONCÉE EST UNE FAUSSE ALARME DE MON PROPRE PLAN
+
+`I-w1` a tiré : la sonde d'horloge « perturberait » de **3,04 %**. Les quatre
+plateaux à `64³`, **dans l'ordre d'exécution** :
+
+| mesure | sonde | plateau |
+|---|---|---|
+| `m_i1` | ON | **6,0375 ms** |
+| `m_i2a` | ON | 6,1583 |
+| `m_i2b` | ON | 6,2433 |
+| **contrôle** | **OFF** | **6,2269** |
+
+**La dérive est monotone, et le contrôle sans sonde est le DERNIER.** `I-w1`
+compare la première mesure à la quatrième : **il mesure la dérive thermique, pas
+la sonde.** Température : **54 → 79 °C** sur le run.
+
+---
+
+### §A61-2 — TROIS RUNS, TROIS FAUTES, UNE SEULE FAMILLE
+
+| entrée | la faute | ce qui différait en plus de la variable testée |
+|---|---|---|
+| `§A59` | groupes non appariés | **la taille** (bord moyen 9,4 % contre 11,9 %) |
+| `§A60` | filtrer puis agréger | **le périmètre** (étendue calculée sur 3 côtés de 30 à 34) |
+| **`§A61`** | **contrôle non apparié** | **le TEMPS** (1ʳᵉ mesure contre 4ᵉ, +25 °C) |
+
+> **Règle qui s'impose d'elle-même, après trois occurrences en une nuit :**
+> *une comparaison ne vaut que si les deux termes ne diffèrent QUE par la
+> variable testée — et « en plus » inclut le rang dans l'exécution.*
+
+C'est la même vérité que les triplets centrés de `§A60` avaient trouvée pour la
+taille : **l'appariement n'est pas une élégance, c'est la condition d'existence
+du contraste.** Je l'ai appliquée à la taille et pas au temps.
+
+---
+
+### §A61-3 — CE QUE LES DONNÉES DISENT QUAND MÊME, ET QUI DÉPASSE CE RUN
+
+**`I-w2` a tiré légitimement.** Raison de throttle **`0x4` = SW Power Cap**,
+observée dans **les cinq séries sondées**. L'horloge SM varie de **1 035 à
+1 732 MHz** selon la mesure, et le « plateau » de `m_i2a` (**1 177 MHz**) est
+**plus BAS que son premier relevé** (1 732).
+
+> **Il n'y a pas de plateau.** La machine est plafonnée en puissance et dérive en
+> température.
+
+**`I-w4` a tiré légitimement.** Le phénomène de `§A60` **n'est pas reproduit à
+`64³`** — premier quart / plateau = **1,008** ici, contre `7,457 / 6,117 = 1,22`
+là-bas — **mais il EST présent à `128³`** (**1,227**). Le transitoire dépend donc
+de la taille **et** de l'état thermique de départ.
+
+**`T_conv` mesuré** : **2,5 s** à `64³`, **19,3 s** à `128³`, **22,1 s** à `32³`.
+**Aucune constante, ni en secondes ni en frames.**
+
+---
+
+### §A61-4 — LE DIAGNOSTIC QUE CE RUN NE PRONONCE PAS, MAIS QU'IL FAUT NOMMER
+
+Le protocole de chronométrie gravé — `src/f1_gpu/chrono.py:3-6`, « série ≥ 300
+frames ; médiane ET p99 » — **suppose un processus STATIONNAIRE**. Une médiane
+ne décrit une population que si la population ne bouge pas pendant qu'on la
+tire.
+
+> **Sur cette machine et pour ces kernels, le processus n'est pas stationnaire.
+> Aucun warmup ne fait converger vers un plateau qui n'existe pas.**
+> **La re-qualification n'est PAS acquise.**
+
+**Ce qui reste probablement sain, et pourquoi c'est une conjecture et non un
+acquis** : les **rapports mesurés INTRA-RUN entre points adjacents dans le
+temps**. La dérive vaut ~3 % sur trois minutes ; `§A53` avait mesuré 2D et 3D
+**côte à côte**, et ses deux runs concordaient à **0,63 %**. Ce sont les
+**ABSOLUS**, et **toute comparaison entre runs séparés**, qui ne tiennent pas.
+*Cela reste à établir, pas à supposer* — c'est précisément ce que trois runs
+viennent de démontrer sur d'autres suppositions confortables.
+
+---
+
+### §A61-5 — CE QUE CETTE ENTRÉE CHANGE POUR LA SUITE
+
+**Aucune nouvelle mesure 3D absolue ne devrait être produite avant que
+l'instrument soit qualifié.** Ce n'est pas un arrêt du programme : c'est le
+constat que **le prochain chiffre coûterait plus cher à interpréter qu'à
+produire**.
+
+**Ce que la qualification demandera** — et qui est un plan, pas une décision :
+un dispositif où **le rang d'exécution est apparié** (mesures alternées ou
+répétées aux deux bouts), où la **non-stationnarité est mesurée** au lieu d'être
+supposée absente (dérive de plateau contre température), et où la lecture est
+un **estimateur robuste à la dérive** plutôt qu'une médiane sur une population
+mouvante. Chacun de ces trois points est une correction d'une faute constatée,
+pas une précaution ajoutée.
+
+**Ce qui n'est pas atteint** : `§A53`, `§A55`, `§A59`, `§A60` ne sont pas
+rétractées ; aucune conclusion de gate n'en dépend ; `ρ = 2,03` reste dans son
+encadrement statique et la mort de V4 en 3D tenait à **1,54× le budget entier**.
+
+**Ce qui reste devant, inchangé** : le rendu — dû de
+`PREREGISTRATION.md:4142` — et la cadence, à Romain.
+
+---
+
+### §A61-6 — CE QUE QUATRE RUNS ONT COÛTÉ ET RENDU
+
+Environ **huit minutes de GPU** au total. Aucun chiffre de verdict sur les trois
+derniers. En retour : un confondant de plan (`§A59`), un biais d'instrument
+vieux de trois entrées (`§A60`), et l'établissement que **la machine n'a pas de
+point de fonctionnement stable** (`§A61`) — plus une règle d'appariement qui
+s'est imposée en se faisant violer trois fois.
+
+**Les trois ont été trouvés par des critères pré-écrits qui visaient le cas
+favorable. Aucun n'a été trouvé par une relecture.** C'est l'argument le plus
+fort de tout ce journal en faveur des indéterminations pré-écrites, et il a été
+payé en une nuit.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
