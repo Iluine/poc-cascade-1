@@ -38,6 +38,20 @@
   JND d'excentricité, σ_ω (dette + condition de réveil). `[À RÉDIGER]`
 - **§8. Falsificateurs et gates de sortie** — quelles mesures tuent quelles sections ;
   tranche-moteur avec critères de mort pré-écrits ; règles de dépense. `[À RÉDIGER]`
+- **§9. La projection — image et son comme readouts de z** — pointeur ; le détail fait
+  foi au journal §A20, amendé par §A45 et §A46. `[ENDOSSÉE 2026-07-19]`
+- **Révisions endossées, en fin de fichier** — **§6-rev1** (re-épinglage post-MORT-a),
+  **§2-rev1** (propriété E : arbre emboîté ; champs d'échelle), **§2-rev2** (la pyramide
+  est un mipmap). `[ENDOSSÉES 2026-07-19]`
+
+> **Statuts de cette table : périmés, et non arbitrés ici (2026-08-03, §A47-PRÉCISION-2).**
+> Les quatre entrées ci-dessus ont été AJOUTÉES parce que la table omettait des sections
+> endossées du corps. Les `[À RÉDIGER]` de §1–§8 n'ont **pas** été touchés : les en-têtes
+> de corps portent `[EN COURS — soumise à Romain]`, et §2 porte en outre
+> `[§2 ENDOSSÉE 2026-07-18]` en fin de section (`:131`) — trois valeurs pour une seule
+> section. **En cas de doute, le CORPS fait foi contre cette table** (§A47-PRÉCISION-2).
+> L'arbitrage des
+> statuts est une décision Romain, non prise.
 
 ---
 

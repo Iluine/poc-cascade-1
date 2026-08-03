@@ -7586,3 +7586,274 @@ est écrite avant lui, pour qu'il ne se re-litige pas au moment où il arrivera.
 
 Précision rédigée par la session Claude sur invitation explicite de Romain
 (2026-08-03) ; l'endossement est son commit.
+
+### §A47-PRÉCISION-2 (2026-08-03, 18:03 — horloge lue) — le critère est à la CLAUSE, pas au DOCUMENT
+
+**Origine** : le deuxième cas est arrivé le lendemain de §A47, sur le fichier que §A47
+cite lui-même en cas jugé. Le test de §A47 et son application le classent dans deux
+branches opposées.
+
+**LA CONTRADICTION, LUE DANS LES DEUX ARTEFACTS.**
+`spec-p1-rendu-instrument-2026-07-25.md:4-5` porte un en-tête déférent : « Le journal
+`pocCascade2phys/PREREGISTRATION.md` **fait foi** (fin de fichier : §A36) ». Le test de
+§A47 (`:7513-7515`) répond donc **OUI ⇒ document DATÉ DÉFÉRENT ⇒ ne se retouche pas**.
+Mais la branche NON de §A47 (`:7517`) énumère « une thèse, **une spec en vigueur**, un
+contrat », et le cas jugé (`:7536-7537`) l'a effectivement amendée : « spec EN VIGUEUR
+⇒ amendement de pointeur, **proportionné à ce que la ligne affirme** ». La
+proportionnalité n'appartient à aucune des deux branches : §A47 a donc **trois régimes
+en pratique et deux dans la règle**, et sa propre justification (`:7549`) — « sans elle,
+chaque correction future re-litige le même arbitrage » — s'est démentie en un jour.
+
+**LE CRITÈRE RÉEL, NOMMÉ.** Le test de §A47 classe des DOCUMENTS ; ce qui devait être
+classé, ce sont des CLAUSES. Un fichier n'est pas homogène : le même document porte de
+la provenance, du descriptif et du normatif, et l'en-tête déférent ne les couvre pas
+également.
+
+- **Clause de PROVENANCE ou DESCRIPTIVE** (« fin de fichier : §AXX », un état des
+  lieux, un raisonnement daté) ⇒ **couverte EN BLOC par l'en-tête déférent, ne se
+  touche pas.** C'est ce que §A47 a bien jugé, et le corollaire de provenance
+  (`:7525-7529`) reste intact.
+- **Clause NORMATIVE EN VIGUEUR** (un ordre, un gate, une interdiction, un « il arrive à
+  son heure : après P3 ») ⇒ elle **parle en son nom propre au présent, quel que soit
+  l'en-tête du fichier qui la porte** ⇒ elle s'amende **À LA LIGNE**, bornée sans être
+  amputée, datée et référencée au § qui la borne.
+
+**RÈGLE DE PROPORTION, qui découle et qui était le critère tacite du 03/08** : plus la
+ligne COMMANDE, plus elle s'amende à la ligne. Une portée mal lue coûte une surclame ;
+un ordre mal lu **bloque un chantier autorisé**. Une entrée au journal seule ne suffit
+pas pour une clause normative : toute session qui se réamorce sur le document sans
+ouvrir le journal re-applique la clause périmée — c'est le mode de défaillance que §A47
+nomme lui-même (`:7545-7548`).
+
+**CE QUE ÇA RE-QUALIFIE — aucun acte du 03/08 ne change.** Les quatre cas jugés en §A47
+(`:7531-7543`) restent jugés à l'identique ; ils reçoivent seulement leur motif exact :
+`note-orientation-v2` amendée sur des clauses normatives (une thèse, un statut de gate) ;
+`spec-p1` amendée sur une clause normative de portée ; `etat-des-lieux-2026-07-19` et
+`seance-fidelite-2026-07-25` non touchés parce que ce qu'ils portent est **descriptif et
+de provenance**, pas normatif — et non parce que leur en-tête vaut immunité de fichier.
+
+**DEUXIÈME CAS, surfacé en écrivant §A48/§A49 — la TABLE DES MATIÈRES de
+`SPEC-FOVEA-Z.md` (`:24-40`).** Elle **omet quatre sections du corps, toutes ENDOSSÉES** :
+§6-rev1 (`:411`), §2-rev1 (`:426`), **§9** (`:439`), §2-rev2 (`:459`) ; et elle donne
+§1–§8 comme `[À RÉDIGER]` quand leurs en-têtes portent `[EN COURS — soumise à Romain]`.
+**§2 porte à lui seul trois statuts contradictoires** dans le même fichier :
+`[À RÉDIGER]` (TOC `:27`), `[EN COURS — soumise à Romain]` (en-tête `:95`),
+`[§2 ENDOSSÉE 2026-07-18]` (fin de section `:131`).
+
+*Classement sous le critère ci-dessus* : une TOC est **appareil descriptif d'une spec en
+vigueur** — elle ne commande rien, elle décrit — mais elle est **descriptive D'UN
+DOCUMENT VIVANT**, pas d'un instantané daté : rien ne la couvre en bloc, et elle
+s'amende à la ligne. **Corrigé par la session** : les quatre omissions (addition pure,
+aucun statut touché). **NON tranché, décision Romain** : le statut réel de §2, arbitrage
+entre trois valeurs — et, plus largement, si `[À RÉDIGER]` en TOC doit être aligné sur
+les en-têtes de corps.
+
+**FAIT DE PROCESSUS, consigné (famille §A41/§A43).** Deux entrées de ce lot ont d'abord
+affirmé, **sur la foi de cette TOC périmée**, que le §9 « n'existe pas encore » et que le
+§2 est `[À RÉDIGER]` — les deux faux, contredits par le corps du même fichier, et le §9
+est la section dont la session avait amendé le pointeur deux heures plus tôt (commit
+`ac30788`). Corrigé avant tout endossement, donc silencieusement quant au texte (régime
+§A47-PRÉCISION, document non tracké/non endossé) ; **consigné ici quant au motif**, parce
+que c'est exactement celui que cette précision légifère : *la méta-donnée prise pour
+autorité contre le fichier qu'elle décrit.* Une TOC périmée est une provenance périmée qui
+a l'air d'un sommaire.
+
+**PORTÉES** : ne supersède pas §A47, en corrige le test. Aucun seuil, aucune garde,
+aucune mesure. Cas d'application : §A48 et §A49 ci-dessous, et la TOC ci-dessus.
+
+Précision rédigée par la session Claude ; l'endossement est le commit de Romain.
+
+## §A48 (2026-08-03, 18:03 — horloge lue) — CHEMIN-DE-COÛT : la coupe deux-compositeurs ; le verdict D17 de `spec-p1` §0 est BORNÉ (non superséé) ; quatre gardes
+
+> **Entrée de correction de LECTURE, append-only.** Elle ne supersède aucun énoncé et
+> ne déplace aucun seuil. Elle borne la portée d'un **verdict D17 daté du 25/07** en y
+> consignant un consommateur né APRÈS lui. Régime de forme appliqué, déclaré
+> explicitement (§A47-PRÉCISION-2) : **entrée au journal + amendement à la ligne de la
+> clause normative, dans le même commit** — la clause commande, donc elle s'amende.
+
+**LE FAIT, LU DANS L'ARTEFACT.** `spec-p1-rendu-instrument-2026-07-25.md:68-70` :
+« **Verdict D17** : entre P1 et P3, **aucune décision nommée ne consomme le
+compositeur.** Il arrive à son heure : après P3, comme incrément séparé, avec le pin
+transporté pour le juger. » L'argument qui la porte (`:62-67`) : le coût n'est pas le
+build (+0.5–1 séance) mais « **une décision de plus à prendre à froid : l'opérateur de
+couture fovéa/grossier — qui est précisément la "frontière feuille/projection" du
+falsifieur unifié C-strat (§A36)** […] la prendre MAINTENANT, sans pin transporté pour
+la juger, c'est spécifier la pièce la plus délicate de l'arc sans son instrument de
+mesure ». Confirmé côté P3 : `prereg-p3-transport-pin.md:114-115` (« l'ABX de
+substitution attend le compositeur, post-P3 ») et `:126` (« l'achat du compositeur »
+compte parmi les consommateurs du verdict P3).
+
+**POURQUOI CETTE ENTRÉE NE VIOLE PAS L'ORDRE GRAVÉ.** La phrase du 25/07 **énumère**,
+elle ne légifère pas : elle constate qu'aucune décision nommée *ce jour-là* ne consomme
+le compositeur. Son argument protège **l'opérateur de couture de son juge absent**. Il
+n'a jamais rien dit d'un gather jugé au chronomètre. La phrase reste littéralement vraie
+sous la précision ci-dessous : aucune décision sur la couture n'est consommée, et aucune
+fidélité n'est jugée.
+
+**LE CONSOMMATEUR NOUVEAU, né de la correction de but.** Le but gravé du programme est
+un moteur qui tourne (`CLAUDE.md`, portée précisée le 03/08 ; note d'orientation v2 §1,
+ENDOSSÉ). La lecture de l'enveloppe mémoire 3D est conditionnelle à un **coût de rendu
+NON MESURÉ des deux côtés** — c'est la décision qui manquait à la liste du 25/07. Or
+`spec-p1:74-80` range ce terme exactement dans la classe composition : « construire la
+mosaïque albédo écran (~2·10⁶ px à 1920×1080) depuis une pyramide creuse est **un gather
+du même ordre que le shading lui-même** » `[CALCUL]`, et « le coût de composition reste
+une **dette nommée, mesurable quand le compositeur existera** ».
+
+**LA COUPE : IL Y A DEUX OBJETS, PAS UN.**
+
+| | compositeur **INSTRUMENT** | **chemin-de-coût** (moteur) |
+|---|---|---|
+| ce qu'il tranche | la couture = frontière feuille/projection de C-strat | **rien** |
+| son juge | `jnd_sev^R1`, donc **le pin transporté** | « ça tient dans le budget » |
+| ce qu'il mesure | **fidélité** (ABX de substitution) | **coût seul** |
+| l'ordre gravé le lie | **OUI — post-P3, inchangé** | non : aucune des trois citations ne le nomme |
+
+**AUTORISÉ : le chemin-de-coût, avant P3, sous quatre gardes.**
+
+1. **PLANCHER SUR STRUCTURE RÉELLE — « naïf dans l'opérateur, réel dans la structure ».**
+   La direction de l'erreur, pas seulement sa portée : le chemin naïf est un **plancher**
+   de la classe gather (l'opérateur de couture réel ajoutera de l'arithmétique — stencil
+   de prédiction), donc la lecture d'enveloppe le traite en **plancher + marge, jamais
+   comme LE chiffre**. Mais un plancher n'en est un que si la structure lue est la vraie :
+   un upsample cohérent depuis un grossier **dense** borne le coût d'un autre programme ;
+   le gather **creux** est dispersé, et le rapport cohérent/dispersé n'est pas une marge,
+   c'est le terme dominant. **Contrainte** : arithmétique la plus bête permise (plus
+   proche voisin, insertion dure) **sur la pyramide creuse que `z` utilise réellement**
+   (fenêtres actives, arbre emboîté). Cette structure est **spécifiée et ENDOSSÉE** —
+   `SPEC-FOVEA-Z.md` **§2** (`:97-123` : pyramide de Harten, plafond de LOD par distance,
+   raffinement effectif décidé par l'ÉNERGIE sous plafond, résidence VRAM = fovéa +
+   fenêtres d'énergie, extraction de fenêtre alignée-dyadique exigée ; `[§2 ENDOSSÉE
+   2026-07-18]` en `:131`), **§2-rev1** (`:429-432`, ENDOSSÉE : « l'ensemble actif est un
+   **ARBRE emboîté** — toute fenêtre active déclare une parente couvrant son empreinte »)
+   et **§2-rev2** (`:461-466`, ENDOSSÉE : le niveau fin est à la résolution de la
+   physique ; la distance fixe un PLAFOND, jamais un plancher). La garde a donc **deux
+   ancres, pas une** : cette spec **et** le code que la tranche construit, cité
+   `file:line` le jour venu — un chemin-de-coût qui gather depuis un tableau grossier
+   dense viole les deux. Effet second, voulu : le rendu naïf vit sur la vraie structure
+   creuse dès le premier jour, ce dont la VRAM mesurée a besoin pour être la vraie.
+2. **SERRURE MÉCANISÉE, pas une promesse.** Le chemin-de-coût est **interdit de substrat
+   à toute mesure perceptuelle** : il ne passe jamais sous un ABX. Appliqué par une
+   **`RuntimeError` explicite** à son point d'entrée si l'appelant est un chemin
+   ABX/perceptuel — **jamais un `assert`**, qui disparaît sous `python -O` (fait consigné
+   en `§A43:7285-7288`). Le précédent de la maison y est un `ValueError` (mauvaise
+   **valeur**) ; ici la garde porte sur **qui appelle**, d'où `RuntimeError`. Une promesse
+   dans un document meurt par glissement ; une exception meurt bruyamment.
+3. **DISQUALIFICATION PAR LE NOM.** Il s'appelle **chemin-de-coût**, jamais
+   « compositeur ». Jetable par construction. C'est ce qui l'empêche de devenir par
+   glissement la pièce que l'ordre gravé protège.
+4. **CLAUSE DE COUCHER.** Post-P3, le compositeur instrument le **supersède pour tout
+   usage**. La dette « mesurable quand le compositeur existera » (`spec-p1:78-79`) **reste
+   ouverte** : le chiffre naïf l'avance, il ne la solde pas. La garde anti-surclame de
+   `spec-p1:79-80` s'applique mot pour mot au chiffre de la tranche — il dira « le NOYAU
+   plus un gather-plancher coûtent X », jamais « le rendu coûte X ».
+
+**CE QUE CETTE ENTRÉE NE FAIT PAS.** Elle n'autorise pas le compositeur instrument —
+l'argument de `spec-p1:65-67` tient intégralement, il attend P3 et le pin transporté.
+Elle ne touche **pas** `prereg-p3-transport-pin.md` : l'ABX de substitution y attend
+toujours le compositeur (`:114-115`), et la garde 2 est précisément ce qui garantit que
+le chemin-de-coût ne peut pas s'y substituer. Elle ne chiffre rien, ne pré-enregistre
+aucune mesure de fidélité, ne touche ni seuil ni garde.
+
+**CE QU'ELLE REND DÛ** : (1) l'amendement à la ligne de `spec-p1` §0 (`:68-70`) et de son
+refus explicite (`:269-270`), dans le même commit que cette entrée ; (2) le §2 de
+`SPEC-FOVEA-Z.md` s'écrira **depuis la structure construite par la tranche**, pas avant
+— la garde 1 se vérifiant au code jusque-là.
+
+Entrée rédigée par la session Claude ; l'endossement est le commit de Romain.
+
+## §A49 (2026-08-03, 18:03 — horloge lue) — P0-SON TRANCHÉ : β SCINDÉ, VARIANTE β3 — β-impulsif ACHETÉ ; β-continu NOMMÉ à seuil non dérivé ; encadrement psychophysique ÉCRIT, jamais seuil de verdict
+
+> **Décision de Romain, prononcée en session le 2026-08-03** : β, variante β3, après
+> scission du budget en deux achats de prix différents. Le gate P0-son est ouvert depuis
+> §A36 (P0-c/P0-d) et re-cadré par §A45/§A46. Comme toute entrée de ce journal,
+> **l'endossement est le commit** — tant qu'elle n'est pas commitée, elle n'a pas force
+> de gravure. Ce que Romain a prononcé : **β3**. Ce que la session propose : la forme de
+> l'entrée et le détail des gardes ci-dessous. La distinction est maintenue parce que la
+> confondre est la famille consignée en `§A43:7266-7274` (décision attribuée avant
+> d'être prise).
+
+**LA PROPOSITION : β, MAIS SCINDÉ EN DEUX ACHATS DE PRIX DIFFÉRENTS.** Garder le son
+« co-égal » et lui donner le falsifieur qu'il peut réellement avoir — relatif à son
+contrat, au lieu du référent qu'il n'a jamais eu (§A45).
+
+**β-IMPULSIF — GRATUIT, DÉJÀ DÛ, S'ACHÈTE AUJOURD'HUI.** Le falsifieur est la
+**re-dérivabilité DÉTERMINISTE depuis (ledger, graines)** (`§A46:7468`), que `§A46:7497`
+rend déjà due (« reporté dans la spec §9 le jour où un texte audio s'écrit »). Test
+**mécanique, zéro observateur**, dormant jusqu'à consommateur (D17) : il s'attache au
+build audio le jour où il existe, même règle que le registre d'invariants. Son achat
+coûte une ligne de prereg.
+
+**β-CONTINU — NON GRATUIT ; ACHETÉ COMME FALSIFIEUR NOMMÉ, SEUIL NON ENCORE DÉRIVÉ.**
+Trois faits, lus dans `§A46` : la classe continue pilotée par l'état « **n'est PAS
+traitée ici** » (`:7473-7476`) ; « elle ne pré-enregistre **aucune** sonde : le clic au
+commit reste **LA mesure** qui testera ce re-scoping » (`:7493-7494`) ; et la sensibilité
+auditive aux discontinuités ~ms est étiquetée **`[TRANSPOSITION-HYPOTHÈSE … NON MESURÉ
+ici]`** (`:7485-7487`). Donc « le clic-au-commit **sous seuil** » désigne un seuil qui
+n'existe nulle part et dont le seul ancrage n'est pas mesuré.
+
+**LE PRIX, DIT AU LIEU D'ÊTRE DÉCLARÉ NUL.** Ce seuil ne peut venir que de deux
+endroits : (i) une **mesure d'observateur** — l'achat que β prétendait éviter, sur la
+seule ressource non renouvelable du programme ; (ii) un **jugement en espace signal** —
+la faute interdite depuis T1 (« JAMAIS de L2 point-à-point comme critère », la métrique
+qui avait failli fabriquer un C2 PASS contaminé).
+
+**LA VARIANTE RETENUE — β3 : L'ENCADREMENT S'ÉCRIT MAINTENANT, LE SEUIL NON.** Un
+**encadrement par la littérature psychophysique** (détection de gap / audibilité du clic,
+échelle ~ms) est écrit dès à présent et sert **à écrire les BRANCHES d'une lecture
+conditionnelle** — « si la couture tombe sous ~X ms, branche A ; sinon branche B » —
+disponibles pour la séance-table avant toute mesure. **Coût d'observateur : nul.** Ce
+qu'il n'est pas : un seuil. Trois protections, parce que le mode de défaillance est connu
+(une session ultérieure lit l'encadrement comme un seuil, et le programme aura déplacé un
+seuil avant de l'avoir atteint) :
+
+1. **Étiquette obligatoire** `[TRANSPOSITION-HYPOTHÈSE — encadrement bibliographique, NON
+   MESURÉ ici, re-mesure nommée]`, la même que celle que `§A46:7485-7487` porte déjà sur
+   la sensibilité auditive aux discontinuités ~ms.
+2. **Clause de non-verdict** : l'encadrement **écrit des branches, jamais un prononcé**.
+   Aucune lecture mécanique, aucun gate, aucune garde ne peut le consommer comme seuil ;
+   un verdict qui s'y appuierait est nul par construction.
+3. **Serrure le jour où il entre dans du code** : si une valeur d'encadrement est
+   matérialisée en constante, la garde est une **`RuntimeError` explicite** au point où
+   elle serait comparée à une mesure — jamais un `assert` (`§A43:7285-7288`), même forme
+   que la garde 2 de §A48.
+
+Les branches s'écrivent sur l'encadrement ; **le verdict attend la mesure**, attachée au
+build audio par la règle des consommateurs (D17).
+
+**CE QUE β ÉCARTE, et pourquoi.** **α (rétrograder le son)** : il jetterait le levier que
+le son vient de fournir — le chapitre entités (tirage à trace, grades de promotion,
+second consommateur de τ_dec, `§A46:7489-7490`) est né des contraintes auditives ; on ne
+rétrograde pas le canal qui vient de dessiner l'architecture. **γ (statu quo)** : après
+les corrections d'hygiène, il laisserait un son co-égal en jugement mais **infalsifiable
+en tout sens** — soit exactement ce que `§A46:7460` range dans la « famille "un seuil
+déplacé avant d'avoir été atteint" ».
+
+**ERREUR CONSIGNÉE, NON EFFACÉE** : la première formulation de β présentait son budget
+comme **nul aujourd'hui**. Il l'est pour la moitié impulsive et ne l'est pas pour la
+moitié continue. La scission est la correction ; la formulation fautive est consignée
+ici parce qu'un budget sous-évalué se paie plus tard et sans trace.
+
+**CE QUE β3 REND DÛ** — trois lignes de prereg et une dette, aucune mesure :
+1. **β-impulsif** : le falsifieur mécanique (re-dérivabilité déterministe depuis
+   (ledger, graines)) écrit comme falsifieur **dormant jusqu'à consommateur** (D17),
+   attaché au build audio. `§A46:7497` en fixe le lieu : « reporté dans la spec §9 le
+   jour où un texte audio s'écrit » — **et ce lieu existe** : `SPEC-FOVEA-Z.md:439`,
+   « §9. La projection — image et son comme readouts de z » `[ENDOSSÉE 2026-07-19]`, la
+   section même dont le pointeur a été amendé par §A45/§A46 (`:441-445`). La dette
+   impulsive a donc son lieu et n'attend que son texte.
+2. **β-continu** : le falsifieur « clic au commit » écrit comme **nommé, dormant, seuil
+   NON dérivé**, avec sa condition de réveil (l'existence d'un build audio) et
+   l'interdiction explicite des deux dérivations fautives ci-dessus.
+3. **β3** : l'encadrement bibliographique, étiqueté selon (1) ci-dessus, et **les branches
+   conditionnelles qu'il permet** — livrable de la séance-table, jamais d'une mesure.
+4. **Rappel, dû depuis §A46 et non modifié ici** : le prereg de la sonde τ_dec doit nommer
+   son **second consommateur** (`§A46:7489-7490, 7499-7502`).
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Elle n'autorise **aucun code audio**. Elle
+ne pré-enregistre **aucune sonde** : `§A46:7493-7494` tient, le clic au commit reste LA
+mesure. Elle ne touche ni un seuil ni une garde. Elle ne tranche pas la question du canal
+événementiel de la sonde τ_dec, **posée et non tranchée** en `§A46:7499-7502`, qui
+appartient au prereg de cette sonde.
+
+Entrée rédigée par la session Claude sur la position de la session critique ;
+**le tranchage de P0-son est le commit de Romain.**
