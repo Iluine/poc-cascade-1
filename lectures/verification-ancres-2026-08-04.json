@@ -1,10 +1,10 @@
 {
  "comptes": {
-  "nue": 147,
-  "exacte": 21,
-  "non-verbatim-déclarée": 3,
+  "nue": 159,
+  "exacte": 29,
+  "non-verbatim-déclarée": 4,
   "exacte-typographie": 3,
-  "exacte-emphase": 10
+  "exacte-emphase": 11
  },
  "ancres": [
   {
@@ -1345,6 +1345,144 @@
    "notes": []
   },
   {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8879,
+   "citation": "src/summary_quadtree.py:79-86",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8881,
+   "citation": "src/f1_gpu/backend.py:4-6",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8884,
+   "citation": "PREREGISTRATION.md:4221",
+   "etat": "non-verbatim-déclarée",
+   "ligne_trouvee": 8178,
+   "detail": "le texte est en :8178, l'ancre dit :4221",
+   "notes": [
+    "cible INFÉRÉE (`:NNN` nu) -> PREREGISTRATION.md",
+    "ZONE NON NORMATIVE — §A54-2 CONSIGNE les trois formes de citation non verbatim, donc il les CITE. Une entrée qui documente une faute doit pouvoir la reproduire sans que l'outil la lui reproche — et sans que le fragment fautif, désormais présent à deux endroits du journal, fasse croire à une ancre simplement décalée. Zone tenue AU PLUS SERRÉ : la seule section qui cite des fragments fautifs."
+   ]
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8910,
+   "citation": "SPEC-FOVEA-Z.md:431",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8911,
+   "citation": "claude/spec-p1-rendu-instrument-2026-07-25.md:269",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8911,
+   "citation": "PREREGISTRATION.md:7266",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8914,
+   "citation": "SPEC-FOVEA-Z.md:431",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8916,
+   "citation": "SPEC-FOVEA-Z.md:4214",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8916,
+   "citation": "SPEC-FOVEA-Z.md:116-117",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8923,
+   "citation": "SPEC-FOVEA-Z.md:116-117",
+   "etat": "exacte",
+   "ligne_trouvee": 116,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8925,
+   "citation": "SPEC-FOVEA-Z.md:130",
+   "etat": "exacte-emphase",
+   "ligne_trouvee": 130,
+   "detail": "ancre juste ; le balisage markdown de la citation diffère de la source",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8931,
+   "citation": "SPEC-FOVEA-Z.md:4217",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8951,
+   "citation": "SPEC-FOVEA-Z.md:431",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8951,
+   "citation": "SPEC-FOVEA-Z.md:4214",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "PREREGISTRATION.md",
+   "ligne_source": 8951,
+   "citation": "SPEC-FOVEA-Z.md:116-117",
+   "etat": "nue",
+   "ligne_trouvee": null,
+   "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
    "source": "SPEC-FOVEA-Z.md",
    "ligne_source": 51,
    "citation": "PREREGISTRATION.md:131",
@@ -1495,6 +1633,69 @@
    "etat": "nue",
    "ligne_trouvee": null,
    "detail": "aucun texte : INVÉRIFIABLE — une ancre nue décalée fait RÉUSSIR la vérification sur la mauvaise ligne",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 22,
+   "citation": "PREREGISTRATION.md:8972-8973",
+   "etat": "exacte",
+   "ligne_trouvee": 8972,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 40,
+   "citation": "PREREGISTRATION.md:8042",
+   "etat": "exacte",
+   "ligne_trouvee": 8042,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 67,
+   "citation": "PREREGISTRATION.md:8037",
+   "etat": "exacte",
+   "ligne_trouvee": 8037,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 68,
+   "citation": "PREREGISTRATION.md:8038",
+   "etat": "exacte",
+   "ligne_trouvee": 8039,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 84,
+   "citation": "PREREGISTRATION.md:8534-8535",
+   "etat": "exacte",
+   "ligne_trouvee": 8534,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 102,
+   "citation": "src/f1_gpu/substrat_fusionne.py:8-9",
+   "etat": "exacte",
+   "ligne_trouvee": 8,
+   "detail": "",
+   "notes": []
+  },
+  {
+   "source": "claude/prereg-multiplicateur-c-3d-2026-08-04.md",
+   "ligne_source": 184,
+   "citation": "PREREGISTRATION.md:8536-8537",
+   "etat": "exacte",
+   "ligne_trouvee": 8536,
+   "detail": "",
    "notes": []
   },
   {

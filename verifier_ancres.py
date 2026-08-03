@@ -233,9 +233,17 @@ def _cible_plausible(nom: str) -> bool:
 
 
 def _normaliser(texte: str) -> str:
-    """Aplatit les blancs (un fragment cité se replie sur plusieurs
-    lignes du markdown source, la cible non)."""
-    return re.sub(r"\s+", " ", texte).strip()
+    """Aplatit les blancs ET les marqueurs de citation en tête de ligne.
+
+    TROUVÉ EN VÉRIFIANT LE PREREG DU MULTIPLICATEUR `c` : une citation
+    repliée sur deux lignes d'un BLOC CITÉ (`>` en tête) donnait, une fois
+    aplatie, « … avant la **>** décision … » — et ne se retrouvait donc
+    jamais. Or le journal cite l'essentiel de sa matière dans des blocs
+    `>`. Le vérificateur SOUS-DÉTECTAIT précisément là où le corpus est le
+    plus dense : il rendait « introuvable » des ancres justes, ce qui est
+    la pire des deux erreurs — celle qui apprend à ignorer l'outil."""
+    sans_citation = re.sub(r"(?m)^[ \t]*>+[ \t]?", "", texte)
+    return re.sub(r"\s+", " ", sans_citation).strip()
 
 
 def _sans_emphase(texte: str) -> str:

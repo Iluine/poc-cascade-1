@@ -64,6 +64,18 @@ def test_fragment_replie_sur_plusieurs_lignes(corpus):
     assert [a.etat for a in etats] == ["exacte"]
 
 
+def test_fragment_a_travers_un_bloc_cite(corpus):
+    """Le journal cite l'essentiel de sa matière dans des blocs `>`. Sans
+    retirer le marqueur, un fragment replié sur deux lignes d'un bloc
+    devient « … avant la > décision … » et ne se retrouve jamais : le
+    vérificateur sous-détecte là où le corpus est le plus dense, et rend
+    « introuvable » des ancres justes. C'est la pire des deux erreurs —
+    celle qui apprend à ignorer l'outil."""
+    etats = _etats(corpus, "voir `cible.md:2` « le moins cher qui échoue »",
+                   CIBLE, "x\n> le moins cher\n> qui échoue d'abord\n")
+    assert [a.etat for a in etats] == ["exacte"]
+
+
 def test_citation_a_elision(corpus):
     """Le corpus écrit « début […] fin ». Cherché tel quel, un fragment
     élidé ne se trouve JAMAIS : il devient une ancre nue déguisée."""
