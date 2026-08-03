@@ -7857,3 +7857,134 @@ appartient au prereg de cette sonde.
 
 Entrée rédigée par la session Claude sur la position de la session critique ;
 **le tranchage de P0-son est le commit de Romain.**
+
+---
+
+## §A50 (2026-08-03, 18:58 — horloge lue) — ANCRES SORTANTES : 13 FAUSSES SUR 19, toutes nées dans `51b9eef` ; l'AUTORITÉ passe au TEXTE, le numéro devient chemin ; table de correction faisant foi pour §A47-PRÉCISION-2, §A48, §A49
+
+**LE FAIT, LU PAR LA MACHINE.** Le commit `51b9eef` (2026-08-03 18:25) a inséré
+**14 lignes à la ligne 38** de `SPEC-FOVEA-Z.md` (en-tête de diff `@@ -38,6 +38,20 @@`,
+lu par `git show`). Toute ancre `fichier:ligne` désignant ce fichier au-delà de la
+ligne 38 a glissé de **+14**. Le commit frère `928a5b5` a inséré 10 lignes à la
+ligne 68 de `spec-p1-rendu-instrument-2026-07-25.md` (`@@ -268,6 +278,10 @@` pour le
+second bloc) : glissement **+10** au-delà.
+
+Recensement mécanique du journal entier (`grep` sur les deux formes d'ancre) :
+**19 ancres sortantes** — c'est-à-dire désignant un fichier autre que ce journal —
+dont **19 sur 19 nées dans le lot `51b9eef`**, et **13 fausses aujourd'hui**.
+
+**CE QUE LE COMMIT S'EST FAIT À LUI-MÊME.** Ces 13 ancres ne sont pas des ancres
+vieillies : elles ont été **gravées dans le commit qui les déplaçait**, ou dans son
+frère de dix minutes. §A48 cite `spec-p1` `:269-270` comme *la clause qu'elle
+précise* — et l'insertion de cette précision a déplacé la clause. **L'entrée pointe
+à côté de son propre objet.** Le cas aggravant est la **garde 1 de §A48** (plancher
+sur structure réelle), dont la première ancre — la spec §2 endossée — est fausse :
+c'est l'ancre que la tranche consommera pour autoriser du code.
+
+**POURQUOI CELA N'ÉTAIT JAMAIS ARRIVÉ AVANT — l'asymétrie.** Les **33 ancres
+internes** du journal (de forme `` `:NNNN` ``, désignant ce fichier) sont **intactes
+par construction** : l'append-only interdit l'insertion, donc aucun numéro ne bouge
+jamais. La discipline qui protège le journal contre la réécriture le protégeait
+gratuitement contre le décalage — et **ne protège rien au-delà de sa propre
+frontière**. Le style « ancre `fichier:ligne` vers un fichier externe » est une
+innovation de §A47-PRÉCISION-2/§A48/§A49 : §A1–§A46 citaient par nom de section, pas
+par numéro. La session a introduit une précision plus fine **et son mode de
+défaillance**, dans le même geste.
+
+**LE MODE DE DÉFAILLANCE EST PIRE QUE LE SILENCE.** Une ancre décalée ne casse pas :
+elle **désigne du contenu réel mais faux**. La vérification machine *réussit* — sur
+la mauvaise ligne. C'est la famille §A41 (« tout fait consommé par un verdict doit
+être LU PAR UNE MACHINE dans un artefact »), atteinte cette fois **à la source** :
+l'instrument de lecture lui-même mentait. Cas déjà constaté ici : `SPEC:288` était
+cité pour « CPU f64 pur, hors-frame » — texte réellement en `:302` ; la ligne `:288`
+porte aujourd'hui un bloc étiqueté `[NON-ANCRÉ : design]`. Une session vérifiant
+l'ancre y aurait trouvé du NON-ANCRÉ sous un `[GRAVÉ]`, et conclu que la règle du
+commit découplé repose sur du design — alors qu'elle repose sur du `[MESURÉ]`.
+
+**DEUX RÉGIMES, À NE PAS CONFONDRE.**
+- **Née exacte, périmée depuis** : régime de **provenance** (corollaire §A47), déjà
+  appliqué à l'en-tête `spec-p1:5`. Exacte à sa naissance, périmée par le temps :
+  aucune faute, mais un risque de lecture. Ce régime couvre les ancres du document
+  d'entrée de séance (§ ci-dessous).
+- **Née fausse** : gravée dans le commit qui la périmait. Ce n'est pas du
+  vieillissement, c'est un **défaut à l'émission**. Les 13 ci-dessous sont de ce
+  second régime. La faute est de la session ; elle est consignée, non effacée.
+
+**TABLE DE CORRECTION — CETTE TABLE FAIT FOI** pour les ancres de §A47-PRÉCISION-2,
+§A48 et §A49, qui ne s'éditent pas (append-only). Chaque ligne vérifiée sur disque le
+2026-08-03 à 18:58 ; **le texte entre guillemets est l'autorité, le numéro le
+chemin**.
+
+| entrée | gravée | vraie | texte faisant foi (`SPEC-FOVEA-Z.md` sauf mention) |
+|---|---|---|---|
+| §A47-P2 | `:411` | `:425` | « ## §6-rev1 (2026-07-19) — RE-ÉPINGLAGE post-MORT-a » |
+| §A47-P2 | `:426` | `:440` | « ## §2-rev1 (2026-07-19) — Propriété E (emboîtement) » |
+| §A47-P2 | `:439` | `:453` | « ## §9. La projection — image et son comme readouts de z » |
+| §A47-P2 | `:459` | `:473` | « ## §2-rev2 (2026-07-19) — LA PYRAMIDE EST UN MIPMAP » |
+| §A47-P2 | `:95` | `:109` | « ## §2. Structure de z (v1 : 2D mono) `[EN COURS — soumise à Romain]` » |
+| §A47-P2 | `:131` | `:145` | « `[§2 ENDOSSÉE 2026-07-18]` » |
+| §A48 | `:97-123` | `:111-137` | « z est une pyramide de Harten, pas un champ » … « §A14 (v) est le prototype de cette interface » |
+| §A48 | `:131` | `:145` | « `[§2 ENDOSSÉE 2026-07-18]` » |
+| §A48 | `:429-432` | `:443-446` | « **(E)** l'ensemble actif est un » … « **(Champs d'échelle)** » |
+| §A48 | `:461-466` | `:475-480` | « le niveau fin est à la RÉSOLUTION DE LA PHYSIQUE » … « **ne pas payer le fin partout** » |
+| §A48 | `spec-p1:269-270` | `spec-p1:279-280` | « **Pas de compositeur** si Option B est retenue (§0) » |
+| §A49 | `SPEC-FOVEA-Z.md:439` | `:453` | « ## §9. La projection — image et son comme readouts de z `[ENDOSSÉE 2026-07-19]` » |
+| §A49 | `:441-445` | `:455-459` | « Pointeur : le détail faisant foi est au **journal §A20** » |
+
+**RESTÉES EXACTES** (vérifiées, non corrigées) : §A47-P2 `:27` (avant la ligne
+d'insertion) ; §A48 `spec-p1:62-67` et `:68-70` (l'insertion les suit) ;
+`prereg-p3-transport-pin.md:114-115` et `:126` (fichier non touché).
+**PÉRIMÉE EN PORTÉE, non fausse** : §A47-P2 `:24-40` désignait la table des matières
+telle qu'elle était ; l'entrée qui la cite est celle qui l'a étendue — la table court
+désormais jusqu'à `:54`. Régime de provenance.
+
+**LA RÈGLE — L'ANCRE TEXTUELLE, obligatoire pour toute ancre SORTANTE.**
+
+> Forme : `` `fichier:NNN` « fragment exact, quelques mots » ``.
+> **Le texte est la vérité ; le numéro n'est que le chemin.** En cas de désaccord
+> entre les deux, **le texte fait foi** — un `grep` retrouve la ligne après
+> n'importe quel décalage. Si le texte a disparu du fichier, ce n'est **plus un
+> décalage mais un changement de fond**, et il doit se traiter comme tel :
+> fail-loud, jamais une renumérotation silencieuse.
+
+Ce n'est pas une invention : c'est la **formalisation de la pratique qui a déjà
+tenu**. Chaque contrôle de §A45/§A46 mené cette session a été porté par la citation
+entre guillemets, le numéro n'ayant servi qu'à y aller — et les 13 fausses sont
+exactement les **ancres nues, sans texte**. La règle **inverse l'autorité** entre les
+deux, même geste que « en cas de doute, le CORPS fait foi contre cette table »
+(§A47-PRÉCISION-2) : la méta-donnée n'est jamais autorité contre ce qu'elle décrit,
+et **un numéro de ligne est une méta-donnée**.
+
+**LE VÉRIFICATEUR — dû, avec son consommateur nommé (D17).** Un contrôle mécanique
+qui, pour chaque ancre sortante portant son texte, rend l'un de trois états :
+**exacte** / **décalée → N′** (texte trouvé ailleurs dans le fichier) /
+**introuvable** (fail-loud : changement de fond, arrêt). Coût d'observateur **nul**,
+aucun seuil, aucune mesure. **Consommateur** : la gravure de la séance-table, qui
+produit aujourd'hui des ancres sortantes vers la spec — D17 satisfait sans dette.
+Il s'attache au build de la tranche ; d'ici là la règle s'applique à la main.
+
+**LE DOCUMENT D'ENTRÉE DE SÉANCE — prémisse corrigée avant application.** Une
+instruction de Romain le donnait « toujours non-tracké », d'où régime
+§A47-PRÉCISION (correction silencieuse licite). **Vérifié : faux** — `6e501c0`
+(2026-08-03 17:28) l'a commité, `git status` le donne propre. Il relève donc du
+**corollaire de provenance** : ses ancres `SPEC:288` et `SPEC:292` étaient exactes à
+17:28 et ont été périmées à 18:25 par la session, non par lui. L'intention est
+exécutée, la forme change : ses ancres sont converties au format textuel avec
+numéros rafraîchis **sous amendement daté et visible**, jamais en retouche muette —
+une correction silencieuse fabriquerait l'apparence d'un document qui aurait toujours
+été juste. Ses ancres de **code** ont été vérifiées et sont **exactes**
+(`src/f1_gpu/backend.py:66` « return tableau.get() » ; `src/summary_quadtree.py:79-86`
+« COPIE float64 (jamais une vue -- anti-fuite) » ; `src/f1_gpu/ledger.py:164`
+« "moyennes": np.asarray(commit.means, dtype=np.float64) » ; `:166-172`
+« commit PLEIN sans perte ») : fichiers inchangés depuis `4e0e719` (2026-07-19).
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Elle ne modifie **aucun contenu** de
+§A47-PRÉCISION-2, §A48 ni §A49 : leurs raisonnements, leurs gardes et leurs verdicts
+tiennent inchangés — seul le **chemin d'accès** à leurs appuis est corrigé, et les
+appuis eux-mêmes ont été relus à leur vraie ligne. Elle ne déplace aucun seuil, ne
+lève aucune garde, n'ouvre aucune décision. Elle ne tranche pas le statut de
+`SPEC-FOVEA-Z.md` §2 (trois valeurs contradictoires : `:27`, `:109`, `:145`), qui
+reste une décision Romain **non prise**.
+
+Entrée rédigée par la session Claude, qui consigne ici **sa propre faute
+d'émission** ; **l'endossement est le commit de Romain.**
