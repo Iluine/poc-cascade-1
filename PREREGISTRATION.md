@@ -9441,3 +9441,126 @@ trois monnaies) tient entière. Seule la lecture du cap à 30 Hz est corrigée, 
 la branche C-A reste prononcée contre son critère pré-écrit.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A58 (2026-08-04, 01:04 — horloge lue) — LES TROIS PORTES DE LA CONSTANTE : **la première est levée** — la machinerie n'exige que la PARITÉ, `52` est admis, et le souci des halvings ne mord pas ; les deux autres restent dues ; **la gravure dit `s_max(budget) = 52,6`, jamais « 52³ »**
+
+Trois portes posées par Romain avant qu'une constante ne se fige, plus une
+exigence de forme. Cette entrée lève la première, endosse les deux autres et
+grave l'exigence. **Aucune mesure de coût** — code lu et exécuté.
+
+---
+
+### §A58-1 — PORTE 1, LEVÉE : la machinerie n'exige que la parité
+
+**Le souci posé** : les fenêtres sont des rects alignés-dyadiques avec parente
+couvrant au quart ; `52 = 4 · 13` ne supporte que deux halvings ; le candidat
+doit sortir de l'intersection {tailles admises} ∩ {s ≤ 52,6}.
+
+**Il ne mord pas, et la raison est structurelle** : **la machinerie ne divise
+jamais `n_fov` plus d'UNE fois.** Toutes les fenêtres ont la **même largeur à
+tous les niveaux** — 52 partout ; ce qui double d'un niveau à l'autre est le
+**MONDE** (`cote_monde = n0 · 2^j` : 512, 8 192, 131 072), pas la fenêtre. Le
+seul quotient exigé est le **pas emboîté `n_fov/2`**.
+
+La contrainte réelle est donc l'exactitude de l'identité gravée —
+`src/f1_gpu/pyramide.py:90-91` « l'identité oy_j − 2·oy_parent = n_fov/2 étant
+exacte à tous les niveaux » — et elle vaut **si et seulement si `n_fov` est
+PAIR** (à `n_fov` impair, `n_fov // 2` perd une demi-cellule et l'identité
+devient approchée).
+
+| taille | parité | identité `oy_j − 2·oy_p = n_fov/2` |
+|---|---|---|
+| 64 *(témoin gravé)*, 56, 52, 48 | paire | **exacte** |
+| 51, 49 | impaire | approchée — demi-cellule perdue |
+
+> **{tailles admises} ∩ {s ≤ 52,6} = {24, 26, …, 52}. Le maximum est 52.**
+
+*(La propriété E seule — la parente COUVRE l'empreinte — ne sélectionne rien :
+elle tient même à taille impaire, la couverture ayant du jeu. C'est
+l'EXACTITUDE, plus forte que la couverture, qui trie.)*
+
+---
+
+### §A58-2 — FAIT DE PROCESSUS : un critère inventé, attrapé par son témoin
+
+La première sonde de la session ajoutait un critère de son cru — *« l'empreinte
+doit valoir exactement `n_fov/2` cellules »* — et **rejetait TOUTES les tailles,
+y compris `64`**, la seule gravée, mesurée et endossée.
+
+Le critère était faux : **64 cellules démarrant à une origine IMPAIRE chevauchent
+33 cellules parentes, jamais 32.** C'est la géométrie, pas un défaut. Le vrai
+critère est celui que le code implémente déjà (`parente_couvrante`), et la
+demi-cellule se rattrape par la couverture.
+
+**Ce qui a attrapé la faute est le TÉMOIN placé dans le balayage** : `64` y
+figurait avec la consigne écrite *« il DOIT passer »*. Sans lui, la session
+concluait « aucune taille n'est admise » et le rapportait comme un fait de la
+machinerie. **Un balayage sans cas connu-bon ne mesure pas la machine : il mesure
+le critère, et personne ne s'en aperçoit.** Règle à ranger avec les trois
+fabrications de `CLAUDE.md` — c'est la même famille : *un instrument qui ne peut
+pas produire le résultat connu ne produit pas de résultat.*
+
+---
+
+### §A58-3 — PORTES 2 ET 3, ENDOSSÉES, DUES
+
+**PORTE 2 — le balayage de tailles doit inclure des NON-PUISSANCES-DE-DEUX.**
+Toute la stabilité par cellule de `§A53` (étendue 8,0 %) est mesurée à
+**32 / 64 / 128**, et **à 5 champs**. Un côté 52 peut payer du coalescing et de
+l'alignement de warps qu'aucune puissance de deux ne révèle — et `§A55` vient de
+montrer que les constantes de coût de ce kernel ont des **falaises**. Le balayage
+doit porter les candidats eux-mêmes (48, 52, 56) **au vocabulaire réel**.
+
+**PORTE 3 — la monnaie du slot meurt avec `64³`, et sa re-dérivation se fait à
+voix haute.** `PREREGISTRATION.md:8200` posait « **Transposition 3D exacte :
+`512² = 64³ = 262 144` cellules** — le slot garde sa taille, sans hypothèse ». À
+`52³ = 140 608`, **cette transposition n'existe plus**. Le cap d'emplacements, la
+lecture VRAM et les tables de `§A51` se re-dérivent — arithmétique triviale,
+**mais à écrire**, parce que la transposition SILENCIEUSE d'une taille de slot
+est exactement le chemin par lequel `n_fov = 64` est entré en 3D.
+
+---
+
+### §A58-4 — EXIGENCE DE FORME, GRAVÉE
+
+> **Tant que le perceptuel n'a pas parlé, la gravure dit `s_max(budget) = 52,6`,
+> jamais « 52³ ».**
+
+`52,6` est un nombre **inversé depuis le budget** : c'est le côté au-delà duquel
+11 fenêtres ne tiennent plus dans `16,7 − 1,835` ms. Ce n'est pas un choix de
+résolution. `PREREGISTRATION.md:1032-1033` surveille précisément ce geste —
+« **Choisir `r_fovea` pour que le budget passe = fabriquer le verdict** » : la
+transformation d'une inversion de budget en constante de design **est** la faute
+que cette garde nomme.
+
+---
+
+### §A58-5 — DEUX CONCESSIONS DE ROMAIN, CONSIGNÉES
+
+1. **Co-faute sur la porte, et pas par ignorance.** La relecture de §A51 avait
+   affiché `:4217` — « physique 30 Hz + rendu » — et la porte a été endossée
+   **deux fois** comme tenant V4 avec 33,3 ms entières, marge de 14,3 % à
+   l'appui. *« Un chiffre favorable aurait dû doubler la méfiance du relecteur
+   comme celle de l'auteur ; il l'a endormie des deux côtés. »* La règle de §A52
+   sur le chiffre favorable vaut donc **pour la relecture autant que pour la
+   rédaction** — c'est la première fois qu'elle est mise en défaut du côté du
+   relecteur.
+2. **La « leçon » des octets lus était une monnaie unique de plus.** Le titre de
+   §A56 la réfute sur pièce (paire iso-octets, 25 % d'écart). *« J'ai remplacé un
+   compte faux par un compte incomplet en croyant conclure. »*
+
+---
+
+### §A58-6 — ORDRE, INCHANGÉ ET CONFIRMÉ
+
+`PREREGISTRATION.md:4142` — « Portes 33.3 (**motif T2 : où vit le rendu — à
+traiter explicitement si ouverte**) » — reste le **verrou réel**. Aucun des cinq
+caps calculés cette nuit n'inclut le rendu, et le non-F retenu à 1,835 ms est un
+non-F **2D à l'échelle de l'instrument**, pas un rendu 3D à 1920.
+
+**(1)** coût par cellule à d'autres tailles, candidats compris, au vocabulaire
+réel — porte 2 ; **(2)** **où vit le rendu** — le dû de `:4142`, exigible depuis
+le 19/07 ; **(3)** alors seulement la cadence et le côté, ensemble, avec la
+re-dérivation de la monnaie du slot — porte 3.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
