@@ -71,7 +71,7 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A55**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A56**
 > (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
@@ -79,7 +79,8 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > **§A49 P0-son TRANCHÉ : β3** ; **§A50 l'ancre textuelle** ; **§A51 la séance-table tenue** ;
 > **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz** ;
 > **§A54 le vérificateur d'ancres livré** ;
-> **§A55 le multiplicateur `c` — la fourchette du cap est FERMÉE**.
+> **§A55 le multiplicateur `c` — la fourchette du cap est FERMÉE** ;
+> **§A56 la table a TROIS monnaies, une seule linéaire**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -147,6 +148,25 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > reportée (I-c4 passé à 94 % de sa bande) mais **ce n'est pas une loi**. Deux réductions
 > nommées, non mesurées, toutes deux favorables : `id-matériau` lu au centre plutôt que
 > dans le halo, et f16 sur `e_th`/`ρ_s`.
+>
+> **§A56 — LA TABLE A TROIS MONNAIES, UNE SEULE LINÉAIRE.** Le budget ne compte **ni des
+> champs ni des octets lus** : l'artefact de §A55 contient une **paire iso-octets** —
+> M-c3 (3 scalaires) et M-c6 (1 scalaire + 2 statiques), mêmes 7 champs, mêmes 1 008
+> octets lus, **25,1 % d'écart de coût**. Les trois monnaies : **les champs**
+> (arithmétique de flux — un scalaire advecté ajoute 9 minmods et 6 upwinds, **zéro
+> solveur de Riemann**) ; **les octets lus** (bande passante — ce qu'un statique ajoute,
+> et rien d'autre : +9,3 %) ; **les REGISTRES**, seule monnaie à **FALAISE** (l'occupancy
+> tombe de 50 % à 33 % entre le 2ᵉ et le 3ᵉ scalaire, l'incrément triple).
+> ⇒ **La réserve de 4 éq-f32 de §A51 a un prix NON LINÉAIRE qui dépend d'où elle
+> s'encaisse**, et le découpage monolithique/passes séparées est un levier à taux de
+> change mesuré. **Ligne pour la table, pas décision.** Au vocabulaire réel : **1 296
+> octets lus** par cellule et par étage (et non 720, qui est le jouet à 5 champs).
+>
+> **DETTE DE RELECTURE : §A54 est passé sans seconde lecture.** Deux points y méritent
+> celle de Romain — les seuls où la session a exercé une **autorité sur le corpus** au
+> lieu de le décrire : les **trois citations non verbatim déclarées**, et surtout le
+> **REGISTRE DE SUPERSESSIONS**, dont les entrées décident ce qui est périmé dans des
+> documents endossés.
 >
 > **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
 > désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
