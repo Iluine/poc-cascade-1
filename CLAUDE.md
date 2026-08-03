@@ -71,7 +71,7 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A56**
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A59**
 > (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
@@ -80,7 +80,9 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz** ;
 > **§A54 le vérificateur d'ancres livré** ;
 > **§A55 le multiplicateur `c` — la fourchette du cap est FERMÉE** ;
-> **§A56 la table a TROIS monnaies, une seule linéaire**.
+> **§A56 la table a TROIS monnaies, une seule linéaire** ; **§A57 la porte 33,3 réserve
+> ~13 ms au rendu — V4 ne tient pas non plus à 30 Hz** ; **§A58 la machinerie n'exige que la
+> parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -167,6 +169,31 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > lieu de le décrire : les **trois citations non verbatim déclarées**, et surtout le
 > **REGISTRE DE SUPERSESSIONS**, dont les entrées décident ce qui est périmé dans des
 > documents endossés.
+>
+> **§A57 — LA PORTE 33,3 NE DONNE PAS 33,3 ms À LA PHYSIQUE.** `:4217-4219` réserve ~13 ms
+> au rendu 60 fps ⇒ budget physique ~20,3 ms ⇒ **7,61 fenêtres, V4 (11) NE TIENT PAS non
+> plus à 30 Hz**. La marge de 14,3 % de §A55 était celle d'un 30 Hz qui n'existe pas — le
+> seuil pré-écrit était trop généreux, et **la session l'avait écrit elle-même**.
+> **Mais cellules × cadence est CONSERVÉ** (96,2 vs 102,0 M cellules·Hz) : la cadence
+> **n'est pas la variable**, elle redistribue. ⇒ **les 11 fenêtres tiennent à 60 Hz si
+> elles font ~52³** — d'où `s_max(budget) = 52,6`, **une INVERSION, jamais une constante**.
+>
+> **§A58 — la machinerie n'exige que la PARITÉ** : elle ne divise jamais `n_fov` plus d'une
+> fois (les fenêtres ont la même largeur à tous les niveaux ; c'est le MONDE qui double).
+> {admis} ∩ {s ≤ 52,6} = {24…52}. Et un critère inventé par la session rejetait TOUTES les
+> tailles, `64` compris — **attrapé par le témoin gravé placé dans le balayage**.
+>
+> **§A59 — LE BALAYAGE DE TAILLES EST INDÉTERMINÉ, ET C'EST UN RÉSULTAT.** `I-t3`, le seul
+> critère braqué sur le cas **FAVORABLE**, a tiré : `s=40` (chevauchant) sort moins cher que
+> TOUS les alignés. **Deux causes, toutes deux fautes du protocole** : (1) les groupes
+> n'étaient **pas appariés en taille** — le contraste mesurait la taille, et le prereg
+> **nommait lui-même le confondant au paragraphe suivant** ; (2) les **médianes sont
+> contaminées par la gigue** aux petits côtés (étendue 36 % sur médiane contre 12 % sur
+> minimum ; l'anomalie `s=32` se dissout). La lecture n'a **pas** été basculée sur le
+> minimum — changer d'instrument après avoir vu le résultat est la faute. ⇒ **l'inversion
+> `s_max = 52,6` reste INVALIDÉE**, aucune constante de côté n'en sort. Le plan qui
+> répondrait : des **paires appariées** `(62,64) (94,96) (126,128) (34,32)`, et une série
+> dimensionnée sur la DURÉE de frame, non sur un compte fixe.
 >
 > **SUITE — LA DÉCISION DE CADENCE APPARTIENT À ROMAIN.** Les deux nombres existent
 > désormais (6 à 60 Hz, 12 à 30 Hz, V4 en demande 11) et le choix ne se déduit pas d'eux.
