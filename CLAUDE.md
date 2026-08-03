@@ -71,13 +71,14 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A53**
-> (2026-08-03). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A54**
+> (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
 > post-P3 ; un **`chemin-de-coût`** jugé au coût SEUL est autorisé avant, sous quatre gardes) ;
 > **§A49 P0-son TRANCHÉ : β3** ; **§A50 l'ancre textuelle** ; **§A51 la séance-table tenue** ;
-> **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz**.
+> **§A52 le premier chiffre mesuré** ; **§A53 le coût de F en 3D — ρ = 2,03, V4 meurt à 60 Hz** ;
+> **§A54 le vérificateur d'ancres livré**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -107,6 +108,17 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > **CORRIGE §A51:8258** : la marge 2D de V4 n'est pas 0,7 % (chiffre du 19/07, superséé le même
 > jour par §A23-2b) mais **13,2 %** — ancre exacte, contenu périmé.
 >
+> **§A54 — LE VÉRIFICATEUR D'ANCRES EST LIVRÉ** (`verifier_ancres.py`, 20 verrous).
+> **Le lancer avant d'écrire une entrée qui cite** : `.venv/bin/python verifier_ancres.py`
+> (sortie non nulle sur ancre morte). Il rend huit états, dont `périmée` et `contestée`
+> via un **registre de supersessions** déclaré — le troisième état de §A51-7, indétectable
+> par le texte. **80 % des ancres du corpus (147/184) sont NUES**, donc invérifiables : la
+> règle textuelle date du 03/08 et tout ce qui précède l'ignore. Conversion **au fil de
+> l'eau** (toute entrée neuve au format textuel, toute ancre touchée convertie) — NON
+> TRANCHÉ, c'est une décision de coût. **Tout verdict qui en supersède un autre doit
+> ajouter sa ligne au registre**, sinon le troisième état retombe à la vigilance humaine,
+> qui a échoué deux fois sur la même valeur en deux jours.
+>
 > **RÈGLES LOAD-BEARING, nées le 03/08 :**
 > - Toute ancre **SORTANTE** porte son texte : `` `fichier:NNN` « fragment exact » `` — **le texte
 >   fait foi, le numéro est le chemin** (§A50 ; 13 ancres nues sur 19 étaient fausses).
@@ -120,10 +132,17 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 >   arithmétique et nul en valeur** (corrections de pression à `b ≡ 0`, réconciliation positivité)
 >   se retire sans changer un chiffre — seul un **inventaire STRUCTUREL** l'attrape.
 >
-> **SUITE — LA DÉCISION D'ABORD, PAS UNE MESURE.** §A53 a rendu le chiffre dont dépendait
-> l'arbitrage : **60 Hz à 8 blocs contre 30 Hz à 18** (V4 en demande 15). C'est à Romain, et rien
-> ne s'enchaîne automatiquement. Ensuite seulement : le **non-F 3D** et le **`c` 3D** (les deux
-> multiplicateurs dus), puis l'ombrage/éclairage réels et le régime mobile.
+> **SUITE — BORNER LE MULTIPLICATEUR `c` AVANT D'ARBITRER (ordre posé par Romain, §A54-5).**
+> Le cap de §A53 — **8 blocs à 60 Hz, 18 à 30 Hz** — est un **PLAFOND** : deux réductions
+> nommées l'attendent, et l'une est bon marché. Le multiplicateur `c` se **borne avec le
+> jouet 3D existant** (paramétrer le nombre de scalaires advectés), **sans trancher le
+> schéma eau 3D** — c'est un encadrement, pas un choix, et il est neutre au schéma
+> (l'advection de `s`, `e_th`, `ρ_s` est la même partout). Borne haute connue : **×1,50**
+> (champs facturés comme des systèmes) ; borne basse **inconnue** — sans elle le cap n'est
+> que « entre 5 et 8 blocs », trop lâche pour décider. *Le moins cher qui peut échouer,
+> avant la décision qui ne peut plus être défaite.* Prereg commité SEUL avant le run.
+> Ensuite : le **non-F 3D**, puis l'arbitrage de cadence (Romain), puis
+> l'ombrage/éclairage réels et le régime mobile.
 
 ## Commandes
 
