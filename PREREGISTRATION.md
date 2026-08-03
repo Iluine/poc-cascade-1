@@ -8591,3 +8591,248 @@ construction**, superséé par le compositeur instrument post-P3.
 
 Entrée rédigée par la session Claude ; **le prononcé de la branche et
 l'endossement sont le commit de Romain.**
+
+## §A53 (2026-08-03, 23:40 — horloge lue) — LE COÛT DE F EN 3D : **ρ = 2,03**, branche **R-3**, MORT INCONDITIONNELLE de V4 transposé ; l'INDÉTERMINÉE de §A51 est LEVÉE ; ce qui survit, c'est **8 blocs à 60 Hz — ou 18 à 30 Hz**
+
+Deuxième chiffre mesuré du programme. Il lève l'INDÉTERMINÉE que §A51 avait
+posée mot pour mot — `PREREGISTRATION.md:8254` « **LECTURE TEMPS 3D :
+INDÉTERMINÉE.** Toutes les ancres de coût (1.685 / 0.843 ms) sont mesurées **en
+2D** […] **Le coût par cellule en 3D n'est mesuré nulle part.** »
+
+Artefact faisant foi :
+`pocPhysicator/claude/lectures/cout-f-3d-2026-08-03.json`. Machine : RTX 3050 Ti
+Laptop, 3 780,75 Mo, cupy 14.1.1. **Chaque chiffre de cette entrée est relu dans
+ce fichier**, aucun recopié d'une console (§A41, §A52).
+
+---
+
+### §A53-1 — L'ORDRE DES GESTES, ET POURQUOI IL EST LE RÉSULTAT
+
+Première application de la règle née de §A52 : **le pré-enregistrement se commit
+SEUL, AVANT le premier run.** Quatre commits, dans cet ordre, tous horodatés par
+git :
+
+| commit | contenu | ce qui n'existait pas encore |
+|---|---|---|
+| `661237a` | **le prereg SEUL** | aucune ligne de code 3D |
+| `d4148d1` | le jouet 3D + 18 verrous | aucun driver |
+| `c8f6150` | le driver | **aucun chiffre** |
+| `825ad0d` | les deux artefacts | — |
+
+L'antériorité du protocole n'est donc pas affirmée : elle est **vérifiable dans
+l'histoire**. C'était précisément ce que `4dda6a6` (tranche) avait rendu
+impossible en naissant d'un seul commit.
+
+---
+
+### §A53-2 — LE CHIFFRE
+
+**Grandeur de verdict, fixée avant** : `ρ = coût d'un BLOC en 3D / coût d'un BLOC
+en 2D`, mesuré **INTRA-RUN** entre deux kernels fusionnés de la même famille. Un
+bloc = une fenêtre, un système. La transposition de taille est gravée, non
+inventée — `PREREGISTRATION.md:8200` « **Transposition 3D exacte : `512² = 64³ =
+262 144` cellules** — le slot garde sa taille, sans hypothèse. »
+
+| mesure | configuration | médiane | p99 | **ms / bloc** |
+|---|---|---|---|---|
+| M-1 | 2D, 1 système, 3×512² | 2,5359 ms | 2,9512 | **0,8453** |
+| M-2 | 2D, 2 systèmes, 3×512² | 5,1358 ms | 5,5206 | 0,8560 |
+| M-3 | **3D, 1 système, 3×64³** | 5,1415 ms | 5,6679 | **1,7138** |
+| M-4 | 3D, 2 systèmes, 3×64³ | 9,9798 ms | 11,6158 | 1,6633 |
+
+> **ρ = M-3 / M-1 = 2,0275.**
+
+À **nombre de cellules identique** — 262 144 des deux côtés — un bloc coûte
+**deux fois plus cher** quand le monde gagne une dimension.
+
+**Branches pré-écrites (`661237a` §6), seuils calculés par machine depuis
+`ma_prime.json` et `ma_quater.json`, et re-vérifiés par le driver au run :**
+
+| branche | condition | prononcé |
+|---|---|---|
+| R-1 | ρ < **1,1746** | V4 survit |
+| R-2 | 1,1746 ≤ ρ < **1,3196** | mort conditionnelle |
+| **R-3** | **ρ ≥ 1,3196** | **MORT INCONDITIONNELLE** |
+
+**ρ = 2,03 tombe en R-3, et de loin.** F seul, pour les 15 blocs de V4, coûte
+**25,708 ms** — soit **1,54 fois le budget de frame ENTIER** (16,7 ms).
+Le dépassement est de **10,84 ms** ; la marge de V4 passe de **+2,21 ms** en 2D à
+**−10,84 ms**. Aucune connaissance du reste de la frame n'est requise pour le
+prononcer : aucune autre part n'étant négative, F seul suffit.
+
+---
+
+### §A53-3 — LES QUATRE TÉMOINS, TOUS TENUS
+
+Ils ne confirment pas le résultat : ils déterminent s'il est **lisible**.
+
+1. **I-1, reproduction de l'ancre.** Le chemin 2D, intouché, redonne
+   **1,7119 ms/slot** contre **1,68531** archivé — écart **1,58 %**, dans la
+   bande de 25 % fixée avant. Le harnais est bien celui qui a produit l'ancre ;
+   c'est ce qui autorise à parler du même budget.
+2. **I-3, attribution.** L'encadrement **statique** — comptes d'opérations exacts
+   des deux kernels — donne `[1,50 ; 2,25]`, central 1,875 : minmods 45/24,
+   solveurs HLL 6/4, upwinds tangentiels 18/8, lectures de voisins 36/24, octets
+   lus 1,875. **ρ = 2,03 tombe DEDANS**, près de la borne haute. **L'écart EST
+   l'arithmétique du troisième axe**, et non un défaut de kernel : 72 registres
+   par thread contre 64, **aucun débordement en mémoire locale des deux côtés**.
+3. **I-4, stabilité par taille.** Coût par cellule et par système, sur un facteur
+   4 de côté : 2D `{256 : 3,396 · 512 : 3,331 · 1024 : 3,135}` ns, étendue
+   **8,3 %** ; 3D `{32 : 5,984 · 64 : 6,465 · 128 : 6,082}` ns, étendue **8,0 %**.
+   L'hypothèse « le slot garde sa taille » **se transporte** — elle n'était pas
+   acquise, et son échec aurait rendu la lecture INDÉTERMINÉE.
+4. **Linéarité en systèmes.** 2 systèmes / 1 système : **2,025** en 2D,
+   **1,941** en 3D. **Le modèle en BLOCS survit au changement de dimension** —
+   c'est lui qui autorise à multiplier par 15.
+
+**Reproductibilité** : deux runs indépendants, **ρ = 2,0403** et **ρ = 2,0275**,
+écart **0,63 %**. Les deux artefacts sont conservés (§A53-6).
+
+---
+
+### §A53-4 — CE QUE LA MORT VEUT DIRE, ET CE QU'ELLE NE VEUT PAS DIRE
+
+**Ce qui meurt est le COMPTE DE BLOCS de V4 transposé en 3D à 60 Hz — pas la 3D,
+pas la fovéa-z, pas V4 en 2D.** Le chiffre est un coût par bloc ; il se lit
+aussitôt comme un **cap** :
+
+| cadence | budget | non-F retenu | **blocs tenables en 3D** | pour mémoire, en 2D |
+|---|---|---|---|---|
+| **60 Hz** | 16,7 ms | 1,835 ms | **8** | 17,6 |
+| **30 Hz** (porte 33,3) | 33,3 ms | 1,835 ms | **18** | 37,4 |
+
+**V4 en demande 15.** Le résultat n'est donc pas « rien ne passe » : c'est
+**8 blocs à 60 Hz, ou 18 à 30 Hz** — et 18 > 15. **La porte 33,3 ne sauve pas V4
+de justesse : elle lui rend de la marge.** `PREREGISTRATION.md:8183` la tenait
+déjà prête — « **plus de deux foyers perçus simultanément ⟺ physique à 30 Hz**
+(`:4217` « Porte 33,3 = REPLI PRÉ-NOMMÉ ») ». Elle cesse d'être un repli de
+gameplay pour devenir **l'arbitrage de la dimension**.
+
+**Le non-F est retenu CONSTANT, et le sens de cette réserve est défavorable à
+V4** : à nombre de cellules égal, remontée et transferts sont plausiblement
+proches — mais les halos passent de ~2 % des cellules (512²) à ~20 % (64³). Le
+non-F 3D est vraisemblablement **supérieur** à 1,835 ms : le cap de 8 blocs est
+un **majorant généreux**.
+
+**Le second multiplicateur reste entier et n'est PAS fondu dans ρ.** Un bloc 3D
+mesuré ici porte **un système de cinq champs** (h, hu, hv, hw, s). Le vocabulaire
+de §A51 en pose **7,5 éq-f32 par cellule fine** : la traduction du `c` réel n'est
+pas faite, elle **dépend du schéma eau 3D** — `PREREGISTRATION.md:8339` « le
+**schéma eau 3D** (dette « 3D » : pression matérialisée ou non, tampons de
+flux) », arbitrage Romain non pris. Sa direction est certaine et son ampleur
+n'est pas chiffrée ici : **il ne peut qu'ajouter**, donc **réduire les 8**.
+
+---
+
+### §A53-5 — CORRECTION DE §A51 : LA MARGE DE V4 N'ÉTAIT PAS 0,7 %
+
+Consignée dans le prereg **avant** le run, parce qu'elle change la taille de la
+question d'un facteur ~25. `PREREGISTRATION.md:8258` écrit « d'autant que V4
+passe son gate en 2D avec **0,7 % de marge** ». Ce chiffre vient de
+`§A18-lecture-M-a-quater` (19/07, médiane 16.589, marge 0.111 ms) et a été
+**superséé le même jour** par `§A23-2b` — `:5215` « **MORT (médiane > 16.7)** |
+**NON** | marge **2.199 ms** (contre 0.111 auparavant) », verdict prononcé par
+Romain à `:5222`.
+
+**Ancre exacte, contenu périmé** : c'est le troisième état du vérificateur que
+`§A51-7` avait lui-même inventé, et §A51 en est la victime dans la page qui le
+nomme. La même valeur a été recopiée une seconde fois dans le prereg de la
+tranche. **Deux propagations, une seule cause** : une session qui recopie au lieu
+de relire. Le vérificateur d'ancres dû par §A50 gagne ici son **quatrième**
+consommateur en trois jours.
+
+Effet sur cette entrée : sous 0,7 % de marge, tout ρ > 1,006 tuait V4 — la mesure
+était réglée d'avance et n'aurait rien appris. Sous 13,2 %, la 3D disposait de
+**2,21 ms** et les seuils valaient 1,17 / 1,32. **La correction est favorable à
+V4 ; elle a été vérifiée dans l'artefact avant d'être écrite**, en application de
+la règle de §A52 (*un chiffre défavorable n'est pas plus sûr qu'un chiffre
+favorable*).
+
+---
+
+### §A53-6 — FAITS DE PROCESSUS
+
+**(1) La prédiction est consignée AVANT le chiffre.** `c8f6150` (message de
+commit, antérieur au run) écrit l'encadrement statique `[1,50 ; 2,25]` et note
+que **les deux seuils de mort sont sous sa borne basse**, donc que **R-3 est
+l'attendu**. Motif écrit alors : « *le résultat spectaculaire est maintenant
+l'attendu, et c'est exactement la situation où une mesure se laisse tirer* ». La
+mesure a atterri **dans** l'encadrement — ce qui fait de I-3 une prédiction
+vérifiée, et non une justification a posteriori.
+
+**(2) TROIS TROUS DANS MES PROPRES VERROUS, trouvés par mutation avant tout run.**
+- Les verrous comparaient **un pas depuis l'état initial**, où `hu = hv = hw = 0`.
+  Or le flux tangentiel vaut `F_h · u_t`, donc **d'ordre u²** : sa divergence
+  tombait **trois ordres sous `atol`**. Un mutant qui envoyait la tangentielle de
+  l'axe z **dans la mauvaise impulsion** passait les 17 verrous.
+- Trois pas d'échauffement **n'y changeaient rien** : le terme est invisible **par
+  construction**, pas par jeunesse de l'état. Corrigé par un état **sévère**
+  (vitesses d'ordre 1, 12 % de cellules sèches, gradients raides) qui allume
+  toutes les branches. Il ne change rien à la mesure — le driver chronomètre
+  l'état jetable standard, le même que l'ancre — il change **ce que les verrous
+  peuvent voir**.
+- Deux termes du motif sont **payés en arithmétique et nuls en valeur** à
+  bathymétrie plate (corrections de pression, réconciliation positivité). **Les
+  retirer du 3D ne change aucun chiffre, passe tous les verrous numériques, et
+  rend le 3D moins cher** : la minoration silencieuse parfaite, exactement ce que
+  `substrat_fusionne.py:8-9` interdit (« toute omission de calcul serait un
+  harnais complaisant, interdit »). Attrapée par un **inventaire STRUCTUREL** du
+  motif. Six mutants finaux, six chutes.
+
+**Règle qui en sort** : *un verrou numérique ne garde que ce que son état
+allume ; un terme payé et nul en valeur ne se garde que structurellement.*
+
+**(3) Un artefact conservé malgré son défaut.** Le run 1 portait un défaut de
+**reporting seul** : `**stats` écrasait la clé `n` (côté de grille) par le nombre
+d'échantillons, et le témoin de taille repliait trois points sur un. Temps, ρ et
+branche y sont valides. Il **n'a pas été écrasé** : archivé sous
+`cout-f-3d-2026-08-03-AVANT-CORRECTIF-CLE-N.json`, il rend les deux ρ
+confrontables (0,63 % d'écart). Le correctif ajoute une garde **fail-loud** qui
+refuse un témoin dont les entrées se sont repliées.
+
+**(4) Le F jouet 3D est un jouet, et c'est ce qui rend ρ solide.** L'ancre 2D
+elle-même en est un — `substrat_jetable.py:5-6` « doit être **représentatif en
+COÛT** (stencil, c=8 champs), pas en physique-jeu ». Mesurer un jouet contre un
+jouet compare **deux objets de même nature** ; mesurer un F « réel » 3D contre le
+jetable 2D aurait confondu la **dimension** avec le **schéma**.
+
+---
+
+### §A53-7 — PORTÉES : CE QUE CETTE ENTRÉE NE PRONONCE PAS
+
+- **Rien sur le schéma eau 3D**, ni sur la pression matérialisée, ni sur les
+  tampons de flux aux faces. Aucun solve de Poisson n'a été écrit ni mesuré.
+- **Rien sur le `c` 3D** — le second multiplicateur, nommé, non chiffré ici.
+- **Rien sur le rendu**, l'ombrage, l'éclairage, le régime mobile, le streaming
+  (facteur 5,8 toujours sans mesure).
+- **Rien sur la VRAM 3D** : §A51 l'a lue au papier (B1 des deux côtés), non
+  rouverte.
+- **Aucun seuil déplacé, aucune garde levée, aucun kernel 2D touché** (`git diff`
+  vide, empreintes gravées dans l'artefact).
+- **Aucune décision.** D17 — `PREREGISTRATION.md:6461` « *aucun diagnostic sans
+  une décision nommée qui en dépend explicitement* » — nommait la décision avant
+  la mesure : *V4 survit-il au passage 3D, ou la porte 33,3 devient-elle LA
+  décision ?* La mesure répond au premier membre. **Le second appartient à
+  Romain**, et ne s'enchaîne pas automatiquement.
+
+---
+
+### §A53-8 — CE QUI RESTE DÛ
+
+**À TRANCHER, à Romain** : la **cadence** (60 Hz à 8 blocs contre 30 Hz à 18) —
+c'est désormais l'arbitrage principal du programme ; le **schéma eau 3D**, dont
+dépend le second multiplicateur ; les quatre arbitrages déjà listés en `§A51-8`.
+
+**DÛ, avec consommateur nommé** : le **non-F en 3D** (halos, remontée,
+prédiction) — consommateur = le cap de 8 blocs, qu'il ne peut que réduire ; le
+**`c` 3D** — consommateur = le même cap ; le **streaming VRAM↔RAM** (facteur 5,8) ;
+le **vérificateur d'ancres** de §A50 avec son état `fait périmé`, qui vient de
+gagner son quatrième consommateur ; les quatre dûs de §A49.
+
+**CE QUE LE PROGRAMME SAIT MAINTENANT, en trois chiffres mesurés** : la VRAM
+n'est pas la contrainte (§A51, confirmée au bit près par §A52) ; le gather n'est
+pas un poste budgétaire (§A52, 2,7 %) ; **le temps de F l'est, et la dimension le
+double** (§A53). Les postes structurels sont petits ; **le calcul est cher**.
+
+Entrée rédigée par la session Claude ; **le prononcé de la branche et
+l'endossement sont le commit de Romain.**
