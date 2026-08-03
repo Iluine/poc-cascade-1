@@ -7988,3 +7988,365 @@ reste une décision Romain **non prise**.
 
 Entrée rédigée par la session Claude, qui consigne ici **sa propre faute
 d'émission** ; **l'endossement est le commit de Romain.**
+
+---
+
+## §A51 (2026-08-03, 21:24 — horloge lue) — SÉANCE-TABLE TENUE : vocabulaire épinglé (c_fin 3D = 7,5 éq-f32) ; enveloppe lue sous le CAP D'EMPLACEMENTS, deux branches, toutes deux LARGES ; temps 3D INDÉTERMINÉE ; β MORT comme coefficient ; le STREAMING promu de levier à question à facteur 5,8
+
+Séance de design, **zéro run, zéro mesure**. Entrée :
+`pocPhysicator/claude/seance-table-entree-2026-08-03.md` (commit `6e501c0`, amendé
+`50b8f76`). Toutes les ancres sortantes de cette entrée sont au format §A50 —
+`fichier:NNN` suivi du fragment textuel qui fait foi.
+
+> **CE QUE ROMAIN A PRONONCÉ** (tranchages, en séance) : `id-matériau` **u16** ; **la
+> roche est creusable** ; **`e_ch` dérivé du ledger** ; la ligne 4 **coûte plus cher en
+> 3D** (« oui c'est ça ») ; **2 slots énergie ne suffisent pas** ; **β meurt comme
+> coefficient et devient une colonne**. Plus trois apports qui ont déplacé le travail :
+> la **critique de la moyenne** (gradients locaux extrêmes sous une moyenne tiède) ; le
+> rappel que **l'on descend dans la pyramide en fonction de l'énergie aussi** ; et la
+> **scène de montagne** (cascade, neige, rivière semi-gelée, chalet à foyer, pins), avec
+> l'accumulation de neige sur toit incliné jusqu'au déchargement.
+> **CE QUE LA SESSION PROPOSE** : les formes, les critères, les calculs et les branches
+> ci-dessous. Distinction maintenue selon `§A43:7266-7274` (une décision attribuée avant
+> d'être prise). **L'endossement est le commit.**
+
+---
+
+### §A51-1 — LES DÉCISIONS DE CADRE (§0 de l'entrée), GRAVÉES
+
+1. **Machine cible non rouverte** : `annexe-enveloppe-jeu-2026-07-19.md:48-49` « la
+   3050 Ti est le GPU minimal pour 1920, pas une machine 4K ».
+2. **Frontière de F** : F = les règles **physiques** du monde, jamais le comportement
+   des entités, PNJ ou joueurs — « règles du jeu », système séparé dont les événements
+   entrent au **même ledger**. Conséquence gravée : *aucun échec futur de la couche
+   agents n'est imputable au pari « un seul F »*.
+3. **Multijoueur = multi-PC**, pas d'écran partagé : le calcul fin est porté par la
+   machine de chaque observateur.
+
+---
+
+### §A51-2 — LE VOCABULAIRE ÉPINGLÉ : c_fin 3D = 7,5 éq-f32
+
+| # | champ | b | éq-f32 | note |
+|---|---|---|---|---|
+| 1a | `b0` **occupation volumique de solide** | f32 | 1 | **creusable (tranché)** ; porte aussi le bâti |
+| 1b | `s` couche déposée (sédiment, **neige**) | f32 | 1 | `src/sediment.py:5` « le terrain effectif `b_eff = b0 + s` » |
+| 2 | `id-matériau` | **u16** | 0,5 | **tranché** ; flags par table de correspondance ⇒ hors budget |
+| 3 | fraction d'eau (2.5D : `h`) | f32 | 1 | |
+| 4 | impulsion `hu, hv, hw` | f32 | **3** | **f32 partout en 3D (tranché)** — voir §A51-3 |
+| 5 | `e_th` **enthalpie**, diffus seul | f16 | 0,5 | sources intenses ⇒ événements |
+| 6 | `e_ch` | — | **0** | **dérivé du ledger (tranché)** |
+| 7 | `ρ_s` fumée | f16 | 0,5 | **re-tirable** depuis l'événement, pas « jamais commise » |
+| 8 | `u_atm` | — | 0 | fronts semés en **forme close** — condition, pas préférence |
+
+**c_fin 3D = 7,5 éq-f32 ; c_grossier = 7,0.** Le document d'entrée donnait **5,75**
+(2.5D). **La séance a ALOURDI le minimum**, et il faut le dire ainsi : les corrections de
+sous-comptage (la roche manquante, l'identifiant trop étroit, la 3D vraie) pèsent plus
+que la seule économie trouvée (`e_ch`, −0,5). Le résultat n'est plus une estimation mais
+une **somme dérivée ligne à ligne** ; le « ~7–9 » de l'entrée était `[NON-ANCRÉ]`.
+
+**La dégressivité s'est effondrée** : V4 dégressait de c=8 à c=4 aux niveaux supérieurs ;
+la table ne descend que de 7,5 à 7,0. Raison saine et à consigner : tout ce qui pouvait
+sortir du budget en est déjà sorti (`e_ch` au ledger, vent en forme close), et il ne reste
+que la fumée à tomber au grossier. **Une table bien taillée n'a plus de gras à perdre en
+montant** — mais notre `c` grossier est en conséquence **75 % plus cher que celui de V4**.
+
+---
+
+### §A51-3 — TROIS RÈGLES NÉES DE LA SÉANCE
+
+**(R1) CRITÈRE D'ADMISSION AU CHAMP** — né de la critique de Romain sur la moyenne.
+
+> Un phénomène n'entre dans un champ que si **sa moyenne grossière prédit son
+> comportement**. Sinon il sort du champ et devient un **événement**. Un champ dont le
+> grossier ment n'est pas un champ trop grossier — c'est un champ **mal choisi**.
+
+Fondement : l'ignition est un phénomène **à seuil**, et un seuil ne commute pas avec une
+moyenne (`moyenne(f(x)) ≠ f(moyenne(x))` pour `f` non linéaire). La pyramide de Harten
+est fidèle aux quantités conservées et **ment sur tout ce qui se déclenche**. Une cellule
+grossière contenant une source à 1000 °C dans du froid porte la même énergie totale
+qu'une cellule tiède uniforme ; la première allume le bois voisin, la seconde non.
+
+**(R2) LE DUAL — LA DESCENTE PAR L'ÉNERGIE, qui n'est pas neuve et était perdue.**
+`SPEC-FOVEA-Z.md:61` « la distance fixe un plafond de LOD ; l'énergie raffine SOUS ce
+plafond » ; `:116-117` « c'est l'ÉNERGIE qui décide du raffinement effectif (pilier
+existant) `[MESURÉ : S_eff 1.8–3.9 selon r_fovea, journal 2026-07-01]` » ;
+`note-budget-vram-2026-07-18.md:12` « le raffinement fin n'existe que dans les fenêtres
+actives (fovéa + énergie) ». **Le document d'entrée de séance avait perdu ce pilier** —
+omission consignée.
+
+R1 et R2 sont **duaux** : R1 dit quoi sortir du champ, R2 dit où le champ doit être fin.
+Face à la même source : **descendre** (fenêtre d'énergie, coût = un slot) ou **sortir**
+(événement, coût = une entrée de ledger). Le **cap d'emplacements arbitre mécaniquement** :
+quand les slots sont pris, le foyer suivant *doit* devenir un événement. R1 n'est donc
+pas un principe à endosser dans le vide — c'est **le mode de dégradation du cap**, et la
+politique du gouverneur sur le canal thermique.
+
+**(R3) CE QUI SE DÉRIVE NE SE STOCKE PAS.** Trois applications, toutes à coût nul :
+les **flags** se dérivent du type (table de correspondance) ; **`e_ch`** se dérive de
+(type, ledger des combustions) — tranché ; la **fraction de glace** se dérive de
+l'enthalpie.
+
+---
+
+### §A51-4 — LA SCÈNE DE MONTAGNE : test de couverture, et ce qu'elle a démontré
+
+Scène posée par Romain : cascade, neige qui tombe, rivière semi-gelée, chalet à foyer,
+pins, **accumulation de neige sur toit incliné jusqu'au déchargement** (dépendant de la
+forme du toit, du matériau, du vent, du type de neige).
+
+**Objection de fond, retenue** : le but de Cascade est de simuler la scène **sans
+dépendre du nombre de sources temps réel proches**. Elle est fondée, et elle a corrigé un
+mauvais cadrage de la session (§A51-7, faute 2). Réponse : la géométrie ne dépend pas du
+nombre de sources — **le coût est constant dans les INSTANCES et linéaire dans la
+VARIÉTÉ**. C'est le pilier, et la table §3 l'encode.
+
+**Trois résultats produits par cette scène :**
+
+1. **La rivière semi-gelée démontre la ligne 5 mieux que deux arguments de session.**
+   Une rivière semi-gelée est **irreprésentable avec un champ de température** : pendant
+   toute la fusion, T reste à 0 °C et ne distingue pas 10 % de glace de 90 %.
+   L'information vit dans la **chaleur latente** — donc dans l'énergie, et nulle part
+   ailleurs. Si `e_th` stocke l'**enthalpie**, la fraction de glace se lit dans l'énergie :
+   gel, fonte et regel nocturne pour **zéro éq-f32**. Trois raisons indépendantes portent
+   désormais la ligne 5 : l'énergie se moyenne (session), la moyenne masque les gradients
+   (Romain), **la température ne code pas l'état** (la rivière).
+2. **Le toit tranche la nature de `b0`.** Un toit incliné est du solide avec du **vide
+   dessous** : aucun champ de hauteur ne le représente. `b0` doit donc être une
+   **occupation volumique**, ce que « la roche est creusable » impliquait déjà. Bénéfice :
+   le chalet est de la matière comme le reste (occupation + `id-matériau`), sans système
+   « bâtiments » séparé.
+3. **L'accumulation-déchargement est la chaîne `§5` complète**, appliquée pour la
+   première fois hors de l'éboulis rocheux : accumulation (champ) → seuil de stabilité
+   (pente, frottement du matériau, cohésion) → **événement commis** → **entités** qui
+   glissent (cycle E→L→E) → **redépôt eulérien**. Les **deux écritures comptables** de
+   `§6` rendent le tas au sol **exact** (famille É1) sans qu'un instant du glissement ait
+   été calculé.
+
+**Le point qui décide de la jouabilité** : si précipitation et vent sont en **forme close
+par morceaux**, l'accumulation `m(t)` l'est aussi, et **la date de franchissement du
+seuil se calcule analytiquement**. Trois jours d'absence, sept déchargements, la masse au
+sol : une évaluation, **zéro pas de temps simulé**. `§7` l'avait écrit en général
+(« *une forme finement fluctuante détruit la jumpabilité de tout ce qu'elle pilote* ») ;
+le toit en est le cas concret. **Le vent en forme close cesse d'être une préférence : il
+est la condition de jouabilité du chalet après une absence.**
+
+**Le « type de neige » — seul manque réel, résolu sans champ.** Poudreuse, lourde,
+croûte de regel : c'est de l'**histoire**, pas de l'état. La garde de `§6` tranche — *F
+est illusionniste sur les mécanismes, comptable sur les bilans* : la cohésion **n'a aucun
+bilan**, elle ne fait que déclencher un seuil. `cohésion = f(masse, énergie, temps depuis
+la dernière chute)`, le « temps depuis » étant lu au ledger. **Zéro champ ajouté.**
+
+**Ce que la scène casse, et qui reste ouvert** : un foyer de cheminée fait quelques
+dizaines de cellules ; un slot en fait 262 144. **Le cap suppose des fenêtres de taille
+unique**, qu'aucune scène réelle ne respecte — entre un foyer, une cascade et un front de
+neige, l'empreinte varie de trois ordres de grandeur. L'arbre emboîté de `§2-rev1` a le
+vocabulaire (`SPEC-FOVEA-Z.md:443-446` « toute fenêtre active déclare une parente
+couvrant son empreinte (quart de fenêtre) ») ; **le budget, lui, compte des slots égaux**.
+Désaccord de granularité du budget — **NOMMÉ, NON RÉSOLU.**
+
+---
+
+### §A51-5 — LES TROIS RÉGIMES DES SOURCES HORS-PERCEPTION
+
+Né du tranchage « 2 slots ne suffisent pas » et du rappel de Romain : *ce qui est assez
+loin pour n'être ni vu ni entendu, on peut juste écrire le résultat sans simuler chaque
+pas de temps.*
+
+**Nuance préalable, pour ne pas contredire §A46.** `PREREGISTRATION.md:7473-7476` : « La
+classe **continue pilotée par l'état** (rivière, vent, pluie) **n'est pas jumpable** : sa
+réalisation — **la phase fine du bruit** — est précisément l'endroit où vit la couture de
+commit. » L'énoncé est **borné au canal auditif** et à *la phase fine*. Il ne dit rien du
+bilan. Transposé par le contrat déjà endossé (`:6494` « le VIVANT est contracté au
+TÉMOIGNAGE ») : **le bilan est jumpable, la réalisation fine ne l'est pas** — et **le
+non-jumpable ne coûte que là où il est perçu.**
+
+| régime | condition | mécanisme | frame | VRAM |
+|---|---|---|---|---|
+| 1 — perçu | dans le cône **ou** la sphère (`§6`, deux prédicats d'absence) | slot plein, temps réel | 1,685 ms | **15,7–16,8 Mo** |
+| 2 — hors-perception | ni vu ni entendu, bilan vivant | (a) **jump** si forme close · (b) **cadence `k`** sinon | ~0 · 1,685/k | **15,7–16,8 Mo** |
+
+*(Un slot perçu est un slot FIN : coût lu dans l'arithmétique canonique de §A51-6, borne
+basse sans pression matérialisée, borne haute avec. Les 2 slots énergie pèsent donc
+≤ 33,6 Mo, soit **0,8 % de la VRAM** — d'où « négligeables en mémoire, lourds en temps ».)*
+| 3 — froid | au-delà de τ_dec | **tirage semé** depuis l'événement, contraint par le ledger | 0 | ~3,2 Ko |
+
+**Test anti-fabrication, mené explicitement** parce que la garde `:1032-1033` surveille ce
+geste (« **Choisir `r_fovea` pour que le budget passe = fabriquer le verdict** ») : aucun
+des trois mécanismes n'est inventé ici. Prédicats d'absence gravés (§A45/§A46, `§6`) ;
+jump en forme close gravé (`§7`, P0-b) ; tirage semé contraint par le ledger gravé (§A36) ;
+cadence `k` **pré-enregistrée** (`:4221` « P4 — L1 EN RÉSERVE : cadence k=2 »).
+**Transposition à un objet nouveau, pas fabrication.**
+
+**Conséquence sur le cap** : le « 2 » de V4 borne les foyers **en régime 1**, pas les
+foyers du monde. L'arbitrage réel n'est pas « combien de slots » mais : **plus de deux
+foyers perçus simultanément ⟺ physique à 30 Hz** (`:4217` « Porte 33,3 = REPLI
+PRÉ-NOMMÉ »). **NON TRANCHÉ.**
+
+---
+
+### §A51-6 — LIVRABLE 2 : LECTURE DE L'ENVELOPPE
+
+**LES BRANCHES, ÉCRITES AVANT LA LECTURE** (ordre imposé par `§13.2` de l'entrée) :
+**B1 large** (reste > 1,5 Go) ⇒ la VRAM n'est pas la contrainte, la tranche doit mesurer
+temps et rendu ; **B2 serré** (0,5–1,5 Go) ⇒ arbitrage `c` ↔ `n_fov`, le rendu devient le
+risque n°1 ; **B3 cassé** (< 0,5 Go) ⇒ `n_fov=64` en 3D est mort, décision de gate.
+**Sur le temps** : si une seule entrée du calcul est 2D-seulement ⇒ **INDÉTERMINÉE**,
+sans extrapolation.
+
+**Le modèle est le CAP D'EMPLACEMENTS, non la formule dense** — `:3890-3892` :
+« **L'enveloppe dense (γ₂·n_fov²·N_niv) est remplacée par un cap dur d'emplacements** :
+le budget est une liste de SLOTS (niveau, c) … **1 slot ≡ fenêtre 512² = 1.685 ms à c=8**,
+0.843 ms à c=4 `[MESURÉ M-a′]` ». **Transposition 3D exacte : `512² = 64³ = 262 144`
+cellules** — le slot garde sa taille, sans hypothèse.
+
+**L'ARITHMÉTIQUE DU SLOT, POSÉE UNE FOIS ET CITÉE PARTOUT** — toute table de cette entrée
+s'y réfère :
+
+> **1 slot = 262 144 cellules × (2·Σb_primitifs + Σb_dérivés) × 4 octets**
+
+| slot | `2·Σb_prim` | sans pression | avec pression (+1) |
+|---|---|---|---|
+| **fin** (c = 7,5) | 15 | **15,7 Mo** | **16,8 Mo** |
+| **grossier** (c = 7,0) | 14 | **14,7 Mo** | **15,7 Mo** |
+
+**LECTURE** (12 slots — 2 fovéaux fins + 2 énergie fins + 8 grossiers ; f32 ;
+double-buffering sur les primitifs seuls) :
+
+| | z + β | reste sur 4 Go | branche |
+|---|---|---|---|
+| résidence **conique** (streaming), **sans** pression | ≈ **180 Mo** | ~3,8 Go | **B1** |
+| résidence **conique**, **avec** pression | ≈ **193 Mo** | ~3,8 Go | **B1** |
+| résidence **omnidirectionnelle** | ≈ **1,14 Go** | ~2,9 Go | **B1** |
+
+Détail du 193 Mo : `4 × 16,8 + 8 × 15,7`. Détail du 1,14 Go :
+`γ₃ · n_fov³ · N_niv = 7 × 262 144 × 10 = 18,35 M cellules × ~60 octets` (soit
+`2 × 7,5 × 4`). **Le choix pression/sans-pression ne déplace aucune branche** — il vaut
+13 Mo sur un reste de 3,8 Go.
+
+**LES DEUX BRANCHES TOMBENT EN B1.** L'enveloppe mémoire n'est pas la contrainte du
+programme ; **le temps de frame et le rendu le sont**, tous deux `NON MESURÉ`, et seule
+la tranche peut les produire.
+
+**LE STREAMING EST PROMU. Et le facteur se nomme exactement.** L'écart entre les deux
+résidences est **un rapport MODÈLE contre MODÈLE, non une fraction de cône** :
+
+> `(γ₃ · N_niv) / cap = (7 × 10) / 12 = 70 / 12 ≈ **5,8**`
+
+— le modèle **dense en coquilles omnidirectionnelles** contre le **cap de 12 fenêtres**.
+Rien de plus, et c'est démontrable en une division. **CORRECTION D'ATTRIBUTION** : une
+première rédaction de cette entrée nommait la cause « la fraction de sphère couverte par
+le cône de vue ». **Faux, et à consigner dans l'entrée même qui légifère l'exactitude
+d'attribution** : le scénario endossé R2 est à **FOV 20°**, dont le cône couvre ~1/33 à
+~1/131 de la sphère selon la lecture de l'angle — **jamais 1/6**. Le nombre était bon, la
+cause nommée ne le produisait pas. *(Le calcul de session qui l'avait suggérée supposait
+un FOV de 90°, jamais épinglé nulle part — un paramètre substitué en silence à celui de
+l'artefact.)* L'intuition « les fenêtres suivent le regard » subsiste, **étiquetée
+INTUITION, non ancrée, ne portant aucun chiffre.**
+
+La promotion, elle, ne dépend pas de la cause : dans **les deux** comptes, un demi-tour de
+tête exige de re-remplir les fenêtres. Elle dépend entièrement de `SPEC-FOVEA-Z.md:130`
+« Le streaming VRAM↔RAM hors fovéa est un levier **nommé, pas une exigence v1**
+`[NON-ANCRÉ]` » — **ni mesuré, ni décidé, ni pré-enregistré**. Le streaming cesse donc
+d'être un levier optionnel : **c'est la question dont dépend un facteur 5,8 de
+l'enveloppe.**
+
+**LECTURE TEMPS 3D : INDÉTERMINÉE.** Toutes les ancres de coût (1.685 / 0.843 ms) sont
+mesurées **en 2D** (scénario R2, « 2D mono-observateur, FOV 20° »). Un slot 3D a le même
+nombre de cellules mais un stencil à plus de voisins et trois directions de flux. **Le
+coût par cellule en 3D n'est mesuré nulle part.** Aucune extrapolation n'est écrite —
+d'autant que V4 passe son gate en 2D avec **0,7 % de marge**.
+
+**TROIS PRÉCAUTIONS, parce qu'un résultat confortable est le moment où l'on fabrique un
+verdict.** (i) Ce n'est **pas** une infirmation de `§4.2` de l'entrée : les 2,89 Go
+étaient justes *sous le modèle dense*, superséé le 19/07 et non répercuté. Un même monde,
+deux comptes, aucun faux. (ii) **Rien n'a été choisi pour que ça passe** : le `c` a
+**monté** de 5,75 à 7,5 pendant la séance, le nombre de slots vient de V4 endossé, et le
+seul paramètre libre — le FOV — est traité **en branche** et non fixé. (iii) **B1 n'est
+pas un feu vert** : `§4.2` disait déjà « *l'enveloppe ne dit pas "passe" : elle dit passe
+si l'autre moitié tient* ». L'autre moitié reste inconnue.
+
+**β EST MORT COMME COEFFICIENT.** Critère de matérialisation : un dérivé ne coûte de la
+VRAM que s'il est **non local** (un solve, pas un stencil), **relu massivement par frame**,
+ou **lu là où ses sources ne résident pas**. Sur neuf dérivés recensés (vorticité, albédo,
+pente du solide, normale, fraction de glace, température, vitesse désingularisée —
+`src/solver_wetdry.py:29` « `def desingularize_velocity` » —, cohésion du manteau,
+pression), **un seul** est matérialisable : la **pression**, et **seulement sous schéma
+incompressible** (Poisson global). β passe de `1,5·c = 11,25` éq-f32 à **0 ou 1**.
+
+Formule : **`M = 2·Σb_primitifs + Σb_dérivés`** — le double-buffering appartient à ce que
+F avance, **pas au cache recalculé** (asymétrie posée par Romain). Par cellule fine :
+**28** dans l'ancien modèle (`(2+β)·c`, c=8, β=1,5), **15 ou 16** désormais.
+
+**La branche β se dissout au lieu de se trancher**, comme Romain l'avait prévu : 2,55 et
+2,89 Go étaient **tous deux** calculés avec un β fractionnaire, et l'écart de 346 Mo n'a
+plus d'objet. **Aucune branche nouvelle** n'apparaît : la condition restante
+(incompressible ou non) **est la dette « 3D » déjà nommée** et pèse 1 éq-f32, pas 4.
+L'hypothèse `β≈1,5` de `note-budget-vram-2026-07-18.md:33-34` (« cache matérialisé …
+**en fraction de z**, hypothèse β≈1.5 ») n'était pas déraisonnable en son temps : le
+vocabulaire n'existait pas, donc on **provisionnait** faute de pouvoir **compter**.
+
+**RECHERCHE DES DÉRIVÉS OUBLIÉS** (vider un poste de 11 à 1 impose de se méfier de soi) :
+structures d'accélération du rendu (SDF, BVH) — **hors z**, elles changent de plateau et
+tombent avec le rendu non mesuré ; masques wet/dry et repos sédimentaire —
+`SPEC-FOVEA-Z.md:129` les place explicitement en **RAM** ; coefficients de détail Harten —
+déjà comptés puisqu'on compte par niveau ; **tampons de flux aux faces** — fusionnés dans
+le kernel en volumes finis, mais **seul risque sérieux identifié**, et il dépend **du même
+choix de schéma 3D** que la pression. Noté comme tel plutôt que provisionné :
+*provisionner sans nommer est ce qui a produit β.*
+
+---
+
+### §A51-7 — FAITS DE PROCESSUS
+
+**Faute 1 — un quadruplet mort cité comme en vigueur.** La session a cité `SPEC:431`
+(§6-rev1) pour « 3 slots énergie » : **citation exacte, fait périmé**.
+`§A16-lecture-M-a-ter` prononce « **MORT V2** » ; le quadruplet en vigueur est **V4**
+(`:4214` « fovéale 9 slots (2 fins c=8 + 7 c=4) + **2 slots énergie c=8** »), qui a passé
+son gate — `§A18-lecture-M-a-quater` « **PAS DE MORT, mais V4 AU SEUIL** », marge **0,7 %**.
+**Une ancre textuelle (§A50) n'aurait PAS attrapé cette faute** : l'ancre pointait juste,
+le contenu était superséé par un verdict ultérieur. **Le vérificateur dû par §A50 gagne
+un second état à rendre : `fait périmé` — ancre exacte, contenu superséé.**
+
+**Faute 2 — mauvais cadrage des slots énergie.** La session les a traités comme le budget
+de **toutes** les sources, alors que `SPEC-FOVEA-Z.md:61` en fait des **exceptions au
+plafond de distance** (`:3896` « la **réserve gameplay** ») : les sources proches sont
+déjà couvertes par les slots fovéaux. Erreur détectée par la scène de Romain, non par une
+vérification de la session. Elle avait produit une alarme surdimensionnée (« le livrable 2
+compte une moitié »), corrigée : **les fenêtres d'énergie sont négligeables en mémoire
+(< 1 %) et lourdes en temps (20 % de la frame)**.
+
+**Contradiction interne de la spec, NOMMÉE, NON RÉSOLUE.** `SPEC-FOVEA-Z.md:425`
+(« ## §6-rev1 … `[ENDOSSÉE 2026-07-19]` ») grave V2 comme re-épinglage, tandis que
+`:449` (§2-rev1, endossée le même jour) dit « Candidat courant : **V4** ». La spec porte
+une section endossée décrivant un quadruplet mort le jour même. **Troisième méta-donnée
+périmée de la journée — et la première qui soit un CORPS de spec endossé, non une table
+des matières.** Arbitrage Romain, non pris.
+
+**Ancre vérifiée et confirmée** : le `S_eff 1.8–3.9` de `SPEC:117` est exact. Il existe
+**deux** mesures `S_eff` du 2026-07-01 — celle du routage (`:985-986`, 2.45–4.45 selon
+WIN) et celle du budget-fovéa (`:1030-1031` « `r_fovea/rmax = 1.0/0.3/0.15` →
+`S_eff = 1.8/2.3/3.9` ») ; la spec cite la seconde, la bonne.
+
+---
+
+### §A51-8 — CE QUI RESTE DÛ, ET CE QUI EST INDÉTERMINÉ
+
+**INDÉTERMINÉE** : la lecture **temps 3D** (aucune ancre de coût hors 2D).
+
+**NON TRANCHÉ, à Romain** : le nombre de foyers perçus simultanés et la **porte 33,3**
+qu'il implique ; la **granularité du budget** (slots égaux contre arbre emboîté) ; le
+**schéma eau 3D** (dette « 3D » : pression matérialisée ou non, tampons de flux) ; le
+statut de `SPEC-FOVEA-Z.md` §2 (trois valeurs : `:27`, `:109`, `:145`) ; la contradiction
+§6-rev1/§2-rev1 ci-dessus.
+
+**DÛ, avec consommateur nommé** : le **streaming VRAM↔RAM**, promu de levier à question
+à facteur 5,8 — consommateur = la lecture d'enveloppe de cette entrée ; le **vérificateur
+d'ancres** de §A50, augmenté de l'état `fait périmé` ; les quatre dûs de §A49.
+
+**PORTÉES — ce que cette entrée NE fait PAS.** Aucun run, aucune mesure, aucun seuil
+déplacé, aucune garde levée. Elle ne prononce **aucun verdict de gate** : B1 déplace la
+question vers le temps et le rendu, elle ne la ferme pas. Elle n'autorise aucun code —
+l'autorisation du `chemin-de-coût` reste celle de §A48, sous ses quatre gardes.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
