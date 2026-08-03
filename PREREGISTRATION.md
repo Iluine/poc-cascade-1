@@ -7369,3 +7369,20 @@ ni descellement, ni relâchement de la garde CV ne se décident ici.
 brûlage de `20260729` — entrée dédiée au journal + commit dédié au code
 (`GRAINES_BRULEES` et son test, qui documente déjà sa propre mise à jour).
 Aucun enchaînement.**
+
+### §A44-BRÛLAGE (2026-08-03, 11:26 — horloge lue) — `20260729` BRÛLÉE
+
+L'acte de gravure prescrit par §A42 [v2.1] (CORRECTION 2) et §A43, exécuté
+APRÈS l'endossement de §A44 (commit 392a621) : la graine `20260729` a été
+présentée à un sujet humain (séance P3′ du 2026-08-03, ~210 essais) — elle
+entre dans `GRAINES_BRULEES`, **quelle que soit la branche du verdict** : la
+liste protège contre la RÉUTILISATION (B1a — la graine encode la feuille de
+réponses), pas contre l'indétermination. Liste après l'acte :
+{20260705, 20260729}. Portée INCHANGÉE (§A42-COMPLÉMENT, trou 2) : l'ENTRÉE
+humaine seule — replay, synthétique et lecture par égalité préservés, la
+re-dérivabilité de l'archive P3′ tient. Côté code : commit dédié
+(pocPhysicator) — `GRAINES_BRULEES` et la mise à jour du test d'entrée, qui
+documentait sa propre obsolescence (« passe aujourd'hui ; ajouté à la liste,
+REFUSÉ »). Tout P3″ éventuel court sur une graine NEUVE ; sa décision reste
+OUVERTE (§A44). Entrée rédigée par la session Claude sur la même délégation
+que §A44 ; l'endossement est le commit de Romain.
