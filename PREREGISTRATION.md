@@ -9332,3 +9332,112 @@ Le reste de §A54 est descriptif et se vérifie tout seul : 80 % d'ancres nues,
 les trois formes de citation, les quatre défauts de l'outil contre lui-même.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A57 (2026-08-04, 00:41 — horloge lue) — CORRECTION DE §A55 : **le cap de 12,97 fenêtres à 30 Hz donnait à la physique les 33,3 ms ENTIÈRES**, que la porte 33,3 ne lui accorde pas ; sous sa propre définition, **V4 ne tient pas non plus à 30 Hz** — et la faute est dans le seuil que la session avait pré-écrit
+
+Aucune mesure. Arithmétique sur des nombres gravés, et lecture d'une ancre que
+le pré-enregistrement du multiplicateur `c` n'avait pas lue.
+
+---
+
+### §A57-1 — LE FAIT
+
+`PREREGISTRATION.md:4217-4219` définit la porte : « **Porte 33.3 = REPLI
+PRÉ-NOMMÉ** avec motif T2 traité : physique 30 Hz + rendu 60 fps par
+interpolation du readout, **cohabitation GPU dans les ~13 ms restants par
+fenêtre** [design nommé, non décidé, non gratuit]. »
+
+**La porte ne donne donc PAS 33,3 ms à la physique.** Elle en réserve ~13 pour
+que le rendu tourne à 60 fps dans la même fenêtre. Le budget physique de la porte
+est **~20,3 ms**, pas 33,3.
+
+| lecture | budget physique | cap (C = 2,4293 ms) | V4 = 11 fenêtres |
+|---|---|---|---|
+| 60 Hz, rendu non compté | 16,7 ms | **6,12** | ne tient pas |
+| 30 Hz, rendu non compté — **§A55** | 33,33 ms | **12,97** | tient |
+| **30 Hz, sous la réserve de la porte** | **20,33 ms** | **7,61** | **ne tient pas** |
+
+> **Sous sa propre définition, la porte 33,3 ne sauve pas V4 davantage que le
+> 60 Hz.** La marge de 14,3 % annoncée par §A55 était celle d'un 30 Hz qui
+> n'existe pas dans le journal.
+
+---
+
+### §A57-2 — LA FAUTE EST DANS LE SEUIL PRÉ-ÉCRIT, ET ELLE EST DE LA SESSION
+
+La branche **C-A reste correctement prononcée** : le critère `C ≤ 2,8635` était
+figé avant le run, le driver l'a recalculé depuis l'artefact, et `2,4293` passe.
+**Ce n'est pas le verdict qui est faux, c'est sa prémisse.**
+
+Ce seuil, la session l'a posé elle-même dans `claude/prereg-multiplicateur-c-3d-2026-08-04.md`
+comme `(33,333 − non-F) / 11`, **sans lire ce que la porte réserve au rendu**.
+C'est exactement la faute 2 de `§A51-7` — *un mauvais cadrage d'un objet gravé,
+détecté par une lecture ultérieure et non par une vérification de la session*.
+Elle a produit ici un chiffre **favorable**, ce qui aurait dû la rendre plus
+suspecte, pas moins : `PREREGISTRATION.md:8748` « un chiffre défavorable n'est
+pas plus sûr qu'un chiffre favorable ».
+
+**Ce que la garde a quand même tenu** : le prereg exigeait que le driver
+RECALCULE le seuil depuis l'artefact et échoue en cas de désaccord. Il l'a fait.
+La mécanique était juste ; c'est la lecture humaine qui avait sauté une ligne.
+Aucune garde n'aurait pu attraper cela — **seule une ancre lue l'aurait fait**,
+et l'ancre existait, gravée depuis le 19/07.
+
+---
+
+### §A57-3 — CE QUE LA CORRECTION DÉCOUVRE, ET QUI VAUT MIEUX QU'ELLE
+
+En reprenant l'arithmétique sur les deux cadences, un invariant apparaît :
+
+| | cellules actives | × cadence |
+|---|---|---|
+| 60 Hz, budget 16,7 | 1,60 M | **96,2 M cellules·Hz** |
+| 30 Hz, budget 33,33 | 3,40 M | **102,0 M cellules·Hz** |
+
+**Le produit cellules × cadence est quasi conservé** (l'écart est le non-F, payé
+une fois par frame quelle que soit la cadence). **La cadence n'est donc pas la
+variable** : elle ne crée pas de budget, elle le redistribue entre résolution
+temporelle et résolution spatiale.
+
+**Conséquence, qui rouvre le 60 Hz que §A53 et §A55 donnaient pour perdu** — à
+11 fenêtres, ce n'est pas la cadence qui doit céder mais **le côté de la fenêtre** :
+
+| cadence | ms par fenêtre | cellules | **côté** |
+|---|---|---|---|
+| **60 Hz** | 1,3514 | 145 827 | **52,6³** |
+| 30 Hz sous réserve porte | 1,6816 | 181 467 | 56,6³ |
+
+> **Les 11 fenêtres de V4 tiennent à 60 Hz si elles font 52³ au lieu de 64³.**
+
+`n_fov = 64` en 3D n'est pas une grandeur mesurée : c'est la transposition de
+`512² = 64³` (`PREREGISTRATION.md:8200`), un choix de TAILLE hérité de la 2D.
+`§A51-4` avait déjà nommé le problème du côté de la scène : *« le cap suppose des
+fenêtres de taille unique, qu'aucune scène réelle ne respecte »*.
+
+**PORTÉE — c'est de l'arithmétique, pas une mesure.** Le passage de 64³ à 52³
+suppose que le coût PAR CELLULE reste stable en taille. `§A53` l'a mesuré —
+étendue 8,0 % de 32³ à 128³ — mais **à 5 champs**, pas à 9. La vérification est
+un run du driver existant à d'autres `n`, **sans une ligne de code neuve**.
+
+---
+
+### §A57-4 — CE QUI RESTE, ET LE DÛ QUE LA PORTE OUVRE
+
+`PREREGISTRATION.md:4142` l'avait écrit avant que la question ne se pose :
+« Portes 33.3 (**motif T2 : où vit le rendu — à traiter explicitement si
+ouverte**) ». **La porte est ouverte.** Le dû est donc exigible, et il est le
+verrou réel : **aucune des deux cadences n'a de cap honnête tant que le rendu
+n'est pas placé.** Les deux caps de §A55, et les trois de cette entrée, excluent
+tous le rendu — `:3963` « T2 est un budget de frame, transferts compris » ne le
+mentionne pas.
+
+**Ordre suggéré, non décidé** : (1) le coût par cellule à d'autres tailles au
+vocabulaire réel — un run, aucun code ; (2) **où vit le rendu** — le dû gravé de
+la porte ; (3) alors seulement la cadence, avec le côté de fenêtre comme second
+axe et non comme variable d'ajustement silencieuse.
+
+**§A55 n'est pas rétracté** : sa mesure (`C`, `ρ_c`, la marche d'occupancy, les
+trois monnaies) tient entière. Seule la lecture du cap à 30 Hz est corrigée, et
+la branche C-A reste prononcée contre son critère pré-écrit.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
