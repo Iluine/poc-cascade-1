@@ -9012,3 +9012,199 @@ streaming VRAM↔RAM (facteur 5,8) ; les quatre dûs de §A49 ; les arbitrages d
 `§A51-8`, auxquels s'ajoute désormais **la cadence**.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A55 (2026-08-04, 00:24 — horloge lue) — LE MULTIPLICATEUR `c` : **`C` = 2,43 ms par fenêtre à vocabulaire réel**, `ρ_c` = 1,46 — la fourchette est **FERMÉE**, branche **C-A** : la porte 33,3 tient V4 avec 14 % de marge ; et le coût n'est pas affine, **il est en marche d'occupancy**
+
+Troisième chiffre mesuré. Il exécute l'ordre des gestes posé par Romain en
+§A54-5 — `PREREGISTRATION.md:8972-8973` « Le moins cher qui peut échouer, avant la
+décision qui ne peut plus être défaite » : **borner avant d'arbitrer**.
+
+Artefact : `pocPhysicator/claude/lectures/multiplicateur-c-3d-2026-08-04.json`.
+Protocole `c298a8b` (commité seul), kernel paramétré `f368de9`, driver `e73852a`
+(commité **avant** le run), artefact `3e2b946`. **Chaque chiffre de cette entrée
+est relu dans le JSON.**
+
+---
+
+### §A55-1 — LE CHIFFRE, ET LA FOURCHETTE QU'IL FERME
+
+Une **fenêtre 64³ portant le vocabulaire réel de §A51** — un système
+hyperbolique (h, hu, hv, hw), **3 scalaires advectés** (`s`, `e_th`, `ρ_s`),
+**2 champs statiques lus** (`b0`, `id-matériau`) — coûte :
+
+> **`C` = 2,4293 ms**, soit **`ρ_c` = 1,4623** contre le jouet à un scalaire de §A53.
+
+La borne haute posée avant le run était **1,50** (`7,5 / 5`, champs facturés
+comme des systèmes). **Elle tient — de peu : à 97,5 % de sa valeur.**
+
+| mesure | `n` scalaires | `n` statiques | champs | **ms / fenêtre** |
+|---|---|---|---|---|
+| M-c1 | 1 | 0 | 5 | **1,6613** |
+| M-c2 | 2 | 0 | 6 | 1,8284 |
+| M-c3 | 3 | 0 | 7 | 2,2223 |
+| M-c4 | 4 | 0 | 8 | 2,4895 |
+| **M-c5** | **3** | **2** | **9** | **2,4293** |
+| M-c6 | 1 | 2 | 7 | 1,7768 |
+
+**LE CAP EST FERMÉ** (non-F retenu constant à 1,835 ms) :
+
+| cadence | fenêtres tenables | pour mémoire, au jouet de §A53 |
+|---|---|---|
+| **60 Hz** | **6,12** | 8,67 |
+| **30 Hz** | **12,97** | 18,38 |
+
+**V4 en demande 11** ⇒ branche **C-A** : *la porte 33,3 tient V4 (11 slots) à
+30 Hz.* En temps : `11 × 2,4293 + 1,835 = 28,56 ms` sur 33,33 — **marge 4,78 ms,
+soit 14,3 %**. Il faudrait que le non-F 3D **triple** (1,835 → 6,61 ms) pour
+renverser cette lecture.
+
+---
+
+### §A55-2 — LA DÉCOMPOSITION, QUI CONTREDIT À MOITIÉ L'ARGUMENT DE LA BORNE
+
+L'argument qui fondait `×1,50` était : *une advection n'a pas de solveur de
+Riemann, donc un champ advecté coûte moins qu'un champ de système.* La mesure le
+confirme **et** montre que ce n'était pas toute l'histoire.
+
+| part | facteur | lecture |
+|---|---|---|
+| scalaires seuls (3 contre 1) | **×1,3377** | **SOUS** le rapport des comptes d'opérations (**1,4348**) — l'argument est juste |
+| champs statiques ajoutés | **×1,0931** | **+9,3 %**, que la borne ne comptait pas : elle raisonnait en CHAMPS, pas en OCTETS LUS |
+| **total** | **×1,4623** | |
+
+**L'économie prédite par l'arithmétique était réelle ; elle a été presque
+entièrement mangée par un poste que la borne ignorait.** Les statiques ne
+portent aucune arithmétique de flux — ils n'ajoutent que de la bande passante —
+et cela suffit à consommer les deux tiers de la marge sous la borne.
+
+---
+
+### §A55-3 — LE COÛT N'EST PAS AFFINE : IL EST EN MARCHE D'OCCUPANCY
+
+C'est le fait le plus important de cette mesure, et il n'était pas prévu.
+
+Incréments mesurés par scalaire ajouté : **+0,167**, puis **+0,394**, puis
+**+0,267 ms**. Le deuxième vaut **2,4 fois** le premier. La cause est mécanique,
+vérifiable, et lue dans l'artefact :
+
+| mesure | registres / thread | blocs résidents / SM | occupancy | ms / fenêtre |
+|---|---|---|---|---|
+| M-c1 (1 scal.) | 72 | **3** | 50 % | 1,6613 |
+| M-c2 (2 scal.) | 80 | **3** | 50 % | 1,8284 |
+| M-c3 (3 scal.) | 94 | **2** | 33 % | 2,2223 |
+| M-c4 (4 scal.) | 96 | **2** | 33 % | 2,4895 |
+
+*(65 536 registres par SM et 1 536 threads par SM — attributs LUS sur le device,
+non déclarés ; blocs de 256 threads.)*
+
+**L'occupancy tombe de 50 % à 33 % exactement entre le 2ᵉ et le 3ᵉ scalaire, et
+c'est là que l'incrément triple.** Le coût marginal d'un scalaire advecté n'est
+donc **pas une constante** : il dépend de la place qui reste dans le fichier de
+registres.
+
+**Conséquence sur la lecture, dite franchement** : `I-c4` (affinité) est passé —
+résidu maximal **0,0781 ms** contre une bande de **0,0831**, soit **94 % du
+seuil**. La pente est reportée parce que le critère pré-écrit l'autorise, mais
+**ce n'est pas une loi**, et elle ne s'extrapole pas au-delà des points mesurés.
+Un cinquième scalaire pourrait franchir une seconde marche, ou aucune.
+
+**`I-c5` (cohérence croisée) est passé à 75 % de sa bande** (3,77 % contre 5 %) :
+la décomposition en `δ` indépendants est **approximative**. Un champ statique
+coûte **0,103 ms** en présence de 3 scalaires contre **0,058 ms** en présence
+d'un seul — la pression de registres couple les deux postes. Reporté, non lissé.
+
+---
+
+### §A55-4 — LES GARDES, TOUTES TENUES AVANT LE PREMIER CHRONOMÈTRE
+
+1. **Le kernel de §A53 est INTOUCHÉ** (`git diff` vide, empreinte gravée) : il
+   est le dénominateur de `ρ_c`.
+2. **Identité BIT POUR BIT à (1 scalaire, 0 statique)** — écart **exactement 0**,
+   en S=1 comme en S=2. C'est le verrou d'entrée, plus fort qu'une reproduction
+   statistique : si la paramétrisation avait déplacé le motif d'un ULP, le
+   rapport aurait mesuré la réécriture et non le vocabulaire.
+3. **Équivalence de motif aux SIX configurations**, sur l'**état sévère** —
+   l'état jetable ordinaire laisse le transport tangentiel sous `atol` (leçon de
+   §A53, corrigée avant ce protocole).
+4. **Les champs statiques sont RÉELLEMENT LUS.** Un champ dont rien ne dépend
+   est supprimé par `nvcc`, et le chronomètre mesure alors un champ qui n'existe
+   pas. Ils sont repliés dans la sortie avec un **poids passé en argument valant
+   zéro** — le compilateur ne peut pas le savoir, et `0·x + y = y` exactement.
+   **La preuve, plutôt que la plaidoirie** : à poids 1 la sortie change (écart
+   **1,544**) ; à poids 0 elle est bit-pour-bit identique à la configuration sans
+   statiques.
+5. `I-c1` : le point (1,0) reproduit §A53 à **3,1 %**. `I-c6` : **aucun
+   débordement** en mémoire locale, à aucune configuration.
+
+**Un AJOUT de la session au protocole, déclaré** : le prereg scopait `I-c3`
+(élimination par le compilateur) aux **scalaires**. La session l'a étendue aux
+**statiques**, où le risque est plus grand encore. *Une garde ajoutée ne relâche
+rien* — elle ne peut que rendre la lecture plus stricte.
+
+---
+
+### §A55-5 — LA PRÉDICTION, ET SON DÉFAUT
+
+Consignée dans le commit du driver `e73852a`, **avant le premier chiffre** :
+`δ ~ 0,1–0,3 ms`, `C ~ 1,9–2,3 ms`, branche **C-A**.
+
+**Mesuré** : `δ = 0,288` (dans la fourchette), `C = 2,429` (**au-dessus**),
+branche **C-A** (juste). **La branche était bonne, le nombre était hors de ma
+fourchette** — je n'avais anticipé ni les 9,3 % des statiques, ni la marche
+d'occupancy. La prédiction reste utile : elle a servi de témoin, et son écart
+est ce qui a fait chercher la cause au lieu de l'encaisser.
+
+---
+
+### §A55-6 — DEUX RÉDUCTIONS NOMMÉES, NON MESURÉES, TOUTES DEUX FAVORABLES
+
+Le `C` mesuré est un **majorant**, et ses deux marges sont nommées :
+
+1. **`id-matériau` est lu dans le HALO** — 36 lectures par cellule et par étage,
+   comme tous les autres champs. C'est **fidèle pour `b0`**, qui est une grandeur
+   de FACE (la bathymétrie entre dans la reconstruction d'interface), mais un
+   **majorant pour `id-matériau`**, qu'un kernel de production lirait **une fois
+   au centre**. Les statiques pesant 9,3 %, la réduction disponible est de cet
+   ordre.
+2. **`e_th` et `ρ_s` sont mesurés en f32** alors que §A51 les range en **f16**
+   (0,5 éq-f32 chacun). Bande passante divisée par deux sur deux champs sur neuf.
+
+Aucune des deux n'est mesurée. Toutes deux ne peuvent qu'**agrandir le cap**.
+
+---
+
+### §A55-7 — PORTÉES : CE QUE CETTE ENTRÉE NE PRONONCE PAS
+
+- **Rien sur le schéma eau 3D.** C'est ce qui rendait la mesure possible sans
+  trancher : seule l'advection passive est en jeu, et elle est la même sous tous
+  les schémas. La dette « 3D » reste entière.
+- **Rien sur le non-F en 3D** — dernière réduction nommée du cap, qui ne peut que
+  le réduire, et qui demande du build.
+- **Rien sur la cadence.** C-A donne les deux nombres ; **l'arbitrage appartient
+  à Romain**, et rien ne s'enchaîne.
+- **C-A n'est PAS un feu vert.** `§A51-6` le disait déjà de la VRAM :
+  *l'enveloppe ne dit pas « passe » : elle dit passe si l'autre moitié tient*.
+  Ici l'autre moitié est le rendu, l'ombrage, le régime mobile et le non-F 3D.
+- **Aucun seuil déplacé, aucune garde levée, aucun kernel de §A53 touché.**
+
+---
+
+### §A55-8 — CE QUI RESTE DÛ
+
+**À TRANCHER, à Romain** : la **cadence** — 6 fenêtres à 60 Hz, 12 à 30 Hz, V4
+en demande 11. Les deux nombres existent désormais ; le choix ne se déduit pas
+d'eux.
+
+**DÛ, avec consommateur nommé** : le **non-F en 3D** (halos, remontée,
+prédiction) — consommateur = le cap de 12 fenêtres à 30 Hz, qu'il ne peut que
+réduire ; les **deux réductions de §A55-6** ; le **streaming VRAM↔RAM**
+(facteur 5,8) ; les quatre dûs de §A49 ; les arbitrages de `§A51-8`.
+
+**Inscription au registre de supersessions** (discipline de §A54-6) : cette
+entrée **ne supersède aucun chiffre de §A53**. Le cap de 8 fenêtres y était
+donné *au jouet à un scalaire*, et il reste juste sous cette hypothèse, qui y
+est écrite. §A55 le **complète**, il ne le remplace pas — aucune ligne ajoutée
+au registre.
+
+Entrée rédigée par la session Claude ; **le prononcé de la branche et
+l'endossement sont le commit de Romain.**
