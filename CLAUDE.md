@@ -254,9 +254,28 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > l'artefact) : *« le coût inconnu du rendu ne vit PAS dans l'encodage ; il vit
 > dans la COMPOSITION et dans l'optique au-delà de Y = A. La dette se DÉPLACE.
 > INTERDICTION d'en conclure "le rendu tient". »* Au plancher, le cap 60 Hz
-> **tombe de 6,12 à 5,90** pour 11 fenêtres demandées. **Rien n'est superséé** —
-> §A57-1 reste vraie sous son label « rendu non compté », §A57-3 est expliquée et
-> non corrigée.
+> **tombe de 6,12 à 5,90** pour 11 fenêtres demandées. §A57-1 reste vraie sous son
+> label « rendu non compté », §A57-3 est expliquée et non corrigée.
+>
+> **§A62-bis — QUATRE POINTS D'UNE RELECTURE ADVERSE, TOUS JUSTES.** §A62 n'est
+> pas fausse, elle est **sous-tracée**, et deux de ses énoncés entrent au registre.
+> **(1)** La prédiction (2) du prereg — point mort *à* non-F — a été **CONTREDITE**
+> de 3,63 %, et §A62-3 a écrit « les trois prédictions tiennent » tout en publiant,
+> trois lignes plus loin, deux énoncés incompatibles (« non-F → ≈ 0 » et « point
+> mort 1,768 »). **La cause est l'arrondi, et c'est le mot que §A62 n'écrit
+> jamais** : le corpus grave 16,7 (pas 1000/60), donc le côté 60 Hz vit dans une
+> seconde de **1002 ms**. Sous `1000/f` le point mort tombe **exactement** sur non-F.
+> **(2)** `I-r5` — « calculer des deux façons » — était **pré-écrite et NON
+> MÉCANISÉE** ; exécutée depuis, avec branche INDÉTERMINÉE si elle diffère entre les
+> deux. Elle établit que **l'arrondi ne touche que ce qui vit PAR SECONDE** (point
+> mort et Δ : 3,63 % ; s_max 0,08 %, cap 0,23 %, étendue 0,28 %).
+> **(3)** Le « témoin non planifié » de §A62-4 est une **identité** — mêmes trois
+> nombres, mêmes opérations que §A57 — pas une reproduction indépendante. Retiré.
+> **(4)** ⚠ **LE « ~67³ » EST LE COIN `I` = 0.** À 30 Hz le côté DÉPEND de `I` :
+> **66,82** (I=0) · 66,14 (I=non-F/2) · **65,45** (au point mort). Le 60 Hz n'en
+> dépend pas. Au point mort le troc est exact : 51,99³×60 ≈ 65,45³×30.
+> **(5)** Volet manquant de `I-r4` : un biais ±15 % sur `R_plancher` déplace s_max
+> de **0,19 %** — §A61 n'y mord pas. Calculé, plus supposé.
 >
 > **SUITE — TROIS CHOSES DEVANT, DANS CET ORDRE, ET LA PREMIÈRE INTERDIT DE MESURER.**
 >
@@ -280,8 +299,9 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 >
 > **LA CADENCE APPARTIENT À ROMAIN, et sa forme est maintenant énonçable sans terme
 > caché** : à travail quasi constant, **60 Hz avec des fenêtres de ~52³** ou **30 Hz avec
-> des fenêtres de ~67³** — résolution temporelle contre résolution spatiale, pour un écart
-> de **6,2 % qui s'évapore si l'interpolation coûte un non-F**. V4 en demande **11**, et
+> des fenêtres de 66,8³ (`I` = 0) à 65,5³ (au point mort)** — résolution temporelle contre
+> résolution spatiale, pour un écart de **6,2 % qui s'évapore si l'interpolation coûte un
+> non-F**. V4 en demande **11**, et
 > **aucun cap ne l'atteint** : 5,90 à 60 Hz au plancher mesuré du rendu, 7,61 à 30 Hz sous
 > la réserve gravée.
 > ⚠ Le « **12,97 à 30 Hz** » de §A55 est **SUPERSÉÉ par §A57** — il accordait à la

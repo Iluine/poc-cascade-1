@@ -153,6 +153,23 @@ SUPERSESSIONS: tuple[Supersession, ...] = (
         superseant="PREREGISTRATION.md:8972 « Le moins cher qui peut "
                    "échouer, avant la »",
         fragments=("12,97", "la porte 33,3 tient V4", "14,3 %")),
+    Supersession(
+        fichier="PREREGISTRATION.md", ligne_debut=10005, ligne_fin=10028,
+        portee="DEUX ÉNONCÉS de §A62-3, et eux seuls. (1) « Les trois "
+               "prédictions consignées avant le chiffre tiennent » : la "
+               "prédiction (2) posait le point mort À non-F ≈ 1,835 ; le "
+               "lecteur l'a CONTREDITE de 3,63 %, et le prereg avait "
+               "pré-écrit la conduite — « si le lecteur contredit l'un des "
+               "trois, c'est le lecteur qui a raison ». (2) la cellule de "
+               "table « non-F → ≈ 0 » : l'artefact écrit −0,8233 sur une "
+               "plage de 21,84, soit 3,8 %. La CAUSE est l'arrondi "
+               "1002/1000 des budgets gravés, que I-r5 avait nommé avant le "
+               "run et que §A62 n'a jamais nommé. Le reste de §A62 — W-R1, "
+               "l'annulation de R, l'encadrement 51,99/43,46, l'étendue "
+               "16,4 % — est INTACT et vérifié non régressé.",
+        superseant="PREREGISTRATION.md:10104 « ADDENDUM À §A62 : quatre "
+                   "points d'une relecture adverse, tous justes »",
+        fragments=("Les trois prédictions consignées", "| **≈ 0** |")),
 )
 
 # CITATIONS NON VERBATIM DÉCLARÉES — chacune vérifiée à la main, chacune

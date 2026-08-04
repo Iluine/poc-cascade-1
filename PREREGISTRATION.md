@@ -10100,3 +10100,147 @@ et le côté ensemble, avec la porte 3 de `§A58` — re-dériver la monnaie du 
 si le côté quitte 64 — qui **n'est toujours pas levée**.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A62-bis (2026-08-04, 19:08 — horloge de l'artefact) — **ADDENDUM À §A62 : quatre points d'une relecture adverse, tous justes** — la prédiction (2) a été CONTREDITE et §A62 a écrit « tiennent » ; `I-r5` était pré-écrite et **non mécanisée** ; le « témoin » de §A62-4 est une identité ; et le `~67³` avait perdu son étiquette `I`
+
+Artefact : `pocPhysicator/claude/lectures/ou-vit-le-rendu-ir5-2026-08-04.json`,
+lecteur `b027a7b`. **La première lecture n'est pas écrasée** : elle devient le
+témoin de non-régression, et les quatre grandeurs relues s'y retrouvent à
+**écart 0,0 exactement**.
+
+**Aucune mesure. `W-R1` n'est pas entamée.** `§A62` n'est pas fausse, elle est
+**sous-tracée** — et deux de ses énoncés entrent au registre de supersessions.
+
+---
+
+### §A62-bis-1 — LA PRÉDICTION (2) A ÉTÉ CONTREDITE, ET J'AI ÉCRIT « TIENNENT »
+
+Le prereg posait la prédiction (2) comme « **point mort à `I` = non-F**, soit
+≈ 1,835 ms », et écrivait juste après la conduite à tenir : « *si le lecteur
+contredit l'un des trois, c'est le lecteur qui a raison* ». **Il a contredit** :
+1,7684 contre 1,8350, soit **3,63 %**. `§A62-3` a publié « les trois prédictions
+consignées avant le chiffre **tiennent** ».
+
+Pire, à trois lignes d'écart, `§A62-3` porte les deux énoncés incompatibles : la
+cellule de table « **non-F → ≈ 0** » — qui affirme le point mort *à* non-F — et
+la phrase « **Point mort à `I` = 1,768 ms** ». L'artefact, lui, écrivait
+`Δ(I = non-F) = −0,8233` sur une plage de 21,84, soit **3,8 %**. « ≈ 0 » était
+faux de sa propre source.
+
+**La cause est entièrement l'arrondi, et c'est le mot que `§A62` n'a jamais
+écrit.** Le corpus grave 16,7 ms à 60 Hz et 33,333 à 30 Hz : le côté 60 Hz vit
+donc dans une seconde de **1002 ms**, le côté 30 Hz dans une de 1000. Le point
+mort vaut `non-F − (60·B₆₀ − 30·B₃₀)/30`, dont le second terme s'annule **si et
+seulement si** les budgets valent `1000/f`. Le lecteur le confirme : sous
+`1000/f`, le point mort tombe **exactement** sur non-F.
+
+> `§A62` avait raison au fond — le `−0,8233` est à 100 % de l'arrondi et zéro
+> physique — **mais pour une raison qu'elle n'énonce jamais.** Avoir raison sans
+> nommer sa raison est indistinguable, pour un relecteur, d'avoir raison par
+> chance.
+
+---
+
+### §A62-bis-2 — `I-r5` ÉTAIT PRÉ-ÉCRITE ET NON MÉCANISÉE
+
+Le prereg §7 prescrivait : « *le lecteur calcule **des deux façons** et reporte
+l'écart* ». Le lecteur ne calculait que les ms/s. **C'est la seule divergence
+prereg → lecteur du fichier, et elle est causale** : implémentée, elle aurait
+posé 1,835 à côté de 1,768 dans l'artefact, et `§A62-3` n'aurait pas pu imprimer
+un scalaire unique.
+
+**Une garde promise dans un document est une garde absente** — c'est ce que le
+corpus reproche partout ailleurs, et je l'ai fait dans le fichier même qui grave
+« *une promesse dans un document meurt par glissement ; une exception meurt
+bruyamment* » (`§A48`, garde 2). Elle est maintenant mécanisée : **tout le paquet
+passe par une fonction appelée deux fois**, et la branche devient **INDÉTERMINÉE
+si elle diffère entre les deux façons**.
+
+Ce que l'exécution montre, et qui n'était pas évident :
+
+| grandeur | écart entre les deux façons |
+|---|---|
+| point mort `I` | **3,63 %** |
+| `Δ` à `I` = 0 | **3,63 %** |
+| `s_max` 60 Hz | 0,08 % |
+| cap 60 Hz | 0,23 % |
+| étendue du côté | 0,28 % |
+
+> **L'arrondi ne touche que ce qui vit PAR SECONDE.** Dans les grandeurs par
+> frame il se simplifie. C'est pourquoi il n'a contaminé ni `s_max`, ni les caps,
+> ni l'étendue — et pourquoi il a emporté le point mort en entier.
+
+---
+
+### §A62-bis-3 — LE « TÉMOIN NON PLANIFIÉ » DE §A62-4 EST UNE IDENTITÉ
+
+Le lecteur construit `R_porte` = 13,0 / 2 = 6,5, que le cap 30 Hz remultiplie par
+2 pour restituer 13,0. Il calcule donc `(33,3333 − 13 − non-F)/C` ; `§A57`
+calculait `(20,33 − non-F)/C`. **Mêmes trois nombres, mêmes opérations** ; l'écart
+7,61 → 7,6148 est l'arrondi de 20,3333 → 20,33.
+
+« Reproduit un chiffre existant sans avoir été ajusté pour » est **vrai à la
+lettre et trompeur en portée** : rien n'a été ajusté, et **rien n'a été testé non
+plus**. La conversion par-seconde ↔ par-frame n'est pas un autre chemin, c'est
+une identité. Le témoin est retiré comme témoin ; il reste une vérification de
+cohérence interne, ce qui n'est pas rien mais n'est pas ce qui a été écrit.
+
+---
+
+### §A62-bis-4 — LE `~67³` RETROUVE SON ÉTIQUETTE
+
+L'artefact nommait la clé `s_max_30hz_I_nul`. `§A62-6` a publié « **~67³** » sans
+le qualificatif, alors que tout le prereg pose `I` inconnu et gravé « non
+gratuit ». Le côté 30 Hz **dépend de `I`** :
+
+| `I` | `s_max` 30 Hz (à `R_plancher`) |
+|---|---|
+| 0 | 66,82 |
+| non-F / 2 | 66,14 |
+| **non-F** (point mort) | **65,45** |
+
+Le 60 Hz, lui, **ne dépend pas de `I`** : aucune image n'y est interpolée. Un
+`s_max` 30 Hz sans son `I` est un chiffre du coin favorable — la faute même que
+`§A62-1` reprochait à `§A57-1`, commise dans l'autre sens et dans la même entrée.
+
+**Et au point mort, le troc est exact** : 51,99³ × 60 = 8,430·10⁶ contre
+65,45³ × 30 = 8,414·10⁶ cellules·Hz. Là où l'arbitrage s'annule, les deux travaux
+s'égalisent — vérification indépendante de `W-R1`, obtenue par un chemin qui,
+lui, n'est pas une identité.
+
+---
+
+### §A62-bis-5 — LE VOLET DE `I-r4` QUI MANQUAIT : LE BIAIS SUR `R_plancher` LUI-MÊME
+
+`I-r4` perturbait `C` et le non-F de ±15 %, **jamais `R_plancher`**. Or
+`R_plancher` est mesuré sur des séries d'environ **0,25 s**, très en deçà du plus
+court `T_conv` observé par `§A61` (**2,5 s** à 64³) : il peut vivre **entier dans
+le transitoire**, donc être sur-estimé.
+
+Calculé plutôt que supposé : un biais de ±15 % sur `R_plancher` déplace `s_max`
+60 Hz de **0,19 %**. `R_plancher` est trop petit devant le budget pour que la
+maladie d'instrument de `§A61` y morde. **Direction favorable, et cette fois
+établie.**
+
+---
+
+### §A62-bis-6 — CE QUI TIENT, ET CE QUI ENTRE AU REGISTRE
+
+**Non entamé** : `W-R1` ; l'annulation de `R` (1,3·10⁻¹⁵, identique sous les deux
+façons de compter) ; les prédictions (1) et (3) ; l'encadrement 51,99 / 43,46 ;
+l'étendue 16,4 % ; l'interdiction héritée de P2 et le cap 60 Hz à 5,90.
+`point_mort_I` n'entrait dans **aucun calcul aval** — trois occurrences, toutes
+de présentation — donc rien n'est contaminé.
+
+**Entrent au registre de supersessions**, et eux seuls : la phrase « *les trois
+prédictions consignées avant le chiffre tiennent* » (`:10005`) et la cellule
+« **≈ 0** » (`:10025`). Le reste de `§A62` est intact et **vérifié non régressé**.
+
+**Ce que cette relecture apprend, et qui dépasse l'entrée** : trois des quatre
+points sont des **sur-ventes de portée**, pas des erreurs de calcul — « tiennent »
+pour « deux sur trois », « chemin différent » pour une identité, « ~67³ » pour un
+coin favorable. Aucune garde pré-écrite ne les attrape, parce qu'aucune ne porte
+sur la **rédaction**. Le quatrième, lui, était attrapable et ne l'a pas été :
+`I-r5` existait, écrite, datée, et n'a pas été codée.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
