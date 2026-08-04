@@ -9960,3 +9960,143 @@ fort de tout ce journal en faveur des indéterminations pré-écrites, et il a �
 payé en une nuit.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+## §A62 (2026-08-04, 18:35 — horloge de l'artefact) — **OÙ VIT LE RENDU : le dû gravé de `:4142` est INSTRUIT** — le rendu ne décide pas la cadence, il décide le **CÔTÉ** ; tout l'arbitrage de cadence tient dans `30·(non-F − I)/C`, et il s'annule si l'interpolation du readout coûte le non-F d'un pas
+
+Artefact : `pocPhysicator/claude/lectures/ou-vit-le-rendu-2026-08-04.json`.
+Protocole `e2eba15` (commité seul), lecteur `bbabe02` (commité avant la
+lecture), artefact `e55ec69`. **Aucune mesure, aucun GPU, aucun `cupy`** — tout
+nombre vient d'un artefact existant ou est **extrait du texte d'une ancre**.
+`§A61` est respecté **par construction** : le lecteur n'a pas les moyens de
+mesurer.
+
+---
+
+### §A62-1 — LE DÛ, ET POURQUOI IL ÉTAIT URGENT
+
+`PREREGISTRATION.md:4142` « **où vit le rendu — à traiter explicitement si
+ouverte** », gravé le 19/07, exigible depuis que `§A57` a ouvert la porte.
+
+Le fait qui le rendait urgent n'est pas que les caps excluaient le rendu, c'est
+qu'ils **ne l'excluaient pas de la même façon des deux côtés** : la table de
+`§A57-1` le compte à **zéro** à 60 Hz et à **~13 ms par fenêtre de 33,3** à
+30 Hz. Deux termes qui diffèrent par autre chose que la variable testée — la
+**huitième règle** (`§A61-2`), qui aurait connu là sa quatrième occurrence, la
+première dans de l'arithmétique.
+
+---
+
+### §A62-2 — LES QUATRE PLACEMENTS, TRAITÉS EXPLICITEMENT
+
+| | placement | sort |
+|---|---|---|
+| **P-a** | sériel, physique et rendu à la même cadence | vivant, hors porte |
+| **P-b** | **porte 33,3** — physique 30 Hz, rendu 60 fps par interpolation du readout | vivant, c'est le gravé |
+| **P-c** | cohabitation concurrente | **majoré par P-a/P-b** : les temps additionnés sont un majorant, donc tout cap lu ici est **pessimiste** |
+| **P-d** | « le rendu vit ailleurs » | **N'EXISTE PAS** — il y a un seul GPU |
+
+`P-d` est écrit pour être tué. Un placement qu'on n'énumère pas reste disponible
+comme échappatoire tacite.
+
+---
+
+### §A62-3 — LE RÉSULTAT : `R` S'ANNULE, ET CE N'EST PAS UNE TRIVIALITÉ
+
+Les trois prédictions consignées **avant** le chiffre (prereg §5) tiennent.
+
+**(1) Le coût d'une image rendue disparaît de l'arbitrage de cadence.**
+Sensibilité mesurée **1,3·10⁻¹⁵** contre une bande pré-écrite de 0,5 %. La cause
+est nommée et unique : **60 images sont rendues par seconde dans les deux
+placements**, donc `60·R` est le même terme des deux côtés.
+
+**Le contraste, ajouté en écrivant le lecteur, est ce qui rend l'énoncé
+informatif** : au placement « rendu à la cadence physique » — 30 fps à 30 Hz,
+hors porte — la sensibilité à `R` vaut **0,72** et `Δ` passe de 28,5 à 102,1.
+*Sans lui, « `R` s'annule » n'aurait été que la vérification de mon algèbre par
+mon propre code.* L'annulation n'est pas une propriété du budget : **c'est ce
+que le design 60 fps de la porte achète.**
+
+**(2) Tout l'arbitrage de cadence vaut `Δ = 30·(non-F − I)/C`.**
+
+| `I` (coût d'une interpolation de readout) | `Δ` (fenêtres·Hz) |
+|---|---|
+| 0 | **+21,84** |
+| non-F/2 | +10,51 |
+| **non-F** | **≈ 0** |
+| 2·non-F | −23,48 |
+
+**Point mort à `I` = 1,768 ms.** À `I` = 0, le 30 Hz gagne **6,2 %** du travail
+total ; au point mort il ne gagne rien. Le 30 Hz achète exactement les non-F de
+30 pas de physique, et les paie en 30 interpolations. `:4219` avait écrit
+« **non gratuit** » sans le chiffrer ; c'est chiffré ici comme **seuil**, pas
+comme coût.
+
+**(3) Le rendu décide le CÔTÉ.** `s_max` à 11 fenêtres, 60 Hz :
+
+| hypothèse sur `R` | valeur | `s_max` | cap à 64³ |
+|---|---|---|---|
+| **plancher MESURÉ** (gather 0,4488 + encodage fusionné 0,0936) | 0,542 ms | **51,99** | **5,90** |
+| **réserve GRAVÉE** de la porte (13 ms / 2 images) | 6,5 ms | **43,46** | 3,44 |
+
+**Étendue 16,4 %** — et elle est **exactement invariante à un biais
+multiplicatif sur `C`** (seize chiffres identiques) : la maladie d'instrument de
+`§A61` **ne touche pas cette lecture**, parce que les deux termes partagent le
+même `C`. Sous ±15 % sur le non-F elle descend à **16,0 %**, au-dessus du biais
+de `§A60` — distinguable, **mais d'un point**.
+
+---
+
+### §A62-4 — LE TÉMOIN QUE JE N'AVAIS PAS PLANIFIÉ
+
+Le lecteur ressort le cap 30 Hz sous la réserve de la porte à **7,6148**, contre
+**7,61** lu par `§A57` sur les mêmes gravés. **Le modèle reproduit un chiffre
+existant sans avoir été ajusté pour** — et il le fait par un chemin différent
+(par seconde, avec le rendu explicite, plutôt que par frame avec une réserve
+soustraite).
+
+---
+
+### §A62-5 — CE QUE CETTE ENTRÉE NE DIT PAS, ET L'INTERDICTION QUI MORD
+
+L'artefact recopie **par la machine** la lecture pré-gravée de P2 : « *le coût
+inconnu du rendu ne vit PAS dans l'encodage ; il vit dans la COMPOSITION et dans
+l'optique au-delà de `Y = A` (R2+). La dette se DÉPLACE, elle ne rétrécit pas.
+INTERDICTION PRÉ-ÉCRITE d'en conclure « le rendu tient ».* »
+
+**Elle mord ici, et du côté favorable, comme `I-r1` l'avait prévu** : le
+plancher de rendu est confortable, et **il ne sauve rien** — à ce plancher, le
+cap 60 Hz tombe de 6,12 à **5,90** pour 11 fenêtres demandées. Le vrai coût vit
+dans les deux termes que P2 n'a pas chiffrés.
+
+**Rien n'est superséé**, et c'est vérifié plutôt que supposé : `§A57-1` reste
+vraie **sous son propre label** (« rendu non compté ») ; `§A57-3` — le produit
+cellules × cadence quasi conservé, l'écart étant le non-F — n'est pas corrigée
+mais **expliquée** : c'est une identité algébrique dont le résidu est exactement
+le non-F. Aucune ligne n'entre au registre de supersessions.
+
+---
+
+### §A62-6 — CE QUE ÇA CHANGE POUR LA SUITE
+
+`§A57-4` posait : « *aucune des deux cadences n'a de cap honnête tant que le
+rendu n'est pas placé* ». **Le rendu est placé.** Ce que la cadence attend n'est
+donc plus le rendu, mais **deux grandeurs qui ne sont pas lui** :
+
+1. **`I`, le coût d'une interpolation de readout** — inconnu, explicitement non
+   gratuit, et **point mort de l'arbitrage** à 1,768 ms.
+2. **le non-F 3D** — l'un des deux multiplicateurs dus de `§A53`. `Δ` lui est
+   proportionnel, et le non-F retenu (1,835 ms) est un **non-F 2D à l'échelle de
+   l'instrument** (`:9559`), pas un rendu 3D à 1920.
+
+**Et la forme de la décision, qui appartient à Romain**, est maintenant
+énonçable sans terme caché : à travail quasi constant, **60 Hz avec des fenêtres
+de ~52³**, ou **30 Hz avec des fenêtres de ~67³** — résolution temporelle contre
+résolution spatiale, et un écart de 6,2 % qui s'évapore si l'interpolation coûte
+un non-F.
+
+**Ce qui reste devant, et dans cet ordre** : la re-qualification de l'instrument
+(`§A61`) gate toute mesure ; puis `I` et le non-F 3D ; puis seulement la cadence
+et le côté ensemble, avec la porte 3 de `§A58` — re-dériver la monnaie du slot
+si le côté quitte 64 — qui **n'est toujours pas levée**.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**

@@ -91,7 +91,8 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > ~13 ms au rendu — V4 ne tient pas non plus à 30 Hz** ; **§A58 la machinerie n'exige que la
 > parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ** ;
 > **§A60 l'instrument lui-même est en cause** ;
-> **§A61 la machine n'a pas de point de fonctionnement stable**.
+> **§A61 la machine n'a pas de point de fonctionnement stable** ;
+> **§A62 le rendu est PLACÉ — il décide le côté, pas la cadence**.
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -234,7 +235,30 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > ~3 % sur 3 min ; §A53 mesurait 2D et 3D côte à côte, deux runs à 0,63 %).
 > **Rien n'est rétracté** : aucune conclusion de gate n'en dépend.
 >
-> **SUITE — DEUX CHOSES DEVANT, DANS CET ORDRE, ET AUCUNE N'EST UNE MESURE 3D.**
+> **§A62 — LE RENDU EST PLACÉ, et le dû de `:4142` (19/07) est INSTRUIT.** Aucune
+> mesure, aucun GPU : tout est lu dans des artefacts ou **extrait du texte d'une
+> ancre**. Quatre placements traités, y compris celui qui meurt (un seul GPU).
+> **Le coût d'une image rendue `R` s'ANNULE de l'arbitrage de cadence** —
+> sensibilité 1,3·10⁻¹⁵ — parce que 60 images sont rendues par seconde des deux
+> côtés. Ce n'est pas une trivialité : au placement « rendu à la cadence
+> physique », hors porte, la sensibilité vaut **0,72**. ⇒ **tout l'arbitrage de
+> cadence vaut `Δ = 30·(non-F − I)/C`**, soit **+21,84 fenêtres·Hz (6,2 %) à
+> `I` = 0** et **zéro au point mort `I` = 1,768 ms**, où `I` est le coût d'une
+> interpolation de readout, inconnu et gravé « non gratuit ». **Le rendu décide
+> le CÔTÉ** : `s_max` à 11 fenêtres et 60 Hz va de **51,99** (plancher MESURÉ du
+> rendu : gather 0,449 + encodage 0,094) à **43,46** (réserve gravée 13 ms / 2
+> images) — étendue 16,4 %, **exactement invariante à un biais sur `C`**, donc
+> hors d'atteinte de la maladie de §A61. Témoin non planifié : le modèle
+> **reproduit le 7,61 de §A57** (7,6148) par un autre chemin.
+> ⚠ **L'INTERDICTION PRÉ-ÉCRITE DE P2 MORD ICI** (recopiée par la machine dans
+> l'artefact) : *« le coût inconnu du rendu ne vit PAS dans l'encodage ; il vit
+> dans la COMPOSITION et dans l'optique au-delà de Y = A. La dette se DÉPLACE.
+> INTERDICTION d'en conclure "le rendu tient". »* Au plancher, le cap 60 Hz
+> **tombe de 6,12 à 5,90** pour 11 fenêtres demandées. **Rien n'est superséé** —
+> §A57-1 reste vraie sous son label « rendu non compté », §A57-3 est expliquée et
+> non corrigée.
+>
+> **SUITE — TROIS CHOSES DEVANT, DANS CET ORDRE, ET LA PREMIÈRE INTERDIT DE MESURER.**
 >
 > **(1) NE PAS LANCER DE MESURE 3D ABSOLUE.** §A61 : l'instrument n'est pas qualifié —
 > machine plafondée en puissance, pas de plateau, dérive monotone. Le prochain chiffre
@@ -245,15 +269,23 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > corrige une faute constatée. *Les rapports intra-run entre points adjacents restent
 > plausibles — à ÉTABLIR, pas à supposer.*
 >
-> **(2) OÙ VIT LE RENDU** — dû de `PREREGISTRATION.md:4142`, exigible depuis le 19/07, et
-> **aucun cap calculé n'inclut le rendu**. C'est le verrou réel.
+> **(2) LES DEUX GRANDEURS QUE LA CADENCE ATTEND**, et **ce n'est plus le rendu** :
+> **`I`**, le coût d'une interpolation de readout (point mort de l'arbitrage), et le
+> **non-F 3D** — l'un des deux multiplicateurs dus de §A53, auquel `Δ` est proportionnel,
+> et dont la valeur retenue (1,835 ms) est un **non-F 2D à l'échelle de l'instrument**
+> (`PREREGISTRATION.md:9559`), pas un rendu 3D à 1920. Les deux passent **derrière (1)**.
 >
-> **LA CADENCE APPARTIENT À ROMAIN, et les nombres sont ceux-ci** (tous **hors rendu**) :
-> **6,12 fenêtres à 60 Hz** · **7,61 à 30 Hz sous la réserve de la porte** (`:4217-4219`
-> réserve ~13 ms au rendu 60 fps) · V4 en demande **11**.
+> **(3) LA PORTE 3 DE §A58 — re-dériver la monnaie du slot si le côté quitte 64.**
+> Toujours pas levée, et §A62 rend son échéance concrète : aucun des côtés lus n'est 64.
+>
+> **LA CADENCE APPARTIENT À ROMAIN, et sa forme est maintenant énonçable sans terme
+> caché** : à travail quasi constant, **60 Hz avec des fenêtres de ~52³** ou **30 Hz avec
+> des fenêtres de ~67³** — résolution temporelle contre résolution spatiale, pour un écart
+> de **6,2 % qui s'évapore si l'interpolation coûte un non-F**. V4 en demande **11**, et
+> **aucun cap ne l'atteint** : 5,90 à 60 Hz au plancher mesuré du rendu, 7,61 à 30 Hz sous
+> la réserve gravée.
 > ⚠ Le « **12,97 à 30 Hz** » de §A55 est **SUPERSÉÉ par §A57** — il accordait à la
-> physique les 33,3 ms entières. *Sous sa propre définition, la porte 33,3 ne tient pas
-> V4 davantage que le 60 Hz.* La ligne est au registre de supersessions.
+> physique les 33,3 ms entières. La ligne est au registre de supersessions.
 > **Rien ne s'enchaîne.**
 
 ## Commandes
