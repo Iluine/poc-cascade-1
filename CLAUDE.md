@@ -78,8 +78,9 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > `experiments/mixed_substrate.py`** (scène falsifiée), et après réparation de `vorticity`
 > (bords traités par `jnp.roll` sur un canal non périodique — `cascade/experts/regimes.py:28-32`,
 > consommée par `experiments/c2_static_null.py:46`).
-> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A61**
-> (2026-08-04). §A45 portée du corollaire de falsifiabilité (image seule) ; §A46 re-scoping audio
+> Lire la conclusion de `PREREGISTRATION.md` avant de continuer — dernière entrée : **§A62-bis**
+> (2026-08-04, `:10104`). §A45 portée du corollaire de falsifiabilité (image seule) ;
+> §A46 re-scoping audio
 > impulsif et couplage τ_dec ; §A47 (+ PRÉCISION, + PRÉCISION-2) le régime de correction est à la
 > **CLAUSE**, pas au document ; **§A48 la coupe deux-compositeurs** (le compositeur INSTRUMENT reste
 > post-P3 ; un **`chemin-de-coût`** jugé au coût SEUL est autorisé avant, sous quatre gardes) ;
@@ -92,7 +93,11 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > parité** ; **§A59 le balayage de tailles est INDÉTERMINÉ** ;
 > **§A60 l'instrument lui-même est en cause** ;
 > **§A61 la machine n'a pas de point de fonctionnement stable** ;
-> **§A62 le rendu est PLACÉ — il décide le côté, pas la cadence**.
+> **§A62 le rendu est PLACÉ — il décide le côté, pas la cadence** ;
+> **§A62-bis quatre points d'une relecture adverse, tous justes — trois SUR-VENTES DE
+> PORTÉE qu'aucune garde pré-écrite n'attrape, et `I-r5` écrite mais non codée**.
+> *(Ce pointeur est une méta-donnée : le CORPS du journal fait foi contre lui — §A47-
+> PRÉCISION-2. Il annonçait §A61 alors que deux entrées suivaient ; corrigé le 23/08.)*
 >
 > **TRANCHÉS — ne pas se réamorcer sur les documents qui les portent encore comme ouverts.**
 > **P0-b** depuis §A36 (2026-07-25) : C-STRAT version F-unique — porté comme ouvert pendant neuf
@@ -288,6 +293,16 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > corrige une faute constatée. *Les rapports intra-run entre points adjacents restent
 > plausibles — à ÉTABLIR, pas à supposer.*
 >
+> **Ce dû est INSTRUIT depuis le 22-23/08, et AUCUN run n'a eu lieu.** Le protocole existe :
+> `pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md`, endossé en
+> trois commits (`4a7b9a9` corps, `f9f57fc` et `ab954f6` amendements), et son driver
+> `pocPhysicator/run_requalification_instrument_3d_v2.py` (`ec45510`, commit distinct — la v1
+> est intacte, elle porte le protocole que §A61 a disqualifié). **Ne pas le réécrire : le lire.**
+> Il renverse v1 — ne plus chercher un plateau qui n'existe pas, mais mesurer si un contraste
+> apparié en rang est répétable MALGRÉ la dérive. L'interdiction ci-dessus **tient tant que le
+> run n'a pas tourné**, et après lui : artefact, entrée au journal, ARRÊT — aucune branche ne
+> s'enchaîne, Q-A moins que les autres.
+>
 > **(2) LES DEUX GRANDEURS QUE LA CADENCE ATTEND**, et **ce n'est plus le rendu** :
 > **`I`**, le coût d'une interpolation de readout (point mort de l'arbitrage), et le
 > **non-F 3D** — l'un des deux multiplicateurs dus de §A53, auquel `Δ` est proportionnel,
@@ -326,6 +341,12 @@ uv pip install --python .venv -e .          # installe cascade + deps de pyproje
 
 # Lint
 .venv/bin/ruff check .                      # line-length 100, target py312
+
+# Ancres — À LANCER AVANT D'ÉCRIRE TOUTE ENTRÉE OU TOUT PREREG QUI CITE (§A54).
+# Balaie les DEUX dépôts ; sortie non nulle sur une ancre morte.
+.venv/bin/python verifier_ancres.py                 # table lisible
+.venv/bin/python verifier_ancres.py --json X        # artefact machine
+.venv/bin/python verifier_ancres.py --nues          # liste aussi les ancres NUES
 
 # Expériences (GPU requis ; chacune a un main() autonome, runs longs ~min)
 .venv/bin/python experiments/g0_spring/g0a_strouhal.py    # un gate / claim
