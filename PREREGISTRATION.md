@@ -10244,3 +10244,212 @@ sur la **rédaction**. Le quatrième, lui, était attrapable et ne l'a pas été
 `I-r5` existait, écrite, datée, et n'a pas été codée.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+---
+
+## §A63 (2026-08-23, 00:58 — horloge de l'artefact) — **QUATRIÈME TENTATIVE DE QUALIFICATION : INDÉTERMINÉ, et ce n'est PAS la dispersion qui tue** — deux contrastes sur trois dépendent du RANG malgré l'appariement ; le prior de dérive de `§A61` est confirmé à 1,7 % près, et le refroidissement n'a JAMAIS atteint son seuil
+
+Artefact : `pocPhysicator/claude/lectures/requalification-instrument-3d-v2-2026-08-22.json`
+(4,1 Mo, traces complètes). Protocole :
+`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md`,
+endossé en trois commits (`4a7b9a9` corps, `f9f57fc` et `ab954f6` amendements) ;
+driver `ec45510`, commit DISTINCT, écrit après le prereg.
+
+> **Verdict : INDÉTERMINÉ GLOBAL. `σ_r` n'est pas gravée, `§8` reste FERMÉ.**
+> L'interdiction de `§A61` — aucune mesure 3D absolue — **TIENT**.
+
+**Rien n'est superséé** ; aucune ligne au registre de supersessions. Cette entrée
+n'ajoute aucun chiffre au budget, au côté ni à la cadence : c'est de l'appareil.
+
+---
+
+### §A63-1 — CE QUI TUE N'EST PAS LA DISPERSION
+
+| contraste | lecture | dispersion | cause de sortie |
+|---|---|---|---|
+| 64→128 | 8,8029 | **1,09 %** | `I-q3` — aller/retour **2,33 %** |
+| 128→32 | 0,0147 | **1,34 %** | test de forme — **6,67** > 5,5 |
+| 32→64 | 7,7029 | **2,21 %** | `I-q3` — aller/retour **2,19 %** |
+
+Les trois dispersions (interquartile/2, relatives) sont à **deux ordres de
+grandeur** des 15 % de Q-C, et deux sur trois tiennent sous le seuil de 2 %.
+Ce qui sort deux contrastes est `I-q3` : **une dépendance au RANG malgré
+l'appariement**, à quoi le protocole refuse toute version restreinte
+(`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:256`
+« 2 et 15 %. **Un désaccord ALLER/RETOUR n'a PAS de version restreinte** : »).
+`I-q3` détecte une dépendance au rang que la dérive caractérisée
+**n'explique pas** (≤ ~0,4 % prédit — deux fois le biais réel de 0,200 % d'`I-q5` —
+contre 2,2–2,3 % observé) ; mais le dispositif **ne distingue pas** une faillite de
+l'ESTIMATEUR d'un **confondu thermique-rang** que le prereg déclarait borné, pas
+annulé (`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:108`
+« ne fait que la BORNER pour le thermique. »). **L'attribution reste OUVERTE.**
+
+---
+
+### §A63-2 — CE QUI A TENU, ET QUI N'ÉTAIT PAS ACQUIS
+
+**Ce qui n'a PAS tenu, et que le titre ne doit pas masquer : `I-q1` est sorti
+INDÉTERMINÉ.** `M-s` et `M-s′` **ne concluent pas de même** sur la perturbation
+de la sonde — écart de la médiane des rapports **2,20 %** (au-dessus du seuil de
+2 %) pour `M-s`, **0,69 %** pour `M-s′`. La **branche par défaut pré-écrite** a
+joué : **retrait de la sonde**, ce qui rend NON LISIBLES la pente contre la
+TEMPÉRATURE, `I-q6` et la puissance du test de forme. **Les deux runs sont deux
+contrôles « froids » partis de 57 °C et de 60 °C** — fait consigné ici **sans
+explication** : l'attribuer au thermique serait la fabrication après coup que
+`§A59` a payée.
+
+- **Le prior de dérive de `§A61-4` tombe juste** : pente mesurée par `M-d`
+  (Theil–Sen sur médianes de tranches) = **0,01671 %/s** contre un prior de
+  0,017 %/s — **1,7 % d'écart**. `I-q5` ne mord pas (plafond 0,034).
+- **`I-q2` : la dérive a été VUE, largement** — 3,65 %, 3,03 %, 13,79 % par
+  côté. Aucun contraste suspendu : **ce run n'est pas le cas commode**, la
+  robustesse était réellement testable.
+- **`I-q4` passe, et le mot juste est « compatible sous tolérance », pas
+  « expliquée »** : écart **0,496 %** contre un seuil de **1,104 %**. Il passe
+  parce que le seuil retenu est large, pas parce que la pente rend compte des
+  cycles — la **médiane des produits vaut 1,0001**, soit ≈ **zéro** dérive
+  cycle-à-cycle, contre **0,51 %** prédits par la pente. Le test ne distingue
+  pas « la pente explique » de « il n'y a rien à expliquer ».
+- **Les bornes de biais recalculées sur les durées RÉELLES** (volet mécanisé
+  d'`I-q5`) : 0,199 %, 0,200 %, 0,057 % — toutes sous le majorant pré-dérivé
+  de 0,43 %.
+- **L'enchaînement sans repos tient** : écart de frontière **maximal 0,001 s**
+  sur les quatre runs ; 13 suspensions de sonde, **0,25 s au total**.
+
+---
+
+### §A63-3 — LA LECTURE STRICTE D'`I-q3` DÉCIDE, ET LE SEUIL NE SE DÉPLACE PAS
+
+Le texte gravé porte deux lectures :
+`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:348`
+« RETOUR d'un même contraste divergent de > 2 % (au-delà du biais pré-dérivé de »
+— seuil **2 %**, ou seuil **2 % + biais** ? L'ambiguïté a été DÉCLARÉE avant le
+run et tranchée du côté **strict**, le biais nominal (**0,200 %**) consigné à
+côté.
+
+Elle mord : sous la lecture non stricte (2,2 %), **32→64 à 2,19 % passait** ;
+64→128 à 2,33 % serait resté sorti.
+
+> **Le seuil ne bouge pas.** `§A52` : *un seuil manqué est un RÉSULTAT, pas un
+> bug*. Le déplacer après avoir vu le chiffre serait exactement la fabrication
+> que ce protocole existe pour empêcher. Ceci est consigné pour que la
+> dépendance soit VISIBLE, non pour la rouvrir.
+
+**Et l'ambiguïté ne décide RIEN au niveau du verdict : sous les DEUX lectures, le
+global reste INDÉTERMINÉ.** Sous la lecture non stricte, `32→64` passe `I-q3`
+(2,19 % < 2,2 %) — mais sa **dispersion de 2,21 %** le fait tomber en **Q-B**
+(`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:255`
+« froid/chaud casse le 2 % en restant sous 15 %, ou la dispersion vit entre »), et
+`64→128` à **2,33 %** sort de toute façon, ce qui suffit à rendre le global
+INDÉTERMINÉ par la règle d'agrégation. **L'ambiguïté décide du chemin d'un
+contraste, jamais du verdict** — c'est ce qui rend le refus de la déplacer gratuit
+en substance et coûteux seulement en confort.
+
+---
+
+### §A63-4 — LA GARDE 6 N'ÉTAIT PAS MÉCANISÉE, DANS LE DRIVER QUI PRÉTENDAIT MÉCANISER
+
+`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:409`
+« 6. **Environnement consigné** : version du pilote, plafond de puissance » —
+**rien de tout cela n'est dans l'artefact.** Version du pilote, plafond de
+puissance et alimentation secteur : absents.
+
+C'est la faute `§A62-bis-2` — une garde écrite, endossée, non codée — commise
+dans le fichier même qui portait `garde_prereg_endosse()` contre cette faute.
+La cause est nommable : **la relecture `§6.9` a balayé le `§5` branche par
+branche, et pas le `§6`.** Une relecture qui se donne un périmètre en laisse un
+autre à découvert.
+
+Le verdict n'en dépend pas — `I-q6` était déjà NON LISIBLE, la sonde ayant été
+retirée par `I-q1`. **Par chance, pas par conception.**
+
+---
+
+### §A63-5 — « FROID » N'A JAMAIS EXISTÉ AU SENS DÉFINI
+
+`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:110`
+« **« Froid »** se définit par une mesure, pas un décret : idle jusqu'à » — le
+seuil est 55 °C, plafonné à 180 s. **Les cinq refroidissements ont tapé le
+plafond, aucun n'a atteint le seuil** :
+
+| | `M-s` | `M-c1` | `M-c3` | `M-d` | `M-s′` |
+|---|---|---|---|---|---|
+| durée (s) | 180,9 | 180,2 | 180,5 | 180,9 | 180,3 |
+| arrivée (°C) | 57 | 57 | 59 | 60 | 60 |
+
+Les départs « froids » **dérivent eux-mêmes** au fil de la session (57 → 57 → 59
+→ 60 → 60). La température atteinte est consignée, comme le protocole l'exige ;
+mais **aucune branche n'existe pour « le seuil n'est jamais atteint »**.
+
+*Aucun lien n'est établi entre ce fait et `I-q3`.* L'affirmer serait une
+explication fabriquée après coup — la faute que `§A59` a payée.
+
+---
+
+### §A63-6 — LE TROU DE `§8`, ET CE QUE QUATRE TENTATIVES ONT APPRIS
+
+`pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md:438`
+« Si Q-A ou Q-B **GLOBAL** (règle d'agrégation de §4, verdict non suspendu par »
+ouvre sur Q-A/Q-B ; Q-C ferme sur une décision matérielle. **INDÉTERMINÉ global
+n'est ni l'un ni l'autre**, et c'est ce qui est sorti.
+
+`§A59`, `§A60`, `§A61`, `§A63` : **quatre tentatives, quatre INDÉTERMINÉ.** Mais
+celui-ci diffère des trois autres, et la différence est le seul acquis de la
+séance : les trois premiers sont morts de **fautes de plan** (confondants non
+appariés, filtrage sans re-nommage, contrôle non apparié dans le temps). Celui-ci
+est mort d'une **mesure** — le dispositif a tenu, les gardes ont mordu là où
+elles devaient, et il a refusé de graver un `σ_r` que l'appariement ne soutenait
+pas. *Ce n'est pas un progrès vers la qualification ; c'est un progrès de
+l'instrument de mesure de l'instrument.*
+
+---
+
+### §A63-7 — CE QUI EST DÛ
+
+**Une décision de Romain, et rien d'autre.** Aucune branche ne s'enchaîne :
+ni cinquième protocole, ni relance, ni seuil déplacé. Les trois faits neufs qui
+la nourrissent — la dépendance au rang à 2,2–2,3 %, le refroidissement qui
+n'atteint pas son seuil, le trou de `§8` — sont consignés ci-dessus et vivent
+dans l'artefact, pas dans cette entrée.
+
+---
+
+### §A63-8 — LA SESSION A CASSÉ TROIS ANCRES D'UN DOCUMENT ENDOSSÉ, ET C'EST LA MACHINE QUI L'A VU
+
+`verifier_ancres.py`, lancé pour CETTE entrée, rend **3 ancres `décalée`** qui
+n'apparaissaient dans aucune passe antérieure de la séance :
+
+| citant | cite | texte réellement en |
+|---|---|---|
+| prereg v2 `:17` | `CLAUDE.md:282` | **:287** |
+| prereg v2 `:426` | `CLAUDE.md:282` | **:287** |
+| prereg v2 `:440` | `CLAUDE.md:291` | **:306** |
+
+**Cause : l'amendement de `pocCascade2phys/CLAUDE.md` (`5e3e43e`, +24 lignes),
+fait par la session elle-même**, a déplacé les lignes 282 et 291 que le prereg
+v2 — **endossé et commité** — cite trois fois. C'est la signature de `§A50` au
+mot près : *les ancres fausses naissent dans le lot qui les déplace*. Elle a été
+commise dans la séance qui a passé la nuit à vérifier des ancres.
+
+**Elles ne sont PAS corrigées, et le motif est mécanique, pas de confort.**
+Le TEXTE fait foi (`§A50`) et les trois fragments sont intacts, retrouvés par la
+machine ; le numéro seul a dérivé — l'état est `décalée`, pas `introuvable`, et
+le vérificateur sort en code 0. Surtout, `garde_prereg_endosse()` du driver
+compare le sha256 du prereg à `ab954f6` : **toucher au prereg empêcherait le
+driver de tourner** jusqu'à re-commit du driver. Le remède coûterait plus que le
+mal, et il toucherait un document endossé pour un numéro de ligne.
+
+⇒ **DÛ, sans échéance forcée** : si le prereg v2 est un jour amendé pour une
+autre raison, corriger ces trois numéros **dans le même lot**, et re-pointer
+`COMMIT_PREREG` dans le driver.
+
+> **La leçon, qui n'était dans aucune garde** : le corpus impose de lancer le
+> vérificateur **avant d'écrire une entrée qui cite** (`§A54`). Il ne dit rien
+> du cas symétrique — **amender un document CITÉ casse les ancres de ses
+> citants**, et *rien ne le signale au moment de l'amendement*. Ici, la faute a
+> vécu depuis `5e3e43e` et n'a été vue qu'à la passe suivante, lancée pour une
+> tout autre raison. La règle manquante : **après tout amendement d'un document
+> cité, relancer le vérificateur** — il balaie les deux dépôts, il l'aurait dit
+> immédiatement.
+
+Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
