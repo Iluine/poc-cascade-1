@@ -10453,3 +10453,87 @@ autre raison, corriger ces trois numéros **dans le même lot**, et re-pointer
 > immédiatement.
 
 Entrée rédigée par la session Claude ; **l'endossement est le commit de Romain.**
+
+---
+
+## §A64 (2026-08-26) — DÉCISION : pas de cinquième qualification ; régime de mesure réduit ; le programme passe en mode construction
+
+1. **L'instrument 3D ne sera pas qualifié sur cette machine.** Quatre tentatives
+   (§A59, §A60, §A61, §A63), quatre INDÉTERMINÉ. Le constat de §A61-4 —
+   `PREREGISTRATION.md:9911` « Sur cette machine et pour ces kernels, le processus
+   n'est pas stationnaire » — est confirmé par §A63 **sur le seul point que §A63
+   chiffre** : le prior de DÉRIVE, `PREREGISTRATION.md:10301` « Le prior de dérive
+   de `§A61-4` tombe juste » — pente 0,01671 %/s contre 0,017 prédite, soit
+   **1,7 % d'écart**. Ce n'est pas le diagnostic entier qui est confirmé à 1,7 %,
+   c'est sa pente. Une cinquième tentative sans changement de nature serait le
+   treadmill que ce journal nomme depuis `PREREGISTRATION.md:1233` « treadmill —
+   NE PAS raffiner ».
+
+2. **Régime de mesure en conséquence** : aucun absolu 3D verdict-grade sur ce
+   laptop. Les contrastes se font **appariés intra-run** uniquement.
+
+   **Ce que cette clause décide sciemment.** §A61-4 ne donne pas l'appariement
+   intra-run pour acquis : `PREREGISTRATION.md:9915` « Ce qui reste probablement
+   sain, et pourquoi c'est une conjecture et non un acquis », et `:9920` « Cela
+   reste à établir, pas à supposer ». §A64 ne convertit pas cette conjecture en
+   fait — il décide de **travailler sous elle**, faute de mieux, et le dit.
+
+   **Le plancher qui va avec.** §A63 a mesuré une dépendance au rang de
+   **2,2–2,3 % MALGRÉ l'appariement** (`PREREGISTRATION.md:10282` « contre 2,2–2,3 %
+   observé »). Un contraste apparié intra-run **ne résout donc rien sous ~2,3 %**.
+
+   Les absolus sont permis à titre indicatif, toujours accompagnés de leur
+   incertitude connue : §A60 — ~15 % pessimistes, **biais mesuré sur la
+   configuration d'alors** (plancher de 300 frames ; portée §A60-5 : §A53, §A55,
+   §A59) — et la dérive §A61/§A63. Ceci supersède l'interdiction ouverte de
+   §A61-5 (`PREREGISTRATION.md:9927` « Aucune nouvelle mesure 3D absolue ne devrait
+   être produite avant que ») en la remplaçant par une règle fermée.
+
+3. **Le côté (§A62) devient un choix provisoire et révisable.** L'invariance de la
+   physique au côté est mécanisée par le verrou (d),
+   `tests/test_boucle_rendu.py` `test_le_cote_ne_touche_pas_la_physique` — N ticks
+   de chaque côté depuis le même état initial, états physiques BIT-IDENTIQUES,
+   seuls les écrans diffèrent. L'erreur coûte donc une inversion, pas une
+   reconstruction : pas de rigueur verdict-grade. Choix aux chiffres appariés
+   disponibles — sous le plancher du §A64-2 — motif en une phrase.
+
+4. **Cérémonie recalibrée**, application à la lettre de la doctrine gravée en
+   `CLAUDE.md:17` « **rigueur verdict-grade est proportionnelle au coût de se
+   tromper** » (portée précisée le 2026-08-03) : prereg + verdict + entrée de
+   journal réservés aux irréversibles que cette doctrine énumère elle-même —
+   enveloppe mémoire, budget de frame, « un seul F » / fermeture sous-maille,
+   contrat du registre. Partout ailleurs, et c'est le mot du texte gravé :
+   `CLAUDE.md:19` « **build par défaut, mesure quand une décision en dépend** ».
+   Tout le reste est donc verrouillé par tests et consigné par des messages de
+   commit factuels. Le journal reste append-only mais ne reçoit que des décisions
+   — plus de documents de clôture, plus de rounds de relecture au-delà d'un seul.
+
+### §A64-5 — CE QUI EST DÛ, ET DANS QUEL ORDRE
+
+**Rien ne s'enchaîne automatiquement, sauf ce lot-ci**, qui n'est que la mise en
+conformité mécanique de la décision ci-dessus :
+
+1. cette entrée, committée SEULE ;
+2. **ensuite seulement** — l'ancre du superséant n'existe qu'après le commit — le
+   registre de supersessions de `verifier_ancres.py` reçoit §A61-5 : dix documents
+   citent aujourd'hui l'interdiction ouverte, dont les épigraphes de deux specs
+   endossées, et sans registre le corpus continuerait de la lire vivante sans
+   qu'aucune machine ne s'en aperçoive (c'est le troisième état de §A51-7) ;
+3. `CLAUDE.md` s'amende À LA LIGNE (`:237`, `:287`) : il est VIVANT au sens de
+   §A47, et ses instructions gouvernent les sessions au présent ;
+4. relance du vérificateur (§A63-8).
+
+**CE QUI NE S'AMENDE PAS, et c'est dit pour que personne n'y touche** : les dix
+documents citants. Leurs citations sont des FAITS DE PROVENANCE — §A47 grave que
+la provenance ne se rafraîchit pas, et deux d'entre eux sont des specs endossées
+dont l'épigraphe atteste l'état du journal au moment de leur écriture. Le registre
+les couvre ; il ne les corrige pas.
+
+Entrée rédigée par la session Cowork, **amendée sur pièces par la session Claude**
+(sept amendements : le 1,7 % rendu à sa portée, la paraphrase remplacée par le
+fragment, l'ancre du treadmill, la conjecture de §A61-4 dite comme telle, la
+portée du ~15 %, le verrou du côté nommé, la doctrine du §4 ancrée).
+**ENDOSSÉE par Romain le 2026-08-26**, qui a délégué le commit à la session et a
+tranché expressément le seul point qui lui revenait — le PLANCHER du §A64-2 : un
+régime dont le plancher n'est pas affiché ferait travailler son premier
+consommateur en aveugle, et ce consommateur est assis dessus.
