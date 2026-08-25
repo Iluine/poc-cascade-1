@@ -200,6 +200,24 @@ SUPERSESSIONS: tuple[Supersession, ...] = (
         superseant="PREREGISTRATION.md:10104 « ADDENDUM À §A62 : quatre "
                    "points d'une relecture adverse, tous justes »",
         fragments=("Les trois prédictions consignées", "| **≈ 0** |")),
+    Supersession(
+        fichier="PREREGISTRATION.md", ligne_debut=9925, ligne_fin=9948,
+        portee="L'INTERDICTION OUVERTE, et elle seule : « aucune nouvelle "
+               "mesure 3D absolue avant que l'instrument soit qualifié ». "
+               "§A64 décide qu'il ne le sera pas sur cette machine et "
+               "remplace l'interdiction ouverte par une RÈGLE FERMÉE — pas "
+               "d'absolu 3D verdict-grade, contrastes appariés intra-run, "
+               "absolus indicatifs avec leur incertitude affichée, et un "
+               "PLANCHER de ~2,3 % que l'appariement ne descend pas. Le "
+               "reste de §A61-5 est INTACT et reste à lire : ce que la "
+               "qualification demanderait, ce qui n'est pas atteint (§A53, "
+               "§A55, §A59, §A60 non rétractées), ce qui reste devant. "
+               "Dix documents citent l'interdiction ouverte, dont les "
+               "épigraphes de deux specs endossées ; sans cette entrée, le "
+               "corpus continuerait de la lire vivante.",
+        superseant="PREREGISTRATION.md:10490 « en la remplaçant par une "
+                   "règle fermée »",
+        fragments=("Aucune nouvelle mesure 3D absolue",)),
 )
 
 # CITATIONS NON VERBATIM DÉCLARÉES — chacune vérifiée à la main, chacune

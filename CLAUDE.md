@@ -240,6 +240,18 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > ~3 % sur 3 min ; §A53 mesurait 2D et 3D côte à côte, deux runs à 0,63 %).
 > **Rien n'est rétracté** : aucune conclusion de gate n'en dépend.
 >
+> **PRÉCISION 2026-08-26 — §A64 FERME CETTE INTERDICTION.** L'énoncé ci-dessus
+> reste lisible et n'est pas amputé ; il était OUVERT (« avant qu'elle le soit »).
+> §A64 décide que l'instrument NE SERA PAS qualifié sur cette machine — quatre
+> tentatives, quatre INDÉTERMINÉ — et remplace l'attente par une **règle fermée** :
+> aucun absolu 3D **verdict-grade** ; contrastes **appariés intra-run** uniquement ;
+> absolus permis à titre **indicatif**, incertitude affichée à côté (§A60 : ~15 %
+> pessimistes, biais de la configuration d'alors ; dérive §A61/§A63). **Et un
+> PLANCHER, qui est neuf** : §A63 a mesuré **2,2–2,3 % de dépendance au rang MALGRÉ
+> l'appariement** — un contraste apparié **ne résout rien sous ~2,3 %**. Le « reste
+> probablement sain » ci-dessus garde le statut que §A61-4 lui donne : une
+> **conjecture** sous laquelle §A64 décide de travailler, jamais un acquis.
+>
 > **§A62 — LE RENDU EST PLACÉ, et le dû de `:4142` (19/07) est INSTRUIT.** Aucune
 > mesure, aucun GPU : tout est lu dans des artefacts ou **extrait du texte d'une
 > ancre**. Quatre placements traités, y compris celui qui meurt (un seul GPU).
@@ -292,6 +304,14 @@ Ces règles ont produit les vrais résultats du projet ; les enfreindre fabrique
 > robuste à la dérive** plutôt qu'une médiane sur population mouvante. Chacun des trois
 > corrige une faute constatée. *Les rapports intra-run entre points adjacents restent
 > plausibles — à ÉTABLIR, pas à supposer.*
+>
+> **PRÉCISION 2026-08-26 — §A64 : CE POINT (1) NE SE LIT PLUS COMME UNE ATTENTE.**
+> « Ne pas lancer de mesure 3D absolue **verdict-grade** » reste vrai. Ce qui tombe,
+> c'est la condition suspensive : il n'y aura pas de re-qualification sur cette
+> machine, donc plus rien à attendre. Le régime qui remplace est celui du §A64-2 —
+> appariés intra-run, absolus indicatifs avec incertitude, **plancher ~2,3 %**. Et
+> le programme passe en **mode construction** : build par défaut, mesure quand une
+> décision en dépend (portée précisée le 2026-08-03, en tête de ce fichier).
 >
 > **Ce dû est INSTRUIT depuis le 22-23/08, et AUCUN run n'a eu lieu.** Le protocole existe :
 > `pocPhysicator/claude/prereg-requalification-instrument-3d-v2-2026-08-22.md`, endossé en
