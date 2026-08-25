@@ -251,3 +251,252 @@ def test_le_corpus_reel_ne_porte_aucune_ancre_morte():
                 morts.append(f"{resultat.source}:{resultat.ligne_source} "
                              f"-> {resultat.citation} ({resultat.etat})")
     assert not morts, "ancres mortes non déclarées :\n" + "\n".join(morts)
+
+
+# ------------------------------------------- renvois par NOM DE TEST
+#
+# Trou d'outillage remonté à la clôture de la boucle de rendu : le corpus
+# cite des VERROUS par leur nom de fonction, et le vérificateur n'en voyait
+# aucun. C'est la faute de §A62-bis-2 sous sa forme la plus discrète — un
+# document qui cite un test supprimé promet une garde que rien ne tient,
+# et la promesse a l'apparence de la preuve.
+#
+# Les cas ci-dessous sont montés sur des mini-dépôts jetables, jamais sur
+# le corpus vivant : un verrou qui n'allume que ce qui se trouve déjà là
+# ne garde rien le jour où ça change (§A53).
+
+def _depot_de_test(corpus, doc: str, fichiers: dict[str, str]):
+    """Un mini-dépôt : un document citant, et des sources Python."""
+    for nom, contenu in fichiers.items():
+        chemin = corpus / nom
+        chemin.parent.mkdir(parents=True, exist_ok=True)
+        chemin.write_text(contenu, encoding="utf-8")
+    (corpus / "doc.md").write_text(doc, encoding="utf-8")
+    index, echecs = va.indexer_tests()
+    renvois = va.extraire_renvois_tests(corpus / "doc.md", "doc.md")
+    return [va.verifier_renvoi_test(r, index) for r in renvois], echecs
+
+
+UN_TEST = "def test_le_verrou_qui_existe():\n    assert True\n"
+
+
+@pytest.fixture
+def declarer(monkeypatch):
+    """Pose un registre de renommages jetable, sans toucher au vrai."""
+    def _poser(ligne_debut, ligne_fin, nom_cite="test_ancien_nom",
+               nom_livre="test_le_verrou_qui_existe"):
+        monkeypatch.setattr(va, "RENVOIS_TESTS_DECLARES", (
+            va.RenvoiTestDeclare(
+                source="doc.md", ligne_debut=ligne_debut,
+                ligne_fin=ligne_fin, nom_cite=nom_cite,
+                nom_livre=nom_livre, raison="montage de test"),))
+    return _poser
+
+
+def test_renvoi_vers_un_verrou_vivant(corpus):
+    renvois, _ = _depot_de_test(
+        corpus, "le verrou `test_le_verrou_qui_existe` tient.",
+        {"tests/test_chose.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-vivant"]
+
+
+def test_renvoi_vers_un_verrou_supprime_est_fatal(corpus):
+    """LE CAS QUI JUSTIFIE L'OUTIL. Un document qui cite un test disparu
+    affirme une garde absente — et jusqu'ici rien ne pouvait le voir."""
+    renvois, _ = _depot_de_test(
+        corpus, "le verrou `test_supprime_l_an_dernier` tient.",
+        {"tests/test_chose.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-introuvable"]
+    assert "garde promise" in renvois[0].detail
+
+
+def test_le_renvoi_mort_fait_sortir_en_code_non_nul(corpus, monkeypatch):
+    """La fatalité est le seul organe qui MORD. Sans elle l'outil rend un
+    joli rapport que personne ne lit et que la CI laisse passer."""
+    (corpus / "tests").mkdir()
+    (corpus / "tests" / "test_chose.py").write_text(UN_TEST, encoding="utf-8")
+    (corpus / "doc.md").write_text("verrou `test_disparu`\n", encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["verifier_ancres.py"])
+    monkeypatch.setattr(va, "RENVOIS_TESTS_DECLARES", ())
+    monkeypatch.setattr(va, "SUPERSESSIONS", ())
+    assert va.main() == 1
+
+
+def test_le_corpus_sain_sort_en_zero(corpus, monkeypatch):
+    """Le contre-verrou : un outil qui échoue toujours n'est plus lu."""
+    (corpus / "tests").mkdir()
+    (corpus / "tests" / "test_chose.py").write_text(UN_TEST, encoding="utf-8")
+    (corpus / "doc.md").write_text("verrou `test_le_verrou_qui_existe`\n",
+                                   encoding="utf-8")
+    monkeypatch.setattr(sys, "argv", ["verifier_ancres.py"])
+    monkeypatch.setattr(va, "RENVOIS_TESTS_DECLARES", ())
+    monkeypatch.setattr(va, "SUPERSESSIONS", ())
+    assert va.main() == 0
+
+
+def test_renvoi_de_famille_resolu_par_prefixe(corpus):
+    """`test_construire_halo_…` désigne une famille. Le chercher tel quel
+    rendrait « introuvable » un renvoi juste — l'erreur qui apprend à
+    ignorer l'outil, la pire des deux."""
+    renvois, _ = _depot_de_test(
+        corpus, "voir `test_construire_halo_…` pour l'assemblage.",
+        {"tests/test_halo.py":
+         "def test_construire_halo_interieur_fin():\n    assert True\n"})
+    assert [r.etat for r in renvois] == ["test-famille"]
+    assert renvois[0].resolu == "test_construire_halo_interieur_fin"
+
+
+def test_famille_sans_aucun_membre_reste_fatale(corpus):
+    """Le marqueur de famille n'est pas un laissez-passer : une famille
+    entièrement supprimée est aussi morte qu'un nom seul."""
+    renvois, _ = _depot_de_test(
+        corpus, "voir `test_famille_eteinte_…`.",
+        {"tests/test_halo.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-introuvable"]
+
+
+def test_forme_abregee_resolue_dans_la_famille_de_son_appui(corpus):
+    """`test_c_property_terrain_reel_plein` / `_front_wet_dry` — le corpus
+    n'en porte qu'UNE, mais une ancre ignorée ne se signale jamais."""
+    renvois, _ = _depot_de_test(
+        corpus, "`test_c_property_plein` / `_front_wet_dry` : idem",
+        {"tests/test_c.py":
+         "def test_c_property_plein():\n    assert True\n\n"
+         "def test_c_property_front_wet_dry():\n    assert True\n"})
+    assert [r.etat for r in renvois] == ["test-vivant", "test-abrégé"]
+    assert renvois[1].resolu == "test_c_property_front_wet_dry"
+
+
+def test_l_abrege_n_attrape_pas_hors_de_sa_famille(corpus):
+    """Sans la condition de préfixe commun, `_front_wet_dry` capterait
+    n'importe quel test finissant pareil : une résolution qui a l'air
+    d'en être une, donc pire que pas de résolution."""
+    renvois, _ = _depot_de_test(
+        corpus, "`test_c_property_plein` / `_front_wet_dry` : idem",
+        {"tests/test_c.py":
+         "def test_c_property_plein():\n    assert True\n\n"
+         "def test_autre_chose_front_wet_dry():\n    assert True\n"})
+    assert renvois[1].etat == "test-introuvable"
+
+
+def test_un_jeton_souligne_sans_appui_n_est_pas_un_renvoi(corpus):
+    """Le corpus porte 30 jetons backtickés en `_` : 29 sont des helpers
+    et des constantes. Les lire comme des tests noierait le seul vrai."""
+    renvois, _ = _depot_de_test(
+        corpus, "la constante `_MODULES_ETAT` et le helper `_rhs_o2`.",
+        {"tests/test_chose.py": UN_TEST})
+    assert renvois == []
+
+
+def test_un_nom_de_fichier_n_est_pas_un_renvoi_de_fonction(corpus):
+    renvois, _ = _depot_de_test(
+        corpus, "voir `tests/test_chose.py` et `test_chose.py`.",
+        {"tests/test_chose.py": UN_TEST})
+    assert renvois == []
+
+
+def test_defini_mais_non_collecte_n_est_pas_vivant(corpus):
+    """« Exister » ne veut pas dire « être défini ». Un `def test_x` que
+    pytest ne ramasse pas ne tourne jamais : le dire vivant ferait de cet
+    outil la faute qu'il traque, appliquée à lui-même."""
+    renvois, _ = _depot_de_test(
+        corpus, "le verrou `test_le_verrou_qui_existe` tient.",
+        {"outils/aide.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-non-collecté"]
+
+
+def test_source_python_illisible_est_remontee_pas_avalee(corpus):
+    """FAIL-LOUD : un fichier de tests imparsable rend ses définitions
+    invisibles. Avalée, la panne d'outil se traduirait en accusation
+    FATALE contre des verrous bien vivants."""
+    (corpus / "tests").mkdir()
+    (corpus / "tests" / "test_casse.py").write_text(
+        "def test_x(:\n", encoding="utf-8")
+    _, echecs = va.indexer_tests()
+    assert echecs and "illisible" in echecs[0]
+
+
+def test_declaration_de_renommage_couvre_toute_sa_plage(corpus, declarer):
+    """Le plan cite le nom mort DEUX fois à onze lignes d'écart — la note
+    qui le désavoue et le bloc de code qu'elle désavoue. Déclarée au
+    point, la seconde sortait en FATAL : l'outil reprochait au document
+    exactement ce que le document consigne."""
+    declarer(ligne_debut=1, ligne_fin=3)
+    renvois, _ = _depot_de_test(
+        corpus,
+        "note : `test_ancien_nom` est devenu `test_le_verrou_qui_existe`\n"
+        "\n"
+        "def test_ancien_nom():\n",
+        {"tests/test_chose.py": UN_TEST})
+    assert [r.etat for r in renvois] == [
+        "test-déclaré", "test-vivant", "test-déclaré"]
+
+
+def test_declaration_dont_le_nom_livre_n_existe_pas_casse_le_registre(
+        corpus, declarer):
+    declarer(ligne_debut=1, ligne_fin=3, nom_livre="test_jamais_ecrit")
+    (corpus / "tests").mkdir()
+    (corpus / "tests" / "test_chose.py").write_text(UN_TEST, encoding="utf-8")
+    (corpus / "doc.md").write_text("x\n", encoding="utf-8")
+    index, echecs = va.indexer_tests()
+    problemes = va.garde_renvois_tests(index, echecs)
+    assert any("nom livré INEXISTANT" in p for p in problemes)
+
+
+def test_declaration_perimee_casse_le_registre(corpus, declarer):
+    """Un registre qui ne se nettoie pas finit par mentir : si le nom
+    excusé ressuscite, la déclaration le couvre pour rien."""
+    declarer(ligne_debut=1, ligne_fin=3,
+             nom_cite="test_le_verrou_qui_existe")
+    (corpus / "tests").mkdir()
+    (corpus / "tests" / "test_chose.py").write_text(UN_TEST, encoding="utf-8")
+    (corpus / "doc.md").write_text("x\n", encoding="utf-8")
+    index, echecs = va.indexer_tests()
+    problemes = va.garde_renvois_tests(index, echecs)
+    assert any("PÉRIMÉE" in p for p in problemes)
+
+
+def test_le_registre_des_renvois_se_verifie_lui_meme():
+    """Sur le VRAI corpus : les deux renommages déclarés pointent vers des
+    tests qui existent, et les noms qu'ils excusent n'existent plus."""
+    index, echecs = va.indexer_tests()
+    assert va.garde_renvois_tests(index, echecs) == []
+
+
+def test_le_corpus_reel_ne_promet_aucun_verrou_absent():
+    """Le verrou d'intégration du versant renvois."""
+    index, _ = va.indexer_tests()
+    morts = []
+    for chemin in va.collecter():
+        relatif = str(chemin.relative_to(
+            va.RACINE if va.RACINE in chemin.parents
+            else va.RACINE_PHYSICATOR))
+        for renvoi in va.extraire_renvois_tests(chemin, relatif):
+            resultat = va.verifier_renvoi_test(renvoi, index)
+            if resultat.etat == "test-introuvable":
+                morts.append(f"{resultat.source}:{resultat.ligne_source} "
+                             f"-> {resultat.nom}")
+    assert not morts, ("renvois vers un verrou inexistant :\n"
+                       + "\n".join(morts))
+
+
+def test_le_repli_module_ne_regarde_pas_dans_venv(corpus):
+    """UN FATAL MASQUÉ PAR UNE DÉPENDANCE. Le repli « ce n'est pas une
+    fonction, c'est un FICHIER de tests » cherchait sur tout le disque du
+    dépôt : un `site-packages/…/test_utils.py` aurait excusé en NON FATAL
+    un renvoi mort vers `test_utils`. Jamais déclenché à ce jour — un
+    verrou se juge sur ce qu'il attrape le jour où ça arrive."""
+    (corpus / ".venv").mkdir()
+    (corpus / ".venv" / "test_utils.py").write_text(
+        "def test_dune_dependance():\n    assert True\n", encoding="utf-8")
+    renvois, _ = _depot_de_test(corpus, "le verrou `test_utils` tient.",
+                                {"tests/test_chose.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-introuvable"]
+
+
+def test_le_repli_module_reconnait_un_vrai_fichier_de_tests(corpus):
+    """Le contre-verrou : le repli doit continuer de servir, sans quoi on
+    aurait fabriqué un faux fatal en corrigeant un fatal masqué."""
+    renvois, _ = _depot_de_test(corpus, "voir `test_chose` pour le reste.",
+                                {"tests/test_chose.py": UN_TEST})
+    assert [r.etat for r in renvois] == ["test-module"]

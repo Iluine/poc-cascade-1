@@ -26,6 +26,33 @@ humain l'a validée de bonne foi.
   nue              ancre sans texte : INVÉRIFIABLE, c'est le danger de §A50
   fichier-absent   la cible n'existe pas
 
+TROUVÉ PAR LA PASSE DU 2026-08-25 — LE RENVOI PAR NOM DE TEST. Le corpus
+ne cite pas que des lignes : il cite des VERROUS, par leur nom de fonction
+(`test_replay_prefixe_bit_identique`, `test_les_deux_cotes_couvrent_la_
+table_des_couples`). **34 renvois** de cette forme — 31 noms distincts,
+répartis sur 9 documents — et le vérificateur en était AVEUGLE : aucun n'a
+jamais la forme `fichier:NNN`. Les chiffres sont ceux que l'outil imprime.
+Or c'est exactement la faute que §A62-bis-2 nomme : **une garde promise
+dans un document est une garde absente**. Un document qui cite un verrou
+supprimé ou renommé promet une garde que rien ne tient, et jusqu'ici
+aucune machine ne pouvait le voir.
+
+Ce que la passe a trouvé en ouvrant l'œil : trois NOMS non résolus sur les
+31 distincts. Deux sont des noms PLANIFIÉS que la livraison a renommés — et la
+note d'obsolescence que le plan porte lui-même (`claude/plan-interpolation-
+readout-2026-08-23.md:374`) en consigne UN et manque l'autre, 321 lignes
+plus bas. Le troisième
+est une famille abrégée, légitime. Aucun des trois n'était visible.
+
+ÉTATS DES RENVOIS PAR NOM DE TEST :
+  test-vivant      la fonction existe, dans un fichier que pytest collecte
+  test-famille     renvoi en `…` / `*` : au moins un membre existe
+  test-abrégé      forme `_suffixe` adossée au renvoi complet qui précède
+  test-déclaré     renommage consigné au registre, nom livré vérifié
+  test-non-collecté  la fonction existe mais pytest ne la ramasse PAS
+  test-module      pas une fonction : un FICHIER de tests de ce nom
+  test-introuvable aucune fonction de ce nom : FAIL-LOUD
+
 Une `introuvable` fait sortir en code non nul : le texte a disparu, donc
 la substance a changé, et §A50 interdit de renuméroter en silence.
 
@@ -33,10 +60,13 @@ Usage :
     .venv/bin/python verifier_ancres.py            # table lisible
     .venv/bin/python verifier_ancres.py --json X   # artefact machine
     .venv/bin/python verifier_ancres.py --nues     # liste aussi les nues
+
+Les renvois par nom de test sont vérifiés à chaque passe, sans option.
 """
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import pathlib
 import re
@@ -652,6 +682,302 @@ def extraire_depuis_texte(texte: str, source: str) -> list[Ancre]:
 
 
 # --------------------------------------------------------------------
+# LE RENVOI PAR NOM DE TEST — trou d'outillage remonté à la clôture de la
+# boucle de rendu (`pocPhysicator/claude/cloture-boucle-rendu-2026-08-25.md`)
+# --------------------------------------------------------------------
+
+# CE QUE « EXISTER » VEUT DIRE, ET POURQUOI CE N'EST PAS « ÊTRE DÉFINI ».
+# Un `def test_x` dans un module que pytest ne ramasse pas n'est pas un
+# verrou : il ne tourne jamais. Le rendre « vivant » ferait de cet outil
+# la faute qu'il traque — une garde promise, donc absente, appliquée à
+# lui-même. VÉRIFIÉ LE 25/08 : ni `python_files` ni `testpaths` n'est
+# configuré dans les deux dépôts, donc les défauts de pytest font foi.
+# Le compte des définitions hors collecte est AUJOURD'HUI de zéro ; l'état
+# existe pour le jour où il ne le sera plus, et se signalera seul.
+MOTIFS_FICHIERS_TESTS: tuple[str, ...] = ("test_*.py", "*_test.py")
+
+# `test_construire_halo_…` (verif-echelle-grossier:139) désigne une
+# FAMILLE, pas une fonction. La chercher telle quelle rendrait
+# « introuvable » un renvoi parfaitement juste — l'erreur qui apprend à
+# ignorer l'outil, celle que ce fichier redoute le plus.
+MARQUEURS_FAMILLE = ("\u2026", "...", "*")
+
+# Un renvoi complet, éventuellement suivi d'un marqueur de famille ; OU la
+# forme ABRÉGÉE `_suffixe` entre backticks. La seconde n'existe qu'adossée
+# à un renvoi complet sur la même ligne — `test_c_property_terrain_reel_
+# plein` / `_front_wet_dry` — et le corpus n'en porte qu'UNE. On ne
+# construit donc pas un résolveur général : on refuse le silence sur ce
+# cas-là, rien de plus. Les 29 autres jetons backtickés en `_` du corpus
+# sont des helpers et des constantes, jamais des tests.
+MOTIF_RENVOI_TEST = re.compile(
+    r"(?<![\w/.])(?P<complet>test_[A-Za-z0-9_]+)"
+    r"(?P<famille>\u2026|\.\.\.|\*)?"
+    r"|`(?P<abrege>_[A-Za-z0-9_]+)`")
+
+
+@dataclass(frozen=True)
+class RenvoiTestDeclare:
+    """Un renvoi qui cite un nom PLANIFIÉ que la livraison a renommé.
+
+    Même régime que `CITATIONS_NON_VERBATIM` : ce n'est pas une exception
+    de confort. Le renvoi reste AFFICHÉ à chaque passe, dans sa propre
+    section ; ce que la déclaration change, c'est le code de sortie — pour
+    qu'un renvoi mort NEUF ne se noie pas dans un renvoi mort connu.
+
+    Elle se déclare par PLAGE et non par ligne — TROUVÉ EN CÂBLANT : le
+    plan cite le nom mort DEUX fois à onze lignes d'écart, une fois dans
+    la note qui le désavoue (:374) et une fois dans le bloc de code
+    planifié (:385). Déclarée au point, la première était couverte et la
+    seconde sortait en FATAL — l'outil aurait reproché au document
+    exactement ce que le document consigne. La plage est tenue au plus
+    serré : la note et le bloc qu'elle désavoue, rien au-delà.
+
+    La déclaration se vérifie dans les DEUX SENS (`garde_registre`) : le
+    nom livré doit exister, et le nom cité ne doit PLUS exister. Sans le
+    second, une déclaration survivrait à la résurrection du nom qu'elle
+    excuse, et couvrirait alors un renvoi qui n'a plus besoin d'être
+    couvert — un registre qui ne se nettoie pas finit par mentir.
+    """
+    source: str
+    ligne_debut: int
+    ligne_fin: int
+    nom_cite: str
+    nom_livre: str
+    raison: str
+
+
+RENVOIS_TESTS_DECLARES: tuple[RenvoiTestDeclare, ...] = (
+    RenvoiTestDeclare(
+        source="claude/plan-interpolation-readout-2026-08-23.md",
+        ligne_debut=370, ligne_fin=434,
+        nom_cite="test_les_deux_modes_partagent_un_seul_chemin",
+        nom_livre="test_melanger_est_deterministe",
+        raison="le plan CONSIGNE lui-même ce renommage (:374 « est devenu "
+               "`test_melanger_est_deterministe` (même corps, docstring "
+               "refaite) ») et refuse de réécrire son bloc de code : « un "
+               "plan est le registre de ce qui a été DÉCIDÉ ». Le renvoi "
+               "est donc juste au passé et mort au présent — déclaré, pas "
+               "amendé."),
+    RenvoiTestDeclare(
+        source="claude/plan-interpolation-readout-2026-08-23.md",
+        ligne_debut=698, ligne_fin=743,
+        nom_cite="test_le_gather_est_inchange_et_lit_la_vue",
+        nom_livre="test_le_gather_lit_la_vue_octet_pour_octet",
+        raison="MÊME DÉFAUT, NON CONSIGNÉ : la note d'obsolescence du plan "
+               "(:370-378) énumère les renommages du bloc de l'étape 1 et "
+               "ne dit RIEN de celui-ci, 321 lignes plus bas (:699). Une "
+               "note d'obsolescence incomplète est plus dangereuse qu'une "
+               "note absente : elle donne au lecteur la preuve apparente "
+               "que le reste est à jour. Trouvé par cette passe."),
+)
+
+
+def indexer_tests(
+        racines: tuple[pathlib.Path, ...] | None = None
+) -> tuple[dict[str, list[tuple[str, int, bool]]], list[str]]:
+    """Recense les `test_*` des deux dépôts. Rend l'index ET les échecs.
+
+    FAIL-LOUD SUR L'ANALYSE (§A43 par analogie) : un fichier de tests
+    imparsable rendrait ses définitions invisibles, et l'invisibilité se
+    traduirait ici en `test-introuvable` FATAUX sur des verrous bien
+    vivants. Avaler la `SyntaxError` transformerait une panne d'outil en
+    accusation contre le corpus. On la remonte.
+    """
+    if racines is None:
+        racines = (RACINE, RACINE_PHYSICATOR)
+    index: dict[str, list[tuple[str, int, bool]]] = {}
+    echecs: list[str] = []
+    for racine in racines:
+        if not racine.exists():
+            continue
+        for chemin in sorted(racine.rglob("*.py")):
+            if {".venv", ".git", "__pycache__"} & set(chemin.parts):
+                continue
+            try:
+                arbre = ast.parse(chemin.read_text(encoding="utf-8"))
+            except (SyntaxError, ValueError, UnicodeDecodeError) as erreur:
+                echecs.append(f"source Python illisible : {chemin} -> {erreur}")
+                continue
+            collectable = any(chemin.match(m) for m in MOTIFS_FICHIERS_TESTS)
+            for noeud in ast.walk(arbre):
+                if (isinstance(noeud, (ast.FunctionDef, ast.AsyncFunctionDef))
+                        and noeud.name.startswith("test_")):
+                    index.setdefault(noeud.name, []).append(
+                        (str(chemin), noeud.lineno, collectable))
+    return index, echecs
+
+
+@dataclass
+class RenvoiTest:
+    source: str
+    ligne_source: int
+    nom: str
+    famille: bool = False
+    abrege: bool = False
+    appui: str = ""          # le renvoi complet auquel un abrégé s'adosse
+    etat: str = ""
+    detail: str = ""
+    resolu: str = ""
+    notes: list[str] = field(default_factory=list)
+
+
+def extraire_renvois_tests(chemin: pathlib.Path,
+                           relatif: str) -> list[RenvoiTest]:
+    renvois: list[RenvoiTest] = []
+    for numero, ligne in enumerate(
+            chemin.read_text(encoding="utf-8").splitlines(), start=1):
+        appui = ""
+        for m in MOTIF_RENVOI_TEST.finditer(ligne):
+            if m.group("complet"):
+                # `test_foo.py` nomme un FICHIER, pas une fonction ; on ne
+                # le compte pas et il ne sert pas d'appui à un abrégé.
+                if ligne[m.end("complet"):].startswith(".py"):
+                    continue
+                appui = m.group("complet")
+                renvois.append(RenvoiTest(
+                    source=relatif, ligne_source=numero, nom=appui,
+                    famille=bool(m.group("famille"))))
+            elif appui:
+                renvois.append(RenvoiTest(
+                    source=relatif, ligne_source=numero,
+                    nom=m.group("abrege"), abrege=True, appui=appui))
+    return renvois
+
+
+def _declaration_de(renvoi: RenvoiTest) -> RenvoiTestDeclare | None:
+    for d in RENVOIS_TESTS_DECLARES:
+        if (pathlib.PurePath(renvoi.source).name
+                == pathlib.PurePath(d.source).name
+                and d.ligne_debut <= renvoi.ligne_source <= d.ligne_fin
+                and renvoi.nom == d.nom_cite):
+            return d
+    return None
+
+
+def _sites(index, nom: str) -> list[tuple[str, int, bool]]:
+    return index.get(nom, [])
+
+
+def verifier_renvoi_test(renvoi: RenvoiTest, index) -> RenvoiTest:
+    declaree = _declaration_de(renvoi)
+    if declaree is not None:
+        renvoi.etat = "test-déclaré"
+        renvoi.resolu = declaree.nom_livre
+        renvoi.notes.append(f"DÉCLARÉ — {declaree.raison}")
+        renvoi.detail = f"nom livré : {declaree.nom_livre}"
+        return renvoi
+
+    if renvoi.abrege:
+        # Un abrégé se résout par SUFFIXE, mais seulement dans la famille
+        # de son appui : sans cette condition, `_front_wet_dry` capterait
+        # n'importe quel test finissant pareil, dans n'importe quel
+        # fichier — une résolution qui a l'air d'en être une.
+        candidats = sorted(
+            nom for nom in index
+            if nom.endswith(renvoi.nom)
+            and len(_prefixe_commun(nom, renvoi.appui)) > len("test_"))
+        if candidats:
+            renvoi.etat = "test-abrégé"
+            renvoi.resolu = candidats[0]
+            renvoi.detail = (f"forme abrégée adossée à `{renvoi.appui}` "
+                             f"-> {candidats[0]}")
+            if len(candidats) > 1:
+                renvoi.notes.append(
+                    "abrégé AMBIGU : " + ", ".join(candidats))
+            return renvoi
+        renvoi.etat = "test-introuvable"
+        renvoi.detail = (f"forme abrégée `{renvoi.nom}` adossée à "
+                         f"`{renvoi.appui}` : aucun test de cette famille "
+                         "ne porte ce suffixe")
+        return renvoi
+
+    if renvoi.famille:
+        membres = sorted(nom for nom in index if nom.startswith(renvoi.nom))
+        if membres:
+            renvoi.etat = "test-famille"
+            renvoi.resolu = membres[0]
+            renvoi.detail = (f"{len(membres)} membre(s), dont "
+                             f"{membres[0]}")
+            return renvoi
+        renvoi.etat = "test-introuvable"
+        renvoi.detail = ("renvoi de FAMILLE dont aucun membre n'existe : "
+                         f"rien ne commence par `{renvoi.nom}`")
+        return renvoi
+
+    sites = _sites(index, renvoi.nom)
+    if sites:
+        collectes = [s for s in sites if s[2]]
+        if collectes:
+            renvoi.etat = "test-vivant"
+            renvoi.resolu = renvoi.nom
+            renvoi.detail = f"{collectes[0][0]}:{collectes[0][1]}"
+            if len(collectes) > 1:
+                renvoi.notes.append(
+                    "nom défini à plusieurs endroits : "
+                    + ", ".join(f"{c[0]}:{c[1]}" for c in collectes))
+            return renvoi
+        renvoi.etat = "test-non-collecté"
+        renvoi.resolu = renvoi.nom
+        renvoi.detail = (f"défini en {sites[0][0]}:{sites[0][1]}, mais "
+                         "pytest ne ramasse pas ce fichier — un verrou qui "
+                         "ne tourne pas n'est pas un verrou")
+        return renvoi
+
+    for racine in (RACINE, RACINE_PHYSICATOR):
+        if not racine.exists():
+            continue
+        # MÊME FILTRE QUE L'INDEXEUR — trouvé en relecture, jamais déclenché
+        # à ce jour : sans lui, un renvoi mort `test_utils` serait excusé
+        # en `test-module` NON FATAL par un `site-packages/…/test_utils.py`.
+        # Un fatal masqué par une dépendance, et masqué en silence.
+        if any(not ({".venv", ".git", "__pycache__"} & set(c.parts))
+               for c in racine.rglob(f"{renvoi.nom}.py")):
+            renvoi.etat = "test-module"
+            renvoi.resolu = f"{renvoi.nom}.py"
+            renvoi.detail = ("désigne un FICHIER de tests, pas une "
+                             "fonction — résolu, mais dit pour ce qu'il est")
+            return renvoi
+
+    renvoi.etat = "test-introuvable"
+    renvoi.detail = ("aucune fonction de ce nom dans les deux dépôts — "
+                     "un verrou cité qui n'existe pas est une garde "
+                     "promise, donc une garde absente (§A62-bis-2)")
+    return renvoi
+
+
+def _prefixe_commun(a: str, b: str) -> str:
+    n = 0
+    while n < min(len(a), len(b)) and a[n] == b[n]:
+        n += 1
+    return a[:n]
+
+
+def garde_renvois_tests(index, echecs: list[str]) -> list[str]:
+    """Le registre des renvois déclarés, vérifié dans les deux sens."""
+    problemes = list(echecs)
+    for d in RENVOIS_TESTS_DECLARES:
+        cible = _resoudre_cible(d.source, "physicator")
+        if cible is None:
+            problemes.append(
+                f"registre renvois : document déclarant absent {d.source}")
+        else:
+            n_lignes = len(cible.read_text(encoding="utf-8").splitlines())
+            if d.ligne_fin > n_lignes:
+                problemes.append(
+                    f"registre renvois : plage {d.source}:{d.ligne_debut}-"
+                    f"{d.ligne_fin} dépasse le fichier ({n_lignes} lignes)")
+        if d.nom_livre not in index:
+            problemes.append(
+                f"registre renvois : nom livré INEXISTANT {d.nom_livre} "
+                f"(déclaré pour {d.nom_cite})")
+        if d.nom_cite in index:
+            problemes.append(
+                f"registre renvois : déclaration PÉRIMÉE — {d.nom_cite} "
+                "existe de nouveau, la déclaration le couvre pour rien")
+    return problemes
+
+
+# --------------------------------------------------------------------
 
 def collecter() -> list[pathlib.Path]:
     fichiers: list[pathlib.Path] = []
@@ -670,13 +996,16 @@ def main() -> int:
                            help="lister aussi les ancres sans texte")
     options = analyseur.parse_args()
 
-    problemes_registre = garde_registre()
+    index_tests, echecs_analyse = indexer_tests()
+    problemes_registre = (garde_registre()
+                          + garde_renvois_tests(index_tests, echecs_analyse))
     if problemes_registre:
         for p in problemes_registre:
             print(f"REGISTRE CASSÉ : {p}")
         return 2
 
     resultats: list[Ancre] = []
+    renvois: list[RenvoiTest] = []
     for chemin in collecter():
         relatif = str(chemin.relative_to(
             RACINE if RACINE in chemin.parents else RACINE_PHYSICATOR))
@@ -684,6 +1013,8 @@ def main() -> int:
                          or chemin.parent == RACINE_PHYSICATOR else "cascade")
         for ancre in extraire(chemin, relatif, racine_source):
             resultats.append(appliquer_registre(verifier(ancre)))
+        for renvoi in extraire_renvois_tests(chemin, relatif):
+            renvois.append(verifier_renvoi_test(renvoi, index_tests))
 
     comptes: dict[str, int] = {}
     for a in resultats:
@@ -715,6 +1046,31 @@ def main() -> int:
                 extrait = _normaliser(a.fragment)[:110]
                 print(f"      « {extrait}{'…' if len(extrait) == 110 else ''} »")
 
+    comptes_renvois: dict[str, int] = {}
+    for r in renvois:
+        comptes_renvois[r.etat] = comptes_renvois.get(r.etat, 0) + 1
+
+    print(f"\n{len(renvois)} renvois par NOM DE TEST "
+          f"({len(index_tests)} fonctions `test_*` indexées)\n")
+    for etat in ("test-introuvable", "test-non-collecté", "test-module",
+                 "test-déclaré", "test-abrégé", "test-famille",
+                 "test-vivant"):
+        n = comptes_renvois.get(etat, 0)
+        if n:
+            print(f"  {etat:16s} {n:4d}")
+    for etat in ("test-introuvable", "test-non-collecté", "test-module",
+                 "test-déclaré", "test-abrégé"):
+        concernes = [r for r in renvois if r.etat == etat]
+        if not concernes:
+            continue
+        print(f"\n=== {etat.upper()} ({len(concernes)}) ===")
+        for r in concernes:
+            print(f"  {r.source}:{r.ligne_source} -> `{r.nom}`")
+            if r.detail:
+                print(f"      {r.detail}")
+            for note in r.notes:
+                print(f"      {note}")
+
     if options.nues:
         nues = [a for a in resultats if a.etat == "nue"]
         print(f"\n=== NUES ({len(nues)}) — invérifiables par construction ===")
@@ -728,7 +1084,14 @@ def main() -> int:
                          "citation": a.citation, "etat": a.etat,
                          "ligne_trouvee": a.ligne_trouvee,
                          "detail": a.detail, "notes": a.notes}
-                        for a in resultats]},
+                        for a in resultats],
+             "comptes_renvois_tests": comptes_renvois,
+             "renvois_tests": [{"source": r.source,
+                                "ligne_source": r.ligne_source,
+                                "nom": r.nom, "etat": r.etat,
+                                "resolu": r.resolu, "detail": r.detail,
+                                "notes": r.notes}
+                               for r in renvois]},
             ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\nartefact : {options.json}")
 
@@ -738,7 +1101,12 @@ def main() -> int:
     if fatales:
         print(f"\nÉCHEC : {fatales} ancre(s) dont le texte a disparu — "
               "changement de fond, jamais une renumérotation silencieuse.")
-    return 1 if fatales else 0
+    morts = comptes_renvois.get("test-introuvable", 0)
+    if morts:
+        print(f"\nÉCHEC : {morts} renvoi(s) vers un verrou qui n'existe "
+              "pas — une garde promise dans un document est une garde "
+              "absente (§A62-bis-2).")
+    return 1 if fatales + morts else 0
 
 
 if __name__ == "__main__":
